@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" type="image/png" href="img/qrcodeico.png"/>
+  <link href="style/style.css" rel="stylesheet" type="text/css" />
+  <meta charset="utf-8">
+  <title>QR Code Generator</title>
+</head>
+<body>
+  <div class="ribbon">
+  	<a target="_blank" href="http://sourceforge.net/projects/javascriptqrcode/" rel="">Get on SourceForge</a>
+  </div>
+  <div class="header" data-role="header">
+    <h2>QR Code Generator</h2>
+  </div>
+  <div data-role="content">
+    <div id="containerqr"></div>
+    <label for="setdimension">Set Dimension QR Code</label>
+    <div id="dimensionqr"></div>
+    <div class="clearfix"></div>
+    <hr/>
+    <label for="inputqrstring">Enter input or url</label>
+    <textarea name="inputqrstring" id="texttoqr"></textarea>
+    <div class="clearfix"></div>
+      <span><button class="btn" data-role="button" id="btnmakeqr">Make QR Code</button></span>
+      <span><button class="btn" id="sharechart" data-role="button">Share Image</button></span>
+      <span><button class="btn" id="printqrpaper">Print</button></span>
+
+  </div>
+    <textarea id="getcode"></textarea>
+  <div class="footer" data-role="footer"><h5><a href="https://play.google.com/store/apps/developer?id=UlmDesign" target="_blank"><img alt="My Apps On Google Play" title="My Apps on Google Play" src="img/myappsgoogleplay.png" /></a></h5>
+  <h5>Web Mobile App by <a author="Mediamaster.eu" href="http://mediamaster.eu" target="blank">UlmDesign</a></h5></div>
+<script type="text/javascript" src="js/qr-2.0.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "JavaScript QR Code",
+  "short_name": "JavaScript QR Code generator",
+  "description": "Make QR Codes in JavaScript",
+  "version": "1.5.7",
+
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+
+  "applications": {
+        "gecko": {
+            "id": "@javascriptqrcode",
+            "strict_min_version": "48.0"
+        }
+    },
+
+  "permissions": [
+          "tabs",
+          "activeTab",
+          "<all_urls>",
+          "contextMenus"
+    ],
+
+  "browser_action": {
+    "default_icon": {
+      "19": "assets/icon_16.png",
+      "38": "assets/icon_128.png"
+    }
+  },
+
+  "content_security_policy": "script-src 'self'; default-src 'self'; img-src * data:; style-src 'self';",
+
+  "background": {
+      "scripts": ["background.js"]
+  }
+}
