@@ -9,14 +9,14 @@
  *
  * */
 
-var qrgchart = {} || qrgchart, qrimage = document.createElement("img");
+var qrgchart = {} || qrgchart, qrimage = document.createElement("div");
 
 qrgchart.getQRCode = function(getidqr, setWidth, setHeight, setcontent) {
   try{
-    var containerqrimage = document.getElementById(getidqr), stringqr = "https://chart.apis.google.com/chart?cht=qr&chs=" + setWidth + "x" + setHeight + "&chl=" + encodeURIComponent(setcontent);
+    var containerqrimage = document.getElementById(getidqr);
     this.empty(containerqrimage);
     qrimage.setAttribute("id", "imgchart");
-    qrimage.src = stringqr.replace(/&amp;/g, '&');
+    new QRCode(qrimage, setcontent);
     containerqrimage.appendChild(qrimage);
     return[getidqr, setWidth, setHeight, setcontent];
   } catch(e){
@@ -38,7 +38,7 @@ qrgchart.standardimQR = function(idcontainer){
   }
 }
 qrgchart.empty = function(element){
-  return element;
+  element.innerHTML = '';
 }
 qrgchart.getQRimg = function(idareaCode, getidqr) {
   var txtArea = document.getElementById(idareaCode), containerqrimage = document.getElementById(getidqr), qrhtml = decodeURIComponent('<img src="https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(document.getElementsByTagName('img')[0].src.split("=")[3]) + '"/>');
