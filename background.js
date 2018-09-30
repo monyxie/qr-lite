@@ -15,7 +15,7 @@
     });
 
     browser.contextMenus.create({
-        "title": "Text to QR-Code",
+        "title": "Text to QR Code",
         "contexts": ["selection"],
         "onclick": function onSelectTxt(info, tab) {
             openMainPageWithString(info.selectionText);
@@ -23,7 +23,7 @@
     });
 
     browser.contextMenus.create({
-        "title": "Link to QR-Code",
+        "title": "Link to QR Code",
         "contexts": ["link"],
         "onclick": function onGetLink(info, tab) {
             openMainPageWithString(info.linkUrl);

@@ -1,13 +1,12 @@
 {
   "manifest_version": 2,
-  "name": "JavaScript QR Code",
-  "short_name": "JavaScript QR Code generator",
-  "description": "Make QR Codes in JavaScript",
-  "version": "1.5.7",
+  "name": "QR Lite",
+  "short_name": "QR Lite",
+  "description": "Make QR Codes in Pure JavaScript",
+  "version": "0.1",
 
   "icons": {
-    "16": "assets/icon_16.png",
-    "128": "assets/icon_128.png"
+    "16": "assets/qrlite_16.png"
   },
 
   "applications": {
@@ -26,8 +25,7 @@
 
   "browser_action": {
     "default_icon": {
-      "19": "assets/icon_16.png",
-      "38": "assets/icon_128.png"
+      "19": "assets/qrlite_16.png"
     },
     "default_popup": "data/index.html"
   },

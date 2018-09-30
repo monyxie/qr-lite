@@ -14,7 +14,5 @@
 
     browser.tabs.query({active: true, currentWindow: true}).then(function(tabs){
         renderQrCode(tabs[0].url);
-    }, function(){
-        renderQrCode('failed');
     })
 })(browser);
