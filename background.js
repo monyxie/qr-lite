@@ -49,5 +49,5 @@
         }
     });
 
-})(browser || chrome);
+})(browser);
 

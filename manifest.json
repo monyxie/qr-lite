@@ -28,7 +28,8 @@
     "default_icon": {
       "19": "assets/icon_16.png",
       "38": "assets/icon_128.png"
-    }
+    },
+    "default_popup": "data/index.html"
   },
 
   "content_security_policy": "script-src 'self'; default-src 'self'; img-src * data:; style-src 'self';",

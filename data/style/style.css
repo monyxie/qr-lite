@@ -1,7 +1,15 @@
-*,
-*:before,
-*:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+#footer {
+    font-size: 0.6em;
+    font-family: sans-serif;
+    color: chocolate;
+}
+
+#sourceStr {
+    font-size: 0.6em;
+    font-family: sans-serif;
+    color: brown;
+}
+
+body {
+    max-width: 400px;
 }
