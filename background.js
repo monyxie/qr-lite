@@ -6,8 +6,8 @@
 
 (function(browser) {
     function openMainPageWithString(str) {
-        var qrURL = "data/index.html#" + encodeURIComponent(str);
-        browser.tabs.create({url: qrURL});
+        window.stringToEncode = str
+        browser.browserAction.openPopup()
     }
 
     browser.browserAction.onClicked.addListener(function (tab) {
@@ -15,7 +15,7 @@
     });
 
     browser.contextMenus.create({
-        "title": "Text to QR Code",
+        "title": "Encode Selected Text",
         "contexts": ["selection"],
         "onclick": function onSelectTxt(info, tab) {
             openMainPageWithString(info.selectionText);
@@ -23,7 +23,7 @@
     });
 
     browser.contextMenus.create({
-        "title": "Link to QR Code",
+        "title": "Encode Link URL",
         "contexts": ["link"],
         "onclick": function onGetLink(info, tab) {
             openMainPageWithString(info.linkUrl);
@@ -31,17 +31,9 @@
 
     });
 
-    browser.contextMenus.create({
-        "title": "URL page to QR Code",
-        "contexts": ["page"],
-        "onclick": function onGetPage(info, tab) {
-            openMainPageWithString(tab.url);
-        }
-    });
-
     // decode QR code in image
     browser.contextMenus.create({
-        "title": "Decode this QR Code",
+        "title": "Decode this image",
         "contexts": ["image"],
         "onclick": function decodeQR(info, tab) {
             var urlDecode = "https://zxing.org/w/decode?u=" + encodeURIComponent(info.srcUrl);

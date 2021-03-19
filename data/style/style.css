@@ -1,15 +1,27 @@
-#footer {
-    font-size: 0.6em;
-    font-family: sans-serif;
-    color: chocolate;
+.container {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#sourceStr {
-    font-size: 0.6em;
+.footer {
+    font-size: 14px;
     font-family: sans-serif;
-    color: brown;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: gray;
 }
 
-body {
-    max-width: 400px;
+.footer * {
+    color: gray;
+}
+
+.source {
+    font-size: 14px;
+    font-family: sans-serif;
+    height: 100px;
+    width: 300px;
+    word-break: break-all;
 }

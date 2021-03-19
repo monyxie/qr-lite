@@ -2,20 +2,21 @@
 A browser extension for generating QR codes in pure Javascript.
 
 ## Supported Browsers
-Only Firefox is supported at the moment.
+This extension only supports Firefox at the moment.
 
 ## Features
-
-  * Generate QR code for current tab in popup.
-  * Generate QR code for selected link/text.
-  * Decode QR code in any images. Powered by [zxing.org](https://zxing.org).
+* Generate QR code for current tab in popup.
+* Generate QR code for selected link/text.
+* Decode QR code in any images. Powered by [zxing.org](https://zxing.org).
   
 ## Todo
-  * Localization
+* Localization
+* Add image padding
   
-## Author
-This extension is modified and re-branded by me from a Firefox extension called [Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/).
+## Credits
+This extension is a fork of [Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/).
 The original extension was written by Francesco De Stefano.
 
 ## License
-GPLv3
+
+MIT

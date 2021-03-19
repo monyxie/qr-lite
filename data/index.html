@@ -1,23 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link href="style/style.css" rel="stylesheet" type="text/css" />
-  <meta charset="utf-8">
-  <title>QR Lite</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="style/style.css" rel="stylesheet" type="text/css"/>
+    <meta charset="utf-8">
+    <title>QR Lite</title>
 </head>
 <body>
-<div data-role="content">
-  <p id="sourceStr"></p>
-  <div id="result"></div>
+<div class="container" data-role="content">
+    <div class="header">
+        <textarea class="source" id="sourceInput"></textarea>
+    </div>
+    <div class="content" id="result"></div>
+    <div class="footer">
+        <div class="footer-left">
+            <span class="counter" id="counter"></span>
+        </div>
+        <div class="footer-right">
+            <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""><strong>QR Lite</strong></a>
+        </div>
+    </div>
 </div>
-<p id="footer">
-  <strong>QR Lite</strong>
-  |
-  <a target="_blank" href="https://github.com/monyxie/qr-lite" rel="">source code</a>
-<p>
-  <script type="text/javascript" src="js/qrcode.min.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

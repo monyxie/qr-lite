@@ -1,18 +1,37 @@
 (function(browser){
+    var qrCode = null;
+
     function renderQrCode(str) {
-        var sourceStrElement = document.getElementById('sourceStr');
+        var sourceInput = document.getElementById('sourceInput');
+        var counter = document.getElementById('counter');
         var resultElement = document.getElementById('result');
-        sourceStrElement.innerText = str;
-        new QRCode(resultElement, str);
+        sourceInput.innerText = str;
+        counter.innerText = '' + str.length + ' character(s)';
+        if (qrCode) {
+            qrCode.makeCode(str)
+        }
+        else {
+            qrCode = new QRCode(resultElement, {
+                text: str,
+                width: 300,
+                height: 300,
+            });
+        }
     }
 
-    var str = decodeURIComponent(window.location.hash.substring(1));
-    if (str) {
-        renderQrCode(str);
-        return;
-    }
+    chrome.runtime.getBackgroundPage((backgroundPage) => {
+        if (backgroundPage && backgroundPage.stringToEncode) {
+            renderQrCode(backgroundPage.stringToEncode);
+            backgroundPage.stringToEncode = null
+        }
+        else {
+            browser.tabs.query({ active: true, currentWindow: true }).then(function(tabs){
+                renderQrCode(tabs[0].url);
+            })
+        }
+    });
 
-    browser.tabs.query({active: true, currentWindow: true}).then(function(tabs){
-        renderQrCode(tabs[0].url);
+    document.getElementById('sourceInput').addEventListener('keyup', function(e){
+        renderQrCode(e.target.value)
     })
 })(browser);
