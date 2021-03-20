@@ -1,17 +1,17 @@
-(function(browser){
-    var qrCode = null;
+(function(browser, chrome){
+    let qrCode = null;
+    const domSource = document.getElementById('sourceInput');
+    const domCounter = document.getElementById('counter');
+    const domResult = document.getElementById('result');
 
     function renderQrCode(str) {
-        var sourceInput = document.getElementById('sourceInput');
-        var counter = document.getElementById('counter');
-        var resultElement = document.getElementById('result');
-        sourceInput.innerText = str;
-        counter.innerText = '' + str.length + ' character(s)';
+        domSource.innerText = str;
+        domCounter.innerText = '' + str.length + ' character(s)';
         if (qrCode) {
             qrCode.makeCode(str)
         }
         else {
-            qrCode = new QRCode(resultElement, {
+            qrCode = new QRCode(domResult, {
                 text: str,
                 width: 300,
                 height: 300,
@@ -31,7 +31,7 @@
         }
     });
 
-    document.getElementById('sourceInput').addEventListener('keyup', function(e){
+    domSource.addEventListener('keyup', function(e){
         renderQrCode(e.target.value)
     })
-})(browser);
+})(browser, chrome);

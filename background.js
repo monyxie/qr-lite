@@ -36,7 +36,7 @@
         "title": "Decode this image",
         "contexts": ["image"],
         "onclick": function decodeQR(info, tab) {
-            var urlDecode = "https://zxing.org/w/decode?u=" + encodeURIComponent(info.srcUrl);
+            const urlDecode = "https://zxing.org/w/decode?u=" + encodeURIComponent(info.srcUrl);
             browser.tabs.create({url: urlDecode});
         }
     });
