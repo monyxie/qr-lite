@@ -1102,9 +1102,14 @@ var QRCode;
    * Make the QRCode
    *
    * @param {String} sText link data
+   * @param {Number} correctLevel
    */
-  QRCode.prototype.makeCode = function (sText) {
-    this._oQRCode = new QRCodeModel(_getTypeNumber(sText, this._htOption.correctLevel), this._htOption.correctLevel);
+  QRCode.prototype.makeCode = function (sText, correctLevel) {
+    if (typeof correctLevel === 'undefined') {
+      correctLevel = this._htOption.correctLevel
+    }
+
+    this._oQRCode = new QRCodeModel(_getTypeNumber(sText, correctLevel), correctLevel);
     this._oQRCode.addData(sText);
     this._oQRCode.make();
     this._el.title = sText;

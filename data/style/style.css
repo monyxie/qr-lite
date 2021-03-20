@@ -25,3 +25,14 @@
     width: 300px;
     word-break: break-all;
 }
+
+.ec-level {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.ec-level.ec-level-active {
+    cursor: default;
+    font-weight: bolder;
+    text-decoration: none;
+}

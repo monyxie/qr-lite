@@ -10,15 +10,26 @@
 <body>
 <div class="container" data-role="content">
     <div class="header">
-        <textarea class="source" id="sourceInput"></textarea>
+        <textarea class="source" id="sourceInput" title="The text to encode"></textarea>
     </div>
     <div class="content" id="result"></div>
     <div class="footer">
-        <div class="footer-left">
-            <span class="counter" id="counter"></span>
+        <div>
+            <span title="Length of the input text in characters">Len:
+                <span class="counter" id="counter"></span>
+            </span>
         </div>
-        <div class="footer-right">
-            <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""><strong>QR Lite</strong></a>
+        <div>
+            <span title="Error correction level">EC:</span>
+            <span id="ecLevels">
+                <span class="ec-level" id="ecL" title="Low, 7% of data bytes can be restored">L</span> |
+                <span class="ec-level" id="ecM" title="Medium, 15% of data bytes can be restored">M</span> |
+                <span class="ec-level" id="ecQ" title="Quartile, 25% of data bytes can be restored">Q</span> |
+                <span class="ec-level" id="ecH" title="High, 30% of data bytes can be restored">H</span>
+            </span>
+        </div>
+        <div>
+            <a target="_blank" href="https://github.com/monyxie/qr-lite" rel="" title="Visit our project page on Github"><strong>QR Lite</strong></a>
         </div>
     </div>
 </div>

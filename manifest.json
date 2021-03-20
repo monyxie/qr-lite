@@ -21,7 +21,8 @@
     "tabs",
     "activeTab",
     "<all_urls>",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
 
   "browser_action": {
