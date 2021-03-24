@@ -3,7 +3,7 @@
   "name": "QR Lite",
   "short_name": "QR Lite",
   "description": "Make QR Codes in Pure JavaScript",
-  "version": "1.0",
+  "version": "1.1",
 
   "icons": {
     "16": "assets/qrlite.svg",
