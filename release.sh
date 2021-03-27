@@ -5,11 +5,10 @@ PROJECT_ROOT="$(pwd)"
 DIST_DIR="$PROJECT_ROOT/dist"
 RELEASE_DIR="$PROJECT_ROOT/release"
 
-COMMON_NAME="qr-lite-"$(git branch --show-current)"-"$(git rev-parse HEAD | head -c8)
-RELEASE_FILE="$RELEASE_DIR/$COMMON_NAME-release.zip"
-SOURCE_FILE="$RELEASE_DIR/$COMMON_NAME-source.zip"
+RELEASE_FILE="$RELEASE_DIR/qr-lite-release.zip"
+SOURCE_FILE="$RELEASE_DIR/qr-lite-source.zip"
 
-yarn run eslint src && yarn run webpack --mode production
+yarn install && yarn run eslint src && yarn run webpack --mode production
 
 if [ $? -eq 0 ]; then
 
@@ -27,5 +26,5 @@ if [ $? -eq 0 ]; then
   zip -r "$RELEASE_FILE" ./*
 
   cd "$PROJECT_ROOT"
-  zip -r "$SOURCE_FILE" src package.json README.md release.sh webpack.config.js yarn.lock
+  zip -r "$SOURCE_FILE" src .eslintrc.json package.json README.md release.sh webpack.config.js yarn.lock
 fi
