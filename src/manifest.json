@@ -2,8 +2,8 @@
   "manifest_version": 2,
   "name": "QR Lite",
   "short_name": "QR Lite",
-  "description": "Make QR Codes in Pure JavaScript",
-  "version": "2.0-dev",
+  "description": "Make or Scan QR Codes in Pure JavaScript",
+  "version": "2.0",
 
   "icons": {
     "16": "icons/qrlite.svg",
