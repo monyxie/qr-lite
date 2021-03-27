@@ -36,3 +36,16 @@
     font-weight: bolder;
     text-decoration: none;
 }
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.decoded-image {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+}

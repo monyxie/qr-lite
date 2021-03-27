@@ -5,39 +5,40 @@
  */
 
 (function (browser) {
-  function openMainPageWithString (str) {
-    window.stringToEncode = str
-    browser.browserAction.openPopup()
+  function openPopup (options) {
+    window.qrLitePopupOptions = options
+    browser.browserAction.openPopup().then(function () {
+
+    })
   }
 
   browser.browserAction.onClicked.addListener(function (tab) {
-    openMainPageWithString(tab.url)
+    openPopup({ action: 'ACTION_ENCODE', text: tab.url })
   })
 
   browser.contextMenus.create({
-    title: 'Encode Selected Text',
+    title: 'Make QR Code For Selected Text',
     contexts: ['selection'],
     onclick: function onSelectTxt (info, tab) {
-      openMainPageWithString(info.selectionText)
+      openPopup({ action: 'ACTION_ENCODE', text: info.selectionText })
     }
   })
 
   browser.contextMenus.create({
-    title: 'Encode Link URL',
+    title: 'Make QR Code For This Link',
     contexts: ['link'],
     onclick: function onGetLink (info, tab) {
-      openMainPageWithString(info.linkUrl)
+      openPopup({ action: 'ACTION_ENCODE', text: info.linkUrl })
     }
 
   })
 
   // decode QR code in image
   browser.contextMenus.create({
-    title: 'Decode this image',
+    title: 'Scan QR Code In This Image',
     contexts: ['image'],
     onclick: function decodeQR (info, tab) {
-      const urlDecode = 'https://zxing.org/w/decode?u=' + encodeURIComponent(info.srcUrl)
-      browser.tabs.create({ url: urlDecode })
+      openPopup({ action: 'ACTION_DECODE', image: info.srcUrl })
     }
   })
 })(window.browser)
