@@ -3,11 +3,11 @@
   "name": "QR Lite",
   "short_name": "QR Lite",
   "description": "Make QR Codes in Pure JavaScript",
-  "version": "1.1",
+  "version": "2.0-dev",
 
   "icons": {
-    "16": "assets/qrlite.svg",
-    "48": "assets/qrlite.svg"
+    "16": "icons/qrlite.svg",
+    "48": "icons/qrlite.svg"
   },
 
   "applications": {
@@ -26,17 +26,17 @@
   ],
 
   "browser_action": {
-    "default_icon": "assets/qrlite.svg",
-    "default_popup": "data/index.html",
+    "default_icon": "icons/qrlite.svg",
+    "default_popup": "popup/popup.html",
     "theme_icons": [
       {
-        "light": "assets/qrlite-gray.svg",
-        "dark": "assets/qrlite.svg",
+        "light": "icons/qrlite-gray.svg",
+        "dark": "icons/qrlite.svg",
         "size": 16
       },
       {
-        "light": "assets/qrlite-gray.svg",
-        "dark": "assets/qrlite.svg",
+        "light": "icons/qrlite-gray.svg",
+        "dark": "icons/qrlite.svg",
         "size": 32
       }
     ]
@@ -45,6 +45,6 @@
   "content_security_policy": "script-src 'self'; default-src 'self'; img-src * data:; style-src 'self';",
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background/background.js"]
   }
 }

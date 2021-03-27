@@ -1,0 +1,26 @@
+{
+  "name": "qr-lite",
+  "version": "1.0.0",
+  "main": "data/js/app.js",
+  "repository": "git@github.com:monyxie/qr-lite.git",
+  "author": "Mony Xie <monyxie@gmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "dependencies": {
+    "@zxing/browser": "^0.0.8",
+    "@zxing/library": "^0.18.4",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^8.1.0",
+    "css-loader": "^5.2.0",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "file-loader": "^6.2.0",
+    "style-loader": "^2.0.0"
+  }
+}
