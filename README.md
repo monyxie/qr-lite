@@ -21,8 +21,6 @@ is the installable extension, while `qr-lite-source.zip` is the source code.
    
 ## Todo
 * Localization
-* Add image padding
-* Add button for saving image
   
 ## Credits
 
