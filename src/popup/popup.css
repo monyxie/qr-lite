@@ -30,10 +30,14 @@
     font-size: 14px;
     font-family: sans-serif;
     height: 96px; /* 300 - padding - border */
-    width: 296px; /* 300 - padding - border */
+    width: 298px; /* 300 - padding - border */
     word-break: break-all;
-    border-width: 1px;
+    border-width: 1px 0;
+    border-color: #CCCCCC;
+    border-style: solid;
     padding: 1px;
+    resize: none;
+    background-color: #F8F8F8;
 }
 
 .clickable {
