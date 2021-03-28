@@ -23,11 +23,15 @@
         <div>
             <span title="Error correction level">EC:</span>
             <span id="ecLevels">
-                <span class="ec-level" id="ecL" title="Low, 7% of data bytes can be restored">L</span> |
-                <span class="ec-level" id="ecM" title="Medium, 15% of data bytes can be restored">M</span> |
-                <span class="ec-level" id="ecQ" title="Quartile, 25% of data bytes can be restored">Q</span> |
-                <span class="ec-level" id="ecH" title="High, 30% of data bytes can be restored">H</span>
+                <span class="clickable ec-level" id="ecL" title="Low, 7% of data bytes can be restored">L</span>
+                <span class="clickable ec-level" id="ecM" title="Medium, 15% of data bytes can be restored">M</span>
+                <span class="clickable ec-level" id="ecQ" title="Quartile, 25% of data bytes can be restored">Q</span>
+                <span class="clickable ec-level" id="ecH" title="High, 30% of data bytes can be restored">H</span>
             </span>
+        </div>
+        <div>
+            <span class="clickable" id="save" title="Save this QR code image">Save</span>
+            <span class="clickable" id="open" title="Open scan result in a new tab">Open</span>
         </div>
         <div>
             <a target="_blank" href="https://github.com/monyxie/qr-lite" rel="" title="Visit our project page on Github"><strong>QR Lite</strong></a>

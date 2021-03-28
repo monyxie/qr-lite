@@ -1,5 +1,5 @@
 import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
-import { BrowserQRCodeSvgWriter, BrowserQRCodeReader } from '@zxing/browser'
+import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
 
@@ -11,6 +11,8 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
   const domCounter = document.getElementById('counter')
   const domResult = document.getElementById('result')
   const domEcLevels = document.getElementById('ecLevels')
+  const domSave = document.getElementById('save')
+  const domOpen = document.getElementById('open')
 
   function updateActiveEcLevel (activeEcLevel) {
     domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
@@ -21,6 +23,9 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
   }
 
   function createQrCode (text, activeEcLevel) {
+    domSave.classList.add('hidden')
+    domOpen.classList.add('hidden')
+
     domSource.value = text
     domCounter.innerText = '' + text.length
     updateActiveEcLevel(activeEcLevel)
@@ -31,6 +36,8 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
     domResult.innerText = ''
     writer.writeToDom(domResult, text, 300, 300, hints)
     currentText = text
+
+    domSave.classList.remove('hidden')
   }
 
   function getPopupOptions () {
@@ -48,6 +55,9 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
   }
 
   function decodeImage (url) {
+    domSave.classList.add('hidden')
+    domOpen.classList.add('hidden')
+
     console.log('decoding image:', url)
     const codeReader = new BrowserQRCodeReader()
 
@@ -77,6 +87,10 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
       domResult.appendChild(img)
 
       currentText = text
+
+      if (/^https?:\/\//.test(text)) {
+        domOpen.classList.remove('hidden')
+      }
     })
       .catch(function (e) {
         domSource.placeholder = 'decode failed: ' + e
@@ -107,6 +121,17 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
       })
 
       createQrCode(domSource.value, ecLevel)
+    })
+
+    domSave.addEventListener('click', function (e) {
+      downloadImage()
+    })
+
+    domOpen.addEventListener('click', function (e) {
+      browser.tabs.create({
+        url: currentText,
+        active: true
+      })
     })
 
     browser.storage.local.get('ecLevel')
@@ -146,6 +171,28 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
             console.log(e)
           })
       })
+  }
+
+  function downloadImage () {
+    const svg = document.querySelector('svg')
+    const img = document.createElement('img')
+    const canvas = document.createElement('canvas')
+    const a = document.createElement('a')
+    const xml = new XMLSerializer().serializeToString(svg)
+    const svg64 = btoa(xml)
+
+    canvas.width = svg.getBoundingClientRect().width
+    canvas.height = svg.getBoundingClientRect().height
+    img.src = 'data:image/svg+xml;base64,' + svg64
+    img.onload = function () {
+      const context = canvas.getContext('2d')
+      context.fillStyle = '#FFFFFF'
+      context.fillRect(0, 0, canvas.width, canvas.height)
+      context.drawImage(img, 0, 0)
+      a.href = canvas.toDataURL('image/png')
+      a.download = 'qr-code.png'
+      a.click()
+    }
   }
 
   init()
