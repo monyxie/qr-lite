@@ -1,11 +1,13 @@
 import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
 import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
-import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
+import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
+import SanitizeFilename from 'sanitize-filename'
 
 (function (browser, chrome) {
   let ecLevel = ECLevel.M
   let currentText = null
+  let currentTitle = null
 
   const domSource = document.getElementById('sourceInput')
   const domCounter = document.getElementById('counter')
@@ -22,7 +24,7 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
     document.getElementById(id).classList.add('ec-level-active')
   }
 
-  function createQrCode (text, activeEcLevel) {
+  function createQrCode (text, activeEcLevel, title) {
     domSave.classList.add('hidden')
     domOpen.classList.add('hidden')
 
@@ -34,19 +36,21 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
     const hints = new Map()
     hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
     domResult.innerText = ''
+    domResult.title = title || ''
     writer.writeToDom(domResult, text, 300, 300, hints)
     currentText = text
 
     domSave.classList.remove('hidden')
+    currentTitle = title || ''
   }
 
   function getPopupOptions () {
     return new Promise(function (resolve, reject) {
       chrome.runtime.getBackgroundPage((backgroundPage) => {
         if (backgroundPage && backgroundPage.qrLitePopupOptions) {
-          const url = backgroundPage.qrLitePopupOptions
+          const options = backgroundPage.qrLitePopupOptions
           backgroundPage.qrLitePopupOptions = null
-          resolve(url)
+          resolve(options)
         } else {
           resolve(null)
         }
@@ -57,6 +61,7 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
   function decodeImage (url) {
     domSave.classList.add('hidden')
     domOpen.classList.add('hidden')
+    domResult.title = currentTitle = ''
 
     console.log('decoding image:', url)
     const codeReader = new BrowserQRCodeReader()
@@ -149,7 +154,7 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
               return new Promise(function (resolve, reject) {
                 browser.tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
-                    resolve({ action: 'ACTION_ENCODE', text: tabs[0].url })
+                    resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
                   })
                   .catch(function (e) {
                     resolve({ action: 'ACTION_ENCODE', text: '' })
@@ -162,7 +167,7 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
           .then(function (options) {
             switch (options.action) {
               case 'ACTION_ENCODE':
-                return createQrCode(options.text, ecLevel)
+                return createQrCode(options.text, ecLevel, options.title)
               case 'ACTION_DECODE':
                 return decodeImage(options.image)
             }
@@ -171,6 +176,10 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
             console.log(e)
           })
       })
+  }
+
+  function getFilenameFromTitle (title) {
+    return SanitizeFilename(title).substr(0, 100) + '.png'
   }
 
   function downloadImage () {
@@ -190,7 +199,7 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType';
       context.fillRect(0, 0, canvas.width, canvas.height)
       context.drawImage(img, 0, 0)
       a.href = canvas.toDataURL('image/png')
-      a.download = 'qr-code.png'
+      a.download = currentTitle ? getFilenameFromTitle(currentTitle) : 'qr-code.png'
       a.click()
     }
   }

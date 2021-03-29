@@ -13,14 +13,14 @@
   }
 
   browser.browserAction.onClicked.addListener(function (tab) {
-    openPopup({ action: 'ACTION_ENCODE', text: tab.url })
+    openPopup({ action: 'ACTION_ENCODE', text: tab.url, title: tab.title })
   })
 
   browser.contextMenus.create({
     title: 'Make QR Code For Selected Text',
     contexts: ['selection'],
     onclick: function onSelectTxt (info, tab) {
-      openPopup({ action: 'ACTION_ENCODE', text: info.selectionText })
+      openPopup({ action: 'ACTION_ENCODE', text: info.selectionText, title: info.selectionText })
     }
   })
 
@@ -28,7 +28,7 @@
     title: 'Make QR Code For This Link',
     contexts: ['link'],
     onclick: function onGetLink (info, tab) {
-      openPopup({ action: 'ACTION_ENCODE', text: info.linkUrl })
+      openPopup({ action: 'ACTION_ENCODE', text: info.linkUrl, title: info.linkText })
     }
 
   })
