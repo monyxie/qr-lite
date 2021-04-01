@@ -1,5 +1,9 @@
 # QR Lite
-A browser extension for making/scanning QR codes in pure Javascript.
+
+<img src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
+
+QR Lite is a browser extension for making/scanning QR codes in pure Javascript.
+
 
 ## Features
 * Generate QR code for current tab in popup.
