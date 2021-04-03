@@ -5,21 +5,14 @@
     justify-content: space-between;
 }
 
-.footer {
+.necker, .footer {
     font-size: 14px;
     font-family: sans-serif;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 2px 0;
-}
-
-.footer>* {
-    text-align: center;
-    border-top: 1px solid #CCC;
-    border-bottom: 1px solid #CCC;
     color: gray;
-    flex-grow: 1;
 }
 
 .footer a {

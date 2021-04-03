@@ -3,6 +3,7 @@ import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
 import SanitizeFilename from 'sanitize-filename'
+import manifest from '../manifest.json'
 
 (function (browser, chrome) {
   let ecLevel = ECLevel.M
@@ -176,6 +177,8 @@ import SanitizeFilename from 'sanitize-filename'
             console.log(e)
           })
       })
+
+    document.getElementById('qrLiteVersion').innerText = 'v' + manifest.version
   }
 
   function getFilenameFromTitle (title) {
