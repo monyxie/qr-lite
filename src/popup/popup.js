@@ -59,6 +59,43 @@ import manifest from '../manifest.json'
     })
   }
 
+  function getRelativePosition (rect1, rect2) {
+    const relPos = {}
+
+    relPos.top = rect1.top - rect2.top
+    relPos.right = rect1.right - rect2.right
+    relPos.bottom = rect1.bottom - rect2.bottom
+    relPos.left = rect1.left - rect2.left
+
+    return relPos
+  }
+
+  function createPointMarkerElement (point, containerEl, imgEl) {
+    const containerRect = containerEl.getBoundingClientRect()
+    const imgRect = imgEl.getBoundingClientRect()
+    const markerEl = document.createElement('div')
+    const relPos = getRelativePosition(imgRect, containerRect)
+    const scaleRatioX = imgRect.width / imgEl.naturalWidth
+    const scaleRatioY = imgRect.width / imgEl.naturalWidth
+    const x = (point.getX() * scaleRatioX) + relPos.left
+    const y = (point.getY() * scaleRatioY) + relPos.top
+    const markerSize = 20
+    const markerDotPortion = 0.6
+    const markerBorderPortion = (1 - markerDotPortion)
+
+    markerEl.innerText = ' '
+    markerEl.style.position = 'absolute'
+    markerEl.style.width = (markerSize * markerDotPortion) + 'px'
+    markerEl.style.height = (markerSize * markerDotPortion) + 'px'
+    markerEl.style.borderRadius = markerSize + 'px'
+    markerEl.style.backgroundColor = 'white'
+    markerEl.style.border = (markerSize * markerBorderPortion) + 'px solid lightgreen'
+    markerEl.style.top = (y - (markerSize * 0.5)) + 'px'
+    markerEl.style.left = (x - (markerSize * 0.5)) + 'px'
+
+    containerEl.appendChild(markerEl)
+  }
+
   function decodeImage (url) {
     domSave.classList.add('hidden')
     domOpen.classList.add('hidden')
@@ -72,6 +109,8 @@ import manifest from '../manifest.json'
 
     return codeReader.decodeFromImageUrl(url).then(function (result) {
       const text = result.getText()
+      const points = result.getResultPoints()
+
       domSource.placeholder = ''
       domSource.value = text
       domSource.select()
@@ -91,6 +130,10 @@ import manifest from '../manifest.json'
       img.classList.add('decoded-image')
       img.src = url
       domResult.appendChild(img)
+
+      for (let i = 0; i < points.length; i++) {
+        createPointMarkerElement(points[i], domResult, img)
+      }
 
       currentText = text
 
