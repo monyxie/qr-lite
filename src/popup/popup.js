@@ -5,49 +5,57 @@ import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
 import SanitizeFilename from 'sanitize-filename'
 import manifest from '../manifest.json'
 
-(function (browser, chrome) {
-  let ecLevel = ECLevel.M
-  let currentText = null
-  let currentTitle = null
+class Popup {
+  constructor (browser, chrome) {
+    this.browser = browser
+    this.chrome = chrome
 
-  const domSource = document.getElementById('sourceInput')
-  const domCounter = document.getElementById('counter')
-  const domResult = document.getElementById('result')
-  const domEcLevels = document.getElementById('ecLevels')
-  const domSave = document.getElementById('save')
-  const domOpen = document.getElementById('open')
+    this.renderPage()
 
-  function updateActiveEcLevel (activeEcLevel) {
-    domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
+    this.ecLevel = ECLevel.M
+    this.currentText = null
+    this.currentTitle = null
+
+    this.domSource = document.getElementById('sourceInput')
+    this.domCounter = document.getElementById('counter')
+    this.domResult = document.getElementById('result')
+    this.domEcLevels = document.getElementById('ecLevels')
+    this.domSave = document.getElementById('save')
+    this.domOpen = document.getElementById('open')
+  }
+
+  updateActiveEcLevel (activeEcLevel) {
+    this.domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
       el.classList.remove('ec-level-active')
     })
     const id = 'ec' + activeEcLevel.toString()
     document.getElementById(id).classList.add('ec-level-active')
   }
 
-  function createQrCode (text, activeEcLevel, title) {
-    domSave.classList.add('hidden')
-    domOpen.classList.add('hidden')
+  createQrCode (text, activeEcLevel, title) {
+    this.domSave.classList.add('hidden')
+    this.domOpen.classList.add('hidden')
 
-    domSource.value = text
-    domCounter.innerText = '' + text.length
-    updateActiveEcLevel(activeEcLevel)
+    this.domSource.value = text
+    this.domCounter.innerText = '' + text.length
+    this.updateActiveEcLevel(activeEcLevel)
 
     const writer = new BrowserQRCodeSvgWriter()
     const hints = new Map()
     hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
-    domResult.innerText = ''
-    domResult.title = title || ''
-    writer.writeToDom(domResult, text, 300, 300, hints)
-    currentText = text
+    this.domResult.innerText = ''
+    this.domResult.title = title || ''
+    writer.writeToDom(this.domResult, text, 300, 300, hints)
+    this.currentText = text
 
-    domSave.classList.remove('hidden')
-    currentTitle = title || ''
+    this.domSave.classList.remove('hidden')
+    this.currentTitle = title || ''
   }
 
-  function getPopupOptions () {
+  getPopupOptions () {
+    const that = this
     return new Promise(function (resolve, reject) {
-      chrome.runtime.getBackgroundPage((backgroundPage) => {
+      that.chrome.runtime.getBackgroundPage((backgroundPage) => {
         if (backgroundPage && backgroundPage.qrLitePopupOptions) {
           const options = backgroundPage.qrLitePopupOptions
           backgroundPage.qrLitePopupOptions = null
@@ -59,7 +67,7 @@ import manifest from '../manifest.json'
     })
   }
 
-  function getRelativePosition (rect1, rect2) {
+  getRelativePosition (rect1, rect2) {
     const relPos = {}
 
     relPos.top = rect1.top - rect2.top
@@ -70,11 +78,11 @@ import manifest from '../manifest.json'
     return relPos
   }
 
-  function createPointMarkerElement (point, containerEl, imgEl) {
+  createPointMarkerElement (point, containerEl, imgEl) {
     const containerRect = containerEl.getBoundingClientRect()
     const imgRect = imgEl.getBoundingClientRect()
     const markerEl = document.createElement('div')
-    const relPos = getRelativePosition(imgRect, containerRect)
+    const relPos = this.getRelativePosition(imgRect, containerRect)
     const scaleRatioX = imgRect.width / imgEl.naturalWidth
     const scaleRatioY = imgRect.width / imgEl.naturalWidth
     const x = (point.getX() * scaleRatioX) + relPos.left
@@ -96,107 +104,153 @@ import manifest from '../manifest.json'
     containerEl.appendChild(markerEl)
   }
 
-  function decodeImage (url) {
-    domSave.classList.add('hidden')
-    domOpen.classList.add('hidden')
-    domResult.title = currentTitle = ''
+  decodeImage (url) {
+    this.domSave.classList.add('hidden')
+    this.domOpen.classList.add('hidden')
+    this.domResult.title = this.currentTitle = ''
 
-    console.log('decoding image:', url)
+    // console.log('decoding image:', url)
     const codeReader = new BrowserQRCodeReader()
 
-    domSource.value = ''
-    domSource.placeholder = 'decoding...'
+    this.domSource.value = ''
+    this.domSource.placeholder = this.browser.i18n.getMessage('decoding')
 
+    const that = this
     return codeReader.decodeFromImageUrl(url).then(function (result) {
       const text = result.getText()
       const points = result.getResultPoints()
 
-      domSource.placeholder = ''
-      domSource.value = text
-      domSource.select()
-      domCounter.innerText = '' + text.length
+      that.domSource.placeholder = ''
+      that.domSource.value = text
+      that.domSource.select()
+      that.domCounter.innerText = '' + text.length
 
       const metaEcLevel = result.getResultMetadata().get(ResultMetadataType.ERROR_CORRECTION_LEVEL)
       if (typeof metaEcLevel !== 'undefined') {
         try {
           const activeEcLevel = ECLevel.fromString(metaEcLevel)
-          updateActiveEcLevel(activeEcLevel)
+          that.updateActiveEcLevel(activeEcLevel)
         } catch (e) {
         }
       }
 
-      domResult.innerText = ''
+      that.domResult.innerText = ''
       const img = document.createElement('img')
       img.classList.add('decoded-image')
       img.src = url
-      domResult.appendChild(img)
+      that.domResult.appendChild(img)
 
       for (let i = 0; i < points.length; i++) {
-        createPointMarkerElement(points[i], domResult, img)
+        that.createPointMarkerElement(points[i], that.domResult, img)
       }
 
-      currentText = text
+      that.currentText = text
 
       if (/^https?:\/\//.test(text)) {
-        domOpen.classList.remove('hidden')
+        that.domOpen.classList.remove('hidden')
       }
     })
       .catch(function (e) {
-        domSource.placeholder = 'decode failed: ' + e
+        that.domSource.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
       })
   }
 
-  function init () {
-    domSource.addEventListener('keyup', function (e) {
-      if (domSource.value !== currentText) {
-        createQrCode(domSource.value, ecLevel)
+  getFilenameFromTitle (title) {
+    return SanitizeFilename(title).substr(0, 100) + '.png'
+  }
+
+  downloadImage () {
+    const svg = document.querySelector('svg')
+    const img = document.createElement('img')
+    const canvas = document.createElement('canvas')
+    const a = document.createElement('a')
+    const xml = new XMLSerializer().serializeToString(svg)
+    const svg64 = btoa(xml)
+    const that = this
+
+    canvas.width = svg.getBoundingClientRect().width
+    canvas.height = svg.getBoundingClientRect().height
+    img.src = 'data:image/svg+xml;base64,' + svg64
+    img.onload = function () {
+      const context = canvas.getContext('2d')
+      context.fillStyle = '#FFFFFF'
+      context.fillRect(0, 0, canvas.width, canvas.height)
+      context.drawImage(img, 0, 0)
+      a.href = canvas.toDataURL('image/png')
+      a.download = that.currentTitle ? that.getFilenameFromTitle(that.currentTitle) : 'qr-code.png'
+      a.click()
+    }
+  }
+
+  renderPage () {
+    const that = this
+    // console.log('rendering template, language code: ' + this.browser.i18n.languageCode)
+
+    // this.browser.i18n.getAcceptLanguages().then(a => console.log('accept language: ' + a))
+    const domTemplate = document.getElementById('template')
+    const template = domTemplate.innerHTML
+    domTemplate.parentElement.innerHTML = template.replace(/{{__MSG_(\w+)__}}/g, function (match, contents, offset) {
+      const message = that.browser.i18n.getMessage(contents)
+      // console.log('replace:', contents, message)
+      return message
+    })
+  }
+
+  init () {
+    const that = this
+
+    this.domSource.addEventListener('keyup', function (e) {
+      if (this.domSource.value !== that.currentText) {
+        that.createQrCode(this.domSource.value, that.ecLevel)
       }
     })
 
-    domEcLevels.addEventListener('click', function (e) {
+    this.domEcLevels.addEventListener('click', function (e) {
       switch (e.target.id) {
         case 'ecL':
         case 'ecM':
         case 'ecQ':
         case 'ecH':
-          ecLevel = ECLevel.fromString(e.target.id.substr(2))
+          that.ecLevel = ECLevel.fromString(e.target.id.substr(2))
           break
         default:
           return
       }
 
-      browser.storage.local.set({
-        ecLevel: ecLevel.toString()
+      that.browser.storage.local.set({
+        ecLevel: that.ecLevel.toString()
       })
 
-      createQrCode(domSource.value, ecLevel)
+      that.createQrCode(that.domSource.value, that.ecLevel)
     })
 
-    domSave.addEventListener('click', function (e) {
-      downloadImage()
+    this.domSave.addEventListener('click', function (e) {
+      that.downloadImage()
     })
 
-    domOpen.addEventListener('click', function (e) {
-      browser.tabs.create({
-        url: currentText,
+    this.domOpen.addEventListener('click', function (e) {
+      that.browser.tabs.create({
+        url: that.currentText,
         active: true
       })
     })
 
-    browser.storage.local.get('ecLevel')
+    that.browser.storage.local.get('ecLevel')
       .then(function (results) {
-        console.log('got ecLevel from storage: ' + JSON.stringify(results))
-        try {
-          ecLevel = ECLevel.fromString(results.ecLevel)
-        } catch (e) {
-          console.log(e)
+        // console.log('got ecLevel from storage: ' + JSON.stringify(results))
+        if (results.ecLevel) {
+          try {
+            that.ecLevel = ECLevel.fromString(results.ecLevel)
+          } catch (e) {
+            console.error(e)
+          }
         }
 
-        getPopupOptions()
+        that.getPopupOptions()
           .then(function (options) {
             if (options === null) {
               return new Promise(function (resolve, reject) {
-                browser.tabs.query({ active: true, currentWindow: true })
+                that.browser.tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
                     resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
                   })
@@ -211,44 +265,18 @@ import manifest from '../manifest.json'
           .then(function (options) {
             switch (options.action) {
               case 'ACTION_ENCODE':
-                return createQrCode(options.text, ecLevel, options.title)
+                return that.createQrCode(options.text, that.ecLevel, options.title)
               case 'ACTION_DECODE':
-                return decodeImage(options.image)
+                return that.decodeImage(options.image)
             }
           })
           .catch(function (e) {
-            console.log(e)
+            console.error(e)
           })
       })
 
     document.getElementById('qrLiteVersion').innerText = 'v' + manifest.version
   }
+}
 
-  function getFilenameFromTitle (title) {
-    return SanitizeFilename(title).substr(0, 100) + '.png'
-  }
-
-  function downloadImage () {
-    const svg = document.querySelector('svg')
-    const img = document.createElement('img')
-    const canvas = document.createElement('canvas')
-    const a = document.createElement('a')
-    const xml = new XMLSerializer().serializeToString(svg)
-    const svg64 = btoa(xml)
-
-    canvas.width = svg.getBoundingClientRect().width
-    canvas.height = svg.getBoundingClientRect().height
-    img.src = 'data:image/svg+xml;base64,' + svg64
-    img.onload = function () {
-      const context = canvas.getContext('2d')
-      context.fillStyle = '#FFFFFF'
-      context.fillRect(0, 0, canvas.width, canvas.height)
-      context.drawImage(img, 0, 0)
-      a.href = canvas.toDataURL('image/png')
-      a.download = currentTitle ? getFilenameFromTitle(currentTitle) : 'qr-code.png'
-      a.click()
-    }
-  }
-
-  init()
-})(window.browser, window.chrome)
+(new Popup(window.browser, window.chrome)).init()

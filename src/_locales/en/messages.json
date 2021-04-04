@@ -1,0 +1,73 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "extension_short_name": {
+    "message": "QR Lite"
+  },
+  "extension_description": {
+    "message": "Make or scan QR codes in pure JavaScript."
+  },
+  "save_image_btn": {
+    "message": "Save Image"
+  },
+  "save_image_btn_title": {
+    "message": "Save this QR code image"
+  },
+  "open_url_btn": {
+    "message": "Open URL"
+  },
+  "open_url_btn_title": {
+    "message": "Open scan result in a new tab"
+  },
+  "github_link_title": {
+    "message": "Visit QR Lite's project page on Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "Low, 7% of data bytes can be restored"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "Medium, 15% of data bytes can be restored"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "Quartile, 25% of data bytes can be restored"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "High, 30% of data bytes can be restored"
+  },
+  "error_correction_level_label": {
+    "message": "EC:"
+  },
+  "error_correction_level_label_title": {
+    "message": "Error correction level"
+  },
+  "content_length_label_title": {
+    "message": "Length of the QR code content in characters"
+  },
+  "content_length_label": {
+    "message": "Len:"
+  },
+  "content_title": {
+    "message": "QR code content"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "Make QR Code For This Link"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "Make QR Code For Selected Text"
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "Scan QR Code In This Image"
+  },
+  "decoding": {
+    "message": "Decoding..."
+  },
+  "decoding_failed": {
+    "message": "Decoding failed: $MSG$",
+    "placeholders": {
+      "msg" : {
+        "content" : "$1"
+      }
+    }
+  }
+}

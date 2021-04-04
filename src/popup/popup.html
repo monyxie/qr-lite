@@ -9,38 +9,40 @@
     <script defer src="popup.js"></script>
 </head>
 <body>
-<div class="container" data-role="content">
-    <div class="header">
-        <textarea class="source" id="sourceInput" title="QR code content"></textarea>
-        <div class="necker">
-            <div>
-            <span title="Length of the input text in characters">Len:
+<template id="template">
+    <div class="container" data-role="content">
+        <div class="header">
+            <textarea class="source" id="sourceInput" title="{{__MSG_content_title__}}"></textarea>
+            <div class="necker">
+                <div>
+            <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
                 <span class="counter" id="counter"></span>
             </span>
+                </div>
+                <div>
+                    <span title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
+                    <span id="ecLevels">
+                <span class="clickable ec-level" id="ecL" title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
+                <span class="clickable ec-level" id="ecM" title="{{__MSG_error_correction_level_btn_medium_title__}}">M</span>
+                <span class="clickable ec-level" id="ecQ" title="{{__MSG_error_correction_level_btn_quartile_title__}}">Q</span>
+                <span class="clickable ec-level" id="ecH" title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
+            </span>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="result"></div>
+        <div class="footer">
+            <div>
+                <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}">{{__MSG_save_image_btn__}}</span>
+                <span class="clickable" id="open" title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
             </div>
             <div>
-                <span title="Error correction level">EC:</span>
-                <span id="ecLevels">
-                <span class="clickable ec-level" id="ecL" title="Low, 7% of data bytes can be restored">L</span>
-                <span class="clickable ec-level" id="ecM" title="Medium, 15% of data bytes can be restored">M</span>
-                <span class="clickable ec-level" id="ecQ" title="Quartile, 25% of data bytes can be restored">Q</span>
-                <span class="clickable ec-level" id="ecH" title="High, 30% of data bytes can be restored">H</span>
-            </span>
+                <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
+                   title="{{__MSG_github_link_title__}}"><strong>{{__MSG_extension_short_name__}}</strong></a>
+                <span id="qrLiteVersion"></span>
             </div>
         </div>
     </div>
-    <div class="content" id="result"></div>
-    <div class="footer">
-        <div>
-            <span class="clickable" id="save" title="Save this QR code image">Save Image</span>
-            <span class="clickable" id="open" title="Open scan result in a new tab">Open URL</span>
-        </div>
-        <div>
-            <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
-               title="Visit our project page on Github"><strong>QR Lite</strong></a>
-            <span id="qrLiteVersion"></span>
-        </div>
-    </div>
-</div>
+</template>
 </body>
 </html>

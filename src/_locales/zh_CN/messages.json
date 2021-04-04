@@ -1,0 +1,73 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "extension_short_name": {
+    "message": "QR Lite"
+  },
+  "extension_description": {
+    "message": "使用纯JavaScript生成和扫描二维码。"
+  },
+  "save_image_btn": {
+    "message": "保存图片"
+  },
+  "save_image_btn_title": {
+    "message": "保存这张二维码图片"
+  },
+  "open_url_btn": {
+    "message": "打开网址"
+  },
+  "open_url_btn_title": {
+    "message": "在新标签页中打开扫描到的网址"
+  },
+  "github_link_title": {
+    "message": "访问 QR Lite 在 Github 上的项目主页"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "低级，可以恢复 7% 左右的数据"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "中级，可以恢复 15% 左右的数据"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "四分级，可以恢复 25% 左右的数据"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "高级，可以恢复 30% 左右的数据"
+  },
+  "error_correction_level_label": {
+    "message": "纠错:"
+  },
+  "error_correction_level_label_title": {
+    "message": "纠错等级"
+  },
+  "content_length_label_title": {
+    "message": "二维码内容长度，以字符数计"
+  },
+  "content_length_label": {
+    "message": "长度:"
+  },
+  "content_title": {
+    "message": "二维码内容"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "为该链接生成二维码"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "为选中的文字生成二维码"
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "扫描该图片中的二维码"
+  },
+  "decoding": {
+    "message": "正在扫码..."
+  },
+  "decoding_failed": {
+    "message": "扫码失败：$MSG$",
+    "placeholders": {
+      "msg" : {
+        "content" : "$1"
+      }
+    }
+  }
+}

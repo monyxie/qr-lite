@@ -1,22 +1,20 @@
 {
   "manifest_version": 2,
-  "name": "QR Lite",
-  "short_name": "QR Lite",
-  "description": "Make or Scan QR Codes in Pure JavaScript",
+  "name": "__MSG_extension_name__",
+  "short_name": "__MSG_extension_short_name__",
+  "description": "__MSG_extension_description__",
   "version": "2.3",
-
+  "default_locale": "en",
   "icons": {
     "16": "icons/qrlite.svg",
     "48": "icons/qrlite.svg"
   },
-
   "applications": {
     "gecko": {
       "id": "@qrlite",
       "strict_min_version": "57.0"
     }
   },
-
   "permissions": [
     "tabs",
     "activeTab",
@@ -24,7 +22,6 @@
     "contextMenus",
     "storage"
   ],
-
   "browser_action": {
     "default_icon": "icons/qrlite.svg",
     "default_popup": "popup/popup.html",
@@ -41,10 +38,10 @@
       }
     ]
   },
-
   "content_security_policy": "script-src 'self'; default-src 'self'; img-src * data:; style-src 'self';",
-
   "background": {
-    "scripts": ["background/background.js"]
+    "scripts": [
+      "background/background.js"
+    ]
   }
 }
