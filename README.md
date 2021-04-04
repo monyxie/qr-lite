@@ -1,6 +1,6 @@
 # QR Lite
 
-<img src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
+<img alt="QR Lite icon" src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
 
 QR Lite is a browser extension for making/scanning QR codes in pure Javascript.
 
@@ -24,7 +24,7 @@ The build script only supports Linux.
 is the installable extension, while `qr-lite-source.zip` is the source code.
    
 ## Todo
-* Localization
+* Translations
   
 ## Credits
 
