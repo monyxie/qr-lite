@@ -200,8 +200,8 @@ class Popup {
     const that = this
 
     this.domSource.addEventListener('keyup', function (e) {
-      if (this.domSource.value !== that.currentText) {
-        that.createQrCode(this.domSource.value, that.ecLevel)
+      if (that.domSource.value !== that.currentText) {
+        that.createQrCode(that.domSource.value, that.ecLevel)
       }
     })
 

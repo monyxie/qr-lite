@@ -23,5 +23,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "file-loader": "^6.2.0",
     "style-loader": "^2.0.0"
+  },
+  "scripts": {
+    "dev": "yarn run webpack watch --mode development",
+    "release": "./release.sh"
   }
 }
