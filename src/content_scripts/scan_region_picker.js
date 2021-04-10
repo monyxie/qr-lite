@@ -111,7 +111,7 @@ class Picker {
   show () {
     if (!this.isShown) {
       this.isShown = true
-      document.body.style.overflow = 'hidden'
+      document.scrollingElement.style.overflow = 'hidden'
       document.body.appendChild(this.domMask)
     }
   }
@@ -156,7 +156,7 @@ class Picker {
       this.currentX = this.currentY = this.x1 = this.x2 = this.y1 = this.y2 = null
       this.domRect.innerHTML = ''
       this.domMask.parentElement.removeChild(this.domMask)
-      document.body.style.overflow = ''
+      document.scrollingElement.style.overflow = ''
       document.removeEventListener('keydown', this.keyupHandler)
     }
   }
