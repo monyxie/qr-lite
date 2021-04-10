@@ -59,6 +59,12 @@
   "context_menu_scan_qr_code_in_image": {
     "message": "扫描该图片中的二维码"
   },
+  "context_menu_pick_region_to_scan": {
+    "message": "选择区域进行扫描..."
+  },
+  "scan_region_picker_tips_html": {
+    "message": "按住鼠标左键并拖拽来截取二维码图片，\n<br>然后在图片上右击并选择“扫描该图片中的二维码”。 <br>按 &lt;Esc&gt; 键可以取消。"
+  },
   "decoding": {
     "message": "正在扫码..."
   },

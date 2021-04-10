@@ -5,7 +5,8 @@ module.exports = {
   devtool: false,
   entry: {
     popup: { import: './src/popup/popup.js', filename: 'popup/popup.js' },
-    background: { import: './src/background/background.js', filename: 'background/background.js' }
+    background: { import: './src/background/background.js', filename: 'background/background.js' },
+    scan_region_picker: { import: './src/content_scripts/scan_region_picker.js', filename: 'content_scripts/scan_region_picker.js' }
   },
   output: {
     filename: '[name].js',

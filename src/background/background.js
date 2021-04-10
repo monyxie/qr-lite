@@ -41,4 +41,27 @@
       openPopup({ action: 'ACTION_DECODE', image: info.srcUrl })
     }
   })
+
+  // manually pick region to scan
+  browser.contextMenus.create({
+    title: browser.i18n.getMessage('context_menu_pick_region_to_scan'),
+    contexts: ['page', 'browser_action'],
+    onclick: function decodeQR (info, tab) {
+      browser.tabs.executeScript({
+        file: '../content_scripts/scan_region_picker.js'
+      })
+    }
+  })
+
+  // image capturing
+  browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    switch (request.action) {
+      case 'ACTION_CAPTURE':
+        return browser.tabs.captureVisibleTab({
+          rect: request.rect
+        }).then((dataUri) => {
+          return { dataUri: dataUri }
+        })
+    }
+  })
 })(window.browser)

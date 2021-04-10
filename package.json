@@ -25,7 +25,8 @@
     "style-loader": "^2.0.0"
   },
   "scripts": {
-    "dev": "yarn run webpack watch --mode development",
+    "dev": "webpack watch --mode development",
+    "lint": "eslint src",
     "release": "./release.sh"
   }
 }

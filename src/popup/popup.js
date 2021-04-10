@@ -116,6 +116,13 @@ class Popup {
     this.domSource.placeholder = this.browser.i18n.getMessage('decoding')
 
     const that = this
+
+    that.domResult.innerText = ''
+    const img = document.createElement('img')
+    img.classList.add('decoded-image')
+    img.src = url
+    that.domResult.appendChild(img)
+
     return codeReader.decodeFromImageUrl(url).then(function (result) {
       const text = result.getText()
       const points = result.getResultPoints()
@@ -133,12 +140,6 @@ class Popup {
         } catch (e) {
         }
       }
-
-      that.domResult.innerText = ''
-      const img = document.createElement('img')
-      img.classList.add('decoded-image')
-      img.src = url
-      that.domResult.appendChild(img)
 
       for (let i = 0; i < points.length; i++) {
         that.createPointMarkerElement(points[i], that.domResult, img)
