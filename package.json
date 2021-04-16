@@ -26,6 +26,9 @@
   },
   "scripts": {
     "dev": "webpack watch --mode development",
+    "dev:chrome": "webpack watch --mode development --env browser=chrome",
+    "build": "webpack build --mode development",
+    "build:chrome": "webpack build --mode development --env browser=chrome",
     "lint": "eslint src",
     "release": "./release.sh"
   }

@@ -1,12 +1,14 @@
-import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
-import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
+import {QRCodeDecoderErrorCorrectionLevel as ECLevel} from '@zxing/library'
+import {BrowserQRCodeReader, BrowserQRCodeSvgWriter} from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
 import SanitizeFilename from 'sanitize-filename'
 import manifest from '../manifest.json'
+import Storage from '../utils/storage'
+import Tabs from '../utils/tabs'
 
 class Popup {
-  constructor (browser, chrome) {
+  constructor(browser, chrome) {
     this.browser = browser
     this.chrome = chrome
 
@@ -24,7 +26,7 @@ class Popup {
     this.domOpen = document.getElementById('open')
   }
 
-  updateActiveEcLevel (activeEcLevel) {
+  updateActiveEcLevel(activeEcLevel) {
     this.domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
       el.classList.remove('ec-level-active')
     })
@@ -32,7 +34,7 @@ class Popup {
     document.getElementById(id).classList.add('ec-level-active')
   }
 
-  createQrCode (text, activeEcLevel, title) {
+  createQrCode(text, activeEcLevel, title) {
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
 
@@ -52,7 +54,7 @@ class Popup {
     this.currentTitle = title || ''
   }
 
-  getPopupOptions () {
+  getPopupOptions() {
     const that = this
     return new Promise(function (resolve, reject) {
       that.chrome.runtime.getBackgroundPage((backgroundPage) => {
@@ -67,7 +69,7 @@ class Popup {
     })
   }
 
-  getRelativePosition (rect1, rect2) {
+  getRelativePosition(rect1, rect2) {
     const relPos = {}
 
     relPos.top = rect1.top - rect2.top
@@ -78,7 +80,7 @@ class Popup {
     return relPos
   }
 
-  createPointMarkerElement (point, containerEl, imgEl) {
+  createPointMarkerElement(point, containerEl, imgEl) {
     const containerRect = containerEl.getBoundingClientRect()
     const imgRect = imgEl.getBoundingClientRect()
     const markerEl = document.createElement('div')
@@ -104,7 +106,7 @@ class Popup {
     containerEl.appendChild(markerEl)
   }
 
-  decodeImage (url) {
+  decodeImage(url) {
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
     this.domResult.title = this.currentTitle = ''
@@ -156,11 +158,11 @@ class Popup {
       })
   }
 
-  getFilenameFromTitle (title) {
+  getFilenameFromTitle(title) {
     return SanitizeFilename(title).substr(0, 100) + '.png'
   }
 
-  downloadImage () {
+  downloadImage() {
     const svg = document.querySelector('svg')
     const img = document.createElement('img')
     const canvas = document.createElement('canvas')
@@ -183,7 +185,7 @@ class Popup {
     }
   }
 
-  renderPage () {
+  renderPage() {
     const that = this
     // console.log('rendering template, language code: ' + this.browser.i18n.languageCode)
 
@@ -197,7 +199,7 @@ class Popup {
     })
   }
 
-  init () {
+  init() {
     const that = this
 
     this.domSource.addEventListener('keyup', function (e) {
@@ -218,7 +220,7 @@ class Popup {
           return
       }
 
-      that.browser.storage.local.set({
+      Storage.set({
         ecLevel: that.ecLevel.toString()
       })
 
@@ -230,13 +232,13 @@ class Popup {
     })
 
     this.domOpen.addEventListener('click', function (e) {
-      that.browser.tabs.create({
+      Tabs.create({
         url: that.currentText,
         active: true
       })
     })
 
-    that.browser.storage.local.get('ecLevel')
+    Storage.get('ecLevel')
       .then(function (results) {
         // console.log('got ecLevel from storage: ' + JSON.stringify(results))
         if (results.ecLevel) {
@@ -249,14 +251,17 @@ class Popup {
 
         that.getPopupOptions()
           .then(function (options) {
+            console.log('options', options)
             if (options === null) {
               return new Promise(function (resolve, reject) {
-                that.browser.tabs.query({ active: true, currentWindow: true })
+                Tabs.query({active: true, currentWindow: true})
                   .then(function (tabs) {
-                    resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
+                    console.log('tabs', tabs)
+                    resolve({action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title})
                   })
                   .catch(function (e) {
-                    resolve({ action: 'ACTION_ENCODE', text: '' })
+                    console.log('tabs failed', e)
+                    resolve({action: 'ACTION_ENCODE', text: ''})
                   })
               })
             } else {
@@ -280,4 +285,4 @@ class Popup {
   }
 }
 
-(new Popup(window.browser, window.chrome)).init()
+(new Popup(window.browser || window.chrome, window.chrome)).init()
