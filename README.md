@@ -2,8 +2,9 @@
 
 <img alt="QR Lite icon" src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
 
-QR Lite is a browser extension for making/scanning QR codes in pure Javascript.
+QR Lite is a browser extension for making and scanning QR codes offline.
 
+[Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
 
 ## Features
 * Generate QR code for current tab in popup.
@@ -30,7 +31,7 @@ is the installable extension, while `qr-lite-source.zip` is the source code.
 
 This extension utilizes the [ZXing for JS](https://github.com/zxing-js/library) library to encode/decode QR codes.
 
-This extension is originally a fork of
+This extension was originally a fork of
 [Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/)
 which was written by Francesco De Stefano.
 
