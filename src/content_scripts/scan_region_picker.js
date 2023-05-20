@@ -74,7 +74,7 @@ class Picker {
         // console.log('capturing image: ', rect)
         this.browser.runtime.sendMessage({
           action: 'ACTION_CAPTURE',
-          rect: rect
+          rect
         }).then(response => {
           const image = document.createElement('img')
           image.src = response.dataUri

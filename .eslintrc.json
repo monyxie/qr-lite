@@ -9,5 +9,8 @@
         "sourceType": "module"
     },
     "rules": {
+    },
+    "globals": {
+        "QRLITE_BROWSER": true
     }
 }
