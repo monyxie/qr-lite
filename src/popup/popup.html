@@ -11,36 +11,48 @@
 <body>
 <template id="template">
     <div class="container" data-role="content">
-        <div class="header">
+        <div class="main" id="main">
             <textarea class="source" id="sourceInput" title="{{__MSG_content_title__}}"></textarea>
-            <div class="necker">
-                <div>
-            <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
-                <span class="counter" id="counter"></span>
-            </span>
+                <div class="necker length-view">
+                        <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
+                            <span class="counter" id="counter"></span>
+                        </span>
                 </div>
-                <div>
+                <div class="necker ec-view">
                     <span title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
                     <span id="ecLevels">
-                <span class="clickable ec-level" id="ecL" title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
-                <span class="clickable ec-level" id="ecM" title="{{__MSG_error_correction_level_btn_medium_title__}}">M</span>
-                <span class="clickable ec-level" id="ecQ" title="{{__MSG_error_correction_level_btn_quartile_title__}}">Q</span>
-                <span class="clickable ec-level" id="ecH" title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
-            </span>
+                            <span class="clickable ec-level" id="ecL"
+                                  title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
+                            <span class="clickable ec-level" id="ecM"
+                                  title="{{__MSG_error_correction_level_btn_medium_title__}}">M</span>
+                            <span class="clickable ec-level" id="ecQ"
+                                  title="{{__MSG_error_correction_level_btn_quartile_title__}}">Q</span>
+                            <span class="clickable ec-level" id="ecH"
+                                  title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
+                        </span>
                 </div>
-            </div>
+            <div class="result" id="result"></div>
+                <div class="footer main-actions1">
+                    <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}">{{__MSG_save_image_btn__}}</span>
+                    <span class="clickable" id="open"
+                          title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
+                </div>
+                <div class="footer main-actions2">
+                    <span class="clickable" id="history-btn" title="{{__MSG_history_btn_title__}}">{{__MSG_history_btn__}}</span>
+                </div>
+                <div class="footer main-actions3">
+                    <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
+                       title="{{__MSG_github_link_title__}}"><span id="qrLiteVersion"></span></a>
+                </div>
         </div>
-        <div class="content" id="result"></div>
-        <div class="footer">
-            <div>
-                <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}">{{__MSG_save_image_btn__}}</span>
-                <span class="clickable" id="open" title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
-            </div>
-            <div>
-                <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
-                   title="{{__MSG_github_link_title__}}"><strong>{{__MSG_extension_short_name__}}</strong></a>
-                <span id="qrLiteVersion"></span>
-            </div>
+        <div class="history" id="history">
+            <ul class="history-items" id="history-items"></ul>
+                <div class="footer history-actions1">
+                    <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}">{{__MSG_clear_history_btn__}}</span>
+                </div>
+                <div class="footer history-actions2">
+                    <span class="clickable" id="back-btn" title="{{__MSG_back_btn_title__}}">{{__MSG_back_btn__}}</span>
+                </div>
         </div>
     </div>
 </template>

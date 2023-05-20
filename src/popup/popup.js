@@ -1,5 +1,5 @@
-import {QRCodeDecoderErrorCorrectionLevel as ECLevel} from '@zxing/library'
-import {BrowserQRCodeReader, BrowserQRCodeSvgWriter} from '@zxing/browser'
+import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
+import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
 import SanitizeFilename from 'sanitize-filename'
@@ -8,7 +8,7 @@ import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
 
 class Popup {
-  constructor(browser, chrome) {
+  constructor (browser, chrome) {
     this.browser = browser
     this.chrome = chrome
 
@@ -18,15 +18,22 @@ class Popup {
     this.currentText = null
     this.currentTitle = null
 
+    this.domMain = document.getElementById('main')
     this.domSource = document.getElementById('sourceInput')
     this.domCounter = document.getElementById('counter')
     this.domResult = document.getElementById('result')
     this.domEcLevels = document.getElementById('ecLevels')
     this.domSave = document.getElementById('save')
     this.domOpen = document.getElementById('open')
+    this.domHistory = document.getElementById('history')
+    this.domHistoryBtn = document.getElementById('history-btn')
+    this.domBackBtn = document.getElementById('back-btn')
+    this.domClearHistoryBtn = document.getElementById('clear-history-btn')
+
+    this.historyTimer = null
   }
 
-  updateActiveEcLevel(activeEcLevel) {
+  updateActiveEcLevel (activeEcLevel) {
     this.domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
       el.classList.remove('ec-level-active')
     })
@@ -34,13 +41,64 @@ class Popup {
     document.getElementById(id).classList.add('ec-level-active')
   }
 
-  createQrCode(text, activeEcLevel, title) {
+  getHistory () {
+    return Storage.get('history')
+      .then(function (results) {
+        if (results.history) {
+          return JSON.parse(results.history)
+        }
+        return [{ type: 'decode', text: 'hahah' }]
+      }, function (e) {
+        console.error('error while parsing history', e)
+      })
+  }
+
+  clearHistory () {
+    Storage.set({
+      history: '[]'
+    }).then(() => this.renderHistory())
+  }
+
+  addHistory (type, text) {
+    this.getHistory()
+      .then(function (history) {
+        // Don't add duplicate items
+        if (history && history.length > 0) {
+          if (history[history.length - 1].text === text) {
+            return
+          }
+        }
+        history = history.filter(function (item) {
+          return item.text && item.text !== text
+        })
+        history = [...history, { type, text }]
+        if (history.length > 100) {
+          history = history.slice(history.length - 100, history.length)
+        }
+        Storage.set({
+          history: JSON.stringify(history)
+        })
+      })
+  }
+
+  createQrCode (text, activeEcLevel, title, historyMode) {
+    const that = this
+    this.showTab('main')
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
 
     this.domSource.value = text
     this.domCounter.innerText = '' + text.length
     this.updateActiveEcLevel(activeEcLevel)
+
+    if (historyMode === 'now') {
+      that.addHistory('encode', text)
+    } else if (historyMode === 'debounce') {
+      clearTimeout(this.historyTimer)
+      this.historyTimer = setTimeout(() => {
+        that.addHistory('encode', text)
+      }, 1000)
+    }
 
     const writer = new BrowserQRCodeSvgWriter()
     const hints = new Map()
@@ -54,7 +112,7 @@ class Popup {
     this.currentTitle = title || ''
   }
 
-  getPopupOptions() {
+  getPopupOptions () {
     const that = this
     return new Promise(function (resolve, reject) {
       that.chrome.runtime.getBackgroundPage((backgroundPage) => {
@@ -69,7 +127,7 @@ class Popup {
     })
   }
 
-  getRelativePosition(rect1, rect2) {
+  getRelativePosition (rect1, rect2) {
     const relPos = {}
 
     relPos.top = rect1.top - rect2.top
@@ -80,11 +138,12 @@ class Popup {
     return relPos
   }
 
-  createPointMarkerElement(point, containerEl, imgEl) {
+  createPointMarkerElement (point, containerEl, imgEl) {
     const containerRect = containerEl.getBoundingClientRect()
     const imgRect = imgEl.getBoundingClientRect()
     const markerEl = document.createElement('div')
     const relPos = this.getRelativePosition(imgRect, containerRect)
+    // console.log('relpos', containerRect, imgRect, relPos)
     const scaleRatioX = imgRect.width / imgEl.naturalWidth
     const scaleRatioY = imgRect.width / imgEl.naturalWidth
     const x = (point.getX() * scaleRatioX) + relPos.left
@@ -106,7 +165,8 @@ class Popup {
     containerEl.appendChild(markerEl)
   }
 
-  decodeImage(url) {
+  decodeImage (url) {
+    this.showTab('main')
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
     this.domResult.title = this.currentTitle = ''
@@ -126,6 +186,7 @@ class Popup {
     that.domResult.appendChild(img)
 
     return codeReader.decodeFromImageUrl(url).then(function (result) {
+      console.log(result)
       const text = result.getText()
       const points = result.getResultPoints()
 
@@ -148,6 +209,7 @@ class Popup {
       }
 
       that.currentText = text
+      that.addHistory('decode', text)
 
       if (/^https?:\/\//.test(text)) {
         that.domOpen.classList.remove('hidden')
@@ -158,11 +220,11 @@ class Popup {
       })
   }
 
-  getFilenameFromTitle(title) {
+  getFilenameFromTitle (title) {
     return SanitizeFilename(title).substr(0, 100) + '.png'
   }
 
-  downloadImage() {
+  downloadImage () {
     const svg = document.querySelector('svg')
     const img = document.createElement('img')
     const canvas = document.createElement('canvas')
@@ -185,7 +247,7 @@ class Popup {
     }
   }
 
-  renderPage() {
+  renderPage () {
     const that = this
     // console.log('rendering template, language code: ' + this.browser.i18n.languageCode)
 
@@ -199,12 +261,56 @@ class Popup {
     })
   }
 
-  init() {
+  renderHistory () {
+    this.getHistory()
+      .then(function (history) {
+        const ul = document.getElementById('history-items')
+        ul.innerHTML = ''
+        for (let i = 0; i < history.length; i++) {
+          const li = document.createElement('li')
+          li.title = history[i].text || ''
+          li.innerText = history[i].text || ''
+          ul.appendChild(li)
+        }
+        ul.scrollTo(0, ul.scrollHeight)
+      })
+  }
+
+  showTab (tab) {
+    if (tab === 'history') {
+      this.domMain.classList.add('hidden')
+      this.domHistory.classList.remove('hidden')
+      const historyItems = document.getElementById('history-items')
+      historyItems.scrollTo(0, historyItems.scrollHeight)
+    } else {
+      this.domMain.classList.remove('hidden')
+      this.domHistory.classList.add('hidden')
+    }
+  }
+
+  init () {
     const that = this
+
+    that.showTab('main')
+    this.domHistoryBtn.addEventListener('click', function (e) {
+      that.showTab('history')
+      that.renderHistory()
+    })
+    this.domBackBtn.addEventListener('click', function (e) {
+      that.showTab('main')
+    })
+    this.domHistory.addEventListener('click', function (e) {
+      if (e.target.tagName.toUpperCase() === 'LI') {
+        that.createQrCode(e.target.innerText, that.ecLevel, undefined, 'now')
+      }
+    })
+    this.domClearHistoryBtn.addEventListener('click', function (e) {
+      that.clearHistory()
+    })
 
     this.domSource.addEventListener('keyup', function (e) {
       if (that.domSource.value !== that.currentText) {
-        that.createQrCode(that.domSource.value, that.ecLevel)
+        that.createQrCode(that.domSource.value, that.ecLevel, undefined, 'debounce')
       }
     })
 
@@ -224,7 +330,7 @@ class Popup {
         ecLevel: that.ecLevel.toString()
       })
 
-      that.createQrCode(that.domSource.value, that.ecLevel)
+      that.createQrCode(that.domSource.value, that.ecLevel, undefined, 'none')
     })
 
     this.domSave.addEventListener('click', function (e) {
@@ -254,14 +360,14 @@ class Popup {
             console.log('options', options)
             if (options === null) {
               return new Promise(function (resolve, reject) {
-                Tabs.query({active: true, currentWindow: true})
+                Tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
                     console.log('tabs', tabs)
-                    resolve({action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title})
+                    resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
                   })
                   .catch(function (e) {
                     console.log('tabs failed', e)
-                    resolve({action: 'ACTION_ENCODE', text: ''})
+                    resolve({ action: 'ACTION_ENCODE', text: '' })
                   })
               })
             } else {
@@ -271,7 +377,7 @@ class Popup {
           .then(function (options) {
             switch (options.action) {
               case 'ACTION_ENCODE':
-                return that.createQrCode(options.text, that.ecLevel, options.title)
+                return that.createQrCode(options.text, that.ecLevel, options.title, 'now')
               case 'ACTION_DECODE':
                 return that.decodeImage(options.image)
             }

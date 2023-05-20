@@ -6,7 +6,7 @@
     "message": "QR Lite"
   },
   "extension_description": {
-    "message": "Make or scan QR codes in pure JavaScript."
+    "message": "Generate or scan QR codes offline, no internet connection is required."
   },
   "save_image_btn": {
     "message": "Save Image"
@@ -19,6 +19,24 @@
   },
   "open_url_btn_title": {
     "message": "Open scan result in a new tab"
+  },
+  "history_btn": {
+    "message": "History"
+  },
+  "history_btn_title": {
+    "message": "View history"
+  },
+  "back_btn": {
+    "message": "Back"
+  },
+  "back_btn_title": {
+    "message": "Back"
+  },
+  "clear_history_btn": {
+    "message": "Clear"
+  },
+  "clear_history_btn_title": {
+    "message": "Clear history"
   },
   "github_link_title": {
     "message": "Visit QR Lite's project page on Github"

@@ -6,7 +6,7 @@
     "message": "QR Lite"
   },
   "extension_description": {
-    "message": "使用纯JavaScript生成和扫描二维码。"
+    "message": "本扩展可以让您在离线的情况下生成和扫描二维码，无需连接任何服务器。"
   },
   "save_image_btn": {
     "message": "保存图片"
@@ -19,6 +19,24 @@
   },
   "open_url_btn_title": {
     "message": "在新标签页中打开扫描到的网址"
+  },
+  "history_btn": {
+    "message": "历史记录"
+  },
+  "history_btn_title": {
+    "message": "查看历史记录"
+  },
+  "back_btn": {
+    "message": "返回"
+  },
+  "back_btn_title": {
+    "message": "返回"
+  },
+  "clear_history_btn": {
+    "message": "清除"
+  },
+  "clear_history_btn_title": {
+    "message": "清除历史记录"
   },
   "github_link_title": {
     "message": "访问 QR Lite 在 Github 上的项目主页"
