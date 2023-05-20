@@ -15,16 +15,23 @@ QR Lite is a browser extension for making and scanning QR codes offline.
 
 ## Supported Browsers
 This extension only supports Firefox at the moment.
-  
-## Build Steps
 
-The build script only supports Linux.
+## Development
+
+1. Clone this repo.
+2. Run `yarn` to install dependencies.
+3. Run `yarn dev` to watch source files and automatically build the add-on when they change.
+4. Load the temporary add-on by going to `about:debugging#/runtime/this-firefox`, then click "Load Temporary Add-on.." and choose `dist/manifest.json` in the project root.
+  
+## Building
+
+Build steps on Linux:
 
 1. Make sure you have Node >= v14.16.0, Yarn >= 1.22.10, and the `zip` command installed.
 1. Open terminal and cd to project root.
 1. Run `./release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release.zip`
-is the installable extension, while `qr-lite-source.zip` is the source code.
-   
+is the installable extension, while `qr-lite-source.zip` is the source code zip.
+
 ## Todo
 * Translations
   
