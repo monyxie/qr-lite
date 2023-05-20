@@ -2,6 +2,7 @@ class Picker {
   constructor (browser) {
     this.browser = browser
     this.x1 = this.x2 = this.y1 = this.y2 = null
+    this.isDragging = false
   }
 
   init () {
@@ -34,10 +35,11 @@ class Picker {
     this.domMask.style.position = 'fixed'
     this.domMask.style.top = '0px'
     this.domMask.style.left = '0px'
-    this.domMask.style.zIndex = '9999'
+    this.domMask.style.zIndex = '2147483647'
     this.domMask.style.width = '100%'
     this.domMask.style.height = '100%'
 
+    domTips.style.padding = '4px'
     domTips.style.position = 'fixed'
     domTips.style.left = '0px'
     domTips.style.top = '0px'
@@ -45,9 +47,11 @@ class Picker {
     domTips.style.backgroundColor = 'rgba(0,0,0,0.75)'
     domTips.style.zIndex = '9998'
     domTips.style.border = '1px solid white'
+    domTips.style.borderRadius = '2px'
     domTips.style.userSelect = 'none'
     domTips.style.fontSize = '14px'
     domTips.style.fontFamily = 'Sans Serif'
+    domTips.style.minWidth = '100px'
     domTips.innerHTML = this.browser.i18n.getMessage('scan_region_picker_tips_html')
     this.domMaskTop.style.backgroundColor = 'rgba(0,0,0,0.5)'
     this.domMaskTop.style.height = '100%'
@@ -55,14 +59,22 @@ class Picker {
     this.domMask.appendChild(domTips)
 
     this.domMask.addEventListener('mousedown', event => {
+      // only handle left-click
+      if (event.button !== 0) {
+        return
+      }
       this.isMouseDown = true
       this.startX = event.clientX
       this.startY = event.clientY
     })
     this.domMask.addEventListener('mouseup', event => {
+      // only handle left-click
+      if (event.button !== 0) {
+        return
+      }
       this.isMouseDown = false
-      if (this.isDragged) {
-        this.isDragged = false
+      if (this.isDragging) {
+        this.isDragging = false
         this.updateSelection()
 
         const rect = {
@@ -98,7 +110,7 @@ class Picker {
       domTips.style.left = (event.clientX + 20) + 'px'
       if (this.isMouseDown) {
         this.domRect.innerHTML = ''
-        this.isDragged = true
+        this.isDragging = true
         this.currentX = event.clientX
         this.currentY = event.clientY
         this.updateSelection()
@@ -151,6 +163,8 @@ class Picker {
 
   hide () {
     if (this.isShown) {
+      this.isMouseDown = false
+      this.isDragging = false
       this.isShown = false
       this.domRect.style.backgroundColor = 'rgba(0,0,0,0.5)'
       this.currentX = this.currentY = this.x1 = this.x2 = this.y1 = this.y2 = null
