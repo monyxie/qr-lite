@@ -47,7 +47,7 @@ class Popup {
         if (results.history) {
           return JSON.parse(results.history)
         }
-        return [{ type: 'decode', text: 'hahah' }]
+        return []
       }, function (e) {
         console.error('error while parsing history', e)
       })
