@@ -3,7 +3,7 @@
   "name": "__MSG_extension_name__",
   "short_name": "__MSG_extension_short_name__",
   "description": "__MSG_extension_description__",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "default_locale": "en",
   "icons": {
     "16": "icons/qrlite.svg",
