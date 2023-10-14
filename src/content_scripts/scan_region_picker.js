@@ -3,34 +3,29 @@ class Picker {
     this.browser = browser
     this.x1 = this.x2 = this.y1 = this.y2 = null
     this.isDragging = false
+    this.maskColor = 'rgba(0,0,0,0.5)'
   }
 
   init () {
     const domMask = document.createElement('div')
     const domTips = document.createElement('p')
-    domMask.innerHTML = '<div class="qr-lite-mask-top"></div>' +
-      '<div class="qr-lite-mask-middle" style="margin:0;width:100%;display:flex;justify-content:space-between;user-select:none;">' +
-      '<div class="qr-lite-mask-left" style="margin:0;height:100%;float:left;user-select:none;"></div>' +
-      '<div class="qr-lite-rect" style="margin:0;height:100%;float:left;user-select:none;"></div>' +
-      '<div class="qr-lite-mask-right" style="margin:0;height:100%;user-select:none;"></div>' +
-      '</div>' +
-      '<div class="qr-lite-mask-bottom" style="margin:0;width:100%;user-select:none;"></div>'
+    const domRect = document.createElement('div')
 
     this.domMask = domMask
-    this.domRect = domMask.getElementsByClassName('qr-lite-rect')[0]
-    this.domMaskTop = domMask.getElementsByClassName('qr-lite-mask-top')[0]
-    this.domMaskMiddle = domMask.getElementsByClassName('qr-lite-mask-middle')[0]
-    this.domMaskLeft = domMask.getElementsByClassName('qr-lite-mask-left')[0]
-    this.domMaskRight = domMask.getElementsByClassName('qr-lite-mask-right')[0]
-    this.domMaskMiddle = domMask.getElementsByClassName('qr-lite-mask-middle')[0]
-    this.domMaskBottom = domMask.getElementsByClassName('qr-lite-mask-bottom')[0]
+    this.domRect = domRect
+
     this.keyupHandler = (event) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && this.isShown) {
         event.preventDefault()
         event.stopPropagation()
         this.hide()
       }
     }
+
+    this.domRect.style.width = '100%'
+    this.domRect.style.height = '100%'
+    this.domRect.style.outline = 'white solid 2px'
+    this.domRect.style.borderRadius = '4px'
 
     this.domMask.style.position = 'fixed'
     this.domMask.style.top = '0px'
@@ -38,6 +33,12 @@ class Picker {
     this.domMask.style.zIndex = '2147483647'
     this.domMask.style.width = '100%'
     this.domMask.style.height = '100%'
+
+    this.domMask.style.boxSizing = 'border-box'
+    this.domMask.style.backgroundColor = this.maskColor
+    this.domMask.style.borderColor = this.maskColor
+    this.domMask.style.borderStyle = 'solid'
+    this.domMask.style.borderWidth = '0'
 
     domTips.style.padding = '4px'
     domTips.style.position = 'fixed'
@@ -53,11 +54,9 @@ class Picker {
     domTips.style.fontFamily = 'Sans Serif'
     domTips.style.minWidth = '100px'
     domTips.innerHTML = this.browser.i18n.getMessage('scan_region_picker_tips_html')
-    this.domMaskTop.style.backgroundColor = 'rgba(0,0,0,0.5)'
-    this.domMaskTop.style.height = '100%'
 
+    this.domMask.appendChild(domRect)
     this.domMask.appendChild(domTips)
-
     this.domMask.addEventListener('mousedown', event => {
       // only handle left-click
       if (event.button !== 0) {
@@ -129,6 +128,11 @@ class Picker {
   }
 
   updateSelection () {
+    if (!this.startX || !this.currentX) {
+      this.domMask.style.borderWidth = '0'
+      this.domMask.style.backgroundColor = this.maskColor
+      return
+    }
     if (this.startX < this.currentX) {
       this.x1 = this.startX
       this.x2 = this.currentX
@@ -145,20 +149,11 @@ class Picker {
       this.y1 = this.currentY
     }
 
-    // this.domMask.style.width = window.innerWidth + 'px'
-    // this.domMask.style.height = window.innerHeight + 'px'
-
-    this.domMaskTop.style.backgroundColor =
-      this.domMaskLeft.style.backgroundColor =
-        this.domMaskRight.style.backgroundColor =
-          this.domMaskBottom.style.backgroundColor = 'rgba(0,0,0,0.5)'
-    this.domRect.style.backgroundColor = 'transparent'
-    this.domMaskTop.style.height = this.y1 + 'px'
-    this.domMaskMiddle.style.height = (this.y2 - this.y1) + 'px'
-    this.domMaskBottom.style.height = (window.innerHeight - this.y2) + 'px'
-    this.domMaskLeft.style.width = this.x1 + 'px'
-    this.domRect.style.width = (this.x2 - this.x1) + 'px'
-    this.domMaskRight.style.width = (window.innerWidth - this.x2) + 'px'
+    this.domMask.style.backgroundColor = 'transparent'
+    this.domMask.style.borderTopWidth = this.y1 + 'px'
+    this.domMask.style.borderBottomWidth = (this.domMask.getBoundingClientRect().height - this.y2) + 'px'
+    this.domMask.style.borderLeftWidth = this.x1 + 'px'
+    this.domMask.style.borderRightWidth = (this.domMask.getBoundingClientRect().width - this.x2) + 'px'
   }
 
   hide () {
@@ -166,10 +161,10 @@ class Picker {
       this.isMouseDown = false
       this.isDragging = false
       this.isShown = false
-      this.domRect.style.backgroundColor = 'rgba(0,0,0,0.5)'
       this.currentX = this.currentY = this.x1 = this.x2 = this.y1 = this.y2 = null
       this.domRect.innerHTML = ''
       this.domMask.parentElement.removeChild(this.domMask)
+      this.updateSelection()
       document.scrollingElement.style.overflow = ''
       document.removeEventListener('keydown', this.keyupHandler)
     }
