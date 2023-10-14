@@ -37,7 +37,7 @@ is the installable extension, while `qr-lite-source.zip` is the source code zip.
   
 ## Credits
 
-This extension utilizes the [ZXing for JS](https://github.com/zxing-js/library) library to encode/decode QR codes.
+This extension utilizes [ZXing for JS](https://github.com/zxing-js/library) / [qr-scanner-wechat](https://github.com/antfu/qr-scanner-wechat) to encode/decode QR codes.
 
 This extension was originally a fork of
 [Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/)

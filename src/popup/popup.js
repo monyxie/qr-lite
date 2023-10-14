@@ -1,11 +1,11 @@
 import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
-import { BrowserQRCodeReader, BrowserQRCodeSvgWriter } from '@zxing/browser'
+import { BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
-import ResultMetadataType from '@zxing/library/esm/core/ResultMetadataType'
 import SanitizeFilename from 'sanitize-filename'
 import manifest from '../manifest.json'
 import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
+import { scan } from 'qr-scanner-wechat'
 
 class Popup {
   constructor (browser, chrome) {
@@ -165,14 +165,32 @@ class Popup {
     containerEl.appendChild(markerEl)
   }
 
+  createRectElement (rect, containerEl, imgEl) {
+    const containerRect = containerEl.getBoundingClientRect()
+    const imgRect = imgEl.getBoundingClientRect()
+    const markerEl = document.createElement('div')
+    const relPos = this.getRelativePosition(imgRect, containerRect)
+    const scaleRatioX = imgRect.width / imgEl.naturalWidth
+    const scaleRatioY = imgRect.width / imgEl.naturalWidth
+
+    markerEl.innerText = ' '
+    markerEl.style.position = 'absolute'
+    markerEl.style.top = ((rect.y * scaleRatioY) + relPos.top) + 'px'
+    markerEl.style.left = ((rect.x * scaleRatioX) + relPos.left) + 'px'
+    markerEl.style.width = (rect.width * scaleRatioX) + 'px'
+    markerEl.style.height = (rect.height * scaleRatioY) + 'px'
+    markerEl.style.outline = '4px solid lightgreen'
+    markerEl.style.borderRadius = '4px'
+    markerEl.style.backgroundColor = 'transparent'
+
+    containerEl.appendChild(markerEl)
+  }
+
   decodeImage (url) {
     this.showTab('main')
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
     this.domResult.title = this.currentTitle = ''
-
-    // console.log('decoding image:', url)
-    const codeReader = new BrowserQRCodeReader()
 
     this.domSource.value = ''
     this.domSource.placeholder = this.browser.i18n.getMessage('decoding')
@@ -185,27 +203,28 @@ class Popup {
     img.src = url
     that.domResult.appendChild(img)
 
-    return codeReader.decodeFromImageUrl(url).then(function (result) {
-      console.log(result)
-      const text = result.getText()
-      const points = result.getResultPoints()
+    // we pass a cloned img node because the original img node is still being appended to the dom
+    // causing qr-code-wechat to get img.width/img.height values of zero
+    return scan(img.cloneNode()).then(function (result) {
+      const text = result.text
+      const points = [] // only with zxing
+      const rect = result.rect // only with qr-scanner-wechat
+
+      if (typeof text === 'undefined') {
+        throw new Error('empty result from decoder')
+      }
 
       that.domSource.placeholder = ''
       that.domSource.value = text
       that.domSource.select()
       that.domCounter.innerText = '' + text.length
 
-      const metaEcLevel = result.getResultMetadata().get(ResultMetadataType.ERROR_CORRECTION_LEVEL)
-      if (typeof metaEcLevel !== 'undefined') {
-        try {
-          const activeEcLevel = ECLevel.fromString(metaEcLevel)
-          that.updateActiveEcLevel(activeEcLevel)
-        } catch (e) {
-        }
-      }
-
       for (let i = 0; i < points.length; i++) {
         that.createPointMarkerElement(points[i], that.domResult, img)
+      }
+
+      if (rect) {
+        that.createRectElement(rect, that.domResult, img)
       }
 
       that.currentText = text
@@ -216,6 +235,7 @@ class Popup {
       }
     })
       .catch(function (e) {
+        console.error(e)
         that.domSource.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
       })
   }
