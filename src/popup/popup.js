@@ -186,7 +186,7 @@ class Popup {
     containerEl.appendChild(markerEl)
   }
 
-  decodeImage (url) {
+  async decodeImage (url) {
     this.showTab('main')
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
@@ -201,6 +201,9 @@ class Popup {
     const img = document.createElement('img')
     img.classList.add('decoded-image')
     img.src = url
+
+    // wait for decode to complete before appending to dom and scanning
+    await img.decode()
     that.domResult.appendChild(img)
 
     // we pass a cloned img node because the original img node is still being appended to the dom
