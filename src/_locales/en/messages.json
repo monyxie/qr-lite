@@ -6,7 +6,7 @@
     "message": "QR Lite"
   },
   "extension_description": {
-    "message": "Generate or scan QR codes offline, no internet connection is required."
+    "message": "Generate or scan QR codes offline."
   },
   "save_image_btn": {
     "message": "Save Image"
@@ -69,16 +69,16 @@
     "message": "QR code content"
   },
   "context_menu_make_qr_code_for_link": {
-    "message": "Make QR Code For This Link"
+    "message": "Generate QR Code for This Link"
   },
   "context_menu_make_qr_code_for_selected_text": {
-    "message": "Make QR Code For Selected Text"
+    "message": "Generate QR Code for \"%s\""
   },
   "context_menu_scan_qr_code_in_image": {
-    "message": "Scan QR Code In This Image"
+    "message": "Scan QR Code in Image"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "Select a region to scan..."
+    "message": "Select region to scan..."
   },
   "scan_region_picker_tips_html": {
     "message": "To scan, draw a rectangle to capture an image of the QR code,\n<br>Then right click on the image and choose \"Scan QR code in this image\". <br>Press &lt;Esc&gt; to cancel."
