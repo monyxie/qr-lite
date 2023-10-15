@@ -138,34 +138,7 @@ class Popup {
     return relPos
   }
 
-  createPointMarkerElement (point, containerEl, imgEl) {
-    const containerRect = containerEl.getBoundingClientRect()
-    const imgRect = imgEl.getBoundingClientRect()
-    const markerEl = document.createElement('div')
-    const relPos = this.getRelativePosition(imgRect, containerRect)
-    // console.log('relpos', containerRect, imgRect, relPos)
-    const scaleRatioX = imgRect.width / imgEl.naturalWidth
-    const scaleRatioY = imgRect.width / imgEl.naturalWidth
-    const x = (point.getX() * scaleRatioX) + relPos.left
-    const y = (point.getY() * scaleRatioY) + relPos.top
-    const markerSize = 20
-    const markerDotPortion = 0.6
-    const markerBorderPortion = (1 - markerDotPortion)
-
-    markerEl.innerText = ' '
-    markerEl.style.position = 'absolute'
-    markerEl.style.width = (markerSize * markerDotPortion) + 'px'
-    markerEl.style.height = (markerSize * markerDotPortion) + 'px'
-    markerEl.style.borderRadius = markerSize + 'px'
-    markerEl.style.backgroundColor = 'white'
-    markerEl.style.border = (markerSize * markerBorderPortion) + 'px solid lightgreen'
-    markerEl.style.top = (y - (markerSize * 0.5)) + 'px'
-    markerEl.style.left = (x - (markerSize * 0.5)) + 'px'
-
-    containerEl.appendChild(markerEl)
-  }
-
-  createRectElement (rect, containerEl, imgEl) {
+  createRectMarker (rect, containerEl, imgEl) {
     const containerRect = containerEl.getBoundingClientRect()
     const imgRect = imgEl.getBoundingClientRect()
     const markerEl = document.createElement('div')
@@ -179,9 +152,10 @@ class Popup {
     markerEl.style.left = ((rect.x * scaleRatioX) + relPos.left) + 'px'
     markerEl.style.width = (rect.width * scaleRatioX) + 'px'
     markerEl.style.height = (rect.height * scaleRatioY) + 'px'
-    markerEl.style.outline = '4px solid lightgreen'
-    markerEl.style.borderRadius = '4px'
-    markerEl.style.backgroundColor = 'transparent'
+    // svg from heroicons.dev
+    markerEl.innerHTML = '<svg class="qr-position-marker" aria-hidden="true" fill="lightgreen" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' +
+      '<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>' +
+      '</svg>'
 
     containerEl.appendChild(markerEl)
   }
@@ -210,7 +184,6 @@ class Popup {
     // causing qr-code-wechat to get img.width/img.height values of zero
     return scan(img.cloneNode()).then(function (result) {
       const text = result.text
-      const points = [] // only with zxing
       const rect = result.rect // only with qr-scanner-wechat
 
       if (typeof text === 'undefined') {
@@ -222,12 +195,8 @@ class Popup {
       that.domSource.select()
       that.domCounter.innerText = '' + text.length
 
-      for (let i = 0; i < points.length; i++) {
-        that.createPointMarkerElement(points[i], that.domResult, img)
-      }
-
       if (rect) {
-        that.createRectElement(rect, that.domResult, img)
+        that.createRectMarker(rect, that.domResult, img)
       }
 
       that.currentText = text
