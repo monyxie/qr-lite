@@ -2,7 +2,6 @@ import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
 import { BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import SanitizeFilename from 'sanitize-filename'
-import manifest from '../manifest.json'
 import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
 import { scan } from 'qr-scanner-wechat'
@@ -379,7 +378,7 @@ class Popup {
           })
       })
 
-    document.getElementById('qrLiteVersion').innerText = 'v' + manifest.version
+    document.getElementById('qrLiteVersion').innerText = 'v' + that.browser.runtime.getManifest().version
   }
 }
 
