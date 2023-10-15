@@ -1,0 +1,97 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "extension_short_name": {
+    "message": "QR Lite"
+  },
+  "extension_description": {
+    "message": "離線產生或掃描二維碼。"
+  },
+  "save_image_btn": {
+    "message": "儲存圖片"
+  },
+  "save_image_btn_title": {
+    "message": "儲存這張二維碼圖片"
+  },
+  "open_url_btn": {
+    "message": "開啟網址"
+  },
+  "open_url_btn_title": {
+    "message": "在新分頁中開啟掃描到的網址"
+  },
+  "history_btn": {
+    "message": "歷史記錄"
+  },
+  "history_btn_title": {
+    "message": "查看歷史記錄"
+  },
+  "back_btn": {
+    "message": "返回"
+  },
+  "back_btn_title": {
+    "message": "返回"
+  },
+  "clear_history_btn": {
+    "message": "清除"
+  },
+  "clear_history_btn_title": {
+    "message": "清除歷史記錄"
+  },
+  "github_link_title": {
+    "message": "造訪 QR Lite 在 Github 上的專案主頁"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "低，可以恢復 7% 左右的資料"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "中，可以恢復 15% 左右的資料"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "四分，可以恢復 25% 左右的資料"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "高，可以恢復 30% 左右的資料"
+  },
+  "error_correction_level_label": {
+    "message": "糾錯:"
+  },
+  "error_correction_level_label_title": {
+    "message": "糾錯級別"
+  },
+  "content_length_label_title": {
+    "message": "二維碼內容的長度（以字元為單位）"
+  },
+  "content_length_label": {
+    "message": "長度:"
+  },
+  "content_title": {
+    "message": "二維碼內容"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "為該連結產生二維碼"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "產生 \"%s\" 的二維碼"
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "掃描圖片中的二維碼"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "選擇掃描區域..."
+  },
+  "scan_region_picker_tips_html": {
+    "message": "請繪製一個矩形以擷取二維碼的影像，\n<br>然後右鍵單擊圖像並選擇“掃描此圖像中的二維碼”。 <br>按 &lt;Esc&gt; 鍵取消。"
+  },
+  "decoding": {
+    "message": "正在掃碼..."
+  },
+  "decoding_failed": {
+    "message": "掃碼失敗：$MSG$",
+    "placeholders": {
+      "msg" : {
+        "content" : "$1"
+      }
+    }
+  }
+}
