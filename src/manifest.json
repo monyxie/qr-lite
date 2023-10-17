@@ -20,7 +20,8 @@
     "activeTab",
     "<all_urls>",
     "contextMenus",
-    "storage"
+    "storage",
+    "clipboardWrite"
   ],
   "browser_action": {
     "default_icon": "icons/qrlite-light.svg",

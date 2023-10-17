@@ -20,11 +20,14 @@
   "open_url_btn_title": {
     "message": "在新分頁中開啟掃描到的網址"
   },
-  "history_btn": {
-    "message": "歷史記錄"
+  "tab_generate_title": {
+    "message": "產生"
   },
-  "history_btn_title": {
-    "message": "檢視歷史記錄"
+  "tab_scan_title": {
+    "message": "掃描"
+  },
+  "tab_history_title": {
+    "message": "歷史記錄"
   },
   "back_btn": {
     "message": "返回"
@@ -81,7 +84,16 @@
     "message": "選擇掃描區域..."
   },
   "scan_region_picker_tips_html": {
-    "message": "請繪製一個矩形以擷取二維碼的影像，\n<br>然後右鍵單擊圖像並選擇“掃描此圖像中的二維碼”。 <br>按 &lt;Esc&gt; 鍵取消。"
+    "message": "拖曳滑鼠以選擇要掃描的區域。按 &lt;Esc&gt; 鍵取消。"
+  },
+  "copy_btn": {
+    "message": "複製"
+  },
+  "copy_btn_copied": {
+    "message": "已複製"
+  },
+  "open_link_btn": {
+    "message": "開啟網址"
   },
   "decoding": {
     "message": "正在掃碼..."
@@ -93,5 +105,11 @@
         "content" : "$1"
       }
     }
+  },
+  "scan_instructions": {
+    "message": "右鍵單擊一張圖片並選擇<br>「掃描此圖片中的二維碼」<br><br>或者<br><br>"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "選擇掃描區域"
   }
 }

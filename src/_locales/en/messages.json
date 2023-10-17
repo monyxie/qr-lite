@@ -20,11 +20,14 @@
   "open_url_btn_title": {
     "message": "Open scan result in a new tab"
   },
-  "history_btn": {
-    "message": "History"
+  "tab_generate_title": {
+    "message": "Generate"
   },
-  "history_btn_title": {
-    "message": "View history"
+  "tab_scan_title": {
+    "message": "Scan"
+  },
+  "tab_history_title": {
+    "message": "History"
   },
   "back_btn": {
     "message": "Back"
@@ -81,7 +84,16 @@
     "message": "Select region to scan..."
   },
   "scan_region_picker_tips_html": {
-    "message": "To scan, draw a rectangle to capture an image of the QR code,\n<br>Then right click on the image and choose \"Scan QR code in this image\". <br>Press &lt;Esc&gt; to cancel."
+    "message": "Drag your mouse to select a region to scan. Press &lt;Esc&gt; to cancel."
+  },
+  "copy_btn": {
+    "message": "Copy"
+  },
+  "copy_btn_copied": {
+    "message": "Copied"
+  },
+  "open_link_btn": {
+    "message": "Open link"
   },
   "decoding": {
     "message": "Decoding..."
@@ -93,5 +105,11 @@
         "content" : "$1"
       }
     }
+  },
+  "scan_instructions": {
+    "message": "Right-click on an image and choose<br>\"Scan QR Code in This Image\" <br> <br> OR <br> <br>"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "Choose region to scan"
   }
 }

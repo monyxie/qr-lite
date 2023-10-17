@@ -1,3 +1,5 @@
+import { createElements } from '../utils/dom'
+
 class Picker {
   constructor (browser) {
     this.browser = browser
@@ -7,13 +9,6 @@ class Picker {
   }
 
   init () {
-    const domMask = document.createElement('div')
-    const domTips = document.createElement('p')
-    const domRect = document.createElement('div')
-
-    this.domMask = domMask
-    this.domRect = domRect
-
     this.keyupHandler = (event) => {
       if (event.key === 'Escape' && this.isShown) {
         event.preventDefault()
@@ -22,41 +17,25 @@ class Picker {
       }
     }
 
-    this.domRect.style.width = '100%'
-    this.domRect.style.height = '100%'
-    this.domRect.style.outline = 'white solid 2px'
-    this.domRect.style.borderRadius = '4px'
+    this.domMask = createElements(`
+    <div style="position: fixed; top: 0; left: 0; z-index: 2147483647; width: 100%; height: 100%;
+    box-sizing: border-box; background-color: ${this.maskColor}; border-color: ${this.maskColor}; border-style: solid; border-width: 0;">
+    </div>`)[0]
 
-    this.domMask.style.position = 'fixed'
-    this.domMask.style.top = '0px'
-    this.domMask.style.left = '0px'
-    this.domMask.style.zIndex = '2147483647'
-    this.domMask.style.width = '100%'
-    this.domMask.style.height = '100%'
+    this.domTips = createElements(`
+    <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white;
+    user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px;">
+    ${this.browser.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
 
-    this.domMask.style.boxSizing = 'border-box'
-    this.domMask.style.backgroundColor = this.maskColor
-    this.domMask.style.borderColor = this.maskColor
-    this.domMask.style.borderStyle = 'solid'
-    this.domMask.style.borderWidth = '0'
+    this.domRect = createElements('<div style="width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px;"></div>')[0]
+    this.domX = createElements('<div style="position: fixed; width: 36px; height: 36px; text-align: center; line-height: 36px; right: 0; top: 0;margin: 4px; color: #ccc; font-family: sans-serif; font-size: 36px; cursor: pointer;">&times;</div>')[0]
 
-    domTips.style.padding = '4px'
-    domTips.style.position = 'fixed'
-    domTips.style.left = '0px'
-    domTips.style.top = '0px'
-    domTips.style.color = 'white'
-    domTips.style.backgroundColor = 'rgba(0,0,0,0.75)'
-    domTips.style.zIndex = '9998'
-    domTips.style.border = '1px solid white'
-    domTips.style.borderRadius = '2px'
-    domTips.style.userSelect = 'none'
-    domTips.style.fontSize = '14px'
-    domTips.style.fontFamily = 'Sans Serif'
-    domTips.style.minWidth = '100px'
-    domTips.innerHTML = this.browser.i18n.getMessage('scan_region_picker_tips_html')
+    this.domMask.appendChild(this.domRect)
+    this.domMask.appendChild(this.domTips)
+    this.domMask.appendChild(this.domX)
 
-    this.domMask.appendChild(domRect)
-    this.domMask.appendChild(domTips)
+    this.domX.addEventListener('click', () => this.hide())
+
     this.domMask.addEventListener('mousedown', event => {
       // only handle left-click
       if (event.button !== 0) {
@@ -65,6 +44,9 @@ class Picker {
       this.isMouseDown = true
       this.startX = event.clientX
       this.startY = event.clientY
+      if (this.domTips && this.domTips.parentElement) {
+        this.domTips.parentElement.removeChild(this.domTips)
+      }
     })
     this.domMask.addEventListener('mouseup', event => {
       // only handle left-click
@@ -75,38 +57,13 @@ class Picker {
       if (this.isDragging) {
         this.isDragging = false
         this.updateSelection()
-
-        const rect = {
-          x: document.documentElement.scrollLeft + this.x1,
-          y: document.documentElement.scrollTop + this.y1,
-          width: this.x2 - this.x1,
-          height: this.y2 - this.y1
-        }
-        // console.log('capturing image: ', rect)
-        this.browser.runtime.sendMessage({
-          action: 'ACTION_CAPTURE',
-          rect
-        }).then(response => {
-          const image = document.createElement('img')
-          image.src = response.dataUri
-          image.style.display = 'block'
-          image.style.margin = '0'
-          image.style.padding = '0'
-          image.style.position = 'static'
-          image.style.top = '0'
-          image.style.left = '0'
-          image.style.width = rect.width + 'px'
-          image.style.height = rect.height + 'px'
-          this.domRect.appendChild(image)
-        }).catch(e => {
-          console.log('image capture failed: ', e)
-        })
+        this.scan()
       }
     })
 
     this.domMask.addEventListener('mousemove', event => {
-      domTips.style.top = event.clientY + 'px'
-      domTips.style.left = (event.clientX + 20) + 'px'
+      // this.domTips.style.top = event.clientY + 'px'
+      // this.domTips.style.left = (event.clientX + 20) + 'px'
       if (this.isMouseDown) {
         this.domRect.innerHTML = ''
         this.isDragging = true
@@ -122,7 +79,9 @@ class Picker {
   show () {
     if (!this.isShown) {
       this.isShown = true
-      document.scrollingElement.style.overflow = 'hidden'
+      // This line disables scrolling when the picker is active
+      // but it causes issues in Google Image search so it's commented out for now
+      // document.scrollingElement.style.overflow = 'hidden'
       document.body.appendChild(this.domMask)
     }
   }
@@ -163,10 +122,98 @@ class Picker {
       this.isShown = false
       this.currentX = this.currentY = this.x1 = this.x2 = this.y1 = this.y2 = null
       this.domRect.innerHTML = ''
+      if (this.domResult && this.domResult.parentElement) {
+        this.domResult.parentElement.removeChild(this.domResult)
+      }
       this.domMask.parentElement.removeChild(this.domMask)
       this.updateSelection()
       document.scrollingElement.style.overflow = ''
       document.removeEventListener('keydown', this.keyupHandler)
+    }
+  }
+
+  async scan () {
+    const that = this
+    if (this.domResult && this.domResult.parentElement) {
+      this.domResult.parentElement.removeChild(this.domResult)
+      this.domResult = undefined
+    }
+    let resImage
+    let resText = ''
+    let resInfo = ''
+    let successful = false
+    const rect = {
+      x: document.documentElement.scrollLeft + this.x1,
+      y: document.documentElement.scrollTop + this.y1,
+      width: this.x2 - this.x1,
+      height: this.y2 - this.y1
+    }
+    try {
+      const res = await this.browser.runtime.sendMessage({
+        action: 'ACTION_CAPTURE',
+        rect
+      })
+      successful = !res.err
+      resImage = res.image
+      if (successful) {
+        resText = res.result.text
+      } else {
+        resInfo = res.err ? this.browser.i18n.getMessage('decoding_failed', res.err.toString()) : ''
+      }
+    } catch (e) {
+      console.error(e)
+      resInfo = e.toString()
+    }
+
+    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 0; box-shadow: 0 0 4px gray;
+    margin:0; padding: 0; background-color: white; word-break: break-all; position: absolute; top: 0; left: 0; width: 100%"></div>`)[0]
+    const textEl = createElements(`<textarea style="font-size: 14px; font-family: sans-serif; width: calc(100% - 12px);
+      word-break: break-all; border-width: 1px 0; border-color: #CCCCCC; border-style: solid; padding: 1px; margin: 6px; resize: none;
+      color: #333; background-color: #F8F8F8; box-sizing: border-box;" placeholder="${resInfo}" readonly>${resText}</textarea>`)[0]
+    this.domResult.appendChild(textEl)
+
+    if (resImage) {
+      const img = createElements('<img style="position: static; display: block; width: 100%; height: 100%" alt="">')[0]
+      img.src = resImage
+      this.domRect.appendChild(img)
+    }
+
+    if (successful) {
+      const btnStyle = 'display: inline-block; margin: 6px; font-size:14px; color:gray; cursor: pointer; text-decoration: underline; font-family: sans-serif;'
+
+      const copyBtn = createElements(`<a style="${btnStyle}">${this.browser.i18n.getMessage('copy_btn')}</a>`)[0]
+      copyBtn.addEventListener('click', e => {
+        this.browser.runtime.sendMessage({
+          action: 'ACTION_COPY_TEXT',
+          text: resText
+        }).then(() => {
+          copyBtn.innerText = this.browser.i18n.getMessage('copy_btn_copied')
+        })
+      })
+      this.domResult.appendChild(copyBtn)
+
+      if (/^https?:\/\//.test(resText)) {
+        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${this.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
+        openBtn.href = resText
+        openBtn.addEventListener('click', e => {
+          that.hide()
+        })
+        this.domResult.appendChild(openBtn)
+      }
+    }
+
+    this.domResult.addEventListener('mousedown', e => e.stopPropagation())
+
+    // Show the scan result on top of the image if there's enough space, otherwise show it at the top of the page
+    if ((this.x2 - this.x1 < 200) || (this.y2 - this.y1 < 50)) {
+      this.domResult.style.position = 'fixed'
+      this.domResult.style.top = '0'
+      this.domResult.style.left = '0'
+      this.domResult.style.margin = '4px'
+      this.domResult.style.width = '50%'
+      this.domMask.appendChild(this.domResult)
+    } else {
+      this.domRect.appendChild(this.domResult)
     }
   }
 }

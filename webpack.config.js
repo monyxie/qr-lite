@@ -10,8 +10,8 @@ module.exports = env => {
   return {
     devtool: false,
     entry: {
-      popup: {import: './src/popup/popup.js', filename: 'popup/popup.js'},
-      background: {import: './src/background/background.js', filename: 'background/background.js'},
+      popup: { import: './src/popup/popup.js', filename: 'popup/popup.js' },
+      background: { import: './src/background/background.js', filename: 'background/background.js' },
       scan_region_picker: {
         import: './src/content_scripts/scan_region_picker.js',
         filename: 'content_scripts/scan_region_picker.js'
@@ -25,11 +25,11 @@ module.exports = env => {
     plugins: [
       new CopyPlugin({
         patterns: [
-          {from: 'src/_locales', to: '_locales'},
-          {from: 'src/icons', to: 'icons'},
-          {from: 'src/' + manifestFile, to: 'manifest.json'},
-          {from: 'src/popup/popup.html', to: 'popup/popup.html'},
-          {from: 'src/popup/popup.css', to: 'popup/popup.css'}
+          { from: 'src/_locales', to: '_locales' },
+          { from: 'src/icons', to: 'icons' },
+          { from: 'src/' + manifestFile, to: 'manifest.json' },
+          { from: 'src/popup/popup.html', to: 'popup/popup.html' },
+          { from: 'src/popup/popup.css', to: 'popup/popup.css' }
         ]
       }),
       new webpack.DefinePlugin({

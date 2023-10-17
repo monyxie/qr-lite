@@ -1,14 +1,43 @@
 import openPopup from '../utils/open-popup'
+import { scan } from 'qr-scanner-wechat'
+import { addHistory } from '../utils/history'
 
 class Background {
-  constructor (browser) {
+  constructor (browser, navigator) {
     this.browser = browser
+    this.navigator = navigator
   }
 
   openPopup (options) {
     window.qrLitePopupOptions = options
     openPopup().then(function () {
     })
+  }
+
+  async captureScan (request) {
+    const dataUri = await this.browser.tabs.captureVisibleTab({
+      rect: request.rect
+    })
+
+    const img = document.createElement('img')
+    img.src = dataUri
+    await img.decode()
+    try {
+      const result = await scan(img)
+      if (typeof result.text === 'undefined') {
+        throw new Error('empty result from decoder')
+      }
+      await addHistory('decode', result.text)
+      return {
+        image: dataUri,
+        result
+      }
+    } catch (err) {
+      return {
+        image: dataUri,
+        err
+      }
+    }
   }
 
   init () {
@@ -51,19 +80,18 @@ class Background {
         }
       })
 
-      // image capturing
       this.browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         switch (request.action) {
+          // image capturing
           case 'ACTION_CAPTURE':
-            return that.browser.tabs.captureVisibleTab({
-              rect: request.rect
-            }).then((dataUri) => {
-              return { dataUri }
-            })
+            return that.captureScan(request)
+          // copy to clipboard
+          case 'ACTION_COPY_TEXT':
+            return that.navigator.clipboard.writeText(request.text || '')
         }
       })
     }
   }
 }
 
-(new Background(window.browser || window.chrome)).init()
+(new Background(window.browser || window.chrome, window.navigator)).init()

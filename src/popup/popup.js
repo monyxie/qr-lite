@@ -5,6 +5,7 @@ import SanitizeFilename from 'sanitize-filename'
 import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
 import { scan } from 'qr-scanner-wechat'
+import * as History from '../utils/history'
 
 class Popup {
   constructor (browser, chrome) {
@@ -17,16 +18,24 @@ class Popup {
     this.currentText = null
     this.currentTitle = null
 
+    this.domTabGenerate = document.getElementById('tab-generate')
+    this.domTabScan = document.getElementById('tab-scan')
+    this.domTabHistory = document.getElementById('tab-history')
     this.domMain = document.getElementById('main')
+    this.domScan = document.getElementById('scan')
+    this.domHistory = document.getElementById('history')
+
     this.domSource = document.getElementById('sourceInput')
     this.domCounter = document.getElementById('counter')
-    this.domResult = document.getElementById('result')
     this.domEcLevels = document.getElementById('ecLevels')
+    this.domResult = document.getElementById('result')
     this.domSave = document.getElementById('save')
+
+    this.domScanInput = document.getElementById('scanInput')
+    this.domScanOutput = document.getElementById('scanOutput')
+    this.domScanRegion = document.getElementById('scanRegion')
     this.domOpen = document.getElementById('open')
-    this.domHistory = document.getElementById('history')
-    this.domHistoryBtn = document.getElementById('history-btn')
-    this.domBackBtn = document.getElementById('back-btn')
+
     this.domClearHistoryBtn = document.getElementById('clear-history-btn')
 
     this.historyTimer = null
@@ -41,48 +50,20 @@ class Popup {
   }
 
   getHistory () {
-    return Storage.get('history')
-      .then(function (results) {
-        if (results.history) {
-          return JSON.parse(results.history)
-        }
-        return []
-      }, function (e) {
-        console.error('error while parsing history', e)
-      })
+    return History.getHistory()
   }
 
   clearHistory () {
-    Storage.set({
-      history: '[]'
-    }).then(() => this.renderHistory())
+    return History.clearHistory().then(() => this.renderHistory())
   }
 
   addHistory (type, text) {
-    this.getHistory()
-      .then(function (history) {
-        // Don't add duplicate items
-        if (history && history.length > 0) {
-          if (history[history.length - 1].text === text) {
-            return
-          }
-        }
-        history = history.filter(function (item) {
-          return item.text && item.text !== text
-        })
-        history = [...history, { type, text }]
-        if (history.length > 100) {
-          history = history.slice(history.length - 100, history.length)
-        }
-        Storage.set({
-          history: JSON.stringify(history)
-        })
-      })
+    return History.addHistory(type, text)
   }
 
   createQrCode (text, activeEcLevel, title, historyMode) {
     const that = this
-    this.showTab('main')
+    this.showTab('generate')
     this.domSave.classList.add('hidden')
     this.domOpen.classList.add('hidden')
 
@@ -160,24 +141,22 @@ class Popup {
   }
 
   async decodeImage (url) {
-    this.showTab('main')
-    this.domSave.classList.add('hidden')
-    this.domOpen.classList.add('hidden')
-    this.domResult.title = this.currentTitle = ''
-
-    this.domSource.value = ''
-    this.domSource.placeholder = this.browser.i18n.getMessage('decoding')
-
     const that = this
 
-    that.domResult.innerText = ''
+    this.showTab('scan')
+
+    this.domOpen.classList.add('hidden')
+    this.domScanOutput.value = ''
+    this.domScanOutput.placeholder = this.browser.i18n.getMessage('decoding')
+
+    that.domScanInput.innerText = ''
     const img = document.createElement('img')
     img.classList.add('decoded-image')
     img.src = url
 
     // wait for decode to complete before appending to dom and scanning
     await img.decode()
-    that.domResult.appendChild(img)
+    that.domScanInput.appendChild(img)
 
     // we pass a cloned img node because the original img node is still being appended to the dom
     // causing qr-code-wechat to get img.width/img.height values of zero
@@ -189,16 +168,14 @@ class Popup {
         throw new Error('empty result from decoder')
       }
 
-      that.domSource.placeholder = ''
-      that.domSource.value = text
-      that.domSource.select()
-      that.domCounter.innerText = '' + text.length
+      that.domScanOutput.placeholder = ''
+      that.domScanOutput.value = text
+      that.domScanOutput.select()
 
       if (rect) {
-        that.createRectMarker(rect, that.domResult, img)
+        that.createRectMarker(rect, that.domScanInput, img)
       }
 
-      that.currentText = text
       that.addHistory('decode', text)
 
       if (/^https?:\/\//.test(text)) {
@@ -207,7 +184,7 @@ class Popup {
     })
       .catch(function (e) {
         console.error(e)
-        that.domSource.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
+        that.domScanInput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
       })
   }
 
@@ -245,8 +222,9 @@ class Popup {
     // this.browser.i18n.getAcceptLanguages().then(a => console.log('accept language: ' + a))
     const domTemplate = document.getElementById('template')
     const template = domTemplate.innerHTML
+    const messages = { version: that.browser.runtime.getManifest().version }
     domTemplate.parentElement.innerHTML = template.replace(/{{__MSG_(\w+)__}}/g, function (match, contents, offset) {
-      const message = that.browser.i18n.getMessage(contents)
+      const message = messages[contents] || that.browser.i18n.getMessage(contents)
       // console.log('replace:', contents, message)
       return message
     })
@@ -257,24 +235,39 @@ class Popup {
       .then(function (history) {
         const ul = document.getElementById('history-items')
         ul.innerHTML = ''
+        history.reverse()
         for (let i = 0; i < history.length; i++) {
           const li = document.createElement('li')
           li.title = history[i].text || ''
           li.innerText = history[i].text || ''
           ul.appendChild(li)
         }
-        ul.scrollTo(0, ul.scrollHeight)
       })
   }
 
   showTab (tab) {
     if (tab === 'history') {
+      this.domTabGenerate.classList.remove('active')
+      this.domTabScan.classList.remove('active')
+      this.domTabHistory.classList.add('active')
       this.domMain.classList.add('hidden')
+      this.domScan.classList.add('hidden')
       this.domHistory.classList.remove('hidden')
-      const historyItems = document.getElementById('history-items')
-      historyItems.scrollTo(0, historyItems.scrollHeight)
+
+      this.renderHistory()
+    } else if (tab === 'scan') {
+      this.domTabGenerate.classList.remove('active')
+      this.domTabScan.classList.add('active')
+      this.domTabHistory.classList.remove('active')
+      this.domMain.classList.add('hidden')
+      this.domScan.classList.remove('hidden')
+      this.domHistory.classList.add('hidden')
     } else {
+      this.domTabGenerate.classList.add('active')
+      this.domTabScan.classList.remove('active')
+      this.domTabHistory.classList.remove('active')
       this.domMain.classList.remove('hidden')
+      this.domScan.classList.add('hidden')
       this.domHistory.classList.add('hidden')
     }
   }
@@ -282,14 +275,17 @@ class Popup {
   init () {
     const that = this
 
-    that.showTab('main')
-    this.domHistoryBtn.addEventListener('click', function (e) {
+    that.showTab('generate')
+    this.domTabHistory.addEventListener('click', function () {
       that.showTab('history')
-      that.renderHistory()
     })
-    this.domBackBtn.addEventListener('click', function (e) {
-      that.showTab('main')
+    this.domTabGenerate.addEventListener('click', function (e) {
+      that.showTab('generate')
     })
+    this.domTabScan.addEventListener('click', function (e) {
+      that.showTab('scan')
+    })
+
     this.domHistory.addEventListener('click', function (e) {
       if (e.target.tagName.toUpperCase() === 'LI') {
         that.createQrCode(e.target.innerText, that.ecLevel, undefined, 'now')
@@ -328,6 +324,15 @@ class Popup {
       that.downloadImage()
     })
 
+    this.domScanRegion.addEventListener('click', function (e) {
+      that.browser.tabs.executeScript({
+        file: '../content_scripts/scan_region_picker.js'
+      })
+
+      // close self (popup)
+      window.close()
+    })
+
     this.domOpen.addEventListener('click', function (e) {
       Tabs.create({
         url: that.currentText,
@@ -348,16 +353,16 @@ class Popup {
 
         that.getPopupOptions()
           .then(function (options) {
-            console.log('options', options)
+            // console.log('options', options)
             if (options === null) {
               return new Promise(function (resolve, reject) {
                 Tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
-                    console.log('tabs', tabs)
+                    // console.log('tabs', tabs)
                     resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
                   })
                   .catch(function (e) {
-                    console.log('tabs failed', e)
+                    console.error('tabs failed', e)
                     resolve({ action: 'ACTION_ENCODE', text: '' })
                   })
               })
@@ -377,8 +382,6 @@ class Popup {
             console.error(e)
           })
       })
-
-    document.getElementById('qrLiteVersion').innerText = 'v' + that.browser.runtime.getManifest().version
   }
 }
 

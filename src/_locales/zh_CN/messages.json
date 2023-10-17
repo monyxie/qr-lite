@@ -20,11 +20,14 @@
   "open_url_btn_title": {
     "message": "在新标签页中打开扫描到的网址"
   },
-  "history_btn": {
-    "message": "历史记录"
+  "tab_generate_title": {
+    "message": "生成"
   },
-  "history_btn_title": {
-    "message": "查看历史记录"
+  "tab_scan_title": {
+    "message": "扫描"
+  },
+  "tab_history_title": {
+    "message": "历史记录"
   },
   "back_btn": {
     "message": "返回"
@@ -81,7 +84,16 @@
     "message": "选择扫描区域..."
   },
   "scan_region_picker_tips_html": {
-    "message": "按住鼠标左键并拖拽来截取二维码图片，\n<br>然后在图片上右击并选择“扫描该图片中的二维码”。 <br>按 &lt;Esc&gt; 键取消。"
+    "message": "拖拽鼠标来选择要扫描的区域。按 &lt;Esc&gt; 键取消。"
+  },
+  "copy_btn": {
+    "message": "复制"
+  },
+  "copy_btn_copied": {
+    "message": "已复制"
+  },
+  "open_link_btn": {
+    "message": "打开网址"
   },
   "decoding": {
     "message": "正在扫码..."
@@ -93,5 +105,11 @@
         "content" : "$1"
       }
     }
+  },
+  "scan_instructions": {
+    "message": "右键单击一张图片并选择<br>“扫描此图片中的二维码”<br><br>或者<br><br>"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "选择扫描区域"
   }
 }

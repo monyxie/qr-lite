@@ -10,17 +10,22 @@
 </head>
 <body>
 <template id="template">
+    <div class="tabs-container">
+        <div class="tabs-item active" id="tab-generate"><a>{{__MSG_tab_generate_title__}}</a></div>
+        <div class="tabs-item" id="tab-scan"><a>{{__MSG_tab_scan_title__}}</a></div>
+        <div class="tabs-item" id="tab-history"><a>{{__MSG_tab_history_title__}}</a></div>
+    </div>
     <div class="container" data-role="content">
         <div class="main" id="main">
             <textarea class="source" id="sourceInput" title="{{__MSG_content_title__}}"></textarea>
-                <div class="necker length-view">
+            <div class="necker length-view">
                         <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
                             <span class="counter" id="counter"></span>
                         </span>
-                </div>
-                <div class="necker ec-view">
-                    <span title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
-                    <span id="ecLevels">
+            </div>
+            <div class="necker ec-view">
+                <span title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
+                <span id="ecLevels">
                             <span class="clickable ec-level" id="ecL"
                                   title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
                             <span class="clickable ec-level" id="ecM"
@@ -30,29 +35,45 @@
                             <span class="clickable ec-level" id="ecH"
                                   title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
                         </span>
-                </div>
+            </div>
             <div class="result" id="result"></div>
-                <div class="footer main-actions1">
-                    <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}">{{__MSG_save_image_btn__}}</span>
-                    <span class="clickable" id="open"
-                          title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
-                </div>
-                <div class="footer main-actions2">
-                    <span class="clickable" id="history-btn" title="{{__MSG_history_btn_title__}}">{{__MSG_history_btn__}}</span>
-                </div>
-                <div class="footer main-actions3">
-                    <a target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
-                       title="{{__MSG_github_link_title__}}"><span id="qrLiteVersion"></span></a>
-                </div>
+            <div class="footer actions1">
+                <span class="clickable" id="save"
+                      title="{{__MSG_save_image_btn_title__}}">{{__MSG_save_image_btn__}}</span>
+            </div>
+            <div class="footer actions2">
+            </div>
+            <div class="footer actions3">
+                <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
+                   title="{{__MSG_github_link_title__}}">v{{__MSG_version__}}</a>
+            </div>
         </div>
-        <div class="history" id="history">
+        <div class="scan hidden" id="scan">
+            <div class="input" id="scanInput">
+                <p class="instructions">
+                    {{__MSG_scan_instructions__}}
+                    <a class="clickable" id="scanRegion">{{__MSG_pick_region_to_scan_btn__}}</a>
+                </p>
+            </div>
+            <textarea class="output" id="scanOutput" title="{{__MSG_content_title__}}"></textarea>
+            <div class="footer actions1">
+                <span class="clickable" id="open"
+                      title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
+            </div>
+            <div class="footer actions2">
+            </div>
+            <div class="footer actions3">
+                <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
+                   title="{{__MSG_github_link_title__}}">v{{__MSG_version__}}</a>
+            </div>
+        </div>
+        <div class="history hidden" id="history">
             <ul class="history-items" id="history-items"></ul>
-                <div class="footer history-actions1">
-                    <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}">{{__MSG_clear_history_btn__}}</span>
-                </div>
-                <div class="footer history-actions2">
-                    <span class="clickable" id="back-btn" title="{{__MSG_back_btn_title__}}">{{__MSG_back_btn__}}</span>
-                </div>
+            <div class="footer actions1">
+                <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}">{{__MSG_clear_history_btn__}}</span>
+            </div>
+            <div class="footer actions2">
+            </div>
         </div>
     </div>
 </template>
