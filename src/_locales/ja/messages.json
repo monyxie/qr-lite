@@ -1,0 +1,115 @@
+{
+  "extension_name": {
+    "message": "QRライト"
+  },
+  "extension_short_name": {
+    "message": "QRライト"
+  },
+  "extension_description": {
+    "message": "オフラインでQRコードを生成またはスキャンします。"
+  },
+  "save_image_btn": {
+    "message": "画像を保存"
+  },
+  "save_image_btn_title": {
+    "message": "このQRコードの画像を保存する"
+  },
+  "open_url_btn": {
+    "message": "URLを開く"
+  },
+  "open_url_btn_title": {
+    "message": "スキャン結果を新しいタブで開く"
+  },
+  "tab_generate_title": {
+    "message": "生成"
+  },
+  "tab_scan_title": {
+    "message": "スキャン"
+  },
+  "tab_history_title": {
+    "message": "履歴"
+  },
+  "back_btn": {
+    "message": "戻る"
+  },
+  "back_btn_title": {
+    "message": "戻る"
+  },
+  "clear_history_btn": {
+    "message": "クリア"
+  },
+  "clear_history_btn_title": {
+    "message": "履歴をクリアする"
+  },
+  "github_link_title": {
+    "message": "QRライトのGithub上のプロジェクトページを訪問する"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "低、データバイトの7%を復元できます"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "中、データバイトの15%を復元できます"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "4分の1、データバイトの25%を復元できます"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "高、データバイトの30%を復元できます"
+  },
+  "error_correction_level_label": {
+    "message": "EC:"
+  },
+  "error_correction_level_label_title": {
+    "message": "エラー訂正レベル"
+  },
+  "content_length_label_title": {
+    "message": "QRコードのコンテンツの文字数"
+  },
+  "content_length_label": {
+    "message": "長さ:"
+  },
+  "content_title": {
+    "message": "QRコードのコンテンツ"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "このリンクのQRコードを生成"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "「%s」のQRコードを生成"
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "画像内のQRコードをスキャン"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "スキャン領域を選択..."
+  },
+  "scan_region_picker_tips_html": {
+    "message": "マウスをドラッグしてスキャン領域を選択してください。<Esc>を押してキャンセルします。"
+  },
+  "copy_btn": {
+    "message": "コピー"
+  },
+  "copy_btn_copied": {
+    "message": "コピーしました"
+  },
+  "open_link_btn": {
+    "message": "リンクを開く"
+  },
+  "decoding": {
+    "message": "デコード中..."
+  },
+  "decoding_failed": {
+    "message": "デコードに失敗しました: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1"
+      }
+    }
+  },
+  "scan_instructions": {
+    "message": "画像を右クリックし、<br>「この画像のQRコードをスキャン」を選択<br><br>または<br><br>"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "スキャン領域を選択"
+  }
+}
