@@ -147,6 +147,7 @@ class Popup {
 
     this.domOpen.classList.add('hidden')
     this.domScanOutput.value = ''
+    this.domScanOutput.classList.remove('hidden')
     this.domScanOutput.placeholder = this.browser.i18n.getMessage('decoding')
 
     that.domScanInput.innerText = ''
