@@ -11,6 +11,7 @@ module.exports = env => {
     devtool: false,
     entry: {
       popup: { import: './src/popup/popup.js', filename: 'popup/popup.js' },
+      grant: { import: './src/pages/grant.js', filename: 'pages/grant.js' },
       background: { import: './src/background/background.js', filename: 'background/background.js' },
       scan_region_picker: {
         import: './src/content_scripts/scan_region_picker.js',
@@ -29,7 +30,9 @@ module.exports = env => {
           { from: 'src/icons', to: 'icons' },
           { from: 'src/' + manifestFile, to: 'manifest.json' },
           { from: 'src/popup/popup.html', to: 'popup/popup.html' },
-          { from: 'src/popup/popup.css', to: 'popup/popup.css' }
+          { from: 'src/pages/grant.html', to: 'pages/grant.html' },
+          { from: 'src/popup/popup.css', to: 'popup/popup.css' },
+          { from: 'src/pages/grant.css', to: 'pages/grant.css' }
         ]
       }),
       new webpack.DefinePlugin({

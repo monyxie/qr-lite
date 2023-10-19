@@ -81,7 +81,10 @@
     "message": "Scan QR Code in Image"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "Select region to scan..."
+    "message": "Select Region to Scan..."
+  },
+  "context_menu_scan_with_camera": {
+    "message": "Scan with Camera"
   },
   "scan_region_picker_tips_html": {
     "message": "Drag your mouse to select a region to scan. Press &lt;Esc&gt; to cancel."
@@ -106,10 +109,49 @@
       }
     }
   },
-  "scan_instructions": {
-    "message": "Right-click on an image and choose<br>\"Scan QR Code in This Image\" <br> <br> OR <br> <br>"
+  "scan_instructions_html": {
+    "message": "Right-click on an image and choose<br>\"Scan QR Code in This Image\""
   },
   "pick_region_to_scan_btn": {
     "message": "Choose region to scan"
+  },
+  "camera_scan_btn": {
+    "message": "Scan with camera"
+  },
+  "camera_rescan_btn_label": {
+    "message": "New scan"
+  },
+  "camera_rescan_btn_title": {
+    "message": "Initiate another scan"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "This feature requires permission to use the camera.<br>Click the link below to grant permission."
+  },
+  "grant_permissions_btn": {
+    "message": "Grant camera access"
+  },
+  "grant_permissions_window_title": {
+    "message": "Grant camera access"
+  },
+  "grant_page_initial_instructions_html": {
+    "message": "When asked whether to allow QR Lite to use your camera,<br>make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>."
+  },
+  "grant_page_blocked_instructions_html": {
+    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br>To change this, click the permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br>After you've done that, refresh this page."
+  },
+  "grant_page_granted_instructions_html": {
+    "message": "QR Lite has been successfully granted permission to use the camera.<br>You may close this page now."
+  },
+  "grant_page_refresh_btn": {
+    "message": "Refresh"
+  },
+  "grant_page_close_btn": {
+    "message": "Close"
+  },
+  "or": {
+    "message": "OR"
+  },
+  "scanning": {
+    "message": "Scanning..."
   }
 }

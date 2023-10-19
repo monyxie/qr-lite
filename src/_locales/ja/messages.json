@@ -83,6 +83,9 @@
   "context_menu_pick_region_to_scan": {
     "message": "スキャン領域を選択..."
   },
+  "context_menu_scan_with_camera": {
+    "message": "カメラでスキャン"
+  },
   "scan_region_picker_tips_html": {
     "message": "マウスをドラッグしてスキャン領域を選択してください。<Esc>を押してキャンセルします。"
   },
@@ -106,10 +109,49 @@
       }
     }
   },
-  "scan_instructions": {
-    "message": "画像を右クリックし、<br>「この画像のQRコードをスキャン」を選択<br><br>または<br><br>"
+  "scan_instructions_html": {
+    "message": "画像を右クリックし、<br>「この画像のQRコードをスキャン」を選択"
   },
   "pick_region_to_scan_btn": {
     "message": "スキャン領域を選択"
+  },
+  "camera_scan_btn": {
+    "message": "カメラでスキャン"
+  },
+  "camera_rescan_btn_label": {
+    "message": "新しいスキャン"
+  },
+  "camera_rescan_btn_title": {
+    "message": "別のスキャンを開始する"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "カメラを使用する権限が必要です。<br>以下のリンクをクリックして権限を付与してください。"
+  },
+  "grant_permissions_btn": {
+    "message": "カメラへのアクセスを許可する"
+  },
+  "grant_permissions_window_title": {
+    "message": "カメラへのアクセスを許可する"
+  },
+  "grant_page_initial_instructions_html": {
+    "message": "QRライトにカメラを使用することを許可するかどうか尋ねられたら、<br><strong>「今後も同様に処理する」</strong>のチェックボックスにチェックを入れてから、<strong>「許可する」</strong>をクリックしてください。"
+  },
+  "grant_page_blocked_instructions_html": {
+    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br>これを変更するには、アドレスバーの左側にある許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br>その後、このページを再読み込みしてください。"
+  },
+  "grant_page_granted_instructions_html": {
+    "message": "QRライトはカメラを使用する権限を付与されました。<br>このページは今閉じても構いません。"
+  },
+  "grant_page_refresh_btn": {
+    "message": "再読み込み"
+  },
+  "grant_page_close_btn": {
+    "message": "閉じる"
+  },
+  "or": {
+    "message": "または"
+  },
+  "scanning": {
+    "message": "スキャン中..."
   }
 }

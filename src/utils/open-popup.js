@@ -1,11 +1,11 @@
-const openPopupFirefox = () => window.browser.browserAction.openPopup()
+const openPopupFirefox = (options) => window.browser.browserAction.openPopup(options)
 
-const openPopupChrome = () => {
+const openPopupChrome = (options) => {
   return new Promise((resolve, reject) => {
-    window.chrome.browserAction.openPopup((data) => {
+    window.chrome.action.openPopup(options, (data) => {
       resolve(data)
     })
   })
 }
 
-export default QRLITE_BROWSER === 'chrome' ? openPopupChrome : openPopupFirefox
+export const openPopup = QRLITE_BROWSER === 'chrome' ? openPopupChrome : openPopupFirefox

@@ -6,6 +6,8 @@ import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
 import { scan } from 'qr-scanner-wechat'
 import * as History from '../utils/history'
+import { addClass, query as $, removeClass } from '../utils/dom'
+import { renderTemplate } from '../utils/i18n'
 
 class Popup {
   constructor (browser, chrome) {
@@ -17,36 +19,15 @@ class Popup {
     this.ecLevel = ECLevel.M
     this.currentText = null
     this.currentTitle = null
-
-    this.domTabGenerate = document.getElementById('tab-generate')
-    this.domTabScan = document.getElementById('tab-scan')
-    this.domTabHistory = document.getElementById('tab-history')
-    this.domMain = document.getElementById('main')
-    this.domScan = document.getElementById('scan')
-    this.domHistory = document.getElementById('history')
-
-    this.domSource = document.getElementById('sourceInput')
-    this.domCounter = document.getElementById('counter')
-    this.domEcLevels = document.getElementById('ecLevels')
-    this.domResult = document.getElementById('result')
-    this.domSave = document.getElementById('save')
-
-    this.domScanInput = document.getElementById('scanInput')
-    this.domScanOutput = document.getElementById('scanOutput')
-    this.domScanRegion = document.getElementById('scanRegion')
-    this.domOpen = document.getElementById('open')
-
-    this.domClearHistoryBtn = document.getElementById('clear-history-btn')
-
     this.historyTimer = null
+    this.currentTab = null
   }
 
   updateActiveEcLevel (activeEcLevel) {
-    this.domEcLevels.querySelectorAll('.ec-level').forEach(function (el) {
+    $('#ecLevels').querySelectorAll('.ec-level').forEach(function (el) {
       el.classList.remove('ec-level-active')
     })
-    const id = 'ec' + activeEcLevel.toString()
-    document.getElementById(id).classList.add('ec-level-active')
+    $('#ec' + activeEcLevel.toString()).classList.add('ec-level-active')
   }
 
   getHistory () {
@@ -63,13 +44,20 @@ class Popup {
 
   createQrCode (text, activeEcLevel, title, historyMode) {
     const that = this
+    const $save = $('#save')
+    const $result = $('#result')
     this.showTab('generate')
-    this.domSave.classList.add('hidden')
-    this.domOpen.classList.add('hidden')
+    addClass('hidden', $save, $('#openLinkBtn'))
 
-    this.domSource.value = text
-    this.domCounter.innerText = '' + text.length
+    $('#sourceInput').value = text
+    $('#counter').innerText = '' + text.length
     this.updateActiveEcLevel(activeEcLevel)
+
+    this.currentText = text
+    $result.innerText = ''
+    if (!text) {
+      return
+    }
 
     if (historyMode === 'now') {
       that.addHistory('encode', text)
@@ -83,12 +71,11 @@ class Popup {
     const writer = new BrowserQRCodeSvgWriter()
     const hints = new Map()
     hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
-    this.domResult.innerText = ''
-    this.domResult.title = title || ''
-    writer.writeToDom(this.domResult, text, 300, 300, hints)
-    this.currentText = text
+    $result.innerText = ''
+    $result.title = title || ''
+    writer.writeToDom($result, text, 300, 300, hints)
 
-    this.domSave.classList.remove('hidden')
+    $save.classList.remove('hidden')
     this.currentTitle = title || ''
   }
 
@@ -121,47 +108,47 @@ class Popup {
   createRectMarker (rect, containerEl, imgEl) {
     const containerRect = containerEl.getBoundingClientRect()
     const imgRect = imgEl.getBoundingClientRect()
-    const markerEl = document.createElement('div')
     const relPos = this.getRelativePosition(imgRect, containerRect)
     const scaleRatioX = imgRect.width / imgEl.naturalWidth
     const scaleRatioY = imgRect.width / imgEl.naturalWidth
+    const $positionMarker = $('#positionMarker')
 
-    markerEl.innerText = ' '
-    markerEl.style.position = 'absolute'
-    markerEl.style.top = ((rect.y * scaleRatioY) + relPos.top) + 'px'
-    markerEl.style.left = ((rect.x * scaleRatioX) + relPos.left) + 'px'
-    markerEl.style.width = (rect.width * scaleRatioX) + 'px'
-    markerEl.style.height = (rect.height * scaleRatioY) + 'px'
-    // svg from heroicons.dev
-    markerEl.innerHTML = '<svg class="qr-position-marker" aria-hidden="true" fill="lightgreen" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">' +
-      '<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>' +
-      '</svg>'
-
-    containerEl.appendChild(markerEl)
+    $positionMarker.style.top = ((rect.y * scaleRatioY) + relPos.top) + 'px'
+    $positionMarker.style.left = ((rect.x * scaleRatioX) + relPos.left) + 'px'
+    $positionMarker.style.width = (rect.width * scaleRatioX) + 'px'
+    $positionMarker.style.height = (rect.height * scaleRatioY) + 'px'
+    $positionMarker.classList.remove('hidden')
   }
 
   async decodeImage (url) {
     const that = this
+    const $scanOutput = $('#scanOutput')
+    const $scanInput = $('#scanInput')
+    const $scanInputImage = $('#scanInputImage')
+    const $openLinkBtn = $('#openLinkBtn')
+    const $scanInstructions = $('#scanInstructions')
+    const $scanVideo = $('#scanVideo')
+    const $positionMarker = $('#positionMarker')
 
     this.showTab('scan')
 
-    this.domOpen.classList.add('hidden')
-    this.domScanOutput.value = ''
-    this.domScanOutput.classList.remove('hidden')
-    this.domScanOutput.placeholder = this.browser.i18n.getMessage('decoding')
+    $openLinkBtn.classList.add('hidden')
+    $scanOutput.value = ''
+    $scanOutput.classList.remove('hidden')
+    $scanOutput.placeholder = this.browser.i18n.getMessage('decoding')
 
-    that.domScanInput.innerText = ''
-    const img = document.createElement('img')
-    img.classList.add('decoded-image')
-    img.src = url
+    $scanInputImage.src = url
+    $scanInputImage.classList.remove('hidden')
+    $scanInstructions.classList.add('hidden')
+    $scanVideo.classList.add('hidden')
+    $positionMarker.classList.add('hidden')
 
     // wait for decode to complete before appending to dom and scanning
-    await img.decode()
-    that.domScanInput.appendChild(img)
+    await $scanInputImage.decode()
 
     // we pass a cloned img node because the original img node is still being appended to the dom
     // causing qr-code-wechat to get img.width/img.height values of zero
-    return scan(img.cloneNode()).then(function (result) {
+    return scan($scanInputImage.cloneNode()).then(function (result) {
       const text = result.text
       const rect = result.rect // only with qr-scanner-wechat
 
@@ -169,23 +156,23 @@ class Popup {
         throw new Error('empty result from decoder')
       }
 
-      that.domScanOutput.placeholder = ''
-      that.domScanOutput.value = text
-      that.domScanOutput.select()
+      $scanOutput.placeholder = ''
+      $scanOutput.value = text
+      $scanOutput.select()
 
       if (rect) {
-        that.createRectMarker(rect, that.domScanInput, img)
+        that.createRectMarker(rect, $scanInput, $scanInputImage)
       }
 
       that.addHistory('decode', text)
 
       if (/^https?:\/\//.test(text)) {
-        that.domOpen.classList.remove('hidden')
+        $openLinkBtn.classList.remove('hidden')
       }
     })
       .catch(function (e) {
         console.error(e)
-        that.domScanInput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
+        $scanInput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
       })
   }
 
@@ -217,24 +204,13 @@ class Popup {
   }
 
   renderPage () {
-    const that = this
-    // console.log('rendering template, language code: ' + this.browser.i18n.languageCode)
-
-    // this.browser.i18n.getAcceptLanguages().then(a => console.log('accept language: ' + a))
-    const domTemplate = document.getElementById('template')
-    const template = domTemplate.innerHTML
-    const messages = { version: that.browser.runtime.getManifest().version }
-    domTemplate.parentElement.innerHTML = template.replace(/{{__MSG_(\w+)__}}/g, function (match, contents, offset) {
-      const message = messages[contents] || that.browser.i18n.getMessage(contents)
-      // console.log('replace:', contents, message)
-      return message
-    })
+    renderTemplate($('#template'))
   }
 
   renderHistory () {
     this.getHistory()
       .then(function (history) {
-        const ul = document.getElementById('history-items')
+        const ul = $('#history-items')
         ul.innerHTML = ''
         history.reverse()
         for (let i = 0; i < history.length; i++) {
@@ -246,63 +222,181 @@ class Popup {
       })
   }
 
+  startCameraScan () {
+    const that = this
+    const $scanOutput = $('#scanOutput')
+    const $scanInputImage = $('#scanInputImage')
+    const $cameraRescanBtn = $('#cameraRescanBtn')
+    const $openLinkBtn = $('#openLinkBtn')
+    const $scanVideo = $('#scanVideo')
+    const $scanInput = $('#scanInput')
+    const $scanInstructions = $('#scanInstructions')
+    const $positionMarker = $('#positionMarker')
+    const $permissionInstructions = $('#permissionInstructions')
+    const $scanningText = $('#scanningText')
+
+    $cameraRescanBtn.onclick = () => this.startCameraScan()
+    $scanVideo.onplay = () => removeClass('hidden', $scanningText)
+    $scanVideo.onpause = () => addClass('hidden', $scanningText)
+
+    this.showTab('scan')
+
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        addClass('hidden', $scanInstructions, $scanInputImage, $positionMarker, $cameraRescanBtn)
+        removeClass('hidden', $scanOutput)
+        $scanOutput.placeholder = ''
+        $scanOutput.value = ''
+        $scanVideo.classList.remove('hidden')
+        $scanVideo.srcObject = stream
+        $scanVideo.play()
+        const canvas = document.createElement('canvas')
+
+        const stop = () => {
+          $scanVideo.pause()
+          addClass('hidden', $scanningText)
+          addClass('hidden', $scanVideo)
+          $scanVideo.srcObject = undefined
+          stream.getTracks().forEach(function (track) {
+            track.stop()
+          })
+        }
+
+        const scanVideo = function () {
+          if (that.currentTab !== 'scan') {
+            stop()
+            return
+          }
+
+          if (!$scanVideo.videoHeight || !$scanVideo.videoWidth || $scanVideo.paused) {
+            setTimeout(scanVideo, 100)
+            return
+          }
+
+          canvas.width = 300
+          canvas.height = $scanVideo.videoHeight / ($scanVideo.videoWidth / canvas.width)
+
+          const context = canvas.getContext('2d')
+          context.drawImage($scanVideo, 0, 0, canvas.width, canvas.height)
+
+          scan(canvas).then(function (result) {
+            const text = result.text
+            const rect = result.rect
+
+            if (typeof text === 'undefined' || text === '') {
+              setTimeout(scanVideo, 100)
+              return
+            }
+
+            stop()
+
+            $scanOutput.placeholder = ''
+            $scanOutput.value = text
+            $scanOutput.select()
+
+            $scanInputImage.classList.remove('hidden')
+            $scanInputImage.src = canvas.toDataURL('image/png')
+
+            $cameraRescanBtn.classList.remove('hidden')
+
+            that.addHistory('decode', text)
+
+            if (/^https?:\/\//.test(text)) {
+              $openLinkBtn.classList.remove('hidden')
+            }
+
+            $scanInputImage.decode().then(() => {
+              if (rect) {
+                that.createRectMarker(rect, $scanInput, $scanInputImage)
+              }
+            })
+          })
+            .catch(function (e) {
+              console.error(e)
+              setTimeout(scanVideo, 100)
+            })
+        }
+
+        scanVideo()
+      }, () => {
+        // getUserMedia() failed
+        removeClass('hidden', $permissionInstructions)
+        addClass('hidden', $scanInstructions)
+      })
+      .catch((err) => {
+        console.error(`An error occurred: ${err}`)
+      })
+  }
+
   showTab (tab) {
+    if (tab !== scan) {
+      addClass('hidden', '#scanOutput', '#scanInputImage', '#cameraRescanBtn', '#openLinkBtn', '#scanVideo', '#positionMarker', '#permissionInstructions')
+      removeClass('hidden', '#scanInput', '#scanInstructions')
+    }
+
     if (tab === 'history') {
-      this.domTabGenerate.classList.remove('active')
-      this.domTabScan.classList.remove('active')
-      this.domTabHistory.classList.add('active')
-      this.domMain.classList.add('hidden')
-      this.domScan.classList.add('hidden')
-      this.domHistory.classList.remove('hidden')
+      $('#tab-generate').classList.remove('active')
+      $('#tab-scan').classList.remove('active')
+      $('#tab-history').classList.add('active')
+      $('#main').classList.add('hidden')
+      $('#scan').classList.add('hidden')
+      $('#history').classList.remove('hidden')
 
       this.renderHistory()
     } else if (tab === 'scan') {
-      this.domTabGenerate.classList.remove('active')
-      this.domTabScan.classList.add('active')
-      this.domTabHistory.classList.remove('active')
-      this.domMain.classList.add('hidden')
-      this.domScan.classList.remove('hidden')
-      this.domHistory.classList.add('hidden')
-    } else {
-      this.domTabGenerate.classList.add('active')
-      this.domTabScan.classList.remove('active')
-      this.domTabHistory.classList.remove('active')
-      this.domMain.classList.remove('hidden')
-      this.domScan.classList.add('hidden')
-      this.domHistory.classList.add('hidden')
+      $('#tab-generate').classList.remove('active')
+      $('#tab-scan').classList.add('active')
+      $('#tab-history').classList.remove('active')
+      $('#main').classList.add('hidden')
+      $('#scan').classList.remove('hidden')
+      $('#history').classList.add('hidden')
+    } else if (tab === 'generate') {
+      $('#tab-generate').classList.add('active')
+      $('#tab-scan').classList.remove('active')
+      $('#tab-history').classList.remove('active')
+      $('#main').classList.remove('hidden')
+      $('#scan').classList.add('hidden')
+      $('#history').classList.add('hidden')
     }
+
+    this.currentTab = tab
   }
 
   init () {
     const that = this
-
     that.showTab('generate')
-    this.domTabHistory.addEventListener('click', function () {
+
+    $('#tab-history').addEventListener('click', function () {
       that.showTab('history')
     })
-    this.domTabGenerate.addEventListener('click', function (e) {
+    $('#tab-generate').addEventListener('click', function (e) {
       that.showTab('generate')
     })
-    this.domTabScan.addEventListener('click', function (e) {
+    $('#tab-scan').addEventListener('click', function (e) {
       that.showTab('scan')
     })
 
-    this.domHistory.addEventListener('click', function (e) {
+    $('#history').addEventListener('click', function (e) {
       if (e.target.tagName.toUpperCase() === 'LI') {
         that.createQrCode(e.target.innerText, that.ecLevel, undefined, 'now')
       }
     })
-    this.domClearHistoryBtn.addEventListener('click', function (e) {
+    $('#clear-history-btn').addEventListener('click', function (e) {
       that.clearHistory()
     })
 
-    this.domSource.addEventListener('keyup', function (e) {
-      if (that.domSource.value !== that.currentText) {
-        that.createQrCode(that.domSource.value, that.ecLevel, undefined, 'debounce')
+    const $sourceInput = $('#sourceInput')
+    const handleSourceInputChange = function (e) {
+      if ($sourceInput.value !== that.currentText) {
+        that.createQrCode($sourceInput.value, that.ecLevel, undefined, 'debounce')
       }
-    })
+    }
+    $sourceInput.addEventListener('keyup', handleSourceInputChange)
+    $sourceInput.addEventListener('paste', handleSourceInputChange)
+    $sourceInput.addEventListener('cut', handleSourceInputChange)
 
-    this.domEcLevels.addEventListener('click', function (e) {
+    $('#ecLevels').addEventListener('click', function (e) {
       switch (e.target.id) {
         case 'ecL':
         case 'ecM':
@@ -318,14 +412,14 @@ class Popup {
         ecLevel: that.ecLevel.toString()
       })
 
-      that.createQrCode(that.domSource.value, that.ecLevel, undefined, 'none')
+      that.createQrCode($sourceInput.value, that.ecLevel, undefined, 'none')
     })
 
-    this.domSave.addEventListener('click', function (e) {
+    $('#save').addEventListener('click', function (e) {
       that.downloadImage()
     })
 
-    this.domScanRegion.addEventListener('click', function (e) {
+    $('#scanRegion').addEventListener('click', function (e) {
       that.browser.tabs.executeScript({
         file: '../content_scripts/scan_region_picker.js'
       })
@@ -334,11 +428,23 @@ class Popup {
       window.close()
     })
 
-    this.domOpen.addEventListener('click', function (e) {
+    $('#cameraScan').addEventListener('click', function (e) {
+      that.startCameraScan()
+    })
+
+    $('#openLinkBtn').addEventListener('click', function (e) {
       Tabs.create({
-        url: that.currentText,
+        url: $('#scanOutput').value,
         active: true
       })
+    })
+
+    $('#grantPermissionsBtn').addEventListener('click', () => {
+      // close self (popup)
+      that.browser.tabs.create({
+        url: '../pages/grant.html'
+      })
+      window.close()
     })
 
     Storage.get('ecLevel')
@@ -377,6 +483,8 @@ class Popup {
                 return that.createQrCode(options.text, that.ecLevel, options.title, 'now')
               case 'ACTION_DECODE':
                 return that.decodeImage(options.image)
+              case 'ACTION_DECODE_CAMERA':
+                return that.startCameraScan()
             }
           })
           .catch(function (e) {
@@ -386,4 +494,5 @@ class Popup {
   }
 }
 
-(new Popup(window.browser || window.chrome, window.chrome)).init()
+window.__popup = (new Popup(window.browser || window.chrome, window.chrome))
+window.__popup.init()

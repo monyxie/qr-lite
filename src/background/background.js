@@ -1,4 +1,4 @@
-import openPopup from '../utils/open-popup'
+import { openPopup } from '../utils/open-popup'
 import { scan } from 'qr-scanner-wechat'
 import { addHistory } from '../utils/history'
 
@@ -56,27 +56,33 @@ class Background {
       onclick: function onGetLink (info, tab) {
         that.openPopup({ action: 'ACTION_ENCODE', text: info.linkUrl, title: info.linkText })
       }
-
     })
 
     // decode QR code in image
     this.browser.contextMenus.create({
       title: this.browser.i18n.getMessage('context_menu_scan_qr_code_in_image'),
       contexts: ['image'],
-      onclick: function decodeQR (info, tab) {
+      onclick: function (info, tab) {
         that.openPopup({ action: 'ACTION_DECODE', image: info.srcUrl })
       }
     })
 
     if (QRLITE_BROWSER === 'firefox') {
-      // manually pick region to scan
       this.browser.contextMenus.create({
         title: this.browser.i18n.getMessage('context_menu_pick_region_to_scan'),
         contexts: ['page', 'browser_action'],
-        onclick: function decodeQR (info, tab) {
+        onclick: function (info, tab) {
           that.browser.tabs.executeScript({
             file: '../content_scripts/scan_region_picker.js'
           })
+        }
+      })
+
+      this.browser.contextMenus.create({
+        title: this.browser.i18n.getMessage('context_menu_scan_with_camera'),
+        contexts: ['browser_action'],
+        onclick: function (info, tab) {
+          that.openPopup({ action: 'ACTION_DECODE_CAMERA' })
         }
       })
 

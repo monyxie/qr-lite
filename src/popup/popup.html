@@ -50,14 +50,31 @@
         </div>
         <div class="scan hidden" id="scan">
             <div class="input" id="scanInput">
-                <p class="instructions">
-                    {{__MSG_scan_instructions__}}
+                <p class="instructions" id="scanInstructions">
+                    {{__MSG_scan_instructions_html__}}<br><br>{{__MSG_or__}}<br><br>
                     <a class="clickable" id="scanRegion">{{__MSG_pick_region_to_scan_btn__}}</a>
+                    <br><br>{{__MSG_or__}}<br><br>
+                    <a class="clickable" id="cameraScan">{{__MSG_camera_scan_btn__}}</a>
                 </p>
+                <p class="instructions hidden" id="permissionInstructions">
+                    {{__MSG_grant_permissions_instructions_html__}}<br><br>
+                    <a class="clickable" id="grantPermissionsBtn">{{__MSG_grant_permissions_btn__}}</a>
+                </p>
+                <div>
+                    <video class="camera hidden" id="scanVideo"></video>
+                    <img class="scan-input-image hidden" id="scanInputImage">
+                    <div class="qr-position-marker-wrapper" id="positionMarker"><svg class="qr-position-marker" aria-hidden="true" fill="lightgreen" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        '<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" fill-rule="evenodd"></path>
+                    </svg></div>
+                </div>
+            </div>
+            <div class="necker instructions">
+                <p class="hidden" id="scanningText">{{__MSG_scanning__}}</p>
+                <a class="clickable hidden" id="cameraRescanBtn" title="{{__MSG_camera_rescan_btn_title__}}">{{__MSG_camera_rescan_btn_label__}}</a>
             </div>
             <textarea class="output hidden" id="scanOutput" title="{{__MSG_content_title__}}" readonly></textarea>
             <div class="footer actions1">
-                <span class="clickable" id="open"
+                <span class="clickable" id="openLinkBtn"
                       title="{{__MSG_open_url_btn_title__}}">{{__MSG_open_url_btn__}}</span>
             </div>
             <div class="footer actions2">

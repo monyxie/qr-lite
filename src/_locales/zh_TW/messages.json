@@ -83,6 +83,9 @@
   "context_menu_pick_region_to_scan": {
     "message": "選擇掃描區域..."
   },
+  "context_menu_scan_with_camera": {
+    "message": "用攝影機掃描"
+  },
   "scan_region_picker_tips_html": {
     "message": "拖曳滑鼠以選擇要掃描的區域。按 &lt;Esc&gt; 鍵取消。"
   },
@@ -106,10 +109,49 @@
       }
     }
   },
-  "scan_instructions": {
-    "message": "右鍵單擊一張圖片並選擇<br>「掃描此圖片中的二維碼」<br><br>或者<br><br>"
+  "scan_instructions_html": {
+    "message": "右鍵單擊一張圖片並選擇<br>「掃描此圖片中的二維碼」"
   },
   "pick_region_to_scan_btn": {
     "message": "選擇掃描區域"
+  },
+  "camera_scan_btn": {
+    "message": "用攝影機掃描"
+  },
+  "camera_rescan_btn_label": {
+    "message": "重新掃描"
+  },
+  "camera_rescan_btn_title": {
+    "message": "開始新的掃描"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "此功能需要攝影機的使用權限。<br>。單擊下方連結以授予權限。"
+  },
+  "grant_permissions_btn": {
+    "message": "授予攝影機權限"
+  },
+  "grant_permissions_window_title": {
+    "message": "授予攝影機權限"
+  },
+  "grant_page_initial_instructions_html": {
+    "message": "當被詢問是否要允許 QR Lite 使用您的攝影機時，<br>請確保<strong>「記住此決定」</strong>已勾中，然後單擊<strong>「允許」</strong>。"
+  },
+  "grant_page_blocked_instructions_html": {
+    "message": "QR Lite 的攝影機權限似乎已經被設定爲<strong>封鎖</strong>了。<br>若要改變此設定，請點擊網址列左邊的權限小圖標，然後將「使用攝影機」旁邊的「已封鎖」狀態<strong>移除</strong>。<br>完成此操作後，請重新載入本頁。"
+  },
+  "grant_page_granted_instructions_html": {
+    "message": "QR Lite 已经成功获得攝影機權限。<br>現在您可以關閉本頁了。"
+  },
+  "grant_page_refresh_btn": {
+    "message": "重新載入"
+  },
+  "grant_page_close_btn": {
+    "message": "關閉"
+  },
+  "or": {
+    "message": "或者"
+  },
+  "scanning": {
+    "message": "掃描中..."
   }
 }

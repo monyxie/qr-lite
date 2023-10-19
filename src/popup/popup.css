@@ -179,14 +179,20 @@
     height: 100%;
     align-self: center;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.scan .decoded-image {
+.scan .scan-input-image {
     max-width: 300px;
     max-height: 300px;
-    width: auto;
-    height: auto;
-    align-self: center;
+}
+
+.scan .camera {
+    width: 100%;
+    height: 100%;
 }
 
 .scan .output {
@@ -206,10 +212,21 @@
     box-sizing: border-box;
 }
 
+.scan .qr-position-marker-wrapper {
+    position: absolute;
+}
+
 .scan .qr-position-marker {
     background-color: white;
     border-radius: 100%;
     opacity: 0.95;
+}
+
+.scan .necker {
+    grid-column: 1 / span 3;
+    grid-row: 2;
+    justify-self: center;
+    align-self: center;
 }
 
 .scan .footer {
@@ -238,9 +255,10 @@
     justify-self: end;
 }
 
-
 /* tabs */
 .tabs-container {
+    width: 300px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
