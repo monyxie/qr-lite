@@ -158,14 +158,14 @@ class Picker {
       if (successful) {
         resText = res.result.text
       } else {
-        resInfo = res.err ? this.browser.i18n.getMessage('decoding_failed', res.err.toString()) : ''
+        resInfo = this.browser.i18n.getMessage('unable_to_decode_qr_code')
       }
     } catch (e) {
       console.error(e)
       resInfo = e.toString()
     }
 
-    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 0; box-shadow: 0 0 4px gray;
+    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 0;
     margin:0; padding: 0; background-color: white; word-break: break-all; position: absolute; top: 0; left: 0; width: 100%"></div>`)[0]
     const textEl = createElements(`<textarea style="font-size: 14px; font-family: sans-serif; width: calc(100% - 12px);
       word-break: break-all; border-width: 1px 0; border-color: #CCCCCC; border-style: solid; padding: 1px; margin: 6px; resize: none;

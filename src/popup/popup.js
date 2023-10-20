@@ -172,7 +172,7 @@ class Popup {
     })
       .catch(function (e) {
         console.error(e)
-        $scanInput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
+        $scanInput.placeholder = that.browser.i18n.getMessage('unable_to_decode_qr_code')
       })
   }
 

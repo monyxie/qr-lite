@@ -153,5 +153,8 @@
   },
   "scanning": {
     "message": "スキャン中..."
+  },
+  "unable_to_decode_qr_code": {
+    "message": "QRコードをデコードできません"
   }
 }
