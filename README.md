@@ -32,9 +32,16 @@ Build steps on Linux:
 1. Run `./release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release.zip`
 is the installable extension, while `qr-lite-source.zip` is the source code zip.
 
-## Todo
-* Translations
-  
+## Translations
+
+Currently supported languages:
+
+- English
+- 中文
+- 日本語
+
+More languages are welcome. Just create a pull request.
+
 ## Credits
 
 This extension utilizes [ZXing for JS](https://github.com/zxing-js/library) / [qr-scanner-wechat](https://github.com/antfu/qr-scanner-wechat) to encode/decode QR codes.
