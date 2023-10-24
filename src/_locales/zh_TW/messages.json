@@ -125,7 +125,7 @@
     "message": "開始新的掃描"
   },
   "grant_permissions_instructions_html": {
-    "message": "此功能需要攝影機的使用權限。<br>。單擊下方連結以授予權限。"
+    "message": "此功能需要攝影機的使用權限。<br>單擊下方連結以授予權限。"
   },
   "grant_permissions_btn": {
     "message": "授予攝影機權限"
