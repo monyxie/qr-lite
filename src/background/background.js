@@ -1,5 +1,5 @@
 import { openPopup } from '../utils/open-popup'
-import { scan } from 'qr-scanner-wechat'
+import { scan } from '../qr-scanner-wechat/index.mjs'
 import { addHistory } from '../utils/history'
 
 class Background {

@@ -1,0 +1,4 @@
+[submodule "qr-scanner-wechat"]
+	path = qr-scanner-wechat
+	url = git@github.com:/monyxie/qr-scanner-wechat.git
+	branch = main

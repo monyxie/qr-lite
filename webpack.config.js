@@ -32,7 +32,8 @@ module.exports = env => {
           { from: 'src/popup/popup.html', to: 'popup/popup.html' },
           { from: 'src/pages/grant.html', to: 'pages/grant.html' },
           { from: 'src/popup/popup.css', to: 'popup/popup.css' },
-          { from: 'src/pages/grant.css', to: 'pages/grant.css' }
+          { from: 'src/pages/grant.css', to: 'pages/grant.css' },
+          { from: 'src/qr-scanner-wechat/opencv.wasm', to: 'assets/opencv.wasm' }
         ]
       }),
       new webpack.DefinePlugin({

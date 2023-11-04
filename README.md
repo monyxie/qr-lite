@@ -18,10 +18,16 @@ This extension only supports Firefox at the moment.
 
 ## Development
 
-1. Clone this repo.
-2. Run `yarn` to install dependencies.
-3. Run `yarn dev` to watch source files and automatically build the add-on when they change.
-4. Load the temporary add-on by going to `about:debugging#/runtime/this-firefox`, then click "Load Temporary Add-on.." and choose `dist/manifest.json` in the project root.
+Because qr-scanner-wechat's OpenCV Wasm module is bundled into a javascript file, causing said JS file to exceed Mozilla's 
+4MB JS file limit. A [modified version](https://github.com/monyxie/qr-scanner-wechat) is needed to workaround this.
+
+Prerequisites: yarn, pnpm(qr-scanner-wechat)
+
+1. Clone this repo and sync the submodules.
+1. Run `yarn` to install dependencies.
+1. Run `yarn run prepare` to build the modified qr-scanner-wechat and copy it to `src/`.
+1. Run `yarn dev` to watch source files and automatically build the add-on when they change.
+1. Load the temporary add-on by going to `about:debugging#/runtime/this-firefox`, then click "Load Temporary Add-on.." and choose `dist/manifest.json` in the project root.
   
 ## Building
 
