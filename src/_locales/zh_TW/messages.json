@@ -87,7 +87,7 @@
     "message": "用攝影機掃描"
   },
   "scan_region_picker_tips_html": {
-    "message": "拖曳滑鼠以選擇要掃描的區域。按 &lt;Esc&gt; 鍵取消。"
+    "message": "您現在正處於 QR Lite 的「選擇掃描區域」模式。拖曳滑鼠以選擇要掃描的區域。按 &lt;Esc&gt; 鍵取消。"
   },
   "copy_btn": {
     "message": "複製"

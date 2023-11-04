@@ -87,7 +87,7 @@
     "message": "Scan with Camera"
   },
   "scan_region_picker_tips_html": {
-    "message": "Drag your mouse to select a region to scan. Press &lt;Esc&gt; to cancel."
+    "message": "You are now in QR Lite's 'Select Region to Scan' mode. Drag your mouse to select a region to scan. Press &lt;Esc&gt; to cancel."
   },
   "copy_btn": {
     "message": "Copy"

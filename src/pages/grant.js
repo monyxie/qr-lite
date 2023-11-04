@@ -14,6 +14,7 @@ import { addClass, query as $, removeClass } from '../utils/dom'
       removeClass('hidden', $('#granted'))
       addClass('hidden', $('#blocked'))
     })
+    // eslint-disable-next-line n/handle-callback-err
     .catch((err) => {
       addClass('hidden', $('#initial'))
       addClass('hidden', $('#granted'))

@@ -23,12 +23,14 @@ class Picker {
     </div>`)[0]
 
     this.domTips = createElements(`
-    <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white;
+    <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #333 1px 0 10px;
     user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px;">
     ${this.browser.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
 
-    this.domRect = createElements('<div style="width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px;"></div>')[0]
-    this.domX = createElements('<div style="position: fixed; width: 36px; height: 36px; text-align: center; line-height: 36px; right: 0; top: 0;margin: 4px; color: #ccc; font-family: sans-serif; font-size: 36px; cursor: pointer;">&times;</div>')[0]
+    this.domRect = createElements('<div style="width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; display: none"></div>')[0]
+    this.domX = createElements(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
+    line-height: 36px; right: 0; top: 0;margin: 4px; color: white;  text-shadow: #333 1px 0 10px;
+    font-family: sans-serif; font-size: 36px; cursor: pointer;">&times;</div>`)[0]
 
     this.domMask.appendChild(this.domRect)
     this.domMask.appendChild(this.domTips)
@@ -44,9 +46,7 @@ class Picker {
       this.isMouseDown = true
       this.startX = event.clientX
       this.startY = event.clientY
-      if (this.domTips && this.domTips.parentElement) {
-        this.domTips.parentElement.removeChild(this.domTips)
-      }
+      this.domTips.style.display = 'none'
     })
     this.domMask.addEventListener('mouseup', event => {
       // only handle left-click
@@ -66,6 +66,7 @@ class Picker {
       // this.domTips.style.left = (event.clientX + 20) + 'px'
       if (this.isMouseDown) {
         this.domRect.innerHTML = ''
+        this.domRect.style.display = 'block'
         this.isDragging = true
         this.currentX = event.clientX
         this.currentY = event.clientY
@@ -83,6 +84,8 @@ class Picker {
       // but it causes issues in Google Image search so it's commented out for now
       // document.scrollingElement.style.overflow = 'hidden'
       document.body.appendChild(this.domMask)
+      this.domTips.style.display = 'block'
+      this.domRect.style.display = 'none'
     }
   }
 
@@ -158,7 +161,7 @@ class Picker {
       if (successful) {
         resText = res.result.text
       } else {
-        resInfo = this.browser.i18n.getMessage('unable_to_decode_qr_code')
+        resInfo = that.browser.i18n.getMessage('unable_to_decode_qr_code')
       }
     } catch (e) {
       console.error(e)
@@ -181,19 +184,19 @@ class Picker {
     if (successful) {
       const btnStyle = 'display: inline-block; margin: 6px; font-size:14px; color:gray; cursor: pointer; text-decoration: underline; font-family: sans-serif;'
 
-      const copyBtn = createElements(`<a style="${btnStyle}">${this.browser.i18n.getMessage('copy_btn')}</a>`)[0]
+      const copyBtn = createElements(`<a style="${btnStyle}">${that.browser.i18n.getMessage('copy_btn')}</a>`)[0]
       copyBtn.addEventListener('click', e => {
         this.browser.runtime.sendMessage({
           action: 'ACTION_COPY_TEXT',
           text: resText
         }).then(() => {
-          copyBtn.innerText = this.browser.i18n.getMessage('copy_btn_copied')
+          copyBtn.innerText = that.browser.i18n.getMessage('copy_btn_copied')
         })
       })
       this.domResult.appendChild(copyBtn)
 
       if (/^https?:\/\//.test(resText)) {
-        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${this.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
+        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${that.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
         openBtn.href = resText
         openBtn.addEventListener('click', e => {
           that.hide()
@@ -206,11 +209,23 @@ class Picker {
 
     // Show the scan result on top of the image if there's enough space, otherwise show it at the top of the page
     if ((this.x2 - this.x1 < 200) || (this.y2 - this.y1 < 50)) {
+      const rect = this.domMask.getBoundingClientRect()
+      if (rect.width - this.x2 > this.x1 && rect.height - this.y2 > this.y1) {
+        this.domResult.style.top = null
+        this.domResult.style.left = null
+        this.domResult.style.right = '0'
+        this.domResult.style.bottom = '0'
+      } else {
+        this.domResult.style.top = '0'
+        this.domResult.style.left = '0'
+        this.domResult.style.right = null
+        this.domResult.style.bottom = null
+      }
       this.domResult.style.position = 'fixed'
-      this.domResult.style.top = '0'
-      this.domResult.style.left = '0'
       this.domResult.style.margin = '4px'
       this.domResult.style.width = '50%'
+      this.domResult.style.borderRadius = '4px'
+      this.domResult.style.outline = 'white solid 2px'
       this.domMask.appendChild(this.domResult)
     } else {
       this.domRect.appendChild(this.domResult)
