@@ -148,32 +148,32 @@ class Popup {
 
     // we pass a cloned img node because the original img node is still being appended to the dom
     // causing qr-code-wechat to get img.width/img.height values of zero
-    return scan($scanInputImage.cloneNode()).then(function (result) {
+    try {
+      const result = await scan($scanInputImage.cloneNode())
       const text = result.text
       const rect = result.rect // only with qr-scanner-wechat
 
       if (typeof text === 'undefined') {
-        throw new Error('empty result from decoder')
+        $scanOutput.placeholder = that.browser.i18n.getMessage('unable_to_decode_qr_code')
+      } else {
+        $scanOutput.placeholder = ''
+        $scanOutput.value = text
+        $scanOutput.select()
+
+        if (rect) {
+          that.createRectMarker(rect, $scanInput, $scanInputImage)
+        }
+
+        await that.addHistory('decode', text)
+
+        if (/^https?:\/\//.test(text)) {
+          $openLinkBtn.classList.remove('hidden')
+        }
       }
-
-      $scanOutput.placeholder = ''
-      $scanOutput.value = text
-      $scanOutput.select()
-
-      if (rect) {
-        that.createRectMarker(rect, $scanInput, $scanInputImage)
-      }
-
-      that.addHistory('decode', text)
-
-      if (/^https?:\/\//.test(text)) {
-        $openLinkBtn.classList.remove('hidden')
-      }
-    })
-      .catch(function (e) {
-        console.error(e)
-        $scanInput.placeholder = that.browser.i18n.getMessage('unable_to_decode_qr_code')
-      })
+    } catch (e) {
+      console.error(e)
+      $scanOutput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
+    }
   }
 
   getFilenameFromTitle (title) {
