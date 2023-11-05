@@ -9,7 +9,7 @@
     "16": "icons/qrlite.svg",
     "48": "icons/qrlite.svg"
   },
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "@qrlite",
       "strict_min_version": "57.0"
