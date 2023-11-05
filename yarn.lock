@@ -1876,11 +1876,6 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
 
-qr-scanner-wechat@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/qr-scanner-wechat/-/qr-scanner-wechat-0.1.3.tgz#f9280cea61d76e1fd2dc229d00b067f92a9d1a5f"
-  integrity sha512-d2dfaXjcgNDxaSweEljvJl6cOIMbXeyW8YijZDbRFUvVpJ672zt5i64lQSBgjvKVZZSSHE2KiRf2SAuiQa286A==
-
 queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
