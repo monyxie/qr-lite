@@ -45,9 +45,11 @@ class Popup {
   createQrCode (text, activeEcLevel, title, historyMode) {
     const that = this
     const $save = $('#save')
+    const $copy = $('#copy')
+    const $copied = $('#copied')
     const $result = $('#result')
     this.showTab('generate')
-    addClass('hidden', $save, $('#openLinkBtn'))
+    addClass('hidden', $save, $copy, $copied, $('#openLinkBtn'))
 
     $('#sourceInput').value = text
     $('#counter').innerText = '' + text.length
@@ -76,6 +78,7 @@ class Popup {
     writer.writeToDom($result, text, 300, 300, hints)
 
     $save.classList.remove('hidden')
+    $copy.classList.remove('hidden')
     this.currentTitle = title || ''
   }
 
@@ -180,27 +183,55 @@ class Popup {
     return SanitizeFilename(title).substr(0, 100) + '.png'
   }
 
+  /**
+   * @returns {Promise<string|ImageData>}
+   */
+  getPngData () {
+    return new Promise((resolve, reject) => {
+      const svg = document.querySelector('svg')
+      const img = document.createElement('img')
+      const canvas = document.createElement('canvas')
+      const xml = new XMLSerializer().serializeToString(svg)
+      const svg64 = btoa(xml)
+
+      canvas.width = svg.getBoundingClientRect().width
+      canvas.height = svg.getBoundingClientRect().height
+      img.src = 'data:image/svg+xml;base64,' + svg64
+      img.onload = function () {
+        const context = canvas.getContext('2d')
+        context.fillStyle = '#FFFFFF'
+        context.fillRect(0, 0, canvas.width, canvas.height)
+        context.drawImage(img, 0, 0)
+        resolve(canvas.toDataURL('image/png'))
+      }
+    })
+  }
+
   downloadImage () {
-    const svg = document.querySelector('svg')
-    const img = document.createElement('img')
-    const canvas = document.createElement('canvas')
-    const a = document.createElement('a')
-    const xml = new XMLSerializer().serializeToString(svg)
-    const svg64 = btoa(xml)
     const that = this
 
-    canvas.width = svg.getBoundingClientRect().width
-    canvas.height = svg.getBoundingClientRect().height
-    img.src = 'data:image/svg+xml;base64,' + svg64
-    img.onload = function () {
-      const context = canvas.getContext('2d')
-      context.fillStyle = '#FFFFFF'
-      context.fillRect(0, 0, canvas.width, canvas.height)
-      context.drawImage(img, 0, 0)
-      a.href = canvas.toDataURL('image/png')
+    this.getPngData().then(url => {
+      const a = document.createElement('a')
+      a.href = url
       a.download = that.currentTitle ? that.getFilenameFromTitle(that.currentTitle) : 'qr-code.png'
       a.click()
-    }
+    })
+  }
+
+  copyImage () {
+    const that = this
+
+    this.getPngData().then(url => {
+      const arr = Uint8Array.from(atob(url.split(',')[1]), (m) => m.codePointAt(0))
+      that.browser.clipboard.setImageData(arr.buffer, 'png').then(() => {
+        addClass('hidden', $('#copy'))
+        removeClass('hidden', $('#copied'))
+        setTimeout(() => {
+          removeClass('hidden', $('#copy'))
+          addClass('hidden', $('#copied'))
+        }, 2000)
+      })
+    })
   }
 
   renderPage () {
@@ -417,6 +448,10 @@ class Popup {
 
     $('#save').addEventListener('click', function (e) {
       that.downloadImage()
+    })
+
+    $('#copy').addEventListener('click', function (e) {
+      that.copyImage()
     })
 
     $('#scanRegion').addEventListener('click', function (e) {

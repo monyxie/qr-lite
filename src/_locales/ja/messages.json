@@ -14,6 +14,15 @@
   "save_image_btn_title": {
     "message": "このQRコードの画像を保存する"
   },
+  "copy_image_btn": {
+    "message": "画像をコピー"
+  },
+  "copy_image_btn_title": {
+    "message": "このQRコード画像をクリップボードにコピーする"
+  },
+  "copy_image_ok": {
+    "message": "コピーOK!"
+  },
   "open_url_btn": {
     "message": "URLを開く"
   },

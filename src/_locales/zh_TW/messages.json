@@ -14,6 +14,15 @@
   "save_image_btn_title": {
     "message": "儲存這張二維碼圖片"
   },
+  "copy_image_btn": {
+    "message": "複製圖片"
+  },
+  "copy_image_btn_title": {
+    "message": "複製這張二維碼圖片到剪貼簿"
+  },
+  "copy_image_ok": {
+    "message": "已複製！"
+  },
   "open_url_btn": {
     "message": "開啟網址"
   },
