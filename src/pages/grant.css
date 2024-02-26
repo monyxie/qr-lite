@@ -34,3 +34,9 @@ body {
     text-decoration: underline;
     font-family: sans-serif;
 }
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}

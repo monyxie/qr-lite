@@ -363,6 +363,7 @@ class Popup {
         // getUserMedia() failed
         removeClass('hidden', $permissionInstructions)
         addClass('hidden', $scanInstructions)
+        addClass('hidden', $scanInput)
       })
       .catch((err) => {
         console.error(`An error occurred: ${err}`)

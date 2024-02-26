@@ -150,7 +150,7 @@
 }
 
 .history .history-items li:nth-child(odd) {
-    background-color: #FBFBFB;
+    background-color: #F2F2F2;
 }
 
 .history li:hover {

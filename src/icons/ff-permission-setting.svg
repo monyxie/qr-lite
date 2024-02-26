@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="360px" height="360px" viewBox="0 0 360 360" version="1.2">
+<g id="surface187289">
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40 240 L 200 240 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 160 120 L 320 120 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40 120 C 40 120 40 80 80 80 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 40 120 C 40 120 40 160 80 160 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 80 80 C 80 80 120 80 120 120 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 80 160 C 80 160 120 160 120 120 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 240 240 C 240 240 240 200 280 200 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 240 240 C 240 240 240 280 280 280 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 280 280 C 280 280 320 280 320 240 "/>
+<path style="fill:none;stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(15.686275%,20%,18.82353%);stroke-opacity:1;stroke-miterlimit:10;" d="M 280 200 C 280 200 320 200 320 240 "/>
+</g>
+</svg>
