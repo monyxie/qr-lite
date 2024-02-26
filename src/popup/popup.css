@@ -143,6 +143,12 @@
     /*color: gray;*/
 }
 
+.history .history-items li > img {
+    height: 1rem;
+    width: 1rem;
+    vertical-align: middle;
+}
+
 .history .history-items li:nth-child(odd) {
     background-color: #FBFBFB;
 }

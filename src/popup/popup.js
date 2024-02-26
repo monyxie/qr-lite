@@ -247,7 +247,15 @@ class Popup {
         for (let i = 0; i < history.length; i++) {
           const li = document.createElement('li')
           li.title = history[i].text || ''
-          li.innerText = history[i].text || ''
+
+          const img = document.createElement('img')
+          if (history[i].type === 'decode') {
+            img.src = '../icons/scan.svg'
+          } else {
+            img.src = '../icons/generate.svg'
+          }
+          li.appendChild(img)
+          li.appendChild(document.createTextNode(' ' + (history[i].text || '')))
           ul.appendChild(li)
         }
       })
