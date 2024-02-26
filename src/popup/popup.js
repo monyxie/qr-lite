@@ -74,7 +74,6 @@ class Popup {
     const hints = new Map()
     hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
     $result.innerText = ''
-    $result.title = title || ''
     writer.writeToDom($result, text, 300, 300, hints)
 
     $save.classList.remove('hidden')
