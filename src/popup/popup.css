@@ -178,6 +178,13 @@
     grid-template-rows: 300px 25px 100px 25px;
 }
 
+.scan .instruction-screen {
+    grid-column: 1 / span 3;
+    grid-row: 1 / span 3;
+    justify-self: center;
+    align-self: center;
+}
+
 .scan .input {
     grid-column: 1 / span 3;
     grid-row: 1;
@@ -269,13 +276,15 @@
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 6px;
+    gap: 4px;
 }
 
 .tabs-item {
     box-sizing: border-box;
-    width: 32%;
     text-align: center;
     border-bottom: 2px solid #ccc;
+    flex-shrink: 1;
+    flex-grow: 1;
 }
 
 .tabs-item > a {
@@ -330,5 +339,11 @@
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
 }

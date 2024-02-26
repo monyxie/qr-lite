@@ -133,6 +133,7 @@ class Popup {
     const $positionMarker = $('#positionMarker')
 
     this.showTab('scan')
+    removeClass('hidden', '#scanInput')
 
     $openLinkBtn.classList.add('hidden')
     $scanOutput.value = ''
@@ -278,6 +279,7 @@ class Popup {
     $scanVideo.onpause = () => addClass('hidden', $scanningText)
 
     this.showTab('scan')
+    removeClass('hidden', '#scanInput')
 
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: false })
@@ -387,6 +389,7 @@ class Popup {
       $('#tab-scan').classList.add('active')
       $('#tab-history').classList.remove('active')
       $('#main').classList.add('hidden')
+      $('#scanInput').classList.add('hidden')
       $('#scan').classList.remove('hidden')
       $('#history').classList.add('hidden')
     } else if (tab === 'generate') {
