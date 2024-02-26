@@ -23,7 +23,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "file-loader": "^6.2.0",
-    "style-loader": "^3.3.3"
+    "style-loader": "^3.3.3",
+    "svg-inline-loader": "^0.8.2"
   },
   "scripts": {
     "prepare": "pnpm -C qr-scanner-wechat i && pnpm -C qr-scanner-wechat prepare && pnpm -C qr-scanner-wechat build && rm -rf src/qr-scanner-wechat && cp -r qr-scanner-wechat/dist src/qr-scanner-wechat",

@@ -41,7 +41,12 @@ module.exports = env => {
       })
     ],
     module: {
-      rules: []
+      rules: [
+        {
+          test: /\.svg$/,
+          loader: 'svg-inline-loader'
+        }
+      ]
     }
   }
 }

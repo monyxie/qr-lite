@@ -1,4 +1,6 @@
 import { createElements } from '../utils/dom'
+import copyIcon from '../icons/copy.svg'
+import openUrlIcon from '../icons/open-url.svg'
 
 class Picker {
   constructor (browser) {
@@ -184,7 +186,7 @@ class Picker {
     if (successful) {
       const btnStyle = 'display: inline-block; margin: 6px; font-size:14px; color:gray; cursor: pointer; text-decoration: underline; font-family: sans-serif;'
 
-      const copyBtn = createElements(`<a style="${btnStyle}">${that.browser.i18n.getMessage('copy_btn')}</a>`)[0]
+      const copyBtn = createElements(`<a style="${btnStyle}">${copyIcon} ${that.browser.i18n.getMessage('copy_btn')}</a>`)[0]
       copyBtn.addEventListener('click', e => {
         this.browser.runtime.sendMessage({
           action: 'ACTION_COPY_TEXT',
@@ -193,10 +195,19 @@ class Picker {
           copyBtn.innerText = that.browser.i18n.getMessage('copy_btn_copied')
         })
       })
+      const svgElement = copyBtn.querySelector('svg')
+      svgElement.style.width = '1rem'
+      svgElement.style.height = '1rem'
+      svgElement.style.verticalAlign = 'middle'
       this.domResult.appendChild(copyBtn)
 
       if (/^https?:\/\//.test(resText)) {
-        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${that.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
+        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${openUrlIcon} ${that.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
+        const svgElement = openBtn.querySelector('svg')
+        svgElement.style.width = '1rem'
+        svgElement.style.height = '1rem'
+        svgElement.style.verticalAlign = 'middle'
+
         openBtn.href = resText
         openBtn.addEventListener('click', e => {
           that.hide()
