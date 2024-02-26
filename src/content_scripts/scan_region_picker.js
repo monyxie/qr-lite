@@ -19,7 +19,7 @@ class Picker {
 
     this.domMask = createElements(`
     <div style="position: fixed; top: 0; left: 0; z-index: 2147483647; width: 100%; height: 100%;
-    box-sizing: border-box; background-color: ${this.maskColor}; border-color: ${this.maskColor}; border-style: solid; border-width: 0;">
+    box-sizing: border-box; background-color: ${this.maskColor}; border-color: ${this.maskColor}; border-style: solid; border-width: 0; cursor: crosshair">
     </div>`)[0]
 
     this.domTips = createElements(`
