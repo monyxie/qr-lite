@@ -199,6 +199,7 @@ class Picker {
       svgElement.style.width = '1rem'
       svgElement.style.height = '1rem'
       svgElement.style.verticalAlign = 'middle'
+      svgElement.style.opacity = '0.8'
       this.domResult.appendChild(copyBtn)
 
       if (/^https?:\/\//.test(resText)) {
@@ -207,6 +208,7 @@ class Picker {
         svgElement.style.width = '1rem'
         svgElement.style.height = '1rem'
         svgElement.style.verticalAlign = 'middle'
+        svgElement.style.opacity = '0.8'
 
         openBtn.href = resText
         openBtn.addEventListener('click', e => {
