@@ -11,9 +11,18 @@
 <body>
 <template id="template">
     <div class="tabs-container">
-        <div class="tabs-item active" id="tab-generate"><a><img class="icon" src="../icons/generate.svg"/> {{__MSG_tab_generate_title__}}</a></div>
-        <div class="tabs-item" id="tab-scan"><a><img class="icon" src="../icons/scan.svg"/> {{__MSG_tab_scan_title__}}</a></div>
-        <div class="tabs-item" id="tab-history"><a><img class="icon" src="../icons/history.svg"/> {{__MSG_tab_history_title__}}</a></div>
+        <div class="tabs-item active" id="tab-generate">
+            <img class="icon" src="../icons/generate.svg"/>
+            <div>{{__MSG_tab_generate_title__}}</div>
+        </div>
+        <div class="tabs-item" id="tab-scan">
+            <img class="icon" src="../icons/scan.svg"/>
+            <div>{{__MSG_tab_scan_title__}}</div>
+        </div>
+        <div class="tabs-item" id="tab-history">
+            <img class="icon" src="../icons/history.svg"/>
+            <div>{{__MSG_tab_history_title__}}</div>
+        </div>
     </div>
     <div class="container" data-role="content">
         <div class="main" id="main">
@@ -54,9 +63,11 @@
         <div class="scan hidden" id="scan">
             <p class="instructions instruction-screen" id="scanInstructions">
                 {{__MSG_scan_instructions_html__}}<br><br>{{__MSG_or__}}<br><br>
-                <a class="clickable" id="scanRegion"><img class="icon" src="../icons/scan-region.svg"/> {{__MSG_pick_region_to_scan_btn__}}</a>
+                <a class="clickable" id="scanRegion"><img class="icon" src="../icons/scan-region.svg"/>
+                    {{__MSG_pick_region_to_scan_btn__}}</a>
                 <br><br>{{__MSG_or__}}<br><br>
-                <a class="clickable" id="cameraScan"><img class="icon" src="../icons/camera.svg"/> {{__MSG_camera_scan_btn__}}</a>
+                <a class="clickable" id="cameraScan"><img class="icon" src="../icons/camera.svg"/>
+                    {{__MSG_camera_scan_btn__}}</a>
             </p>
             <p class="instructions instruction-screen hidden" id="permissionInstructions">
                 {{__MSG_grant_permissions_instructions_html__}}<br><br>
@@ -96,7 +107,8 @@
         <div class="history hidden" id="history">
             <ul class="history-items" id="history-items"></ul>
             <div class="footer actions1">
-                <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}"><img class="icon" src="../icons/trash.svg"/> {{__MSG_clear_history_btn__}}</span>
+                <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}"><img
+                        class="icon" src="../icons/trash.svg"/> {{__MSG_clear_history_btn__}}</span>
             </div>
             <div class="footer actions2">
             </div>

@@ -285,27 +285,21 @@
     border-bottom: 2px solid #ccc;
     flex-shrink: 1;
     flex-grow: 1;
-}
-
-.tabs-item > a {
     padding: 2px 0;
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #999;
     font-family: sans-serif;
     text-decoration: none;
     font-size: 16px;
     text-transform: uppercase;
     background-color: transparent;
-    border: none;
     cursor: pointer;
+    gap: 4px;
 }
 
 .tabs-item:hover {
-}
-
-.tabs-item:hover > a {
     color: #333;
 }
 
@@ -313,9 +307,6 @@
     background-color: #eee;
     font-weight: bold;
     border-bottom: 2px solid #666;
-}
-
-.tabs-item.active > a {
     color: #333;
 }
 
