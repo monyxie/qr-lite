@@ -9,13 +9,13 @@
     "message": "离线生成或扫描二维码。"
   },
   "save_image_btn": {
-    "message": "保存图片"
+    "message": "保存"
   },
   "save_image_btn_title": {
     "message": "保存这张二维码图片"
   },
   "copy_image_btn": {
-    "message": "复制图片"
+    "message": "复制"
   },
   "copy_image_btn_title": {
     "message": "复制这张二维码图片到剪贴板"

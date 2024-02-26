@@ -9,13 +9,13 @@
     "message": "離線產生或掃描二維碼。"
   },
   "save_image_btn": {
-    "message": "儲存圖片"
+    "message": "儲存"
   },
   "save_image_btn_title": {
     "message": "儲存這張二維碼圖片"
   },
   "copy_image_btn": {
-    "message": "複製圖片"
+    "message": "複製"
   },
   "copy_image_btn_title": {
     "message": "複製這張二維碼圖片到剪貼簿"

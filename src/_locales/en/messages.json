@@ -9,13 +9,13 @@
     "message": "Generate or scan QR codes offline."
   },
   "save_image_btn": {
-    "message": "Save Image"
+    "message": "Save"
   },
   "save_image_btn_title": {
     "message": "Save this QR code image"
   },
   "copy_image_btn": {
-    "message": "Copy Image"
+    "message": "Copy"
   },
   "copy_image_btn_title": {
     "message": "Copy this QR code image to the clipboard"
