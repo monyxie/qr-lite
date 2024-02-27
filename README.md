@@ -34,8 +34,8 @@ Build steps on Linux:
 
 1. Make sure you have `node`, `yarn`, `pnpm` (for building qr-scanner-wechat), and the `zip` command installed.
 1. Open terminal and cd to project root.
-1. Run `./release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release.zip`
-is the installable extension, while `qr-lite-source.zip` is the source code zip.
+1. Run `./release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release-xxxxxxxx.zip`
+is the installable extension, while `qr-lite-source-xxxxxxxx.zip` is the source code zip.
 
 ## Translations
 
