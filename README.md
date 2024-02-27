@@ -18,8 +18,7 @@ This extension only supports Firefox at the moment.
 
 ## Development
 
-Because qr-scanner-wechat's OpenCV Wasm module is bundled into a javascript file, causing said JS file to exceed Mozilla's 
-4MB JS file limit. A [modified version](https://github.com/monyxie/qr-scanner-wechat) is needed to workaround this.
+A modified version of [qr-scanner-wechat](https://github.com/monyxie/qr-scanner-wechat) is used to workaround Mozilla's 4MB JS file limit.
 
 Prerequisites: yarn, pnpm(qr-scanner-wechat)
 
@@ -33,7 +32,7 @@ Prerequisites: yarn, pnpm(qr-scanner-wechat)
 
 Build steps on Linux:
 
-1. Make sure you have Node >= v14.16.0, Yarn >= 1.22.10, and the `zip` command installed.
+1. Make sure you have `node`, `yarn`, `pnpm` (for building qr-scanner-wechat), and the `zip` command installed.
 1. Open terminal and cd to project root.
 1. Run `./release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release.zip`
 is the installable extension, while `qr-lite-source.zip` is the source code zip.
