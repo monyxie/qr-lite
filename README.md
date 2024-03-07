@@ -4,7 +4,7 @@
 
 QR Lite is a browser extension for making and scanning QR codes offline.
 
-[Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
+[![Get the addon](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png 'Get the addon')](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
 
 ## Features
 * Generate QR code for current tab in popup.
