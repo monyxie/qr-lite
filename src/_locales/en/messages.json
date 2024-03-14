@@ -143,10 +143,10 @@
     "message": "Grant camera access"
   },
   "grant_page_initial_instructions_html": {
-    "message": "When asked whether to allow QR Lite to use your camera,<br>make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>."
+    "message": "When asked whether to allow QR Lite to use your camera, make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>."
   },
   "grant_page_blocked_instructions_html": {
-    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br>To change this setting, click the <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br>After you've done that, refresh this page.",
+    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page.",
     "placeholders": {
       "icon": {
         "content": "$1"
@@ -154,7 +154,7 @@
     }
   },
   "grant_page_granted_instructions_html": {
-    "message": "QR Lite has been successfully granted permission to use the camera.<br>You may close this page now."
+    "message": "QR Lite has been successfully granted permission to use the camera.<br><br>You may close this page now."
   },
   "grant_page_refresh_btn": {
     "message": "Refresh"

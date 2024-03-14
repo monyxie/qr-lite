@@ -7,25 +7,27 @@
 <body>
 <template id="template">
     <div class="container">
-        <p id="initial">
-            {{__MSG_grant_page_initial_instructions_html__}}
-        </p>
-        <p class="hidden" id="blocked">
-            {{__MSG_grant_page_blocked_instructions_html__}}
-            <br>
-            <br>
-            <a class="clickable" id="refresh">
-                <img class="icon" src="../icons/refresh.svg"/> {{__MSG_grant_page_refresh_btn__}}
-            </a>
-        </p>
-        <p class="hidden" id="granted">
-            {{__MSG_grant_page_granted_instructions_html__}}
-            <br>
-            <br>
-            <a class="clickable" id="close">
-                <img class="icon" src="../icons/close.svg"/> {{__MSG_grant_page_close_btn__}}
-            </a>
-        </p>
+        <div class="box">
+            <p id="initial">
+                {{__MSG_grant_page_initial_instructions_html__}}
+            </p>
+            <p class="hidden" id="blocked">
+                {{__MSG_grant_page_blocked_instructions_html__}}
+                <br>
+                <br>
+                <a class="clickable" id="refresh">
+                    <img class="icon" src="../icons/refresh.svg"/> {{__MSG_grant_page_refresh_btn__}}
+                </a>
+            </p>
+            <p class="hidden" id="granted">
+                {{__MSG_grant_page_granted_instructions_html__}}
+                <br>
+                <br>
+                <a class="clickable" id="close">
+                    <img class="icon" src="../icons/close.svg"/> {{__MSG_grant_page_close_btn__}}
+                </a>
+            </p>
+        </div>
     </div>
 </template>
 <script defer src="grant.js"></script>

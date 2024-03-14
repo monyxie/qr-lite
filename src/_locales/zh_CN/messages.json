@@ -143,13 +143,13 @@
     "message": "授予摄像头权限"
   },
   "grant_page_initial_instructions_html": {
-    "message": "当被询问是否要允许 QR Lite 使用您的摄像头时，<br>请确保<strong>“记住此决定”</strong>已被勾选，然后点击<strong>“允许”</strong>。"
+    "message": "当被询问是否要允许 QR Lite 使用您的摄像头时，请确保<strong>“记住此决定”</strong>已被勾选，然后点击<strong>“允许”</strong>。"
   },
   "grant_page_blocked_instructions_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br>如要修改该设定，请点击地址栏左边的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br>完成该操作后，请刷新本页面。"
+    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
   },
   "grant_page_granted_instructions_html": {
-    "message": "QR Lite 已经成功获得摄像头权限。<br>您现在可以关闭本页面了。"
+    "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
   },
   "grant_page_refresh_btn": {
     "message": "刷新"
