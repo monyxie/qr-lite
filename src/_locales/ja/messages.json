@@ -96,7 +96,7 @@
     "message": "カメラでスキャン"
   },
   "scan_region_picker_tips_html": {
-    "message": "これで、QRライトのスキャン領域の選択モードになりました。マウスをドラッグしてスキャン領域を選択してください。<Esc>を押してキャンセルします。"
+    "message": "これで、QRライトのスキャン領域の選択モードになりました。マウスをドラッグしてスキャン領域を選択してください。&lt;Esc&gt;を押してキャンセルします。"
   },
   "copy_btn": {
     "message": "コピー"
@@ -146,7 +146,12 @@
     "message": "QRライトにカメラを使用することを許可するかどうか尋ねられたら、<strong>「今後も同様に処理する」</strong>のチェックボックスにチェックを入れてから、<strong>「許可する」</strong>をクリックしてください。"
   },
   "grant_page_blocked_instructions_html": {
-    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
+    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。",
+    "placeholders": {
+      "icon": {
+        "content": "$1"
+      }
+    }
   },
   "grant_page_granted_instructions_html": {
     "message": "QRライトはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"

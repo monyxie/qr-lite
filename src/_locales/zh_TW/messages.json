@@ -113,8 +113,8 @@
   "decoding_failed": {
     "message": "掃碼失敗：$MSG$",
     "placeholders": {
-      "msg" : {
-        "content" : "$1"
+      "msg": {
+        "content": "$1"
       }
     }
   },
@@ -146,7 +146,12 @@
     "message": "當被詢問是否要允許 QR Lite 使用您的攝影機時，請確保<strong>「記住此決定」</strong>已勾中，然後單擊<strong>「允許」</strong>。"
   },
   "grant_page_blocked_instructions_html": {
-    "message": "QR Lite 的攝影機權限似乎已經被設定爲<strong>封鎖</strong>了。<br><br>若要改變此設定，請點擊網址列左邊的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 權限小圖標，然後將「使用攝影機」旁邊的「已封鎖」狀態<strong>移除</strong>。<br><br>完成此操作後，請重新載入本頁。"
+    "message": "QR Lite 的攝影機權限似乎已經被設定爲<strong>封鎖</strong>了。<br><br>若要改變此設定，請點擊網址列左邊的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 權限小圖標，然後將「使用攝影機」旁邊的「已封鎖」狀態<strong>移除</strong>。<br><br>完成此操作後，請重新載入本頁。",
+    "placeholders": {
+      "icon": {
+        "content": "$1"
+      }
+    }
   },
   "grant_page_granted_instructions_html": {
     "message": "QR Lite 已经成功获得攝影機權限。<br><br>現在您可以關閉本頁了。"
