@@ -1,6 +1,7 @@
 import { createElements } from '../utils/dom'
 import copyIcon from '../icons/copy.svg'
 import openUrlIcon from '../icons/open-url.svg'
+import { isUrl } from '../utils/str'
 
 class Picker {
   constructor (browser) {
@@ -202,7 +203,7 @@ class Picker {
       svgElement.style.opacity = '0.8'
       this.domResult.appendChild(copyBtn)
 
-      if (/^https?:\/\//.test(resText)) {
+      if (isUrl(resText)) {
         const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${openUrlIcon} ${that.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
         const svgElement = openBtn.querySelector('svg')
         svgElement.style.width = '1rem'

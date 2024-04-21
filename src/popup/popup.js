@@ -8,6 +8,7 @@ import { scan } from '../qr-scanner-wechat/index.mjs'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
 import { renderTemplate } from '../utils/i18n'
+import { isUrl } from '../utils/str'
 
 class Popup {
   constructor (browser, chrome) {
@@ -169,7 +170,7 @@ class Popup {
 
         await that.addHistory('decode', text)
 
-        if (/^https?:\/\//.test(text)) {
+        if (isUrl(text)) {
           $openLinkBtn.classList.remove('hidden')
         }
       }
@@ -342,7 +343,7 @@ class Popup {
 
             that.addHistory('decode', text)
 
-            if (/^https?:\/\//.test(text)) {
+            if (isUrl(text)) {
               $openLinkBtn.classList.remove('hidden')
             }
 
