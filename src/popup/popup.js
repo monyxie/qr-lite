@@ -422,7 +422,7 @@ class Popup {
 
     $('#history').addEventListener('click', function (e) {
       if (e.target.tagName.toUpperCase() === 'LI') {
-        that.createQrCode(e.target.innerText, that.ecLevel, undefined, 'now')
+        that.createQrCode(e.target.title, that.ecLevel, undefined, 'now')
       }
     })
     $('#clear-history-btn').addEventListener('click', function (e) {
