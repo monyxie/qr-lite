@@ -170,5 +170,8 @@
   },
   "unable_to_decode_qr_code": {
     "message": "QRコードをデコードできません"
+  },
+  "browser_action_command_desription": {
+    "message": "Show popup"
   }
 }
