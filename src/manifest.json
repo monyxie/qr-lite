@@ -44,5 +44,10 @@
     "scripts": [
       "background/background.js"
     ]
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "description": "__MSG_browser_action_command_desription__"
+    }
   }
 }
