@@ -170,5 +170,8 @@
   },
   "unable_to_decode_qr_code": {
     "message": "二維碼解碼失敗"
+  },
+  "browser_action_command_desription": {
+    "message": "Show popup"
   }
 }
