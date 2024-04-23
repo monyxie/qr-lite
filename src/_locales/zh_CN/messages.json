@@ -170,5 +170,8 @@
   },
   "unable_to_decode_qr_code": {
     "message": "二维码解码失败"
+  },
+  "browser_action_command_desription": {
+    "message": "显示弹出窗口"
   }
 }
