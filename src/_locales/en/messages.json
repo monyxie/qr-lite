@@ -170,5 +170,8 @@
   },
   "unable_to_decode_qr_code": {
     "message": "Unable to decode QR code"
+  },
+  "browser_action_command_desription": {
+    "message": "Show popup"
   }
 }
