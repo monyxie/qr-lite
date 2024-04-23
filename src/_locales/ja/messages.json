@@ -172,6 +172,6 @@
     "message": "QRコードをデコードできません"
   },
   "browser_action_command_desription": {
-    "message": "Show popup"
+    "message": "ポップアップを表示"
   }
 }
