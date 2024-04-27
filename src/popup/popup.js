@@ -4,11 +4,11 @@ import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import SanitizeFilename from 'sanitize-filename'
 import Storage from '../utils/storage'
 import Tabs from '../utils/tabs'
-import { scan } from '../qr-scanner-wechat/index.mjs'
+import { scan } from '../utils/qrcode'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
 import { renderTemplate } from '../utils/i18n'
-import { isUrl } from '../utils/str'
+import { isUrl, sleep } from '../utils/misc'
 
 class Popup {
   constructor (browser, chrome) {
@@ -108,19 +108,20 @@ class Popup {
     return relPos
   }
 
-  createRectMarker (rect, containerEl, imgEl) {
-    const containerRect = containerEl.getBoundingClientRect()
-    const imgRect = imgEl.getBoundingClientRect()
-    const relPos = this.getRelativePosition(imgRect, containerRect)
-    const scaleRatioX = imgRect.width / imgEl.naturalWidth
-    const scaleRatioY = imgRect.width / imgEl.naturalWidth
+  createRectMarker (vertices, containerEl, imgEl) {
     const $positionMarker = $('#positionMarker')
+    const points = vertices.map(v => v.join(',')).join(' ')
 
-    $positionMarker.style.top = ((rect.y * scaleRatioY) + relPos.top) + 'px'
-    $positionMarker.style.left = ((rect.x * scaleRatioX) + relPos.left) + 'px'
-    $positionMarker.style.width = (rect.width * scaleRatioX) + 'px'
-    $positionMarker.style.height = (rect.height * scaleRatioY) + 'px'
-    $positionMarker.classList.remove('hidden')
+    $positionMarker.innerHTML =
+    `<svg
+      class="qr-position-marker"
+      aria-hidden="true"
+      fill="lightgreen"
+      viewBox="0 0 ${imgEl.naturalWidth} ${imgEl.naturalHeight}"
+      xmlns="http://www.w3.org/2000/svg">
+      <polygon fill="lightgreen" fill-opacity="0.5" stroke="green" stroke-width="3%" stroke-opacity="0.5" points="${points.trim()}" />
+   </svg>`
+    removeClass('hidden', $positionMarker)
   }
 
   async decodeImage (url) {
@@ -154,18 +155,18 @@ class Popup {
     // causing qr-code-wechat to get img.width/img.height values of zero
     try {
       const result = await scan($scanInputImage.cloneNode())
-      const text = result.text
-      const rect = result.rect // only with qr-scanner-wechat
-
-      if (typeof text === 'undefined') {
+      if (result.length < 1) {
         $scanOutput.placeholder = that.browser.i18n.getMessage('unable_to_decode_qr_code')
       } else {
+        const text = result[0].content
+        const vertices = result[0].vertices
+
         $scanOutput.placeholder = ''
         $scanOutput.value = text
         $scanOutput.select()
 
-        if (rect) {
-          that.createRectMarker(rect, $scanInput, $scanInputImage)
+        if (vertices) {
+          that.createRectMarker(vertices, $scanInput, $scanInputImage)
         }
 
         await that.addHistory('decode', text)
@@ -262,7 +263,7 @@ class Popup {
       })
   }
 
-  startCameraScan () {
+  async startCameraScan () {
     const that = this
     const $scanOutput = $('#scanOutput')
     const $scanInputImage = $('#scanInputImage')
@@ -282,97 +283,102 @@ class Popup {
     this.showTab('scan')
     removeClass('hidden', '#scanInput')
 
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then((stream) => {
-        addClass('hidden', $scanInstructions, $scanInputImage, $positionMarker, $cameraRescanBtn)
-        removeClass('hidden', $scanOutput)
-        $scanOutput.placeholder = ''
-        $scanOutput.value = ''
-        $scanVideo.classList.remove('hidden')
-        $scanVideo.srcObject = stream
-        $scanVideo.play()
-        const canvas = document.createElement('canvas')
+    let stream
+    try {
+      stream = await navigator.mediaDevices
+        .getUserMedia({ video: true, audio: false })
+    } catch (e) {
+      // getUserMedia() failed
+      removeClass('hidden', $permissionInstructions)
+      addClass('hidden', $scanInstructions)
+      addClass('hidden', $scanInput)
+      return
+    }
 
-        const stop = () => {
-          $scanVideo.pause()
-          addClass('hidden', $scanningText)
-          addClass('hidden', $scanVideo)
-          $scanVideo.srcObject = undefined
-          stream.getTracks().forEach(function (track) {
-            track.stop()
-          })
+    try {
+      addClass('hidden', $scanInstructions, $scanInputImage, $positionMarker, $cameraRescanBtn)
+      removeClass('hidden', $scanOutput)
+      $scanOutput.placeholder = ''
+      $scanOutput.value = ''
+      $scanVideo.classList.remove('hidden')
+      $scanVideo.srcObject = stream
+      $scanVideo.play()
+      const canvas = document.createElement('canvas')
+
+      let result
+      while (true) {
+        if (that.currentTab !== 'scan') {
+          break
         }
 
-        const scanVideo = function () {
-          if (that.currentTab !== 'scan') {
-            stop()
-            return
-          }
-
-          if (!$scanVideo.videoHeight || !$scanVideo.videoWidth || $scanVideo.paused) {
-            setTimeout(scanVideo, 100)
-            return
-          }
-
-          canvas.width = 300
-          canvas.height = $scanVideo.videoHeight / ($scanVideo.videoWidth / canvas.width)
-
-          const context = canvas.getContext('2d')
-          context.drawImage($scanVideo, 0, 0, canvas.width, canvas.height)
-
-          scan(canvas).then(function (result) {
-            const text = result.text
-            const rect = result.rect
-
-            if (typeof text === 'undefined' || text === '') {
-              setTimeout(scanVideo, 100)
-              return
-            }
-
-            stop()
-
-            $scanOutput.placeholder = ''
-            $scanOutput.value = text
-            $scanOutput.select()
-
-            $scanInputImage.classList.remove('hidden')
-            $scanInputImage.src = canvas.toDataURL('image/png')
-
-            $cameraRescanBtn.classList.remove('hidden')
-
-            that.addHistory('decode', text)
-
-            if (isUrl(text)) {
-              $openLinkBtn.classList.remove('hidden')
-            }
-
-            $scanInputImage.decode().then(() => {
-              if (rect) {
-                that.createRectMarker(rect, $scanInput, $scanInputImage)
-              }
-            })
-          })
-            .catch(function (e) {
-              console.error(e)
-              setTimeout(scanVideo, 100)
-            })
+        if (!$scanVideo.videoHeight || !$scanVideo.videoWidth || $scanVideo.paused) {
+          await sleep(100)
+          continue
         }
 
-        scanVideo()
-      }, () => {
-        // getUserMedia() failed
-        removeClass('hidden', $permissionInstructions)
-        addClass('hidden', $scanInstructions)
-        addClass('hidden', $scanInput)
+        canvas.width = 300
+        canvas.height = $scanVideo.videoHeight / ($scanVideo.videoWidth / canvas.width)
+
+        const context = canvas.getContext('2d')
+        context.drawImage($scanVideo, 0, 0, canvas.width, canvas.height)
+
+        try {
+          result = await scan(canvas)
+        } catch (e) {
+          console.error(e)
+        }
+
+        if (result && result.length > 0) {
+          break
+        }
+
+        await sleep(100)
+      }
+
+      if (!result) {
+        return
+      }
+
+      const text = result[0].content
+      const rect = result[0].vertices
+
+      $scanOutput.placeholder = ''
+      $scanOutput.value = text
+      $scanOutput.select()
+
+      $scanInputImage.classList.remove('hidden')
+      $scanInputImage.src = canvas.toDataURL('image/png')
+
+      $cameraRescanBtn.classList.remove('hidden')
+
+      that.addHistory('decode', text)
+
+      if (isUrl(text)) {
+        $openLinkBtn.classList.remove('hidden')
+      }
+
+      $scanInputImage.decode().then(() => {
+        if (rect) {
+          that.createRectMarker(rect, $scanInput, $scanInputImage)
+        }
       })
-      .catch((err) => {
-        console.error(`An error occurred: ${err}`)
-      })
+    } catch (err) {
+      console.error(`An error occurred: ${err}`)
+    } finally {
+      if (stream) {
+        stream.getTracks().forEach(function (track) {
+          track.stop()
+        })
+      }
+      $scanVideo.pause()
+      $scanVideo.srcObject = undefined
+      addClass('hidden', $scanningText)
+      addClass('hidden', $scanVideo)
+    }
   }
 
   showTab (tab) {
-    if (tab !== scan) {
+    if (tab !== 'scan') {
       addClass('hidden', '#scanOutput', '#scanInputImage', '#cameraRescanBtn', '#openLinkBtn', '#scanVideo', '#positionMarker', '#permissionInstructions')
       removeClass('hidden', '#scanInput', '#scanInstructions')
     }

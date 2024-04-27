@@ -1,6 +1,6 @@
 import { openPopup } from '../utils/open-popup'
-import { scan } from '../qr-scanner-wechat/index.mjs'
 import { addHistory } from '../utils/history'
+import { scan } from '../utils/qrcode'
 
 class Background {
   constructor (browser, navigator) {
@@ -24,10 +24,9 @@ class Background {
     await img.decode()
     try {
       const result = await scan(img)
-      if (typeof result.text === 'undefined') {
-        throw new Error('empty result from decoder')
+      if (result.length) {
+        await addHistory('decode', result[0].content)
       }
-      await addHistory('decode', result.text)
       return {
         image: dataUri,
         result

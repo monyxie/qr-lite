@@ -27,7 +27,6 @@
     "svg-inline-loader": "^0.8.2"
   },
   "scripts": {
-    "prepare": "pnpm -C qr-scanner-wechat i && pnpm -C qr-scanner-wechat prepare && pnpm -C qr-scanner-wechat build && rm -rf src/qr-scanner-wechat && cp -r qr-scanner-wechat/dist src/qr-scanner-wechat",
     "dev": "webpack watch --mode development",
     "dev:chrome": "webpack watch --mode development --env browser=chrome",
     "build": "webpack build --mode development",

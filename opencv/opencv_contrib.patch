@@ -1,0 +1,33 @@
+Index: modules/wechat_qrcode/src/wechat_qrcode.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/modules/wechat_qrcode/src/wechat_qrcode.cpp b/modules/wechat_qrcode/src/wechat_qrcode.cpp
+--- a/modules/wechat_qrcode/src/wechat_qrcode.cpp	(revision c7602a8f74205e44389bd6a4e8d727d32e7e27b4)
++++ b/modules/wechat_qrcode/src/wechat_qrcode.cpp	(date 1714235540283)
+@@ -54,8 +54,6 @@
+     if (!detector_caffe_model_path.empty() && !detector_prototxt_path.empty()) {
+         // initialize detector model (caffe)
+         p->use_nn_detector_ = true;
+-        CV_Assert(utils::fs::exists(detector_prototxt_path));
+-        CV_Assert(utils::fs::exists(detector_caffe_model_path));
+         p->detector_ = make_shared<SSDDetector>();
+         auto ret = p->detector_->init(detector_prototxt_path, detector_caffe_model_path);
+         CV_Assert(ret == 0);
+@@ -70,8 +68,6 @@
+     if (!super_resolution_prototxt_path.empty() && !super_resolution_caffe_model_path.empty()) {
+         p->use_nn_sr_ = true;
+         // initialize dnn model (caffe format)
+-        CV_Assert(utils::fs::exists(super_resolution_prototxt_path));
+-        CV_Assert(utils::fs::exists(super_resolution_caffe_model_path));
+         auto ret = p->super_resolution_model_->init(super_resolution_prototxt_path,
+                                                     super_resolution_caffe_model_path);
+         CV_Assert(ret == 0);
+@@ -244,4 +240,4 @@
+     return {0.5, 1.0};
+ }
+ }  // namespace wechat_qrcode
+-}  // namespace cv
+\ No newline at end of file
++}  // namespace cv

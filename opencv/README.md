@@ -1,0 +1,1 @@
+In this directory is a script for building a custom OpenCV wasm module that contains the WeChat QR Code module.

@@ -2,7 +2,7 @@
 
 <img alt="QR Lite icon" src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
 
-QR Lite is a browser extension for making and scanning QR codes offline.
+QR Lite is a browser extension for generating and scanning QR codes offline.
 
 [![Get the addon](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png 'Get the addon')](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
 
@@ -20,9 +20,6 @@ This extension only supports Firefox at the moment.
 
 ## Development
 
-A modified version of [qr-scanner-wechat](https://github.com/monyxie/qr-scanner-wechat) is used to workaround Mozilla's
-4MB JS file limit.
-
 Prerequisites: yarn, pnpm(qr-scanner-wechat)
 
 1. Clone this repo and sync the submodules.
@@ -31,6 +28,8 @@ Prerequisites: yarn, pnpm(qr-scanner-wechat)
 1. Run `yarn dev` to watch source files and automatically build the add-on when they change.
 1. Load the temporary add-on by going to `about:debugging#/runtime/this-firefox`, then click "Load Temporary Add-on.."
    and choose `dist/manifest.json` in the project root.
+
+Use the script in `/opencv` to update the pre-built OpenCV library and wasm.
 
 ## Building
 
@@ -55,13 +54,9 @@ Help us translate QR Lite into your language at [Crowdin](https://crowdin.com/pr
 
 ## Credits
 
-This extension
-utilizes [ZXing for JS](https://github.com/zxing-js/library) / [qr-scanner-wechat](https://github.com/antfu/qr-scanner-wechat)
-to encode/decode QR codes.
-
-This extension was originally a fork of
-[Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/)
-which was written by Francesco De Stefano.
+- [ZXing for JS](https://github.com/zxing-js/library) for generating QR code.
+- [OpenCV + wechat_qrcode](https://docs.opencv.org/4.9.0/dd/d63/group__wechat__qrcode.html) for decoding QR code.
+- [Javascript QR Code](https://addons.mozilla.org/zh-CN/firefox/addon/javascript-qr-code/) for the initial code base.
 
 ## License
 

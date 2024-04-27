@@ -33,7 +33,9 @@ module.exports = env => {
           { from: 'src/pages/grant.html', to: 'pages/grant.html' },
           { from: 'src/popup/popup.css', to: 'popup/popup.css' },
           { from: 'src/pages/grant.css', to: 'pages/grant.css' },
-          { from: 'src/qr-scanner-wechat/opencv.wasm', to: 'assets/opencv.wasm' }
+          { from: 'src/opencv/opencv_js.wasm', to: 'opencv_js.wasm' },
+          { from: 'src/opencv/models', to: 'opencv/models' },
+          { from: 'src/opencv/opencv.js', to: 'opencv/opencv.js' }
         ]
       }),
       new webpack.DefinePlugin({
@@ -47,6 +49,21 @@ module.exports = env => {
           loader: 'svg-inline-loader'
         }
       ]
+    },
+    resolve: {
+      alias: {},
+      extensions: ['.ts', '.js'],
+      fallback: {
+        fs: false,
+        tls: false,
+        net: false,
+        path: false,
+        zlib: false,
+        http: false,
+        https: false,
+        stream: false,
+        crypto: false
+      }
     }
   }
 }

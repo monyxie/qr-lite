@@ -12,5 +12,6 @@
     },
     "globals": {
         "QRLITE_BROWSER": true
-    }
+    },
+    "ignorePatterns": ["src/opencv/"]
 }

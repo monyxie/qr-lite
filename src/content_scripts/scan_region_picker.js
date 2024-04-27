@@ -1,7 +1,7 @@
 import { createElements } from '../utils/dom'
 import copyIcon from '../icons/copy.svg'
 import openUrlIcon from '../icons/open-url.svg'
-import { isUrl } from '../utils/str'
+import { isUrl } from '../utils/misc'
 
 class Picker {
   constructor (browser) {
@@ -161,8 +161,8 @@ class Picker {
       })
       successful = !res.err
       resImage = res.image
-      if (successful) {
-        resText = res.result.text
+      if (successful && res.result && res.result.length) {
+        resText = res.result[0].content
       } else {
         resInfo = that.browser.i18n.getMessage('unable_to_decode_qr_code')
       }

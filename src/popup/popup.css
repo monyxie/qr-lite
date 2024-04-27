@@ -198,6 +198,10 @@
     align-items: center;
 }
 
+.scan .input-box {
+    position: relative;
+}
+
 .scan .scan-input-image {
     max-width: 300px;
     max-height: 300px;
@@ -227,12 +231,16 @@
 
 .scan .qr-position-marker-wrapper {
     position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
 
 .scan .qr-position-marker {
-    background-color: white;
-    border-radius: 100%;
-    opacity: 0.95;
+    /*background-color: white;*/
+    /*border-radius: 100%;*/
+    /*opacity: 0.95;*/
 }
 
 .scan .necker {
