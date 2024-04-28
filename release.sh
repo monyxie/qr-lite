@@ -1,6 +1,19 @@
 #!/bin/sh
 set -x # echo on
 
+pushd "$(dirname "$0")"
+
+if output=$(git status --porcelain) && [ -z "$output" ]; then
+  echo "Working tree clean."
+else
+  read -p "Working tree dirty, new files won't be included. Continue(y)? " -n 1 -r
+  echo    # (optional) move to a new line
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+      exit 1;
+  fi
+fi
+
 PROJECT_ROOT="$(pwd)"
 DIST_DIR="$PROJECT_ROOT/dist"
 RELEASE_DIR="$PROJECT_ROOT/release"
@@ -28,5 +41,5 @@ if [ $? -eq 0 ]; then
   zip -r "$RELEASE_FILE" ./*
 
   cd "$PROJECT_ROOT"
-  zip -r "$SOURCE_FILE" src .eslintrc.json package.json README.md release.sh webpack.config.js yarn.lock
+  git ls-tree --name-only -r HEAD | zip -r "$SOURCE_FILE" -@
 fi
