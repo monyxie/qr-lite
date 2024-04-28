@@ -119,7 +119,7 @@ class Popup {
       fill="lightgreen"
       viewBox="0 0 ${imgEl.naturalWidth} ${imgEl.naturalHeight}"
       xmlns="http://www.w3.org/2000/svg">
-      <polygon fill="lightgreen" fill-opacity="0.5" stroke="green" stroke-width="3%" stroke-opacity="0.5" points="${points.trim()}" />
+      <polygon fill="green" fill-opacity="0.3" stroke="#88FF00" stroke-width="1%" stroke-linejoin="round" stroke-opacity="0.9" points="${points.trim()}"></polygon>
    </svg>`
     removeClass('hidden', $positionMarker)
   }
