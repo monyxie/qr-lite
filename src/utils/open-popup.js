@@ -1,4 +1,4 @@
-const openPopupFirefox = (options) => window.browser.browserAction.openPopup(options)
+const openPopupFirefox = (options) => window.browser.action.openPopup(options)
 
 const openPopupChrome = (options) => {
   return new Promise((resolve, reject) => {

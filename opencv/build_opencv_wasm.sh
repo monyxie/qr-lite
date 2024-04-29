@@ -39,6 +39,7 @@ emcmake python opencv/platforms/js/build_js.py build_wasm \
             --disable_single_file \
             --cmake_option='-DBUILD_LIST=wechat_qrcode,js' \
             --cmake_option='-DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules' \
+            --build_flags='-sDYNAMIC_EXECUTION=0' \
             --config=opencv_js.config.py
 
 mkdir -p ../src/opencv/models
