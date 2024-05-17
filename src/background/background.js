@@ -61,8 +61,10 @@ function getMenuItems () {
       contexts: ['page', 'action'],
       onclick: function (info, tab) {
         window.browser.scripting.executeScript({
-          file: '../content_scripts/scan_region_picker.js',
-          tabId: tab.id
+          files: ['../content_scripts/scan_region_picker.js'],
+          target: {
+            tabId: tab.id
+          }
         })
       }
     },
