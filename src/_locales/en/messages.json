@@ -127,7 +127,7 @@
   "camera_scan_btn": {
     "message": "Scan with camera"
   },
-  "camera_rescan_btn_label": {
+  "rescan_btn_label": {
     "message": "New scan"
   },
   "camera_rescan_btn_title": {

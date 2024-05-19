@@ -127,7 +127,7 @@
   "camera_scan_btn": {
     "message": "用攝影機掃描"
   },
-  "camera_rescan_btn_label": {
+  "rescan_btn_label": {
     "message": "重新掃描"
   },
   "camera_rescan_btn_title": {

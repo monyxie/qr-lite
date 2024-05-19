@@ -1,14 +1,41 @@
 import { createElements } from '../utils/dom'
 import copyIcon from '../icons/copy.svg'
 import openUrlIcon from '../icons/open-url.svg'
+import refreshIcon from '../icons/refresh.svg'
 import { isUrl } from '../utils/misc'
 
 class Picker {
   constructor (browser) {
     this.browser = browser
     this.x1 = this.x2 = this.y1 = this.y2 = null
-    this.isDragging = false
+    this.isScanning = false
     this.maskColor = 'rgba(0,0,0,0.5)'
+
+    // size of the scan region and related stuff
+    this.winW = window.innerWidth
+    this.winH = window.innerHeight
+    this.minFactor = 0.2
+    this.maxFactor = 10
+    this.numLevel = 20
+    this.distance = Math.pow(this.maxFactor / this.minFactor, 1 / this.numLevel)
+    this.baseScanSize = this.getBaseScanSize()
+    this.setScaleLevel(10)
+  }
+
+  getBaseScanSize () {
+    return Math.max(this.winW, this.winH) / 10
+  }
+
+  setScaleLevel (value) {
+    if (value < 0) {
+      value = 0
+    }
+    if (value > this.numLevel) {
+      value = this.numLevel
+    }
+    this.scaleLevel = value
+    const factor = this.minFactor * Math.pow(this.distance, this.scaleLevel)
+    this.scanSize = this.baseScanSize * factor
   }
 
   init () {
@@ -19,6 +46,27 @@ class Picker {
         this.hide()
       }
     }
+    this.resizeHandler = (event) => {
+      const winW = window.innerWidth
+      const winH = window.innerHeight
+      const ncX = ((this.x1 + this.x2) / 2) * winW / this.winW
+      const ncY = ((this.y1 + this.y2) / 2) * winH / this.winH
+      this.winW = winW
+      this.winH = winH
+
+      const oldBaseScanSize = this.baseScanSize
+      this.baseScanSize = this.getBaseScanSize()
+
+      const r = this.baseScanSize / oldBaseScanSize
+      this.setScaleLevel(this.scaleLevel * r)
+      const nhW = (this.x2 - this.x1) * r / 2
+      const nhH = (this.y2 - this.y1) * r / 2
+      this.x1 = ncX - nhW
+      this.y1 = ncY - nhH
+      this.x2 = ncX + nhW
+      this.y2 = ncY + nhH
+      this.updateSpotLight(true)
+    }
 
     this.domMask = createElements(`
     <div style="position: fixed; top: 0; left: 0; z-index: 2147483647; width: 100%; height: 100%;
@@ -26,127 +74,138 @@ class Picker {
     </div>`)[0]
 
     this.domTips = createElements(`
-    <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #333 1px 0 10px;
+    <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #000 0 1px 10px, #000 0 1px 10px, #000 0 1px 10px;
     user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px;">
     ${this.browser.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
 
-    this.domRect = createElements('<div style="width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; display: none"></div>')[0]
+    this.domRect = createElements('<div style="background-color: transparent; width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; box-shadow: black 0 0 10px;"></div>')[0]
     this.domX = createElements(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
-    line-height: 36px; right: 0; top: 0;margin: 4px; color: white;  text-shadow: #333 1px 0 10px;
+    line-height: 36px; right: 0; top: 0;margin: 4px; color: white;  text-shadow: #000 0 0 10px, #000 0 0 10px, #000 0 0 10px;
     font-family: sans-serif; font-size: 36px; cursor: pointer;">&times;</div>`)[0]
 
     this.domMask.appendChild(this.domRect)
     this.domMask.appendChild(this.domTips)
     this.domMask.appendChild(this.domX)
 
-    this.domX.addEventListener('click', () => this.hide())
-
-    this.domMask.addEventListener('mousedown', event => {
-      // only handle left-click
-      if (event.button !== 0) {
-        return
-      }
-      this.isMouseDown = true
-      this.startX = event.clientX
-      this.startY = event.clientY
-      this.domTips.style.display = 'none'
+    this.domX.addEventListener('click', (event) => {
+      event.preventDefault()
+      event.stopPropagation()
+      this.hide()
     })
-    this.domMask.addEventListener('mouseup', event => {
-      // only handle left-click
-      if (event.button !== 0) {
-        return
-      }
-      this.isMouseDown = false
-      if (this.isDragging) {
-        this.isDragging = false
-        this.updateSelection()
+    this.domMask.addEventListener('click', event => {
+      if (!this.isScanning) {
+        this.isScanning = true
         this.scan()
       }
     })
-
-    this.domMask.addEventListener('mousemove', event => {
-      // this.domTips.style.top = event.clientY + 'px'
-      // this.domTips.style.left = (event.clientX + 20) + 'px'
-      if (this.isMouseDown) {
-        this.domRect.innerHTML = ''
-        this.domRect.style.display = 'block'
-        this.isDragging = true
-        this.currentX = event.clientX
-        this.currentY = event.clientY
-        this.updateSelection()
+    this.domMask.addEventListener('mouseenter', event => {
+      if (!this.isScanning) {
+        this.updateSpotLight(true, event.clientX, event.clientY)
       }
     })
+    this.domMask.addEventListener('mousemove', event => {
+      if (!this.isScanning) {
+        this.updateSpotLight(true, event.clientX, event.clientY)
+      }
+    })
+    this.domMask.addEventListener('wheel', event => {
+      event.preventDefault()
+      event.stopPropagation()
 
-    document.addEventListener('keyup', this.keyupHandler)
+      if (this.isScanning) {
+        return
+      }
+      this.setScaleLevel(this.scaleLevel + (event.deltaY > 0 ? -1 : 1))
+      this.updateSpotLight(true, event.clientX, event.clientY, '.1s')
+    })
+  }
+
+  updateSpotLight (show, x, y, w, h, animate) {
+    if (show) {
+      if (x && y) {
+        if (!w || !h) {
+          w = h = this.scanSize
+        }
+
+        this.x1 = Math.floor(x - w / 2)
+        this.y1 = Math.floor(y - h / 2)
+        this.x2 = Math.floor(this.x1 + w)
+        this.y2 = Math.floor(this.y1 + h)
+      }
+
+      if (animate) {
+        // this.domMask.style.transitionProperty = 'border-width, top, left, width, height'
+        this.domMask.style.transitionProperty = 'all'
+        this.domMask.style.transitionDuration = animate
+        this.domMask.style.transitionTimingFunction = 'linear'
+      } else {
+        this.domMask.style.transitionProperty = ''
+        this.domMask.style.transitionDuration = ''
+        this.domMask.style.transitionTimingFunction = ''
+      }
+      const mr = this.domMask.getBoundingClientRect()
+      this.domMask.style.backgroundColor = 'transparent'
+      this.domMask.style.borderTopWidth = Math.max(0, this.y1) + 'px'
+      this.domMask.style.borderBottomWidth = Math.max(0, mr.height - this.y2) + 'px'
+      this.domMask.style.borderLeftWidth = Math.max(0, this.x1) + 'px'
+      this.domMask.style.borderRightWidth = Math.max(0, mr.width - this.x2) + 'px'
+    } else {
+      this.domMask.style.backgroundColor = this.maskColor
+      this.domMask.style.borderTopWidth = '0'
+      this.domMask.style.borderBottomWidth = '0'
+      this.domMask.style.borderLeftWidth = '0'
+      this.domMask.style.borderRightWidth = '0'
+    }
   }
 
   show () {
     if (!this.isShown) {
       this.isShown = true
-      // This line disables scrolling when the picker is active
-      // but it causes issues in Google Image search so it's commented out for now
-      // document.scrollingElement.style.overflow = 'hidden'
+      this.isScanning = false
       document.body.appendChild(this.domMask)
       this.domTips.style.display = 'block'
-      this.domRect.style.display = 'none'
+      document.addEventListener('keyup', this.keyupHandler)
+      window.addEventListener('resize', this.resizeHandler)
     }
-  }
-
-  updateSelection () {
-    if (!this.startX || !this.currentX) {
-      this.domMask.style.borderWidth = '0'
-      this.domMask.style.backgroundColor = this.maskColor
-      return
-    }
-    if (this.startX < this.currentX) {
-      this.x1 = this.startX
-      this.x2 = this.currentX
-    } else {
-      this.x2 = this.startX
-      this.x1 = this.currentX
-    }
-
-    if (this.startY < this.currentY) {
-      this.y1 = this.startY
-      this.y2 = this.currentY
-    } else {
-      this.y2 = this.startY
-      this.y1 = this.currentY
-    }
-
-    this.domMask.style.backgroundColor = 'transparent'
-    this.domMask.style.borderTopWidth = this.y1 + 'px'
-    this.domMask.style.borderBottomWidth = (this.domMask.getBoundingClientRect().height - this.y2) + 'px'
-    this.domMask.style.borderLeftWidth = this.x1 + 'px'
-    this.domMask.style.borderRightWidth = (this.domMask.getBoundingClientRect().width - this.x2) + 'px'
   }
 
   hide () {
     if (this.isShown) {
-      this.isMouseDown = false
-      this.isDragging = false
+      document.removeEventListener('keydown', this.keyupHandler)
+      window.removeEventListener('resize', this.resizeHandler)
+
+      this.isScanning = false
       this.isShown = false
-      this.currentX = this.currentY = this.x1 = this.x2 = this.y1 = this.y2 = null
+      this.x1 = this.x2 = this.y1 = this.y2 = null
       this.domRect.innerHTML = ''
       if (this.domResult && this.domResult.parentElement) {
         this.domResult.parentElement.removeChild(this.domResult)
+        this.domResult = null
       }
       this.domMask.parentElement.removeChild(this.domMask)
-      this.updateSelection()
-      document.scrollingElement.style.overflow = ''
-      document.removeEventListener('keydown', this.keyupHandler)
+      this.updateSpotLight(false)
     }
+  }
+
+  rescan () {
+    this.isScanning = false
+    this.domRect.innerHTML = ''
+    if (this.domResult && this.domResult.parentElement) {
+      this.domResult.parentElement.removeChild(this.domResult)
+      this.domResult = null
+    }
+    this.updateSpotLight(true)
   }
 
   async scan () {
     const that = this
     if (this.domResult && this.domResult.parentElement) {
       this.domResult.parentElement.removeChild(this.domResult)
-      this.domResult = undefined
+      this.domResult = null
     }
     let resImage
     let resText = ''
-    let resInfo = ''
+    let err = ''
     let successful = false
     const rect = {
       x: document.documentElement.scrollLeft + this.x1,
@@ -164,86 +223,88 @@ class Picker {
       if (successful && res.result && res.result.length) {
         resText = res.result[0].content
       } else {
-        resInfo = that.browser.i18n.getMessage('unable_to_decode_qr_code')
+        err = that.browser.i18n.getMessage('unable_to_decode_qr_code')
       }
     } catch (e) {
       console.error(e)
-      resInfo = e.toString()
+      err = e.toString()
     }
+    this.showResult(err, resText, resImage, successful)
+  }
 
-    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 0;
-    margin:0; padding: 0; background-color: white; word-break: break-all; position: absolute; top: 0; left: 0; width: 100%"></div>`)[0]
-    const textEl = createElements(`<textarea style="font-size: 14px; font-family: sans-serif; width: calc(100% - 12px);
+  showResult (err, content, image, successful) {
+    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 4px;
+    margin:0; padding: 0; background-color: white; word-break: break-all; position: fixed;
+    top: 55%; left: 50%; transform: translateX(-50%); width: 25rem; max-width: 90%;
+    box-shadow: black 0 0 10px; outline: white solid 2px"></div>`)[0]
+    const textEl = createElements(`<textarea rows="6" style="font-size: medium; font-family: sans-serif; width: calc(100% - 12px);
       word-break: break-all; border-width: 1px 0; border-color: #CCCCCC; border-style: solid; padding: 1px; margin: 6px; resize: none;
-      color: #333; background-color: #F8F8F8; box-sizing: border-box;" placeholder="${resInfo}" readonly>${resText}</textarea>`)[0]
+      color: #333; background-color: #F8F8F8; box-sizing: border-box;" placeholder="${err}" readonly>${content}</textarea>`)[0]
     this.domResult.appendChild(textEl)
 
-    if (resImage) {
-      const img = createElements('<img style="position: static; display: block; width: 100%; height: 100%" alt="">')[0]
-      img.src = resImage
+    const rr = this.domRect.getBoundingClientRect()
+    const mr = this.domMask.getBoundingClientRect()
+
+    if (image) {
+      const [aW, aH] = [rr.width, rr.height]
+      const scaleX = aW < mr.width * 0.8 ? (aW < mr.width * 0.5 ? mr.width * 0.5 / aW : 1) : mr.width * 0.8 / aW
+      const scaleY = aH < mr.height / 2 * 0.8 ? (aH < mr.height * 0.25 ? mr.height * 0.25 / aH : 1) : mr.height / 2 * 0.8 / aH
+      const scale = Math.min(scaleX, scaleY)
+      const [bW, bH] = [aW * scale, aH * scale]
+
+      const img = createElements('<img style="display: block; width: 100%; height: 100%">')[0]
+      img.src = image
       this.domRect.appendChild(img)
+      this.updateSpotLight(true, mr.width / 2, mr.height / 4, bW, bH, '.1s')
     }
 
-    if (successful) {
+    const createBtn = (icon, text, href, handler) => {
       const btnStyle = 'display: inline-block; margin: 6px; font-size:14px; color:gray; cursor: pointer; text-decoration: underline; font-family: sans-serif;'
-
-      const copyBtn = createElements(`<a style="${btnStyle}">${copyIcon} ${that.browser.i18n.getMessage('copy_btn')}</a>`)[0]
-      copyBtn.addEventListener('click', e => {
-        this.browser.runtime.sendMessage({
-          action: 'ACTION_COPY_TEXT',
-          text: resText
-        }).then(() => {
-          copyBtn.innerText = that.browser.i18n.getMessage('copy_btn_copied')
-        })
-      })
-      const svgElement = copyBtn.querySelector('svg')
+      const btn = createElements(`<a style="${btnStyle}">${icon} ${text}</a>`)[0]
+      if (href) {
+        btn.href = href
+        btn.target = '_blank'
+      }
+      if (handler) {
+        btn.addEventListener('click', handler)
+      }
+      const svgElement = btn.querySelector('svg')
       svgElement.style.width = '1rem'
       svgElement.style.height = '1rem'
       svgElement.style.verticalAlign = 'middle'
       svgElement.style.opacity = '0.8'
-      this.domResult.appendChild(copyBtn)
+      return btn
+    }
 
-      if (isUrl(resText)) {
-        const openBtn = createElements(`<a style="${btnStyle}" target="_blank">${openUrlIcon} ${that.browser.i18n.getMessage('open_link_btn')}</a>`)[0]
-        const svgElement = openBtn.querySelector('svg')
-        svgElement.style.width = '1rem'
-        svgElement.style.height = '1rem'
-        svgElement.style.verticalAlign = 'middle'
-        svgElement.style.opacity = '0.8'
-
-        openBtn.href = resText
-        openBtn.addEventListener('click', e => {
-          that.hide()
+    if (successful && content) {
+      this.domResult.appendChild(createBtn(copyIcon, this.browser.i18n.getMessage('copy_btn'), '', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        this.browser.runtime.sendMessage({
+          action: 'ACTION_COPY_TEXT',
+          text: content
+        }).then(() => {
+          e.target.innerText = this.browser.i18n.getMessage('copy_btn_copied')
         })
-        this.domResult.appendChild(openBtn)
+      }))
+
+      if (isUrl(content)) {
+        this.domResult.appendChild(createBtn(openUrlIcon, this.browser.i18n.getMessage('open_link_btn'), content, e => {
+          e.stopPropagation()
+          this.hide()
+        }))
       }
     }
+
+    this.domResult.appendChild(createBtn(refreshIcon, this.browser.i18n.getMessage('rescan_btn_label'), content, e => {
+      e.preventDefault()
+      e.stopPropagation()
+      this.rescan()
+    }))
 
     this.domResult.addEventListener('mousedown', e => e.stopPropagation())
-
-    // Show the scan result on top of the image if there's enough space, otherwise show it at the top of the page
-    if ((this.x2 - this.x1 < 200) || (this.y2 - this.y1 < 50)) {
-      const rect = this.domMask.getBoundingClientRect()
-      if (rect.width - this.x2 > this.x1 && rect.height - this.y2 > this.y1) {
-        this.domResult.style.top = null
-        this.domResult.style.left = null
-        this.domResult.style.right = '0'
-        this.domResult.style.bottom = '0'
-      } else {
-        this.domResult.style.top = '0'
-        this.domResult.style.left = '0'
-        this.domResult.style.right = null
-        this.domResult.style.bottom = null
-      }
-      this.domResult.style.position = 'fixed'
-      this.domResult.style.margin = '4px'
-      this.domResult.style.width = '50%'
-      this.domResult.style.borderRadius = '4px'
-      this.domResult.style.outline = 'white solid 2px'
-      this.domMask.appendChild(this.domResult)
-    } else {
-      this.domRect.appendChild(this.domResult)
-    }
+    this.domMask.appendChild(this.domResult)
+    textEl.select()
   }
 }
 
