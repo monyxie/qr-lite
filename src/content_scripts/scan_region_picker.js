@@ -8,6 +8,7 @@ import { apiNs } from '../utils/compat'
 class Picker {
   constructor () {
     this.x1 = this.x2 = this.y1 = this.y2 = null
+    this.mouseX = this.mouseY = null
     this.isScanning = false
     this.maskColor = 'rgba(0,0,0,0.5)'
 
@@ -77,13 +78,13 @@ class Picker {
 
     this.domTips = createElements(`
     <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #000 0 1px 10px, #000 0 1px 10px, #000 0 1px 10px;
-    user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px;">
+    user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px; transition: opacity linear 0.1s">
     ${apiNs.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
 
     this.domRect = createElements('<div style="background-color: transparent; width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; box-shadow: black 0 0 10px;"></div>')[0]
     this.domX = createElements(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
     line-height: 36px; right: 0; top: 0;margin: 4px; color: white;  text-shadow: #000 0 0 10px, #000 0 0 10px, #000 0 0 10px;
-    font-family: sans-serif; font-size: 36px; cursor: pointer;">&times;</div>`)[0]
+    font-family: sans-serif; font-size: 36px; cursor: pointer; transition: opacity linear 0.1s">&times;</div>`)[0]
 
     this.domMask.appendChild(this.domRect)
     this.domMask.appendChild(this.domTips)
@@ -102,11 +103,15 @@ class Picker {
     })
     this.domMask.addEventListener('mouseenter', event => {
       if (!this.isScanning) {
+        this.mouseX = event.clientX
+        this.mouseY = event.clientY
         this.updateSpotLight(true, event.clientX, event.clientY)
       }
     })
     this.domMask.addEventListener('mousemove', event => {
       if (!this.isScanning) {
+        this.mouseX = event.clientX
+        this.mouseY = event.clientY
         this.updateSpotLight(true, event.clientX, event.clientY)
       }
     })
@@ -151,6 +156,8 @@ class Picker {
       this.domMask.style.borderBottomWidth = Math.max(0, mr.height - this.y2) + 'px'
       this.domMask.style.borderLeftWidth = Math.max(0, this.x1) + 'px'
       this.domMask.style.borderRightWidth = Math.max(0, mr.width - this.x2) + 'px'
+
+      this.hideOrShowUiElements()
     } else {
       this.domMask.style.backgroundColor = this.maskColor
       this.domMask.style.borderTopWidth = '0'
@@ -158,6 +165,47 @@ class Picker {
       this.domMask.style.borderLeftWidth = '0'
       this.domMask.style.borderRightWidth = '0'
     }
+  }
+
+  hideOrShowUiElements () {
+    const mouseRect = { x: this.mouseX, y: this.mouseY, width: 0, height: 0 }
+    const spotlightRect = { x: this.x1, y: this.y1, width: this.x2 - this.x1, height: this.y2 - this.y1 }
+
+    const tipsRect = this.domTips.getBoundingClientRect()
+    const shouldHideTips = !this.doRectanglesOverlap(tipsRect, mouseRect) &&
+      this.doRectanglesOverlap(tipsRect, spotlightRect)
+    this.domTips.style.opacity = shouldHideTips ? '0' : '1'
+
+    const xRect = this.domX.getBoundingClientRect()
+    const shouldHideX = !this.doRectanglesOverlap(xRect, mouseRect) &&
+      this.doRectanglesOverlap(xRect, spotlightRect)
+    this.domX.style.opacity = shouldHideX ? '0' : '1'
+  }
+
+  doRectanglesOverlap (rect1, rect2) {
+    // Get the coordinates of the rectangles
+    const rect1Left = rect1.x
+    const rect1Right = rect1.x + rect1.width
+    const rect1Top = rect1.y
+    const rect1Bottom = rect1.y + rect1.height
+
+    const rect2Left = rect2.x
+    const rect2Right = rect2.x + rect2.width
+    const rect2Top = rect2.y
+    const rect2Bottom = rect2.y + rect2.height
+
+    // Check if one rectangle is on the left side of the other
+    if (rect1Right < rect2Left || rect2Right < rect1Left) {
+      return false
+    }
+
+    // Check if one rectangle is above the other
+    if (rect1Bottom < rect2Top || rect2Bottom < rect1Top) {
+      return false
+    }
+
+    // If none of the above conditions are met, the rectangles overlap
+    return true
   }
 
   show () {
