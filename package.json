@@ -31,7 +31,7 @@
     "build": "webpack build --mode development",
     "build:chrome": "webpack build --mode development --env browser=chrome",
     "lint": "eslint src",
-    "release": "./release.sh",
+    "release": "./release.sh firefox",
     "release:chrome": "./release.sh chrome"
   }
 }

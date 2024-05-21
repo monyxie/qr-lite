@@ -40,7 +40,7 @@ HASH="$(git rev-parse HEAD | cut -c1-8)"
 RELEASE_FILE="$RELEASE_DIR/qr-lite-release-$BROWSER-$HASH.zip"
 SOURCE_FILE="$RELEASE_DIR/qr-lite-source-$BROWSER-$HASH.zip"
 
-yarn install && yarn run eslint src && yarn run webpack --mode production
+yarn install && yarn run eslint src && yarn run webpack --mode production --env browser="$BROWSER"
 
 if [ $? -eq 0 ]; then
 
