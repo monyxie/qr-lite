@@ -1,12 +1,12 @@
-import { createElements } from '../utils/dom'
+import { createElement, createElements } from '../utils/dom'
 import copyIcon from '../icons/copy.svg'
 import openUrlIcon from '../icons/open-url.svg'
 import refreshIcon from '../icons/refresh.svg'
 import { isUrl } from '../utils/misc'
+import { apiNs } from '../utils/compat'
 
 class Picker {
-  constructor (browser) {
-    this.browser = browser
+  constructor () {
     this.x1 = this.x2 = this.y1 = this.y2 = null
     this.isScanning = false
     this.maskColor = 'rgba(0,0,0,0.5)'
@@ -16,14 +16,15 @@ class Picker {
     this.winH = window.innerHeight
     this.minFactor = 0.2
     this.maxFactor = 10
-    this.numLevel = 20
-    this.distance = Math.pow(this.maxFactor / this.minFactor, 1 / this.numLevel)
+    this.numLevel = 30
+    // this.distance = Math.pow(this.maxFactor / this.minFactor, 1 / this.numLevel)
+    this.distance = (this.maxFactor - this.minFactor) / this.numLevel
     this.baseScanSize = this.getBaseScanSize()
     this.setScaleLevel(10)
   }
 
   getBaseScanSize () {
-    return Math.max(this.winW, this.winH) / 10
+    return Math.min(this.winW, this.winH) / 10 * 1.1
   }
 
   setScaleLevel (value) {
@@ -34,7 +35,8 @@ class Picker {
       value = this.numLevel
     }
     this.scaleLevel = value
-    const factor = this.minFactor * Math.pow(this.distance, this.scaleLevel)
+    // const factor = this.minFactor * Math.pow(this.distance, this.scaleLevel)
+    const factor = this.minFactor + (this.distance * this.scaleLevel)
     this.scanSize = this.baseScanSize * factor
   }
 
@@ -76,7 +78,7 @@ class Picker {
     this.domTips = createElements(`
     <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #000 0 1px 10px, #000 0 1px 10px, #000 0 1px 10px;
     user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px;">
-    ${this.browser.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
+    ${apiNs.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
 
     this.domRect = createElements('<div style="background-color: transparent; width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; box-shadow: black 0 0 10px;"></div>')[0]
     this.domX = createElements(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
@@ -116,14 +118,14 @@ class Picker {
         return
       }
       this.setScaleLevel(this.scaleLevel + (event.deltaY > 0 ? -1 : 1))
-      this.updateSpotLight(true, event.clientX, event.clientY, '.1s')
+      this.updateSpotLight(true, event.clientX, event.clientY, undefined, undefined, '.1s')
     })
   }
 
   updateSpotLight (show, x, y, w, h, animate) {
     if (show) {
-      if (x && y) {
-        if (!w || !h) {
+      if (typeof x !== 'undefined' && typeof y !== 'undefined') {
+        if (typeof w === 'undefined' || typeof h === 'undefined') {
           w = h = this.scanSize
         }
 
@@ -137,7 +139,7 @@ class Picker {
         // this.domMask.style.transitionProperty = 'border-width, top, left, width, height'
         this.domMask.style.transitionProperty = 'all'
         this.domMask.style.transitionDuration = animate
-        this.domMask.style.transitionTimingFunction = 'linear'
+        this.domMask.style.transitionTimingFunction = 'easeOut'
       } else {
         this.domMask.style.transitionProperty = ''
         this.domMask.style.transitionDuration = ''
@@ -198,7 +200,6 @@ class Picker {
   }
 
   async scan () {
-    const that = this
     if (this.domResult && this.domResult.parentElement) {
       this.domResult.parentElement.removeChild(this.domResult)
       this.domResult = null
@@ -208,26 +209,32 @@ class Picker {
     let err = ''
     let successful = false
     const rect = {
-      x: document.documentElement.scrollLeft + this.x1,
-      y: document.documentElement.scrollTop + this.y1,
+      x: this.x1,
+      y: this.y1,
       width: this.x2 - this.x1,
       height: this.y2 - this.y1
     }
+    const scroll = {
+      left: document.documentElement.scrollLeft,
+      top: document.documentElement.scrollTop
+    }
     try {
-      const res = await this.browser.runtime.sendMessage({
+      const res = await apiNs.runtime.sendMessage({
         action: 'ACTION_CAPTURE',
-        rect
+        rect,
+        scroll,
+        devicePixelRatio: window.devicePixelRatio
       })
       successful = !res.err
       resImage = res.image
       if (successful && res.result && res.result.length) {
         resText = res.result[0].content
       } else {
-        err = that.browser.i18n.getMessage('unable_to_decode_qr_code')
+        err = apiNs.i18n.getMessage('unable_to_decode_qr_code')
       }
     } catch (e) {
-      console.error(e)
-      err = e.toString()
+      console.log('error: ', e)
+      err = e ? e.toString() : 'Unknown error'
     }
     this.showResult(err, resText, resImage, successful)
   }
@@ -252,7 +259,7 @@ class Picker {
       const scale = Math.min(scaleX, scaleY)
       const [bW, bH] = [aW * scale, aH * scale]
 
-      const img = createElements('<img style="display: block; width: 100%; height: 100%">')[0]
+      const img = createElement('<img style="display: block; width: 100%; height: 100%">')
       img.src = image
       this.domRect.appendChild(img)
       this.updateSpotLight(true, mr.width / 2, mr.height / 4, bW, bH, '.1s')
@@ -260,7 +267,11 @@ class Picker {
 
     const createBtn = (icon, text, href, handler) => {
       const btnStyle = 'display: inline-block; margin: 6px; font-size:14px; color:gray; cursor: pointer; text-decoration: underline; font-family: sans-serif;'
-      const btn = createElements(`<a style="${btnStyle}">${icon} ${text}</a>`)[0]
+      const btn = createElement(`<a style="${btnStyle}"></a>`)
+      const svg = createElement(icon)
+      svg.style.marginRight = '0.1rem'
+      btn.appendChild(svg)
+      btn.appendChild(document.createTextNode(text))
       if (href) {
         btn.href = href
         btn.target = '_blank'
@@ -277,26 +288,23 @@ class Picker {
     }
 
     if (successful && content) {
-      this.domResult.appendChild(createBtn(copyIcon, this.browser.i18n.getMessage('copy_btn'), '', e => {
+      this.domResult.appendChild(createBtn(copyIcon, apiNs.i18n.getMessage('copy_btn'), '', e => {
         e.preventDefault()
         e.stopPropagation()
-        this.browser.runtime.sendMessage({
-          action: 'ACTION_COPY_TEXT',
-          text: content
-        }).then(() => {
-          e.target.innerText = this.browser.i18n.getMessage('copy_btn_copied')
+        navigator.clipboard.writeText(content).then((res) => {
+          e.target.innerText = apiNs.i18n.getMessage('copy_btn_copied')
         })
       }))
 
       if (isUrl(content)) {
-        this.domResult.appendChild(createBtn(openUrlIcon, this.browser.i18n.getMessage('open_link_btn'), content, e => {
+        this.domResult.appendChild(createBtn(openUrlIcon, apiNs.i18n.getMessage('open_link_btn'), content, e => {
           e.stopPropagation()
           this.hide()
         }))
       }
     }
 
-    this.domResult.appendChild(createBtn(refreshIcon, this.browser.i18n.getMessage('rescan_btn_label'), content, e => {
+    this.domResult.appendChild(createBtn(refreshIcon, apiNs.i18n.getMessage('rescan_btn_label'), content, e => {
       e.preventDefault()
       e.stopPropagation()
       this.rescan()
@@ -310,7 +318,7 @@ class Picker {
 
 if (!window._qrLite_RegionPicker) {
   // eslint-disable-next-line no-undef
-  window._qrLite_RegionPicker = new Picker(browser)
+  window._qrLite_RegionPicker = new Picker()
   window._qrLite_RegionPicker.init()
 }
 

@@ -14,17 +14,19 @@ export class QrCodeInfo {
 export class OpenCvQrCodeDecoder {
   /**
    */
-  constructor () {
-    this.ready = this.init()
+  constructor (cv) {
+    this.ready = this.init(cv)
   }
 
   /**
-   * @param models {{dw:string, sw:string}}
+   * @param cv
    * @returns {Promise<void>}
    */
-  async init () {
-    let cv = import('../opencv/opencv')
-    // WASM
+  async init (cv) {
+    if (!cv) {
+      cv = import('../opencv/opencv')
+    }
+
     if (cv instanceof Promise) {
       cv = await cv
       console.log(cv.getBuildInformation())
@@ -50,7 +52,6 @@ export class OpenCvQrCodeDecoder {
     } catch (e) {
       console.error(e)
     }
-    console.log(this.qrcode_detector)
   }
 
   /**
@@ -87,13 +88,17 @@ export class OpenCvQrCodeDecoder {
   }
 }
 
+export function initDecoder (cv) {
+  decoder = new OpenCvQrCodeDecoder(cv)
+}
+
 /**
  * @param imageData canvas element/canvas Id/image element/ImageData
  * @return {Promise<QrCodeInfo[]>}
  */
 export async function scan (imageData) {
   if (!decoder) {
-    decoder = new OpenCvQrCodeDecoder()
+    initDecoder()
   }
   await decoder.ready
   return decoder.decode(imageData)

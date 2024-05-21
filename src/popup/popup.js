@@ -2,8 +2,7 @@ import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
 import { BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import SanitizeFilename from 'sanitize-filename'
-import Storage from '../utils/storage'
-import Tabs from '../utils/tabs'
+import { apiNs, clipboard, storage } from '../utils/compat'
 import { scan } from '../utils/qrcode'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
@@ -11,10 +10,7 @@ import { renderTemplate } from '../utils/i18n'
 import { isUrl, sleep } from '../utils/misc'
 
 class Popup {
-  constructor (browser, chrome) {
-    this.browser = browser
-    this.chrome = chrome
-
+  constructor () {
     this.renderPage()
 
     this.ecLevel = ECLevel.M
@@ -82,38 +78,12 @@ class Popup {
     this.currentTitle = title || ''
   }
 
-  getPopupOptions () {
-    const that = this
-    return new Promise(function (resolve, reject) {
-      that.chrome.runtime.getBackgroundPage((backgroundPage) => {
-        if (backgroundPage && backgroundPage.qrLitePopupOptions) {
-          const options = backgroundPage.qrLitePopupOptions
-          backgroundPage.qrLitePopupOptions = null
-          resolve(options)
-        } else {
-          resolve(null)
-        }
-      })
-    })
-  }
-
-  getRelativePosition (rect1, rect2) {
-    const relPos = {}
-
-    relPos.top = rect1.top - rect2.top
-    relPos.right = rect1.right - rect2.right
-    relPos.bottom = rect1.bottom - rect2.bottom
-    relPos.left = rect1.left - rect2.left
-
-    return relPos
-  }
-
   createRectMarker (vertices, containerEl, imgEl) {
     const $positionMarker = $('#positionMarker')
     const points = vertices.map(v => v.join(',')).join(' ')
 
     $positionMarker.innerHTML =
-    `<svg
+      `<svg
       class="qr-position-marker"
       aria-hidden="true"
       fill="lightgreen"
@@ -140,7 +110,6 @@ class Popup {
     $openLinkBtn.classList.add('hidden')
     $scanOutput.value = ''
     $scanOutput.classList.remove('hidden')
-    $scanOutput.placeholder = this.browser.i18n.getMessage('decoding')
 
     $scanInputImage.src = url
     $scanInputImage.classList.remove('hidden')
@@ -156,7 +125,7 @@ class Popup {
     try {
       const result = await scan($scanInputImage.cloneNode())
       if (result.length < 1) {
-        $scanOutput.placeholder = that.browser.i18n.getMessage('unable_to_decode_qr_code')
+        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
       } else {
         const text = result[0].content
         const vertices = result[0].vertices
@@ -177,7 +146,7 @@ class Popup {
       }
     } catch (e) {
       console.error(e)
-      $scanOutput.placeholder = that.browser.i18n.getMessage('decoding_failed', e.toString())
+      $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', e.toString())
     }
   }
 
@@ -186,9 +155,9 @@ class Popup {
   }
 
   /**
-   * @returns {Promise<string|ImageData>}
+   * @returns {Promise<HTMLCanvasElement>}
    */
-  getPngData () {
+  createCanvasForQrCode () {
     return new Promise((resolve, reject) => {
       const svg = document.querySelector('svg')
       const img = document.createElement('img')
@@ -204,7 +173,7 @@ class Popup {
         context.fillStyle = '#FFFFFF'
         context.fillRect(0, 0, canvas.width, canvas.height)
         context.drawImage(img, 0, 0)
-        resolve(canvas.toDataURL('image/png'))
+        resolve(canvas)
       }
     })
   }
@@ -212,20 +181,18 @@ class Popup {
   downloadImage () {
     const that = this
 
-    this.getPngData().then(url => {
+    this.createCanvasForQrCode().then(canvas => {
       const a = document.createElement('a')
-      a.href = url
+      a.href = canvas.toDataURL('image/png')
       a.download = that.currentTitle ? that.getFilenameFromTitle(that.currentTitle) : 'qr-code.png'
       a.click()
     })
   }
 
   copyImage () {
-    const that = this
-
-    this.getPngData().then(url => {
-      const arr = Uint8Array.from(atob(url.split(',')[1]), (m) => m.codePointAt(0))
-      that.browser.clipboard.setImageData(arr.buffer, 'png').then(() => {
+    this.createCanvasForQrCode()
+      .then(canvas => clipboard.copyPng(canvas))
+      .then(() => {
         addClass('hidden', $('#copy'))
         removeClass('hidden', $('#copied'))
         setTimeout(() => {
@@ -233,7 +200,6 @@ class Popup {
           addClass('hidden', $('#copied'))
         }, 2000)
       })
-    })
   }
 
   renderPage () {
@@ -319,7 +285,9 @@ class Popup {
         canvas.width = 300
         canvas.height = $scanVideo.videoHeight / ($scanVideo.videoWidth / canvas.width)
 
-        const context = canvas.getContext('2d')
+        // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
+        // This will affect all subsequent operations on the same canvas
+        const context = canvas.getContext('2d', { willReadFrequently: true })
         context.drawImage($scanVideo, 0, 0, canvas.width, canvas.height)
 
         try {
@@ -457,7 +425,7 @@ class Popup {
           return
       }
 
-      Storage.set({
+      storage.set({
         ecLevel: that.ecLevel.toString()
       })
 
@@ -473,12 +441,17 @@ class Popup {
     })
 
     $('#scanRegion').addEventListener('click', function (e) {
-      that.browser.tabs.executeScript({
-        file: '../content_scripts/scan_region_picker.js'
-      })
+      apiNs.tabs.query({ active: true, currentWindow: true })
+        .then(tabs => tabs[0].id)
+        .then(tabId => {
+          apiNs.scripting.executeScript({
+            files: ['content_scripts/scan_region_picker.js'],
+            target: { tabId }
+          })
+        })
 
       // close self (popup)
-      window.close()
+      // window.close()
     })
 
     $('#cameraScan').addEventListener('click', function (e) {
@@ -486,7 +459,7 @@ class Popup {
     })
 
     $('#openLinkBtn').addEventListener('click', function (e) {
-      Tabs.create({
+      apiNs.tabs.create({
         url: $('#scanOutput').value,
         active: true
       })
@@ -494,13 +467,13 @@ class Popup {
 
     $('#grantPermissionsBtn').addEventListener('click', () => {
       // close self (popup)
-      that.browser.tabs.create({
+      apiNs.tabs.create({
         url: '../pages/grant.html'
       })
       window.close()
     })
 
-    Storage.get('ecLevel')
+    storage.get('ecLevel')
       .then(function (results) {
         // console.log('got ecLevel from storage: ' + JSON.stringify(results))
         if (results.ecLevel) {
@@ -511,12 +484,11 @@ class Popup {
           }
         }
 
-        that.getPopupOptions()
+        apiNs.runtime.sendMessage({ action: 'ACTION_GET_POPUP_OPTIONS' })
           .then(function (options) {
-            // console.log('options', options)
             if (options === null) {
               return new Promise(function (resolve, reject) {
-                Tabs.query({ active: true, currentWindow: true })
+                apiNs.tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
                     // console.log('tabs', tabs)
                     resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
@@ -547,5 +519,5 @@ class Popup {
   }
 }
 
-window.__popup = (new Popup(window.browser || window.chrome, window.chrome))
+window.__popup = new Popup()
 window.__popup.init()

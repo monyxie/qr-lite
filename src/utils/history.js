@@ -1,8 +1,8 @@
-import Storage from './storage'
+import { storage } from './compat'
 
 export async function getHistory () {
   try {
-    const results = await Storage.get('history')
+    const results = await storage.get('history')
     if (results.history) {
       return JSON.parse(results.history)
     }
@@ -13,7 +13,7 @@ export async function getHistory () {
 }
 
 export async function clearHistory () {
-  await Storage.set({
+  await storage.set({
     history: '[]'
   })
 }
@@ -37,7 +37,7 @@ export async function addHistory (type, text) {
     history = history.slice(history.length - 100, history.length)
   }
 
-  await Storage.set({
+  await storage.set({
     history: JSON.stringify(history)
   })
 }

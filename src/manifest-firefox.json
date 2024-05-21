@@ -12,16 +12,18 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "@qrlite",
-      "strict_min_version": "57.0"
+      "strict_min_version": "109.0"
     }
   },
   "permissions": [
-    "tabs",
     "activeTab",
     "contextMenus",
     "storage",
     "clipboardWrite",
     "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "action": {
     "default_icon": "icons/qrlite-light.svg",
@@ -40,11 +42,11 @@
     ]
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src *; img-src * data:; style-src 'self';"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data:; style-src 'self';"
   },
   "background": {
     "scripts": [
-      "background/background.js"
+      "background.js"
     ]
   },
   "commands": {

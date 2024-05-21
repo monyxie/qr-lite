@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extension_name__",
+  "short_name": "__MSG_extension_short_name__",
+  "description": "__MSG_extension_description__",
+  "version": "2.10.0",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/qrlite-16.png",
+    "32": "icons/qrlite-32.png",
+    "64": "icons/qrlite-64.png",
+    "128": "icons/qrlite-128.png",
+    "256": "icons/qrlite-256.png",
+    "512": "icons/qrlite-512.png",
+    "1024": "icons/qrlite-1024.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "clipboardWrite",
+    "scripting"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/qrlite-light-16.png",
+      "32": "icons/qrlite-light-32.png",
+      "64": "icons/qrlite-light-64.png",
+      "128": "icons/qrlite-light-128.png",
+      "256": "icons/qrlite-light-256.png",
+      "512": "icons/qrlite-light-512.png",
+      "1024": "icons/qrlite-light-1024.png"
+    },
+    "default_popup": "popup/popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data:; style-src 'self';"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "description": "__MSG_browser_action_command_desription__"
+    }
+  }
+}

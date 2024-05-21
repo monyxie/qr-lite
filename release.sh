@@ -1,12 +1,29 @@
-#!/bin/sh
+#!/bin/bash
+
+# this script generates a release zip ball and a source code zip ball for the specified browser
+# specify the browser in the first argument (firefox/chrome)
+
 set -x # echo on
 
-pushd "$(dirname "$0")"
+BROWSER="$1"
+
+case "$BROWSER" in
+  firefox)
+    ;;
+  chrome)
+    ;;
+  *)
+    echo "You need to specify which browser to build for - pass 'firefox' or 'chrome' as the first argument."
+    exit 1
+    ;;
+esac
+
+pushd "$(dirname "$0")" || exit
 
 if output=$(git status --porcelain) && [ -z "$output" ]; then
   echo "Working tree clean."
 else
-  read -p "Working tree dirty, new files won't be included. Continue(y)? " -n 1 -r
+  read -p "Working tree dirty, new files won't be included. Continue(y/N)? " -n 1 -r
   echo    # (optional) move to a new line
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
@@ -15,13 +32,13 @@ else
 fi
 
 PROJECT_ROOT="$(pwd)"
-DIST_DIR="$PROJECT_ROOT/dist"
+DIST_DIR="$PROJECT_ROOT/dist/$BROWSER"
 RELEASE_DIR="$PROJECT_ROOT/release"
 
 HASH="$(git rev-parse HEAD | cut -c1-8)"
 
-RELEASE_FILE="$RELEASE_DIR/qr-lite-release-$HASH.zip"
-SOURCE_FILE="$RELEASE_DIR/qr-lite-source-$HASH.zip"
+RELEASE_FILE="$RELEASE_DIR/qr-lite-release-$BROWSER-$HASH.zip"
+SOURCE_FILE="$RELEASE_DIR/qr-lite-source-$BROWSER-$HASH.zip"
 
 yarn install && yarn run eslint src && yarn run webpack --mode production
 
@@ -37,9 +54,9 @@ if [ $? -eq 0 ]; then
     rm "$SOURCE_FILE"
   fi
 
-  cd "$DIST_DIR"
+  cd "$DIST_DIR" || exit
   zip -r "$RELEASE_FILE" ./*
 
-  cd "$PROJECT_ROOT"
+  cd "$PROJECT_ROOT" || exit
   git ls-tree --name-only -r HEAD | zip -r "$SOURCE_FILE" -@
 fi

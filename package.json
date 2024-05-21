@@ -1,7 +1,6 @@
 {
   "name": "qr-lite",
   "version": "1.0.0",
-  "main": "data/js/app.js",
   "repository": "git@github.com:monyxie/qr-lite.git",
   "author": "Mony Xie <monyxie@gmail.com>",
   "license": "MIT",
@@ -32,6 +31,7 @@
     "build": "webpack build --mode development",
     "build:chrome": "webpack build --mode development --env browser=chrome",
     "lint": "eslint src",
-    "release": "./release.sh"
+    "release": "./release.sh",
+    "release:chrome": "./release.sh chrome"
   }
 }

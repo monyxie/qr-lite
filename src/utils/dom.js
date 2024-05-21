@@ -4,6 +4,10 @@ export function createElements (html) {
   return container.children
 }
 
+export function createElement (html) {
+  return createElements(html)[0]
+}
+
 export function query (selector) {
   return document.querySelector(selector)
 }

@@ -5,14 +5,15 @@ const CopyPlugin = require('copy-webpack-plugin')
 module.exports = env => {
   const browser = env.browser || 'firefox'
   console.log('browser: ', browser)
-  const manifestFile = browser === 'chrome' ? 'manifest-chrome.json' : 'manifest.json'
+  const manifestFile = browser === 'firefox' ? 'manifest-firefox.json' : 'manifest-chrome.json'
 
   return {
     devtool: false,
     entry: {
       popup: { import: './src/popup/popup.js', filename: 'popup/popup.js' },
       grant: { import: './src/pages/grant.js', filename: 'pages/grant.js' },
-      background: { import: './src/background/background.js', filename: 'background/background.js' },
+      // background.js have to be in the same directory as opencv_js.wasm
+      background: { import: './src/background/background.js', filename: 'background.js' },
       scan_region_picker: {
         import: './src/content_scripts/scan_region_picker.js',
         filename: 'content_scripts/scan_region_picker.js'
@@ -20,14 +21,21 @@ module.exports = env => {
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, browser === 'chrome' ? 'dist/chrome' : 'dist/firefox'),
       clean: true
     },
     plugins: [
       new CopyPlugin({
         patterns: [
           { from: 'src/_locales', to: '_locales' },
-          { from: 'src/icons', to: 'icons' },
+          {
+            from: 'src/icons',
+            to: 'icons',
+            filter: (path) => {
+              // firefox only needs SVGs
+              return browser === 'chrome' ? true : path.endsWith('.svg')
+            }
+          },
           { from: 'src/' + manifestFile, to: 'manifest.json' },
           { from: 'src/popup/popup.html', to: 'popup/popup.html' },
           { from: 'src/pages/grant.html', to: 'pages/grant.html' },
