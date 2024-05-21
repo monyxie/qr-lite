@@ -1,4 +1,4 @@
-import { createElement, createElements } from '../utils/dom'
+import { createElement } from '../utils/dom'
 import copyIcon from '../icons/copy.svg'
 import openUrlIcon from '../icons/open-url.svg'
 import refreshIcon from '../icons/refresh.svg'
@@ -71,20 +71,20 @@ class Picker {
       this.updateSpotLight(true)
     }
 
-    this.domMask = createElements(`
+    this.domMask = createElement(`
     <div style="position: fixed; top: 0; left: 0; z-index: 2147483647; width: 100%; height: 100%;
     box-sizing: border-box; background-color: ${this.maskColor}; border-color: ${this.maskColor}; border-style: solid; border-width: 0; cursor: crosshair">
-    </div>`)[0]
+    </div>`)
 
-    this.domTips = createElements(`
+    this.domTips = createElement(`
     <div style="padding: 4px; position: fixed; left: 0; top: 0; color: white; text-shadow: #000 0 1px 10px, #000 0 1px 10px, #000 0 1px 10px;
     user-select: none; font-size: 14px; font-family: sans-serif; min-width: 100px; transition: opacity linear 0.1s">
-    ${apiNs.i18n.getMessage('scan_region_picker_tips_html')}</div>`)[0]
+    ${apiNs.i18n.getMessage('scan_region_picker_tips_html')}</div>`)
 
-    this.domRect = createElements('<div style="background-color: transparent; width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; box-shadow: black 0 0 10px;"></div>')[0]
-    this.domX = createElements(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
+    this.domRect = createElement('<div style="background-color: transparent; width: 100%; height: 100%; outline: white solid 2px; border-radius: 4px; box-shadow: black 0 0 10px;"></div>')
+    this.domX = createElement(`<div style="position: fixed; width: 36px; height: 36px; text-align: center;
     line-height: 36px; right: 0; top: 0;margin: 4px; color: white;  text-shadow: #000 0 0 10px, #000 0 0 10px, #000 0 0 10px;
-    font-family: sans-serif; font-size: 36px; cursor: pointer; transition: opacity linear 0.1s">&times;</div>`)[0]
+    font-family: sans-serif; font-size: 36px; cursor: pointer; transition: opacity linear 0.1s">&times;</div>`)
 
     this.domMask.appendChild(this.domRect)
     this.domMask.appendChild(this.domTips)
@@ -288,13 +288,13 @@ class Picker {
   }
 
   showResult (err, content, image, successful) {
-    this.domResult = createElements(`<div style="display: block; border: none; border-radius: 4px;
+    this.domResult = createElement(`<div style="display: block; border: none; border-radius: 4px;
     margin:0; padding: 0; background-color: white; word-break: break-all; position: fixed;
     top: 55%; left: 50%; transform: translateX(-50%); width: 25rem; max-width: 90%;
-    box-shadow: black 0 0 10px; outline: white solid 2px"></div>`)[0]
-    const textEl = createElements(`<textarea rows="6" style="font-size: medium; font-family: sans-serif; width: calc(100% - 12px);
+    box-shadow: black 0 0 10px; outline: white solid 2px"></div>`)
+    const textEl = createElement(`<textarea rows="6" style="font-size: medium; font-family: sans-serif; width: calc(100% - 12px);
       word-break: break-all; border-width: 1px 0; border-color: #CCCCCC; border-style: solid; padding: 1px; margin: 6px; resize: none;
-      color: #333; background-color: #F8F8F8; box-sizing: border-box;" placeholder="${err}" readonly>${content}</textarea>`)[0]
+      color: #333; background-color: #F8F8F8; box-sizing: border-box;" placeholder="${err}" readonly>${content}</textarea>`)
     this.domResult.appendChild(textEl)
 
     const rr = this.domRect.getBoundingClientRect()
