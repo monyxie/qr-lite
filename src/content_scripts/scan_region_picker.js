@@ -127,7 +127,7 @@ class Picker {
     })
   }
 
-  updateSpotLight (show, x, y, w, h, animate) {
+  updateSpotLight (show, x, y, w, h, td, tp, ttf) {
     if (show) {
       if (typeof x !== 'undefined' && typeof y !== 'undefined') {
         if (typeof w === 'undefined' || typeof h === 'undefined') {
@@ -140,11 +140,11 @@ class Picker {
         this.y2 = Math.floor(this.y1 + h)
       }
 
-      if (animate) {
+      if (td) {
         // this.domMask.style.transitionProperty = 'border-width, top, left, width, height'
-        this.domMask.style.transitionProperty = 'all'
-        this.domMask.style.transitionDuration = animate
-        this.domMask.style.transitionTimingFunction = 'easeOut'
+        this.domMask.style.transitionDuration = td
+        this.domMask.style.transitionProperty = tp || 'all'
+        this.domMask.style.transitionTimingFunction = ttf || 'ease-out'
       } else {
         this.domMask.style.transitionProperty = ''
         this.domMask.style.transitionDuration = ''
@@ -310,7 +310,7 @@ class Picker {
       const img = createElement('<img style="display: block; width: 100%; height: 100%">')
       img.src = image
       this.domRect.appendChild(img)
-      this.updateSpotLight(true, mr.width / 2, mr.height / 4, bW, bH, '.1s')
+      this.updateSpotLight(true, mr.width / 2, mr.height / 4, bW, bH, '.2s', 'all', 'ease-out')
     }
 
     const createBtn = (icon, text, href, handler) => {
