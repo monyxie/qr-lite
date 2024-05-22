@@ -7,7 +7,9 @@
   "default_locale": "en",
   "icons": {
     "16": "icons/qrlite.svg",
-    "48": "icons/qrlite.svg"
+    "32": "icons/qrlite.svg",
+    "48": "icons/qrlite.svg",
+    "128": "icons/qrlite.svg"
   },
   "browser_specific_settings": {
     "gecko": {
@@ -26,20 +28,7 @@
     "<all_urls>"
   ],
   "action": {
-    "default_icon": "icons/qrlite-light.svg",
-    "default_popup": "popup/popup.html",
-    "theme_icons": [
-      {
-        "light": "icons/qrlite-dark.svg",
-        "dark": "icons/qrlite-light.svg",
-        "size": 16
-      },
-      {
-        "light": "icons/qrlite-dark.svg",
-        "dark": "icons/qrlite-light.svg",
-        "size": 32
-      }
-    ]
+    "default_popup": "popup/popup.html"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data:; style-src 'self';"
