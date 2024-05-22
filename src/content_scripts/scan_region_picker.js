@@ -128,6 +128,20 @@ class Picker {
   }
 
   updateSpotLight (show, x, y, w, h, td, tp, ttf) {
+    this.nextSpotlightState = [show, x, y, w, h, td, tp, ttf]
+    if (!this.renderSpotlightTimer) {
+      this.renderSpotlightTimer = requestAnimationFrame(() => this.renderSpotlight())
+    }
+  }
+
+  renderSpotlight () {
+    if (!this.nextSpotlightState) {
+      return
+    }
+
+    let [show, x, y, w, h, td, tp, ttf] = this.nextSpotlightState
+    this.renderSpotlightTimer = this.nextSpotlightState = null
+
     if (show) {
       if (typeof x !== 'undefined' && typeof y !== 'undefined') {
         if (typeof w === 'undefined' || typeof h === 'undefined') {
