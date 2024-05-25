@@ -3,7 +3,7 @@
   "name": "__MSG_extension_name__",
   "short_name": "__MSG_extension_short_name__",
   "description": "__MSG_extension_description__",
-  "version": "2.10.0",
+  "version": "3.0.0",
   "default_locale": "en",
   "icons": {
     "16": "icons/qrlite-16.png",
@@ -31,5 +31,16 @@
     "_execute_action": {
       "description": "__MSG_browser_action_command_desription__"
     }
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/picker.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
 }

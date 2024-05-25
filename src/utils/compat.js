@@ -71,7 +71,7 @@ export const openPopup = QRLITE_BROWSER === 'firefox'
  * @param devicePixelRatio {number}
  * @return Promise<OffscreenCanvas>
  */
-export const captureScreen = QRLITE_BROWSER === 'firefox'
+export const capturePartialScreen = QRLITE_BROWSER === 'firefox'
   ? async (rect, scroll, devicePixelRatio) => {
     // in firefox, the '<all_urls>' permission is required to call captureVisibleTab
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1784920

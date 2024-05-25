@@ -1,11 +1,7 @@
-export function createElements (html) {
+export function createElement (html) {
   const container = document.createElement('div')
   container.innerHTML = html
-  return container.children
-}
-
-export function createElement (html) {
-  return createElements(html)[0]
+  return container.children[0]
 }
 
 export function query (selector) {

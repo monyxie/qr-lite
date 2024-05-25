@@ -51,3 +51,13 @@ export async function createCanvasFromDataUri (dataURI, crop) {
   context.drawImage(bitmap, 0, 0)
   return canvas
 }
+
+export function randomStr (len) {
+  let str = ''
+  const a = 'a'.charCodeAt(0)
+  const z = 'z'.charCodeAt(0)
+  for (let i = 0; i < len; i++) {
+    str += String.fromCharCode(a + Math.floor(Math.random() * (z - a + 1)))
+  }
+  return str
+}

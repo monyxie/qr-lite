@@ -441,17 +441,11 @@ class Popup {
     })
 
     $('#scanRegion').addEventListener('click', function (e) {
-      apiNs.tabs.query({ active: true, currentWindow: true })
-        .then(tabs => tabs[0].id)
-        .then(tabId => {
-          apiNs.scripting.executeScript({
-            files: ['content_scripts/scan_region_picker.js'],
-            target: { tabId }
-          })
-        })
-
+      apiNs.runtime.sendMessage({
+        action: 'BG_INJECT_PICKER_LOADER'
+      })
       // close self (popup)
-      // window.close()
+      window.close()
     })
 
     $('#cameraScan').addEventListener('click', function (e) {
@@ -475,7 +469,6 @@ class Popup {
 
     storage.get('ecLevel')
       .then(function (results) {
-        // console.log('got ecLevel from storage: ' + JSON.stringify(results))
         if (results.ecLevel) {
           try {
             that.ecLevel = ECLevel.fromString(results.ecLevel)
@@ -484,18 +477,18 @@ class Popup {
           }
         }
 
-        apiNs.runtime.sendMessage({ action: 'ACTION_GET_POPUP_OPTIONS' })
+        apiNs.runtime.sendMessage({ action: 'BG_GET_POPUP_OPTIONS' })
           .then(function (options) {
             if (options === null) {
               return new Promise(function (resolve, reject) {
                 apiNs.tabs.query({ active: true, currentWindow: true })
                   .then(function (tabs) {
                     // console.log('tabs', tabs)
-                    resolve({ action: 'ACTION_ENCODE', text: tabs[0].url, title: tabs[0].title })
+                    resolve({ action: 'POPUP_ENCODE', text: tabs[0].url, title: tabs[0].title })
                   })
                   .catch(function (e) {
                     console.error('tabs failed', e)
-                    resolve({ action: 'ACTION_ENCODE', text: '' })
+                    resolve({ action: 'POPUP_ENCODE', text: '' })
                   })
               })
             } else {
@@ -504,11 +497,11 @@ class Popup {
           })
           .then(function (options) {
             switch (options.action) {
-              case 'ACTION_ENCODE':
+              case 'POPUP_ENCODE':
                 return that.createQrCode(options.text, that.ecLevel, options.title, 'now')
-              case 'ACTION_DECODE':
+              case 'POPUP_DECODE':
                 return that.decodeImage(options.image)
-              case 'ACTION_DECODE_CAMERA':
+              case 'POPUP_DECODE_CAMERA':
                 return that.startCameraScan()
             }
           })

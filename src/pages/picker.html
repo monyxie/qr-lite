@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="color-scheme" content="light dark">
+    <title>Select region to scan - QR Lite</title>
+    <link href="picker.css" rel="stylesheet">
+</head>
+<body>
+<template id="template">
+    <div class="mask" id="mask">
+        <div class="spotlight" id="spotlight">
+            <img class="captured hidden" id="captured">
+        </div>
+        <div class="tips" id="tips">
+            <img class="logo" src="../icons/qrlite.svg">
+            <span class="tips-text">{{__MSG_scan_region_picker_tips_html__}}</span>
+        </div>
+        <div class="x-mark" id="x-mark">×</div>
+        <div class="result hidden" id="result">
+            <textarea id="result-content" placeholder="Unable to decode QR code" readonly="" rows="6"></textarea>
+            <div class="result-actions">
+                <a id="copy-btn" class="hidden"><img class="icon" src="../icons/copy.svg"/>{{__MSG_copy_btn__}}</a>
+                <span id="copied-message" class="hidden">{{__MSG_copy_btn_copied__}}</span>
+                <a id="open-link-btn" class="hidden" target="_blank"><img class="icon" src="../icons/open-url.svg"/>{{__MSG_open_link_btn__}}</a>
+                <a id="rescan-btn"><img class="icon" src="../icons/refresh.svg"/>{{__MSG_rescan_btn_label__}}</a>
+            </div>
+        </div>
+    </div>
+</template>
+<script defer src="picker.js"></script>
+</body>
+</html>
