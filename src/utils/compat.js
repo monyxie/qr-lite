@@ -78,10 +78,9 @@ export const capturePartialScreen = QRLITE_BROWSER === 'firefox'
     if (typeof apiNs.tabs.captureVisibleTab !== 'function') {
       throw new Error('Permission not granted')
     }
-    const rect1 = { ...rect, x: rect.x + scroll.left, y: rect.y + scroll.top }
     return apiNs.tabs.captureVisibleTab({
       format: 'png',
-      rect: rect1
+      rect: { x: rect.x + scroll.left, y: rect.y + scroll.top, width: rect.width, height: rect.height }
     })
       .then(dataUri => createCanvasFromDataUri(dataUri))
   }

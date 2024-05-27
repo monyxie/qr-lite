@@ -23,10 +23,6 @@ export class OpenCvQrCodeDecoder {
    * @returns {Promise<void>}
    */
   async init (cv) {
-    if (!cv) {
-      cv = import('../opencv/opencv')
-    }
-
     if (cv instanceof Promise) {
       cv = await cv
       console.log(cv.getBuildInformation())
@@ -88,7 +84,15 @@ export class OpenCvQrCodeDecoder {
   }
 }
 
-export function initDecoder (cv) {
+export function initDecoder () {
+  if (typeof importScripts === 'function') {
+    // dynamic imports don't work in web workers, we have to use importScripts to load opencv
+    // in chrome, this has to be at the top level of background.js
+    // eslint-disable-next-line no-undef
+    importScripts('opencv.js') // must be the same name as specified by the `webpackChunkName` magic comment below
+  }
+
+  const cv = import(/* webpackChunkName: "opencv.js" */ '../opencv/opencv')
   decoder = new OpenCvQrCodeDecoder(cv)
 }
 

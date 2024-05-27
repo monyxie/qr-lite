@@ -9,9 +9,21 @@ export function query (selector) {
 }
 
 export function addClass (cls, ...el) {
-  el.forEach(a => (typeof a === 'string' ? query(a) : a).classList.add(cls))
+  el.forEach(a => {
+    if (typeof a === 'string') {
+      query(a).classList.add(cls)
+    } else {
+      a.classList.add(cls)
+    }
+  })
 }
 
 export function removeClass (cls, ...el) {
-  el.forEach(a => (typeof a === 'string' ? query(a) : a).classList.remove(cls))
+  el.forEach(a => {
+    if (typeof a === 'string') {
+      query(a).classList.remove(cls)
+    } else {
+      a.classList.remove(cls)
+    }
+  })
 }

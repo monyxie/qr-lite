@@ -12,6 +12,8 @@ class Picker {
     this.y1 = this.y2 = this.winH / 2
     this.mouseX = this.mouseY = null
     this.isScanning = false
+    // scroll offset of the top frame
+    this.scroll = { top: 0, left: 0 }
 
     // size of the scan region and related stuff
     this.minFactor = 0.2
@@ -71,11 +73,11 @@ class Picker {
   }
 
   async initConnection () {
-    this.pickerLoaderPort = await new Promise(resolve => {
+    [this.pickerLoaderPort, this.scroll] = await new Promise(resolve => {
       window.onmessage = (event) => {
         switch (event.data?.action) {
           case 'PICKER_SHOW':
-            resolve(event.ports[0])
+            resolve([event.ports[0], event.data.scroll])
             break
         }
       }
@@ -310,15 +312,11 @@ class Picker {
       width: this.x2 - this.x1,
       height: this.y2 - this.y1
     }
-    const scroll = {
-      left: document.documentElement.scrollLeft,
-      top: document.documentElement.scrollTop
-    }
     try {
       const res = await apiNs.runtime.sendMessage({
         action: 'BG_CAPTURE',
         rect,
-        scroll,
+        scroll: this.scroll,
         devicePixelRatio: window.devicePixelRatio
       })
       successful = !res.err

@@ -80,6 +80,9 @@
   "content_title": {
     "message": "QR code content"
   },
+  "content_placeholder": {
+    "message": "Type in some text to create a QR code"
+  },
   "context_menu_make_qr_code_for_link": {
     "message": "Generate QR Code for This Link"
   },

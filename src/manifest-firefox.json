@@ -7,9 +7,7 @@
   "default_locale": "en",
   "icons": {
     "16": "icons/qrlite.svg",
-    "32": "icons/qrlite.svg",
-    "48": "icons/qrlite.svg",
-    "128": "icons/qrlite.svg"
+    "48": "icons/qrlite.svg"
   },
   "browser_specific_settings": {
     "gecko": {
@@ -28,7 +26,8 @@
     "<all_urls>"
   ],
   "action": {
-    "default_popup": "popup/popup.html"
+    "default_icon": "icons/qrlite.svg",
+    "default_popup": "pages/popup.html"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data:; style-src 'self';"
@@ -46,8 +45,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "icons/*",
-        "pages/picker.*"
+        "pages/picker.html"
       ],
       "matches": [
         "<all_urls>"

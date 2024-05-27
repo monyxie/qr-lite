@@ -5,14 +5,9 @@
   "author": "Mony Xie <monyxie@gmail.com>",
   "license": "MIT",
   "sideEffects": false,
-  "dependencies": {
+  "devDependencies": {
     "@zxing/browser": "^0.1.3",
     "@zxing/library": "^0.20.0",
-    "sanitize-filename": "^1.6.3",
-    "webpack": "^5.28.0",
-    "webpack-cli": "^5.1.1"
-  },
-  "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.4",
     "eslint": "^8.41.0",
@@ -22,16 +17,16 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "file-loader": "^6.2.0",
+    "glob": "^10.4.1",
+    "sanitize-filename": "^1.6.3",
     "style-loader": "^3.3.3",
-    "svg-inline-loader": "^0.8.2"
+    "svgo": "^3.3.2",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^5.1.1"
   },
   "scripts": {
     "dev": "webpack watch --mode development",
-    "dev:chrome": "webpack watch --mode development --env browser=chrome",
     "build": "webpack build --mode development",
-    "build:chrome": "webpack build --mode development --env browser=chrome",
-    "lint": "eslint src",
-    "release": "./release.sh firefox",
-    "release:chrome": "./release.sh chrome"
+    "lint": "eslint src"
   }
 }

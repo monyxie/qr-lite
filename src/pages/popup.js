@@ -87,7 +87,7 @@ class Popup {
       class="qr-position-marker"
       aria-hidden="true"
       fill="lightgreen"
-      viewBox="0 0 ${imgEl.naturalWidth} ${imgEl.naturalHeight}"
+      viewBox="0 0 ${imgEl.width} ${imgEl.height}"
       xmlns="http://www.w3.org/2000/svg">
       <polygon fill="green" fill-opacity="0.3" stroke="#88FF00" stroke-width="1%" stroke-linejoin="round" stroke-opacity="0.9" points="${points.trim()}"></polygon>
    </svg>`
@@ -97,57 +97,54 @@ class Popup {
   async decodeImage (url) {
     const that = this
     const $scanOutput = $('#scanOutput')
-    const $scanInput = $('#scanInput')
     const $scanInputImage = $('#scanInputImage')
     const $openLinkBtn = $('#openLinkBtn')
-    const $scanInstructions = $('#scanInstructions')
-    const $scanVideo = $('#scanVideo')
-    const $positionMarker = $('#positionMarker')
 
     this.showTab('scan')
-    removeClass('hidden', '#scanInput')
 
-    $openLinkBtn.classList.add('hidden')
+    addClass('hidden', '#scanInstructions', '#scanVideo', '#positionMarker', $openLinkBtn)
+    removeClass('hidden', '#scanInput', $scanOutput, $scanInputImage)
     $scanOutput.value = ''
-    $scanOutput.classList.remove('hidden')
-
     $scanInputImage.src = url
-    $scanInputImage.classList.remove('hidden')
-    $scanInstructions.classList.add('hidden')
-    $scanVideo.classList.add('hidden')
-    $positionMarker.classList.add('hidden')
 
-    // wait for decode to complete before appending to dom and scanning
-    await $scanInputImage.decode()
+    let error
+    const permissions = { origins: ['<all_urls>'] }
+    if (!await apiNs.permissions.contains(permissions)) {
+      // TODO grant permission ui
+      error = 'Permission not granted. Please grant QR Lite "Access your data for all websites" permission in browser settings.'
+    } else {
+      try {
+      // wait for decode to complete before appending to dom and scanning
+        await $scanInputImage.decode()
 
-    // we pass a cloned img node because the original img node is still being appended to the dom
-    // causing qr-code-wechat to get img.width/img.height values of zero
-    try {
-      const result = await scan($scanInputImage.cloneNode())
-      if (result.length < 1) {
-        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
-      } else {
-        const text = result[0].content
-        const vertices = result[0].vertices
+        const result = await scan($scanInputImage)
+        if (result.length < 1) {
+          $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
+        } else {
+          const text = result[0].content
+          const vertices = result[0].vertices
 
-        $scanOutput.placeholder = ''
-        $scanOutput.value = text
-        $scanOutput.select()
+          $scanOutput.placeholder = ''
+          $scanOutput.value = text
+          $scanOutput.select()
 
-        if (vertices) {
-          that.createRectMarker(vertices, $scanInput, $scanInputImage)
+          if (vertices) {
+            that.createRectMarker(vertices, '#scanInput', $scanInputImage)
+          }
+
+          await that.addHistory('decode', text)
+
+          if (isUrl(text)) {
+            $openLinkBtn.classList.remove('hidden')
+          }
         }
-
-        await that.addHistory('decode', text)
-
-        if (isUrl(text)) {
-          $openLinkBtn.classList.remove('hidden')
-        }
+      } catch (e) {
+        console.error(e)
+        error = e.toString()
       }
-    } catch (e) {
-      console.error(e)
-      $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', e.toString())
     }
+
+    $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', error)
   }
 
   getFilenameFromTitle (title) {
@@ -345,6 +342,9 @@ class Popup {
     }
   }
 
+  /**
+   * @param tab {string:'scan'|'generate'|'history'}
+   */
   showTab (tab) {
     if (tab !== 'scan') {
       addClass('hidden', '#scanOutput', '#scanInputImage', '#cameraRescanBtn', '#openLinkBtn', '#scanVideo', '#positionMarker', '#permissionInstructions')
@@ -380,67 +380,64 @@ class Popup {
     this.currentTab = tab
   }
 
-  init () {
-    const that = this
-    that.showTab('generate')
-
-    $('#tab-history').addEventListener('click', function () {
-      that.showTab('history')
+  async init () {
+    $('#tab-history').addEventListener('click', () => {
+      this.showTab('history')
     })
-    $('#tab-generate').addEventListener('click', function (e) {
-      that.showTab('generate')
+    $('#tab-generate').addEventListener('click', e => {
+      this.showTab('generate')
     })
-    $('#tab-scan').addEventListener('click', function (e) {
-      that.showTab('scan')
+    $('#tab-scan').addEventListener('click', e => {
+      this.showTab('scan')
     })
 
-    $('#history').addEventListener('click', function (e) {
+    $('#history').addEventListener('click', e => {
       if (e.target.tagName.toUpperCase() === 'LI') {
-        that.createQrCode(e.target.title, that.ecLevel, undefined, 'now')
+        this.createQrCode(e.target.title, this.ecLevel, undefined, 'now')
       }
     })
-    $('#clear-history-btn').addEventListener('click', function (e) {
-      that.clearHistory()
+    $('#clear-history-btn').addEventListener('click', e => {
+      this.clearHistory()
     })
 
     const $sourceInput = $('#sourceInput')
-    const handleSourceInputChange = function (e) {
-      if ($sourceInput.value !== that.currentText) {
-        that.createQrCode($sourceInput.value, that.ecLevel, undefined, 'debounce')
+    const handleSourceInputChange = e => {
+      if ($sourceInput.value !== this.currentText) {
+        this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'debounce')
       }
     }
     $sourceInput.addEventListener('keyup', handleSourceInputChange)
     $sourceInput.addEventListener('paste', handleSourceInputChange)
     $sourceInput.addEventListener('cut', handleSourceInputChange)
 
-    $('#ecLevels').addEventListener('click', function (e) {
+    $('#ecLevels').addEventListener('click', (e) => {
       switch (e.target.id) {
         case 'ecL':
         case 'ecM':
         case 'ecQ':
         case 'ecH':
-          that.ecLevel = ECLevel.fromString(e.target.id.substr(2))
+          this.ecLevel = ECLevel.fromString(e.target.id.substr(2))
           break
         default:
           return
       }
 
       storage.set({
-        ecLevel: that.ecLevel.toString()
+        ecLevel: this.ecLevel.toString()
       })
 
-      that.createQrCode($sourceInput.value, that.ecLevel, undefined, 'none')
+      this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'none')
     })
 
-    $('#save').addEventListener('click', function (e) {
-      that.downloadImage()
+    $('#save').addEventListener('click', (e) => {
+      this.downloadImage()
     })
 
-    $('#copy').addEventListener('click', function (e) {
-      that.copyImage()
+    $('#copy').addEventListener('click', (e) => {
+      this.copyImage()
     })
 
-    $('#scanRegion').addEventListener('click', function (e) {
+    $('#scanRegion').addEventListener('click', (e) => {
       apiNs.runtime.sendMessage({
         action: 'BG_INJECT_PICKER_LOADER'
       })
@@ -448,11 +445,11 @@ class Popup {
       window.close()
     })
 
-    $('#cameraScan').addEventListener('click', function (e) {
-      that.startCameraScan()
+    $('#cameraScan').addEventListener('click', (e) => {
+      this.startCameraScan()
     })
 
-    $('#openLinkBtn').addEventListener('click', function (e) {
+    $('#openLinkBtn').addEventListener('click', (e) => {
       apiNs.tabs.create({
         url: $('#scanOutput').value,
         active: true
@@ -467,48 +464,68 @@ class Popup {
       window.close()
     })
 
-    storage.get('ecLevel')
-      .then(function (results) {
-        if (results.ecLevel) {
-          try {
-            that.ecLevel = ECLevel.fromString(results.ecLevel)
-          } catch (e) {
-            console.error(e)
-          }
-        }
+    const results = await storage.get('ecLevel')
+    if (results.ecLevel) {
+      try {
+        this.ecLevel = ECLevel.fromString(results.ecLevel)
+      } catch (e) {
+        console.error(e)
+      }
+    }
 
-        apiNs.runtime.sendMessage({ action: 'BG_GET_POPUP_OPTIONS' })
-          .then(function (options) {
-            if (options === null) {
-              return new Promise(function (resolve, reject) {
-                apiNs.tabs.query({ active: true, currentWindow: true })
-                  .then(function (tabs) {
-                    // console.log('tabs', tabs)
-                    resolve({ action: 'POPUP_ENCODE', text: tabs[0].url, title: tabs[0].title })
-                  })
-                  .catch(function (e) {
-                    console.error('tabs failed', e)
-                    resolve({ action: 'POPUP_ENCODE', text: '' })
-                  })
-              })
-            } else {
-              return options
-            }
-          })
-          .then(function (options) {
-            switch (options.action) {
-              case 'POPUP_ENCODE':
-                return that.createQrCode(options.text, that.ecLevel, options.title, 'now')
-              case 'POPUP_DECODE':
-                return that.decodeImage(options.image)
-              case 'POPUP_DECODE_CAMERA':
-                return that.startCameraScan()
-            }
-          })
-          .catch(function (e) {
-            console.error(e)
-          })
-      })
+    apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      switch (request.action) {
+        case 'POPUP_DECODE':
+          return this.decodeImage(request.image)
+      }
+    })
+
+    await this.performInitialAction()
+  }
+
+  async performInitialAction () {
+    let options = await apiNs.runtime.sendMessage({ action: 'POPUP_GET_OPTIONS' })
+
+    if (!options) {
+      const tabs = await apiNs.tabs.query({ active: true, currentWindow: true })
+      if (tabs.length > 0) {
+        options = { action: 'POPUP_ENCODE', text: tabs[0].url, title: tabs[0].title }
+      }
+    }
+
+    if (!options) {
+      options = { action: 'POPUP_ENCODE', text: '' }
+    }
+
+    switch (options.action) {
+      case 'POPUP_ENCODE':
+        return this.createQrCode(options.text, this.ecLevel, options.title, 'now')
+      case 'POPUP_DECODE':
+        return this.decodeImage(options.image)
+      case 'POPUP_DECODE_LATER': {
+        this.showTab('scan')
+        let newOptions
+        for (let i = 0; i < 3; i++) {
+          try {
+            newOptions = await apiNs.tabs.sendMessage(
+              options.tabId,
+              { action: 'POPUP_GET_DECODE_LATER_OPTIONS' },
+              { frameId: options.frameId }
+            )
+          } catch (e) {
+            // just retry
+          }
+
+          if (newOptions && newOptions.image) {
+            return this.decodeImage(newOptions.image)
+          }
+          await sleep(100)
+        }
+        break
+      }
+      case 'POPUP_DECODE_CAMERA':
+        return this.startCameraScan()
+    }
   }
 }
 

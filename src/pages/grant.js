@@ -10,14 +10,14 @@ import { addClass, query as $, removeClass } from '../utils/dom'
   navigator.mediaDevices
     .getUserMedia({ video: true, audio: false })
     .then((stream) => {
-      addClass('hidden', $('#initial'))
-      removeClass('hidden', $('#granted'))
-      addClass('hidden', $('#blocked'))
+      addClass('hidden', '#initial')
+      removeClass('hidden', '#granted')
+      addClass('hidden', '#blocked')
     })
     // eslint-disable-next-line n/handle-callback-err
     .catch((err) => {
-      addClass('hidden', $('#initial'))
-      addClass('hidden', $('#granted'))
-      removeClass('hidden', $('#blocked'))
+      addClass('hidden', '#initial')
+      addClass('hidden', '#granted')
+      removeClass('hidden', '#blocked')
     })
 })()

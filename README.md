@@ -14,9 +14,22 @@ QR Lite is a browser extension for generating and scanning QR codes offline.
 * Scan QR codes in images.
 * Keep track of generating and scanning history.
 
+## Permissions
+QR Lite requires the following permissions:
+
+- `activeTab`: mandatory, enables capturing image of the active page for scanning
+- `contextMenus`: mandatory, enables the context menu items
+- `storage`: mandatory, enables preferences and history persistence on disk
+- `clipboardWrite`: mandatory, enables copying QR code images or text to clipboard
+- `scripting`: mandatory: enables script injection for the following scenarios:
+  - When *Choose region to scan..* is chosen, a script need to be injected to the active page to load the "scan region picker" UI
+  - When *Scan QR code in Image* is chosen, a script need to be injected to the active page to retrieve the image data
+- `<all_urls>`: required to read image data from websites when you click "Scan QR code in image" in the context menu. Also in older Firefox versions, this permission is also needed to capture image of the web page.
+
 ## Supported Browsers
 
-This extension only supports Firefox at the moment.
+- Firefox 102 or newer
+- Chrome 88 or newer
 
 ## Development
 

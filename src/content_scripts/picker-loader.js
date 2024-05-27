@@ -94,7 +94,13 @@ z-index: 2147483647
         this.handleMessage(ev.data || {})
       }
       this.pickerPort.onmessageerror = () => { this.unload() }
-      iframe.contentWindow.postMessage({ action: 'PICKER_SHOW' }, url, [channel.port2])
+      iframe.contentWindow.postMessage({
+        action: 'PICKER_SHOW',
+        scroll: {
+          left: document.documentElement.scrollLeft,
+          top: document.documentElement.scrollTop
+        }
+      }, url, [channel.port2])
 
       // focus on the iframe otherwise the user won't be able to press <esc> to close the picker until they
       // manually focus on the iframe by clicking in it first

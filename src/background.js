@@ -1,19 +1,18 @@
-import { apiNs, capturePartialScreen, openPopup } from '../utils/compat'
-import { addHistory } from '../utils/history'
-import { initDecoder, scan } from '../utils/qrcode'
-import { convertBlobToDataUri, randomStr } from '../utils/misc'
+import { apiNs, capturePartialScreen, openPopup } from './utils/compat'
+import { addHistory } from './utils/history'
+import { initDecoder, scan } from './utils/qrcode'
+import { convertBlobToDataUri, randomStr } from './utils/misc'
 
+/**
+ * @type {{action:string}}
+ */
 let openPopupOptions = null
-const pickerSecrets = []
+/**
+ * @type {string[]}
+ */
+let pickerSecrets = []
 
-if (typeof importScripts === 'function') {
-  // dynamic imports don't work in web workers, we have to use importScripts to load opencv
-  // this has to be at the top level
-  // globalThis.cv will be assigned the opencv.js instance
-  // eslint-disable-next-line no-undef
-  importScripts('../opencv/opencv.js')
-  initDecoder(globalThis.cv)
-}
+initDecoder()
 
 function openPopupWithOptions (options) {
   openPopupOptions = options
@@ -80,7 +79,7 @@ function getMenuItems () {
     context_menu_scan_qr_code_in_image: {
       title: apiNs.i18n.getMessage('context_menu_scan_qr_code_in_image'),
       contexts: ['image'],
-      onclick: function (info, tab) {
+      onclick: (info, tab) => {
         openPopupWithOptions({ action: 'POPUP_DECODE', image: info.srcUrl })
       }
     },
@@ -126,14 +125,15 @@ apiNs.contextMenus.onClicked.addListener((info, tab) => {
 
 function createPickerSecret () {
   const secret = randomStr(16)
-  pickerSecrets.push(secret)
+  // only keep the latest 10
+  pickerSecrets = [...pickerSecrets.slice(-10), secret]
   return secret
 }
 
 function validatePickerSecret (secret) {
   const pos = pickerSecrets.indexOf(secret)
   if (pos !== -1) {
-    pickerSecrets.splice(pos, 1)
+    pickerSecrets = [...pickerSecrets.slice(0, pos), ...pickerSecrets.slice(pos + 1)]
     return true
   }
   return false
@@ -148,19 +148,23 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .then(injectPickerLoader)
       break
     // image capturing
+    case 'BG_UPDATE_ICON':
+      setIconVariant(request.prefersDark)
+      return true
     case 'BG_CAPTURE':
       captureScan(request).then(sendResponse)
       return true
     // get popup options
-    case 'BG_GET_POPUP_OPTIONS':
+    case 'POPUP_GET_OPTIONS':
       sendResponse(openPopupOptions)
       openPopupOptions = null
       break
-    case 'BG_GET_PICKER_URL':
+    case 'BG_GET_PICKER_URL': {
       const url = new URL(apiNs.runtime.getURL('pages/picker.html'))
       url.searchParams.set('secret', createPickerSecret())
       sendResponse(url.href)
       break
+    }
     case 'BG_VALIDATE_PICKER_SECRET':
       sendResponse(validatePickerSecret(request.secret))
       break
