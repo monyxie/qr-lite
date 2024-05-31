@@ -171,7 +171,7 @@
   "unable_to_decode_qr_code": {
     "message": "二维码解码失败"
   },
-  "browser_action_command_desription": {
+  "browser_action_command_description": {
     "message": "显示弹出框"
   }
 }

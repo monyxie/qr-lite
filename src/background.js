@@ -1,4 +1,4 @@
-import { apiNs, capturePartialScreen, openPopup } from './utils/compat'
+import { apiNs, capturePartialScreen, openPopup, tabs } from './utils/compat'
 import { addHistory } from './utils/history'
 import { initDecoder, scan } from './utils/qrcode'
 import { convertBlobToDataUri, randomStr } from './utils/misc'
@@ -120,6 +120,19 @@ apiNs.contextMenus.onClicked.addListener((info, tab) => {
   if (!menuItems) menuItems = getMenuItems()
   if (info.menuItemId && menuItems[info.menuItemId]) {
     menuItems[info.menuItemId].onclick.call(this, info, tab)
+  }
+})
+
+apiNs.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case 'select-region-to-scan':
+      tabs.query({ active: true, currentWindow: true })
+        .then(tabs => tabs[0])
+        .then(injectPickerLoader)
+      break
+    case 'scan-with-camera':
+      openPopupWithOptions({ action: 'POPUP_DECODE_CAMERA' })
+      break
   }
 })
 

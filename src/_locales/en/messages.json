@@ -128,7 +128,7 @@
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
   "pick_region_to_scan_btn": {
-    "message": "Choose region to scan"
+    "message": "Select region to scan"
   },
   "camera_scan_btn": {
     "message": "Scan with camera"
@@ -177,7 +177,13 @@
   "unable_to_decode_qr_code": {
     "message": "Unable to decode QR code"
   },
-  "browser_action_command_desription": {
+  "browser_action_command_description": {
     "message": "Show popup"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Select region to scan"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Scan with camera"
   }
 }

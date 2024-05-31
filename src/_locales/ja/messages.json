@@ -171,7 +171,7 @@
   "unable_to_decode_qr_code": {
     "message": "QRコードをデコードできません"
   },
-  "browser_action_command_desription": {
+  "browser_action_command_description": {
     "message": "ポップアップを表示"
   }
 }
