@@ -115,4 +115,10 @@ z-index: 2147483647
   }
 }
 
-(new PickerLoader()).load()
+if (typeof window.picker === 'undefined') {
+  window.picker = new PickerLoader()
+  window.picker.load()
+} else {
+  window.picker.unload()
+  window.picker.load()
+}
