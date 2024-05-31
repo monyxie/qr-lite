@@ -380,7 +380,17 @@ class Popup {
     this.currentTab = tab
   }
 
+  setZoom () {
+    if (window.innerHeight < document.documentElement.scrollHeight) {
+      document.documentElement.style.zoom = window.innerHeight / document.documentElement.scrollHeight
+    }
+  }
+
   async init () {
+    // needed in chrome to prevent the vertical scrollbar from showing up in the popup
+    // when the default zoom level is set to a large value
+    this.setZoom()
+
     $('#tab-history').addEventListener('click', () => {
       this.showTab('history')
     })
