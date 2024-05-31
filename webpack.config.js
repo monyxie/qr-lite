@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
-const glob = require('glob')
+const svgo = require('svgo')
 
 module.exports = [
   generateConfig('firefox'),
@@ -30,7 +30,20 @@ function generateConfig (browser) {
   const copyPatterns = [
     { from: './' + manifestFile, to: 'manifest.json' },
     './_locales/**/*',
-    './icons/' + (browser === 'firefox' ? '*.svg' : '*.*'),
+    {
+      from: './icons/' + (browser === 'firefox' ? '*.svg' : '*.*'),
+      transform: {
+        transformer: (content, absoluteFrom) => {
+          // The `content` argument is a [`Buffer`](https://nodejs.org/api/buffer.html) object, it could be converted to a `String` to be processed using `content.toString()`
+          // The `absoluteFrom` argument is a `String`, it is absolute path from where the file is being copied
+          if (absoluteFrom.endsWith('.svg')) {
+            return svgo.optimize(content.toString(), { path: absoluteFrom, multipass: true }).data
+          }
+          return content
+        },
+        cache: true
+      }
+    },
     './pages/*.{html,css}',
     { from: './opencv/opencv_js.wasm', to: 'opencv_js.wasm' },
     // './opencv/opencv.js', // has to be placed in extension's root to make both `import('...')` and `importScripts('...')` work
