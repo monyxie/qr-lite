@@ -109,7 +109,7 @@ class Popup {
 
     let error
     const permissions = { origins: ['<all_urls>'] }
-    if (!await apiNs.permissions.contains(permissions)) {
+    if (isUrl(url) && !await apiNs.permissions.contains(permissions)) {
       // TODO grant permission ui
       error = 'Permission not granted. Please grant QR Lite "Access your data for all websites" permission in browser settings.'
     } else {
