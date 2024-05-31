@@ -356,14 +356,20 @@ class Picker {
     // show captured image
     if (image) {
       const [aW, aH] = [rr.width, rr.height]
-      const scaleX = aW < mr.width * 0.8 ? (aW < mr.width * 0.5 ? mr.width * 0.5 / aW : 1) : mr.width * 0.8 / aW
-      const scaleY = aH < mr.height / 2 * 0.8 ? (aH < mr.height * 0.25 ? mr.height * 0.25 / aH : 1) : mr.height / 2 * 0.8 / aH
+      const minW = mr.width * 0.5
+      const maxW = mr.width * 0.8
+      const minH = mr.height * 0.25
+      const maxH = mr.height * 0.4
+
+      const scaleX = aW < maxW ? (aW < minW ? minW / aW : 1) : maxW / aW
+      const scaleY = aH < maxH ? (aH < minH ? minH / aH : 1) : maxH / aH
       const scale = Math.min(scaleX, scaleY)
+
       const [bW, bH] = [aW * scale, aH * scale]
 
       $('#captured').src = image
       removeClass('hidden', '#captured')
-      this.updateSpotLight(mr.width / 2, mr.height / 4, bW, bH, '.2s', 'all', 'ease-out')
+      this.updateSpotLight(mr.width / 2, (mr.height / 2) - (bH / 2) - (mr.height * 0.05), bW, bH, '.2s', 'all', 'ease-out')
     }
 
     // show or hide "Copy" button

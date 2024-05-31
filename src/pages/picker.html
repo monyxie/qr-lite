@@ -14,17 +14,17 @@
             <img class="captured hidden" id="captured">
         </div>
         <div class="tips" id="tips">
-            <img class="logo" src="../icons/qrlite.svg">
+            <img class="logo" src="../icons/qrlite.svg" title="{{__MSG_extension_name__}}">
             <span class="tips-text">{{__MSG_scan_region_picker_tips_html__}}</span>
         </div>
         <div class="x-mark" id="x-mark">×</div>
         <div class="result hidden" id="result">
-            <textarea id="result-content" placeholder="Unable to decode QR code" readonly="" rows="6"></textarea>
+            <textarea id="result-content" placeholder="{{__MSG_unable_to_decode__}}" title="{{__MSG_content_title__}}" readonly="" rows="6"></textarea>
             <div class="result-actions">
-                <a id="copy-btn" class="hidden"><img class="icon" src="../icons/copy.svg"/>{{__MSG_copy_btn__}}</a>
+                <a id="copy-btn" class="hidden" title="{{__MSG_copy_image_btn_title__}}"><img class="icon" src="../icons/copy.svg"/>{{__MSG_copy_btn__}}</a>
                 <span id="copied-message" class="hidden">{{__MSG_copy_btn_copied__}}</span>
-                <a id="open-link-btn" class="hidden" target="_blank"><img class="icon" src="../icons/open-url.svg"/>{{__MSG_open_link_btn__}}</a>
-                <a id="rescan-btn"><img class="icon" src="../icons/refresh.svg"/>{{__MSG_rescan_btn_label__}}</a>
+                <a id="open-link-btn" class="hidden" target="_blank" title="{{__MSG_open_url_btn_title__}}"><img class="icon" src="../icons/open-url.svg"/>{{__MSG_open_url_btn__}}</a>
+                <a id="rescan-btn" title="{{__MSG_rescan_btn_title__}}"><img class="icon" src="../icons/refresh.svg"/>{{__MSG_rescan_btn_label__}}</a>
             </div>
         </div>
     </div>

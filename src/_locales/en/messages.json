@@ -99,7 +99,7 @@
     "message": "Scan with Camera"
   },
   "scan_region_picker_tips_html": {
-    "message": "You are now in QR Lite's 'Select Region to Scan' mode. Drag your mouse to select a region to scan. Press &lt;Esc&gt; to cancel."
+    "message": "<kbd>Scroll Wheel</kbd> Adjust size <kbd>Left Click</kbd> Scan <kbd>Esc</kbd> Exit"
   },
   "copy_btn": {
     "message": "Copy"
@@ -121,6 +121,9 @@
       }
     }
   },
+  "unable_to_decode": {
+    "message": "Unable to decode QR code"
+  },
   "scan_instructions_html": {
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
@@ -133,7 +136,7 @@
   "rescan_btn_label": {
     "message": "New scan"
   },
-  "camera_rescan_btn_title": {
+  "rescan_btn_title": {
     "message": "Initiate another scan"
   },
   "grant_permissions_instructions_html": {
