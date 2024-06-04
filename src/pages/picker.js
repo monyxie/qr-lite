@@ -306,12 +306,12 @@ class Picker {
     let resText = ''
     let err = ''
     let successful = false
-    const rect = {
-      x: this.x1,
-      y: this.y1,
-      width: this.x2 - this.x1,
-      height: this.y2 - this.y1
-    }
+    const x = Math.max(this.x1, 0)
+    const y = Math.max(this.y1, 0)
+    const width = Math.min(this.x2, this.winW) - x
+    const height = Math.min(this.y2, this.winH) - y
+
+    const rect = { x, y, width, height }
     try {
       const res = await apiNs.runtime.sendMessage({
         action: 'BG_CAPTURE',
