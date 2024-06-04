@@ -517,7 +517,9 @@ class Popup {
 
     // needed in chrome to prevent the vertical scrollbar from showing up in the popup
     // when the default zoom level is set to a large value
-    this.setZoom()
+    if (QRLITE_BROWSER === 'chrome') {
+      this.setZoom()
+    }
   }
 }
 
