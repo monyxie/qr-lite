@@ -387,10 +387,6 @@ class Popup {
   }
 
   async init () {
-    // needed in chrome to prevent the vertical scrollbar from showing up in the popup
-    // when the default zoom level is set to a large value
-    this.setZoom()
-
     $('#tab-history').addEventListener('click', () => {
       this.showTab('history')
     })
@@ -509,33 +505,19 @@ class Popup {
 
     switch (options.action) {
       case 'POPUP_ENCODE':
-        return this.createQrCode(options.text, this.ecLevel, options.title, 'now')
-      case 'POPUP_DECODE':
-        return this.decodeImage(options.image)
-      case 'POPUP_DECODE_LATER': {
-        this.showTab('scan')
-        let newOptions
-        for (let i = 0; i < 3; i++) {
-          try {
-            newOptions = await apiNs.tabs.sendMessage(
-              options.tabId,
-              { action: 'POPUP_GET_DECODE_LATER_OPTIONS' },
-              { frameId: options.frameId }
-            )
-          } catch (e) {
-            // just retry
-          }
-
-          if (newOptions && newOptions.image) {
-            return this.decodeImage(newOptions.image)
-          }
-          await sleep(100)
-        }
+        this.createQrCode(options.text, this.ecLevel, options.title, 'now')
         break
-      }
+      case 'POPUP_DECODE':
+        this.decodeImage(options.image)
+        break
       case 'POPUP_DECODE_CAMERA':
-        return this.startCameraScan()
+        this.startCameraScan()
+        break
     }
+
+    // needed in chrome to prevent the vertical scrollbar from showing up in the popup
+    // when the default zoom level is set to a large value
+    this.setZoom()
   }
 }
 
