@@ -161,9 +161,6 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .then(injectPickerLoader)
       break
     // image capturing
-    case 'BG_UPDATE_ICON':
-      setIconVariant(request.prefersDark)
-      return true
     case 'BG_CAPTURE':
       captureScan(request).then(sendResponse)
       return true

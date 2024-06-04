@@ -260,7 +260,7 @@ class Picker {
 
     let promise
     if (window === window.top) {
-      promise = navigator.clipboard.writeText(data.text)
+      promise = navigator.clipboard.writeText(this.resultContent)
     } else {
       // chrome doesn't allow copying text from iframe unless the 'clipboard-write' permission policy is set
       // we have to let the other side (picker-loader.js) do it for us
@@ -353,7 +353,13 @@ class Picker {
   showResult (err, content, image, successful) {
     addClass('showing-result', this.domMask)
     const textarea = $('#result-content')
-    textarea.innerText = content
+    if (err) {
+      textarea.innerText = ''
+      textarea.placeholder = err
+    } else {
+      textarea.innerText = content
+      textarea.placeholder = ''
+    }
 
     const rr = $('#spotlight').getBoundingClientRect()
     const mr = this.domMask.getBoundingClientRect()
@@ -395,7 +401,11 @@ class Picker {
       addClass('hidden', openLinkBtn)
     }
 
-    textarea.select()
+    if (content) {
+      textarea.select()
+    } else {
+      textarea.focus()
+    }
   }
 }
 
