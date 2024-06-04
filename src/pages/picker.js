@@ -93,6 +93,8 @@ class Picker {
       return false
     }
 
+    // update window size because the initial value we got in the constructor may be incorrect
+    this.handleWindowResize()
     return true
   }
 
