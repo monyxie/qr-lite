@@ -300,6 +300,7 @@ class Picker {
 
   async scan () {
     addClass('hidden', this.domResult)
+    addClass('loading', this.domMask)
     this.resultContent = null
 
     let resImage
@@ -329,6 +330,8 @@ class Picker {
     } catch (e) {
       console.error('picker frame error: ', e)
       err = e ? e.toString() : 'Unknown error'
+    } finally {
+      removeClass('loading', this.domMask)
     }
     this.showResult(err, resText, resImage, successful)
   }

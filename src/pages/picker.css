@@ -180,3 +180,8 @@ html, body {
 .hidden {
     display: none !important;
 }
+
+.loading {
+    cursor: wait !important;
+}
+
