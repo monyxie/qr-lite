@@ -1,5 +1,5 @@
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 * {
@@ -32,6 +32,8 @@ body {
     color: #666;
     font-family: sans-serif;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    display: flex;
+    gap: 2rem;
 }
 
 .clickable {
@@ -47,8 +49,15 @@ body {
 }
 
 .icon {
-    width: 1rem;
-    height: 1rem;
+    width: 1em;
+    height: 1em;
     vertical-align: middle;
     opacity: 0.8;
+    margin-right: 0.1em;
+}
+
+.logo {
+    width: 4rem;
+    height: 4rem;
+    align-self: center;
 }

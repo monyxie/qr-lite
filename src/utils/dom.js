@@ -8,10 +8,14 @@ export function query (selector) {
   return document.querySelector(selector)
 }
 
+export function queryAll (selector) {
+  return document.querySelectorAll(selector)
+}
+
 export function addClass (cls, ...el) {
   el.forEach(a => {
     if (typeof a === 'string') {
-      query(a).classList.add(cls)
+      queryAll(a).forEach(el => el.classList.add(cls))
     } else {
       a.classList.add(cls)
     }
@@ -21,7 +25,7 @@ export function addClass (cls, ...el) {
 export function removeClass (cls, ...el) {
   el.forEach(a => {
     if (typeof a === 'string') {
-      query(a).classList.remove(cls)
+      queryAll(a).forEach(el => el.classList.remove(cls))
     } else {
       a.classList.remove(cls)
     }

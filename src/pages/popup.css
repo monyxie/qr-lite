@@ -346,9 +346,9 @@ body {
 }
 
 .icon {
-    width: 1rem;
-    height: 1rem;
+    width: 1em;
+    height: 1em;
     vertical-align: middle;
     opacity: 0.8;
-    margin-right: 0.1rem;
+    margin-right: 0.1em;
 }

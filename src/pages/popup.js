@@ -6,7 +6,7 @@ import { apiNs, clipboard, storage } from '../utils/compat'
 import { scan } from '../utils/qrcode'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
-import { renderTemplate } from '../utils/i18n'
+import { getText, renderTemplate } from '../utils/i18n'
 import { isUrl, sleep } from '../utils/misc'
 
 class Popup {
@@ -102,46 +102,48 @@ class Popup {
 
     this.showTab('scan')
 
+    if (isUrl(url) && !await apiNs.permissions.contains({ origins: ['<all_urls>'] })) {
+      removeClass('hidden', '#permissionInstructions')
+      addClass('hidden', '#scanInstructions', '#scanInput')
+      $('#grant-permissions-instructions').innerHTML = getText('grant_permissions_instructions_html', getText('grant_all_urls_permission_name'))
+      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?all-urls')
+      return
+    }
+
     addClass('hidden', '#scanInstructions', '#scanVideo', '#positionMarker', $openLinkBtn)
     removeClass('hidden', '#scanInput', $scanOutput, $scanInputImage)
     $scanOutput.value = ''
     $scanInputImage.src = url
 
     let error
-    const permissions = { origins: ['<all_urls>'] }
-    if (isUrl(url) && !await apiNs.permissions.contains(permissions)) {
-      // TODO grant permission ui
-      error = 'Permission not granted. Please grant QR Lite "Access your data for all websites" permission in browser settings.'
-    } else {
-      try {
+    try {
       // wait for decode to complete before appending to dom and scanning
-        await $scanInputImage.decode()
+      await $scanInputImage.decode()
 
-        const result = await scan($scanInputImage)
-        if (result.length < 1) {
-          $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
-        } else {
-          const text = result[0].content
-          const vertices = result[0].vertices
+      const result = await scan($scanInputImage)
+      if (result.length < 1) {
+        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
+      } else {
+        const text = result[0].content
+        const vertices = result[0].vertices
 
-          $scanOutput.placeholder = ''
-          $scanOutput.value = text
-          $scanOutput.select()
+        $scanOutput.placeholder = ''
+        $scanOutput.value = text
+        $scanOutput.select()
 
-          if (vertices) {
-            that.createRectMarker(vertices, '#scanInput', $scanInputImage)
-          }
-
-          await that.addHistory('decode', text)
-
-          if (isUrl(text)) {
-            $openLinkBtn.classList.remove('hidden')
-          }
+        if (vertices) {
+          that.createRectMarker(vertices, '#scanInput', $scanInputImage)
         }
-      } catch (e) {
-        console.error(e)
-        error = e.toString()
+
+        await that.addHistory('decode', text)
+
+        if (isUrl(text)) {
+          $openLinkBtn.classList.remove('hidden')
+        }
       }
+    } catch (e) {
+      console.error(e)
+      error = e.toString()
     }
 
     $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', error)
@@ -231,12 +233,9 @@ class Popup {
     const $scanOutput = $('#scanOutput')
     const $scanInputImage = $('#scanInputImage')
     const $cameraRescanBtn = $('#cameraRescanBtn')
-    const $openLinkBtn = $('#openLinkBtn')
     const $scanVideo = $('#scanVideo')
     const $scanInput = $('#scanInput')
     const $scanInstructions = $('#scanInstructions')
-    const $positionMarker = $('#positionMarker')
-    const $permissionInstructions = $('#permissionInstructions')
     const $scanningText = $('#scanningText')
 
     $cameraRescanBtn.onclick = () => this.startCameraScan()
@@ -252,14 +251,16 @@ class Popup {
         .getUserMedia({ video: true, audio: false })
     } catch (e) {
       // getUserMedia() failed
-      removeClass('hidden', $permissionInstructions)
+      removeClass('hidden', '#permissionInstructions')
+      $('#grant-permissions-instructions').innerHTML = getText('grant_permissions_instructions_html', getText('grant_camera_permission_name'))
+      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?camera')
       addClass('hidden', $scanInstructions)
       addClass('hidden', $scanInput)
       return
     }
 
     try {
-      addClass('hidden', $scanInstructions, $scanInputImage, $positionMarker, $cameraRescanBtn)
+      addClass('hidden', $scanInstructions, $scanInputImage, '#positionMarker', $cameraRescanBtn)
       removeClass('hidden', $scanOutput)
       $scanOutput.placeholder = ''
       $scanOutput.value = ''
@@ -319,7 +320,7 @@ class Popup {
       that.addHistory('decode', text)
 
       if (isUrl(text)) {
-        $openLinkBtn.classList.remove('hidden')
+        $('#openLinkBtn').classList.remove('hidden')
       }
 
       $scanInputImage.decode().then(() => {
@@ -462,11 +463,12 @@ class Popup {
       })
     })
 
-    $('#grantPermissionsBtn').addEventListener('click', () => {
-      // close self (popup)
+    $('#grantPermissionsBtn').addEventListener('click', (ev) => {
+      ev.preventDefault()
       apiNs.tabs.create({
-        url: '../pages/grant.html'
+        url: ev.target.href
       })
+      // close self (popup)
       window.close()
     })
 

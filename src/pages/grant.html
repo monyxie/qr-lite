@@ -3,30 +3,39 @@
 <head>
     <meta charset="utf-8">
     <title>Grant camera access</title>
-    <link rel="stylesheet" href="grant.css">
+    <link href="grant.css" rel="stylesheet">
     <script defer src="grant.js"></script>
 </head>
 <body>
 <template id="template">
     <div class="container">
         <div class="box">
+            <img src="../icons/qrlite.svg" class="logo"/>
             <p id="initial">
-                {{__MSG_grant_page_initial_instructions_html__}}
+                <span class="grant-camera hidden"> {{__MSG_grant_camera_initial_instructions_html__}} </span>
+                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_initial_instructions_html__}} </span>
+                <br>
+                <br>
+                <a class="clickable" id="trigger">
+                    <img class="icon" src="../icons/key.svg"/>{{__MSG_grant_permissions_btn__}}
+                </a>
             </p>
             <p class="hidden" id="blocked">
-                {{__MSG_grant_page_blocked_instructions_html__}}
+                <span class="grant-camera hidden"> {{__MSG_grant_camera_blocked_instructions_html__}} </span>
+                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_blocked_instructions_html__}} </span>
                 <br>
                 <br>
                 <a class="clickable" id="refresh">
-                    <img class="icon" src="../icons/refresh.svg"/> {{__MSG_grant_page_refresh_btn__}}
+                    <img class="icon" src="../icons/refresh.svg"/>{{__MSG_grant_page_refresh_btn__}}
                 </a>
             </p>
             <p class="hidden" id="granted">
-                {{__MSG_grant_page_granted_instructions_html__}}
+                <span class="grant-camera hidden"> {{__MSG_grant_camera_granted_instructions_html__}} </span>
+                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_granted_instructions_html__}} </span>
                 <br>
                 <br>
                 <a class="clickable" id="close">
-                    <img class="icon" src="../icons/close.svg"/> {{__MSG_grant_page_close_btn__}}
+                    <img class="icon" src="../icons/close.svg"/>{{__MSG_grant_page_close_btn__}}
                 </a>
             </p>
         </div>
