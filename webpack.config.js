@@ -3,15 +3,16 @@ const webpack = require('webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 const svgo = require('svgo')
 
-module.exports = [
-  generateConfig('firefox'),
-  generateConfig('chrome')
-]
+module.exports = env => (env.browser ? [env.browser] : ['firefox', 'chrome']).map(generateConfig)
 
 /**
  * @param browser {string}
  */
 function generateConfig (browser) {
+  if (['firefox', 'chrome'].indexOf(browser) === -1) {
+    throw new Error('Unsupported browser: ' + browser)
+  }
+
   console.log('browser: ', browser)
 
   const manifestFile = browser === 'firefox' ? 'manifest-firefox.json' : 'manifest-chrome.json'

@@ -55,8 +55,8 @@ if [ $? -eq 0 ]; then
   fi
 
   cd "$DIST_DIR" || exit
-  zip -r "$RELEASE_FILE" ./*
+  zip -r -9 "$RELEASE_FILE" ./*
 
   cd "$PROJECT_ROOT" || exit
-  git ls-tree --name-only -r HEAD | zip -r "$SOURCE_FILE" -@
+  git ls-tree --name-only -r HEAD | zip -x store-metadata -r -9 "$SOURCE_FILE" -@
 fi

@@ -1,6 +1,6 @@
 # QR Lite
 
-<img alt="QR Lite icon" src="https://github.com/monyxie/qr-lite/raw/2.0-dev/src/icons/qrlite.svg" width="48">
+![Promo Banner](promo/chrome-webstore-promo.png)
 
 QR Lite is a browser extension for generating and scanning QR codes offline.
 
