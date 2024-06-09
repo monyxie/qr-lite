@@ -21,13 +21,13 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: #ccc;
+    background: linear-gradient(#DFD 0%, #EFE 30%);
 }
 
 .box {
     padding: 2rem 2rem;
     max-width: 40rem;
-    background-color: #eee;
+    background-color: rgba(255,255,255,0.9);
     border-radius: 1rem;
     color: #666;
     font-family: sans-serif;
@@ -37,8 +37,8 @@ body {
 }
 
 .clickable {
-    padding-left: 1px;
-    padding-right: 1px;
+    border-radius: 0.5em;
+    padding: 0.2em 0.5em;
     display: inline-block;
     text-align: center;
     min-width: 1em;
@@ -46,6 +46,10 @@ body {
     cursor: pointer;
     text-decoration: underline;
     font-family: sans-serif;
+}
+
+.clickable:hover {
+    background-color: rgba(100,100,100,0.2)
 }
 
 .icon {
