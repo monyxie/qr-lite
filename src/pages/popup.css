@@ -1,3 +1,7 @@
+html {
+    overflow: hidden; /*fix scrollbar when in 'history' tab in Firefox*/
+}
+
 body {
     background: linear-gradient(#DFD 0%, #EFE 30%);
 }
