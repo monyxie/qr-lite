@@ -58,5 +58,5 @@ if [ $? -eq 0 ]; then
   zip -r -9 "$RELEASE_FILE" ./*
 
   cd "$PROJECT_ROOT" || exit
-  git ls-tree --name-only -r HEAD | zip -x store-metadata -r -9 "$SOURCE_FILE" -@
+  git ls-tree --name-only -r HEAD | zip -9 "$SOURCE_FILE" --exclude 'promo/*' -@
 fi
