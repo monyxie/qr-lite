@@ -301,7 +301,7 @@ class Popup {
         await sleep(100)
       }
 
-      if (!result) {
+      if (!result || !result.length) {
         return
       }
 
