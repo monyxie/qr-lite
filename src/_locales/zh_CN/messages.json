@@ -6,172 +6,202 @@
     "message": "QR Lite"
   },
   "extension_description": {
-    "message": "离线生成或扫描二维码。"
+    "message": "Generate or scan QR codes offline."
   },
   "save_image_btn": {
-    "message": "保存"
+    "message": "Save"
   },
   "save_image_btn_title": {
-    "message": "保存这张二维码图片"
+    "message": "Save this QR code image"
   },
   "copy_image_btn": {
-    "message": "复制"
+    "message": "Copy"
   },
   "copy_image_btn_title": {
-    "message": "复制这张二维码图片到剪贴板"
+    "message": "Copy this QR code image to the clipboard"
   },
   "copy_image_ok": {
-    "message": "已复制！"
+    "message": "Copied!"
   },
   "open_url_btn": {
-    "message": "打开网址"
+    "message": "Open URL"
   },
   "open_url_btn_title": {
-    "message": "在新标签页中打开扫描到的网址"
+    "message": "Open the scanned URL in a new tab"
   },
   "tab_generate_title": {
-    "message": "生成"
+    "message": "Create"
   },
   "tab_scan_title": {
-    "message": "扫描"
+    "message": "Scan"
   },
   "tab_history_title": {
-    "message": "历史记录"
+    "message": "History"
   },
   "back_btn": {
-    "message": "返回"
+    "message": "Back"
   },
   "back_btn_title": {
-    "message": "返回"
+    "message": "Back"
   },
   "clear_history_btn": {
-    "message": "清除"
+    "message": "Clear"
   },
   "clear_history_btn_title": {
-    "message": "清除历史记录"
+    "message": "Clear history"
   },
   "github_link_title": {
-    "message": "访问 QR Lite 在 Github 上的项目主页"
+    "message": "Visit QR Lite's project page on Github"
   },
   "error_correction_level_btn_low_title": {
-    "message": "低，可以恢复 7% 左右的数据"
+    "message": "Low, 7% of data bytes can be restored"
   },
   "error_correction_level_btn_medium_title": {
-    "message": "中，可以恢复 15% 左右的数据"
+    "message": "Medium, 15% of data bytes can be restored"
   },
   "error_correction_level_btn_quartile_title": {
-    "message": "四分级，可以恢复 25% 左右的数据"
+    "message": "Quartile, 25% of data bytes can be restored"
   },
   "error_correction_level_btn_high_title": {
-    "message": "高，可以恢复 30% 左右的数据"
+    "message": "High, 30% of data bytes can be restored"
   },
   "error_correction_level_label": {
-    "message": "纠错:"
+    "message": "EC:"
   },
   "error_correction_level_label_title": {
-    "message": "纠错等级"
+    "message": "Error correction level"
   },
   "content_length_label_title": {
-    "message": "二维码内容长度，以字符数计"
+    "message": "Length of the QR code content in characters"
   },
   "content_length_label": {
-    "message": "长度:"
+    "message": "Len:"
   },
   "content_title": {
-    "message": "二维码内容"
+    "message": "QR code content"
+  },
+  "content_placeholder": {
+    "message": "Type in some text to create a QR code"
   },
   "context_menu_make_qr_code_for_link": {
-    "message": "为该链接生成二维码"
+    "message": "Generate QR Code for This Link"
   },
   "context_menu_make_qr_code_for_selected_text": {
-    "message": "生成 \"%s\" 的二维码"
+    "message": "Generate QR Code for \"%s\""
   },
   "context_menu_scan_qr_code_in_image": {
-    "message": "扫描图片中的二维码"
+    "message": "Scan QR Code in Image"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "选择扫描区域..."
+    "message": "Select Region to Scan..."
   },
   "context_menu_scan_with_camera": {
-    "message": "用摄像头扫描"
+    "message": "Scan with Camera"
   },
   "scan_region_picker_tips_html": {
-    "message": "您现在处于 QR Lite 的“选择扫描区域”模式下。请拖拽鼠标来选择要扫描的区域。按 &lt;Esc&gt; 键取消。"
+    "message": "<kbd>Scroll Wheel</kbd> Adjust size <kbd>Left Click</kbd> Scan <kbd>Esc</kbd> Exit"
   },
   "copy_btn": {
-    "message": "复制"
+    "message": "Copy"
   },
   "copy_btn_copied": {
-    "message": "已复制"
+    "message": "Copied"
   },
   "open_link_btn": {
-    "message": "打开网址"
+    "message": "Open link"
   },
   "decoding": {
-    "message": "正在扫码..."
+    "message": "Decoding..."
   },
   "decoding_failed": {
-    "message": "扫码失败：$MSG$",
+    "message": "Decoding failed: $MSG$",
     "placeholders": {
       "msg": {
         "content": "$1"
       }
     }
   },
+  "unable_to_decode": {
+    "message": "Unable to decode QR code"
+  },
   "scan_instructions_html": {
-    "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描此图片中的二维码”"
+    "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
   "pick_region_to_scan_btn": {
-    "message": "选择扫描区域"
+    "message": "Select region to scan"
   },
   "camera_scan_btn": {
-    "message": "用摄像头扫描"
+    "message": "Scan with camera"
   },
   "rescan_btn_label": {
-    "message": "重新扫描"
+    "message": "New scan"
   },
-  "camera_rescan_btn_title": {
-    "message": "开始新的扫描"
+  "rescan_btn_title": {
+    "message": "Initiate another scan"
   },
   "grant_permissions_instructions_html": {
-    "message": "此功能需要摄像头的访问权限。<br>点击下方链接以授予权限。"
-  },
-  "grant_permissions_btn": {
-    "message": "授予摄像头权限"
-  },
-  "grant_permissions_window_title": {
-    "message": "授予摄像头权限"
-  },
-  "grant_page_initial_instructions_html": {
-    "message": "当被询问是否要允许 QR Lite 使用您的摄像头时，请确保<strong>“记住此决定”</strong>已被勾选，然后点击<strong>“允许”</strong>。"
-  },
-  "grant_page_blocked_instructions_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。",
+    "message": "This feature requires the following additional permission.<br><br><strong>$PERMISSION$</strong><br>",
     "placeholders": {
-      "icon": {
+      "permission": {
         "content": "$1"
       }
     }
   },
-  "grant_page_granted_instructions_html": {
-    "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
+  "grant_permissions_btn": {
+    "message": "Grant permission"
+  },
+  "grant_camera_permission_name": {
+    "message": "Access to your camera"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "Access to your data for all websites"
+  },
+  "grant_permissions_window_title": {
+    "message": "Grant permission"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>.<br><br>Click the button below to start."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite has been successfully granted permission to use the camera.<br><br>You may close this page now."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "You're about to grant QR Lite access to your data for all websites.<br><br>Click the button below to start."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "Permission not granted. Please refresh this page and try again."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite has been successfully granted access to your data for all websites.<br><br>You may close this page now."
   },
   "grant_page_refresh_btn": {
-    "message": "刷新"
+    "message": "Refresh"
   },
   "grant_page_close_btn": {
-    "message": "关闭"
+    "message": "Close"
   },
   "or": {
-    "message": "或者"
+    "message": "OR"
   },
   "scanning": {
-    "message": "扫描中..."
+    "message": "Scanning..."
   },
   "unable_to_decode_qr_code": {
-    "message": "二维码解码失败"
+    "message": "Unable to decode QR code"
   },
   "browser_action_command_description": {
-    "message": "显示弹出框"
+    "message": "Show popup"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Select region to scan"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Scan with camera"
+  },
+  "picker_close_btn_title": {
+    "message": "Close"
   }
 }
