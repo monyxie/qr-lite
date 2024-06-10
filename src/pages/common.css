@@ -35,3 +35,7 @@ html {
     position: relative;
     left: -0.2em;
 }
+
+textarea[readonly] {
+    outline: none;
+}
