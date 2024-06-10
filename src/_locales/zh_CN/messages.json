@@ -9,10 +9,10 @@
     "message": "Generate or scan QR codes offline."
   },
   "save_image_btn": {
-    "message": "Save"
+    "message": "保存"
   },
   "save_image_btn_title": {
-    "message": "Save this QR code image"
+    "message": "保存此 QR 代码图像"
   },
   "copy_image_btn": {
     "message": "Copy"
@@ -33,43 +33,43 @@
     "message": "Create"
   },
   "tab_scan_title": {
-    "message": "Scan"
+    "message": "扫描"
   },
   "tab_history_title": {
     "message": "History"
   },
   "back_btn": {
-    "message": "Back"
+    "message": "后退"
   },
   "back_btn_title": {
-    "message": "Back"
+    "message": "后退"
   },
   "clear_history_btn": {
     "message": "Clear"
   },
   "clear_history_btn_title": {
-    "message": "Clear history"
+    "message": "清除历史记录"
   },
   "github_link_title": {
-    "message": "Visit QR Lite's project page on Github"
+    "message": "访问 Github 上的 QR Lite项目页面"
   },
   "error_correction_level_btn_low_title": {
-    "message": "Low, 7% of data bytes can be restored"
+    "message": "低, 7%的数据字节可以恢复"
   },
   "error_correction_level_btn_medium_title": {
-    "message": "Medium, 15% of data bytes can be restored"
+    "message": "中、 15%的数据字节可以恢复"
   },
   "error_correction_level_btn_quartile_title": {
     "message": "Quartile, 25% of data bytes can be restored"
   },
   "error_correction_level_btn_high_title": {
-    "message": "High, 30% of data bytes can be restored"
+    "message": "最高，30%的数据字节可以恢复"
   },
   "error_correction_level_label": {
     "message": "EC:"
   },
   "error_correction_level_label_title": {
-    "message": "Error correction level"
+    "message": "错误校正级别"
   },
   "content_length_label_title": {
     "message": "Length of the QR code content in characters"
@@ -81,7 +81,7 @@
     "message": "QR code content"
   },
   "content_placeholder": {
-    "message": "Type in some text to create a QR code"
+    "message": "在某些文本中键入以创建二维码"
   },
   "context_menu_make_qr_code_for_link": {
     "message": "Generate QR Code for This Link"
@@ -90,10 +90,10 @@
     "message": "Generate QR Code for \"%s\""
   },
   "context_menu_scan_qr_code_in_image": {
-    "message": "Scan QR Code in Image"
+    "message": "扫描图像中的二维码"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "Select Region to Scan..."
+    "message": "选择要扫描的区域..."
   },
   "context_menu_scan_with_camera": {
     "message": "Scan with Camera"
@@ -105,7 +105,7 @@
     "message": "Copy"
   },
   "copy_btn_copied": {
-    "message": "Copied"
+    "message": "已复制"
   },
   "open_link_btn": {
     "message": "Open link"
@@ -122,13 +122,13 @@
     }
   },
   "unable_to_decode": {
-    "message": "Unable to decode QR code"
+    "message": "无法解码二维码"
   },
   "scan_instructions_html": {
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
   "pick_region_to_scan_btn": {
-    "message": "Select region to scan"
+    "message": "选择要扫描的区域"
   },
   "camera_scan_btn": {
     "message": "Scan with camera"
@@ -148,16 +148,16 @@
     }
   },
   "grant_permissions_btn": {
-    "message": "Grant permission"
+    "message": "授予权限"
   },
   "grant_camera_permission_name": {
-    "message": "Access to your camera"
+    "message": "访问您的摄像头"
   },
   "grant_all_urls_permission_name": {
-    "message": "Access to your data for all websites"
+    "message": "访问所有网站的数据"
   },
   "grant_permissions_window_title": {
-    "message": "Grant permission"
+    "message": "授予权限"
   },
   "grant_camera_initial_instructions_html": {
     "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>.<br><br>Click the button below to start."
@@ -190,13 +190,13 @@
     "message": "Scanning..."
   },
   "unable_to_decode_qr_code": {
-    "message": "Unable to decode QR code"
+    "message": "无法解码二维码"
   },
   "browser_action_command_description": {
     "message": "Show popup"
   },
   "select_region_to_scan_command_description": {
-    "message": "Select region to scan"
+    "message": "选择要扫描的区域"
   },
   "scan_with_camera_command_description": {
     "message": "Scan with camera"
