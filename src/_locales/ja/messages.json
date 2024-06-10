@@ -6,7 +6,7 @@
     "message": "QR Lite"
   },
   "extension_description": {
-    "message": "Generate or scan QR codes offline."
+    "message": "QRコードをオフラインで生成またはスキャンします。"
   },
   "save_image_btn": {
     "message": "保存"
@@ -15,37 +15,37 @@
     "message": "このQRコードを保存"
   },
   "copy_image_btn": {
-    "message": "Copy"
+    "message": "コピー"
   },
   "copy_image_btn_title": {
-    "message": "Copy this QR code image to the clipboard"
+    "message": "このQRコード画像をクリップボードにコピー"
   },
   "copy_image_ok": {
-    "message": "Copied!"
+    "message": "コピーしました！"
   },
   "open_url_btn": {
-    "message": "Open URL"
+    "message": "URLを開く"
   },
   "open_url_btn_title": {
-    "message": "Open the scanned URL in a new tab"
+    "message": "スキャンした URL を新しいタブで開く"
   },
   "tab_generate_title": {
-    "message": "Create"
+    "message": "作成"
   },
   "tab_scan_title": {
     "message": "スキャン"
   },
   "tab_history_title": {
-    "message": "History"
+    "message": "沿革"
   },
   "back_btn": {
-    "message": "Back"
+    "message": "戻る"
   },
   "back_btn_title": {
     "message": "戻る"
   },
   "clear_history_btn": {
-    "message": "Clear"
+    "message": "クリア"
   },
   "clear_history_btn_title": {
     "message": "履歴を消去"
@@ -60,19 +60,19 @@
     "message": "中、データバイトの15%を復元することができます"
   },
   "error_correction_level_btn_quartile_title": {
-    "message": "Quartile, 25% of data bytes can be restored"
+    "message": "四分位数、25%のデータバイトを復元できます"
   },
   "error_correction_level_btn_high_title": {
-    "message": "High, 30% of data bytes can be restored"
+    "message": "データバイトの30%以上を復元できます"
   },
   "error_correction_level_label": {
     "message": "EC:"
   },
   "error_correction_level_label_title": {
-    "message": "Error correction level"
+    "message": "エラー訂正レベル"
   },
   "content_length_label_title": {
-    "message": "Length of the QR code content in characters"
+    "message": "QRコードの文字数の長さ"
   },
   "content_length_label": {
     "message": "Len:"
@@ -81,40 +81,40 @@
     "message": "QR code content"
   },
   "content_placeholder": {
-    "message": "Type in some text to create a QR code"
+    "message": "QRコードを作成するにはテキストを入力してください"
   },
   "context_menu_make_qr_code_for_link": {
-    "message": "Generate QR Code for This Link"
+    "message": "このリンクの QR コードを生成"
   },
   "context_menu_make_qr_code_for_selected_text": {
-    "message": "Generate QR Code for \"%s\""
+    "message": "\"%s\" のQRコードを生成"
   },
   "context_menu_scan_qr_code_in_image": {
-    "message": "Scan QR Code in Image"
+    "message": "画像内の QR コードをスキャン"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "Select Region to Scan..."
+    "message": "スキャンする領域を選択..."
   },
   "context_menu_scan_with_camera": {
-    "message": "Scan with Camera"
+    "message": "カメラでスキャン"
   },
   "scan_region_picker_tips_html": {
     "message": "<kbd>Scroll Wheel</kbd> Adjust size <kbd>Left Click</kbd> Scan <kbd>Esc</kbd> Exit"
   },
   "copy_btn": {
-    "message": "Copy"
+    "message": "コピー"
   },
   "copy_btn_copied": {
-    "message": "Copied"
+    "message": "コピーしました"
   },
   "open_link_btn": {
-    "message": "Open link"
+    "message": "リンクを開く"
   },
   "decoding": {
-    "message": "Decoding..."
+    "message": "デコード中..."
   },
   "decoding_failed": {
-    "message": "Decoding failed: $MSG$",
+    "message": "デコードに失敗しました: $MSG$",
     "placeholders": {
       "msg": {
         "content": "$1"
@@ -122,25 +122,25 @@
     }
   },
   "unable_to_decode": {
-    "message": "Unable to decode QR code"
+    "message": "QRコードをデコードできません"
   },
   "scan_instructions_html": {
-    "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
+    "message": "任意の画像を右クリックし、<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> この画像のQRコードをスキャン\""
   },
   "pick_region_to_scan_btn": {
-    "message": "Select region to scan"
+    "message": "スキャンする領域を選択"
   },
   "camera_scan_btn": {
-    "message": "Scan with camera"
+    "message": "カメラでスキャン"
   },
   "rescan_btn_label": {
-    "message": "New scan"
+    "message": "新規スキャン"
   },
   "rescan_btn_title": {
-    "message": "Initiate another scan"
+    "message": "別のスキャンを開始する"
   },
   "grant_permissions_instructions_html": {
-    "message": "This feature requires the following additional permission.<br><br><strong>$PERMISSION$</strong><br>",
+    "message": "この機能には、次の追加の権限が必要です。<br><br><strong>$PERMISSION$</strong><br>",
     "placeholders": {
       "permission": {
         "content": "$1"
@@ -148,16 +148,16 @@
     }
   },
   "grant_permissions_btn": {
-    "message": "Grant permission"
+    "message": "アクセス許可を与える"
   },
   "grant_camera_permission_name": {
-    "message": "Access to your camera"
+    "message": "カメラへのアクセス"
   },
   "grant_all_urls_permission_name": {
-    "message": "Access to your data for all websites"
+    "message": "すべてのウェブサイトのあなたのデータにアクセス"
   },
   "grant_permissions_window_title": {
-    "message": "Grant permission"
+    "message": "アクセス許可を与える"
   },
   "grant_camera_initial_instructions_html": {
     "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, make sure the <strong>\"Remember this decision\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>.<br><br>Click the button below to start."
@@ -166,42 +166,42 @@
     "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page."
   },
   "grant_camera_granted_instructions_html": {
-    "message": "QR Lite has been successfully granted permission to use the camera.<br><br>You may close this page now."
+    "message": "QR Liteは正常にカメラの使用を許可されました。<br><br>このページを閉じることができます。"
   },
   "grant_all_urls_initial_instructions_html": {
-    "message": "You're about to grant QR Lite access to your data for all websites.<br><br>Click the button below to start."
+    "message": "すべてのウェブサイトのQR Liteへのアクセスを許可します。<br><br>開始するには下のボタンをクリックしてください。"
   },
   "grant_all_urls_blocked_instructions_html": {
-    "message": "Permission not granted. Please refresh this page and try again."
+    "message": "権限が許可されていません。このページを更新してもう一度お試しください。"
   },
   "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite has been successfully granted access to your data for all websites.<br><br>You may close this page now."
+    "message": "QR Liteはすべてのウェブサイトのデータへのアクセスが許可されました。<br><br>今すぐこのページを閉じることができます。"
   },
   "grant_page_refresh_btn": {
-    "message": "Refresh"
+    "message": "更新"
   },
   "grant_page_close_btn": {
-    "message": "Close"
+    "message": "閉じる"
   },
   "or": {
     "message": "OR"
   },
   "scanning": {
-    "message": "Scanning..."
+    "message": "スキャン中..."
   },
   "unable_to_decode_qr_code": {
-    "message": "Unable to decode QR code"
+    "message": "QRコードをデコードできません"
   },
   "browser_action_command_description": {
-    "message": "Show popup"
+    "message": "ポップアップを表示"
   },
   "select_region_to_scan_command_description": {
-    "message": "Select region to scan"
+    "message": "スキャンする領域を選択"
   },
   "scan_with_camera_command_description": {
-    "message": "Scan with camera"
+    "message": "カメラでスキャン"
   },
   "picker_close_btn_title": {
-    "message": "Close"
+    "message": "閉じる"
   }
 }
