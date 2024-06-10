@@ -27,7 +27,7 @@
     "message": "Open URL"
   },
   "open_url_btn_title": {
-    "message": "Open scan result in a new tab"
+    "message": "Open the scanned URL in a new tab"
   },
   "tab_generate_title": {
     "message": "Create"
@@ -200,5 +200,8 @@
   },
   "scan_with_camera_command_description": {
     "message": "Scan with camera"
+  },
+  "picker_close_btn_title": {
+    "message": "Close"
   }
 }

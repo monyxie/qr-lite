@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
     <title>QR Lite</title>
+    <link href="common.css" rel="stylesheet">
     <link rel="stylesheet" href="popup.css">
     <script defer src="popup.js"></script>
 </head>
 <body>
 <template id="template">
     <div class="tabs-container">
-        <div class="tabs-item active" id="tab-generate">
-            <img class="icon" src="../icons/generate.svg"/><div>{{__MSG_tab_generate_title__}}</div>
+        <div class="tabs-item active" id="tab-generate" title="{{__MSG_tab_generate_title__}}">
+            <img class="icon" src="../icons/generate.svg"/><div class="tabs-item-text">{{__MSG_tab_generate_title__}}</div>
         </div>
-        <div class="tabs-item" id="tab-scan">
-            <img class="icon" src="../icons/scan.svg"/><div>{{__MSG_tab_scan_title__}}</div>
+        <div class="tabs-item" id="tab-scan" title="{{__MSG_tab_scan_title__}}">
+            <img class="icon" src="../icons/scan.svg"/><div class="tabs-item-text">{{__MSG_tab_scan_title__}}</div>
         </div>
-        <div class="tabs-item" id="tab-history">
-            <img class="icon" src="../icons/history.svg"/><div>{{__MSG_tab_history_title__}}</div>
+        <div class="tabs-item" id="tab-history" title="{{__MSG_tab_history_title__}}">
+            <img class="icon" src="../icons/history.svg"/><div class="tabs-item-text">{{__MSG_tab_history_title__}}</div>
         </div>
     </div>
     <div class="container" data-role="content">
