@@ -9,6 +9,7 @@
    inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -24,9 +25,9 @@
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#fafafa"
      showgrid="true"
-     inkscape:zoom="8"
-     inkscape:cx="62.3125"
-     inkscape:cy="69.25"
+     inkscape:zoom="4"
+     inkscape:cx="36"
+     inkscape:cy="69.5"
      inkscape:window-width="2560"
      inkscape:window-height="1355"
      inkscape:window-x="0"
@@ -51,7 +52,30 @@
        visible="true" />
   </sodipodi:namedview>
   <defs
-     id="defs2" />
+     id="defs2">
+    <linearGradient
+       id="linearGradient1"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#aeffb1;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+      <stop
+         style="stop-color:#32d0f7;stop-opacity:1;"
+         offset="1"
+         id="stop1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="29.514133"
+       y1="29.514133"
+       x2="182.15271"
+       y2="182.15273"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.386719,0,0,1.3867189,-40.92781,-40.927806)" />
+  </defs>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -64,12 +88,12 @@
     </rdf:RDF>
   </metadata>
   <rect
-     style="display:inline;fill:#f7f7f6;fill-opacity:1;fill-rule:nonzero;stroke:#f7f7f6;stroke-width:59.0283;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;image-rendering:auto"
+     style="display:inline;fill:url(#linearGradient2);fill-opacity:1;fill-rule:nonzero;stroke:#f7f7f6;stroke-width:0;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;image-rendering:auto"
      id="rect6"
-     width="152.63855"
-     height="152.63858"
-     x="29.514132"
-     y="29.514132"
+     width="211.66681"
+     height="211.66681"
+     x="3.1974423e-14"
+     y="3.1974423e-14"
      inkscape:label="bg" />
   <g
      id="layer1"
