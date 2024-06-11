@@ -10,13 +10,13 @@ html {
 .clickable {
     border-radius: 0.5em;
     padding: 0.2em 0.5em;
-    display: inline-block;
-    text-align: center;
-    min-width: 1em;
     color: gray;
     cursor: pointer;
     text-decoration: underline;
     font-family: sans-serif;
+    display: inline-flex;
+    gap: 0.4em;
+    align-items: center;
 }
 
 .clickable:hover {
@@ -27,13 +27,11 @@ html {
     height: 1em;
     vertical-align: middle;
     opacity: 0.8;
-    margin-right: 0.1em;
 }
 
 .clickable .icon {
-    margin: 0.2em 0;
     position: relative;
-    left: -0.2em;
+    top: 1px;
 }
 
 textarea[readonly] {

@@ -90,6 +90,17 @@ body {
     white-space: nowrap;
 }
 
+.main .ec-levels-container {
+    display: inline-flex;
+    gap: 0.1em
+}
+
+.main .ec-level {
+    width: 1em;
+    display: flex;
+    justify-content: center;
+}
+
 .main .ec-level.ec-level-active {
     background-color: rgba(100, 100, 100, 0.8);
     color: white;
@@ -312,7 +323,6 @@ body {
     text-transform: uppercase;
     background-color: transparent;
     cursor: pointer;
-    gap: 4px;
 }
 
 .tabs-item:hover {
@@ -327,11 +337,13 @@ body {
 }
 
 .tabs-item .tabs-item-text {
+    user-select: none;
     max-width: 0;
     overflow: hidden;
 }
 
 .tabs-item.active .tabs-item-text {
+    padding-left: 0.5em;
     max-width: 100%;
     transition: max-width 0.2s;
 }
