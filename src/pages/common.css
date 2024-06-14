@@ -7,6 +7,14 @@ html {
     display: none !important;
 }
 
+.chrome .chrome-hidden {
+    display: none !important;
+}
+
+.firefox .firefox-hidden {
+    display: none !important;
+}
+
 .clickable {
     border-radius: 0.5em;
     padding: 0.2em 0.5em;

@@ -206,6 +206,7 @@ class Popup {
 
   renderPage () {
     renderTemplate($('#template'))
+    document.documentElement.classList.add(QRLITE_BROWSER)
   }
 
   renderHistory () {

@@ -62,7 +62,12 @@
         </div>
         <div class="scan hidden" id="scan">
             <p class="instructions instruction-screen" id="scanInstructions">
-                {{__MSG_scan_instructions_html__}}<br><br>{{__MSG_or__}}<br><br>
+                <span class="chrome-hidden">
+                    {{__MSG_scan_instructions_html__}}
+                    <br><br>
+                    {{__MSG_or__}}
+                    <br><br>
+                </span>
                 <a class="clickable" id="scanRegion">
                     <img class="icon" src="../icons/scan-region.svg"/>{{__MSG_pick_region_to_scan_btn__}}</a>
                 <br><br>{{__MSG_or__}}<br><br>
