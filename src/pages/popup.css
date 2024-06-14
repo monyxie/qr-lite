@@ -256,12 +256,6 @@ body {
     left: 0;
 }
 
-.scan .qr-position-marker {
-    /*background-color: white;*/
-    /*border-radius: 100%;*/
-    /*opacity: 0.95;*/
-}
-
 .scan .necker {
     grid-column: 1 / span 3;
     grid-row: 2;
@@ -340,13 +334,14 @@ body {
     user-select: none;
     max-width: 0;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .tabs-item.active .tabs-item-text {
     padding-left: 0.5em;
     max-width: 100%;
     transition: max-width 0.2s;
-}
+ }
 
 /* utils */
 .instructions {
