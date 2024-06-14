@@ -1,9 +1,11 @@
 {
   "extension_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_short_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_description": {
     "message": "离线生成或扫描二维码。"
@@ -37,12 +39,6 @@
   },
   "tab_history_title": {
     "message": "历史记录"
-  },
-  "back_btn": {
-    "message": "返回"
-  },
-  "back_btn_title": {
-    "message": "返回"
   },
   "clear_history_btn": {
     "message": "清除"
@@ -80,6 +76,9 @@
   "content_title": {
     "message": "二维码内容"
   },
+  "content_placeholder": {
+    "message": "在此输入文字即可生成二维码"
+  },
   "context_menu_make_qr_code_for_link": {
     "message": "为该链接生成二维码"
   },
@@ -96,19 +95,13 @@
     "message": "用摄像头扫描"
   },
   "scan_region_picker_tips_html": {
-    "message": "您现在处于 QR Lite 的“选择扫描区域”模式下。请拖拽鼠标来选择要扫描的区域。按 &lt;Esc&gt; 键取消。"
+    "message": "<kbd>滚轮</kbd> 调整大小 <kbd>左键单击</kbd> 扫描 <kbd>Esc</kbd> 退出"
   },
   "copy_btn": {
     "message": "复制"
   },
   "copy_btn_copied": {
     "message": "已复制"
-  },
-  "open_link_btn": {
-    "message": "打开网址"
-  },
-  "decoding": {
-    "message": "正在扫码..."
   },
   "decoding_failed": {
     "message": "扫码失败：$MSG$",
@@ -117,6 +110,9 @@
         "content": "$1"
       }
     }
+  },
+  "unable_to_decode": {
+    "message": "无法读取二维码"
   },
   "scan_instructions_html": {
     "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描此图片中的二维码”"
@@ -130,31 +126,35 @@
   "rescan_btn_label": {
     "message": "重新扫描"
   },
-  "camera_rescan_btn_title": {
+  "rescan_btn_title": {
     "message": "开始新的扫描"
   },
-  "grant_permissions_instructions_html": {
-    "message": "此功能需要摄像头的访问权限。<br>点击下方链接以授予权限。"
+  "grant_camera_permission_name": {
+    "message": "使用摄像头"
   },
-  "grant_permissions_btn": {
-    "message": "授予摄像头权限"
+  "grant_all_urls_permission_name": {
+    "message": "访问所有网站的数据"
   },
   "grant_permissions_window_title": {
-    "message": "授予摄像头权限"
+    "message": "授予权限"
   },
-  "grant_page_initial_instructions_html": {
-    "message": "当被询问是否要允许 QR Lite 使用您的摄像头时，请确保<strong>“记住此决定”</strong>已被勾选，然后点击<strong>“允许”</strong>。"
+  "grant_camera_initial_instructions_html": {
+    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请确保<strong>“记住此决定”</strong>复选框已勾选，然后点击<strong>“允许”</strong>。<br><br>点击下方按钮开始。"
   },
-  "grant_page_blocked_instructions_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。",
-    "placeholders": {
-      "icon": {
-        "content": "$1"
-      }
-    }
+  "grant_camera_blocked_instructions_html": {
+    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
   },
-  "grant_page_granted_instructions_html": {
+  "grant_camera_granted_instructions_html": {
     "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "您即将授予 QR Lite 访问所有网站数据的权限。<br><br>点击下方按钮开始。"
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "权限未授予，请刷新本页面后重试。"
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "您已授予 QR Lite 访问所有网站数据的权限。<br><br>您现在可以关闭本页面了。"
   },
   "grant_page_refresh_btn": {
     "message": "刷新"
@@ -162,7 +162,18 @@
   "grant_page_close_btn": {
     "message": "关闭"
   },
-  "or": {
+  "grant_permissions_instructions_html": {
+    "message": "此功能需要以下附加权限。<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "授予权限"
+  },
+   "or": {
     "message": "或者"
   },
   "scanning": {
@@ -173,5 +184,14 @@
   },
   "browser_action_command_description": {
     "message": "显示弹出框"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "选择扫描区域"
+  },
+  "scan_with_camera_command_description": {
+    "message": "用摄像头扫描"
+  },
+  "picker_close_btn_title": {
+    "message": "关闭"
   }
 }

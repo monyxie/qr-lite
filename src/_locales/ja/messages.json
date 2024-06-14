@@ -38,12 +38,6 @@
   "tab_history_title": {
     "message": "履歴"
   },
-  "back_btn": {
-    "message": "戻る"
-  },
-  "back_btn_title": {
-    "message": "戻る"
-  },
   "clear_history_btn": {
     "message": "クリア"
   },
@@ -66,7 +60,8 @@
     "message": "高、データバイトの30%を復元できます"
   },
   "error_correction_level_label": {
-    "message": "EC:"
+    "message": "EC:",
+    "description": "[keep-original]"
   },
   "error_correction_level_label_title": {
     "message": "エラー訂正レベル"
@@ -79,6 +74,9 @@
   },
   "content_title": {
     "message": "QRコードのコンテンツ"
+  },
+  "content_placeholder": {
+    "message": "テキストを入力してQRコードを作成"
   },
   "context_menu_make_qr_code_for_link": {
     "message": "このリンクのQRコードを生成"
@@ -96,19 +94,13 @@
     "message": "カメラでスキャン"
   },
   "scan_region_picker_tips_html": {
-    "message": "これで、QRライトのスキャン領域の選択モードになりました。マウスをドラッグしてスキャン領域を選択してください。&lt;Esc&gt;を押してキャンセルします。"
+    "message": "<kbd>スクロールホイール</kbd> サイズ調整 <kbd>左クリック</kbd> スキャン <kbd>Esc</kbd> 終了"
   },
   "copy_btn": {
     "message": "コピー"
   },
   "copy_btn_copied": {
     "message": "コピーしました"
-  },
-  "open_link_btn": {
-    "message": "リンクを開く"
-  },
-  "decoding": {
-    "message": "デコード中..."
   },
   "decoding_failed": {
     "message": "デコードに失敗しました: $MSG$",
@@ -117,6 +109,9 @@
         "content": "$1"
       }
     }
+  },
+  "unable_to_decode": {
+    "message": "QRコードをデコードできません"
   },
   "scan_instructions_html": {
     "message": "画像を右クリックし、<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> この画像のQRコードをスキャン」を選択"
@@ -130,31 +125,46 @@
   "rescan_btn_label": {
     "message": "新しいスキャン"
   },
-  "camera_rescan_btn_title": {
-    "message": "別のスキャンを開始する"
+  "rescan_btn_title": {
+    "message": "別のスキャンを開始"
   },
   "grant_permissions_instructions_html": {
-    "message": "カメラを使用する権限が必要です。<br>以下のリンクをクリックして権限を付与してください。"
-  },
-  "grant_permissions_btn": {
-    "message": "カメラへのアクセスを許可する"
-  },
-  "grant_permissions_window_title": {
-    "message": "カメラへのアクセスを許可する"
-  },
-  "grant_page_initial_instructions_html": {
-    "message": "QRライトにカメラを使用することを許可するかどうか尋ねられたら、<strong>「今後も同様に処理する」</strong>のチェックボックスにチェックを入れてから、<strong>「許可する」</strong>をクリックしてください。"
-  },
-  "grant_page_blocked_instructions_html": {
-    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。",
+    "message": "この機能には次の追加の権限が必要です。<br><br><strong>$PERMISSION$</strong><br>",
     "placeholders": {
-      "icon": {
+      "permission": {
         "content": "$1"
       }
     }
   },
-  "grant_page_granted_instructions_html": {
+  "grant_permissions_btn": {
+    "message": "権限を許可"
+  },
+  "grant_camera_permission_name": {
+    "message": "カメラへのアクセス"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "全てのサイトに対するアクセス"
+  },
+  "grant_permissions_window_title": {
+    "message": "権限を許可"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "QR Lite にカメラへのアクセスを許可しようとしています。<br><br>QR Lite にカメラの使用を許可するかどうかを尋ねられたら、<strong>「今後も同様に処理する」</strong>チェックボックスがオンになっていることを確認してから、<strong>「許可する」</strong>をクリックしてください。<br><br>開始するには、下のボタンをクリックしてください。"
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
+  },
+  "grant_camera_granted_instructions_html": {
     "message": "QRライトはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "QRライトに全てのサイトに対するアクセスを許可しようとしています。<br><br>開始するには、下のボタンをクリックしてください。"
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "権限が付与されていません。このページを更新してもう一度お試しください。"
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QRライトは全てのサイトに対するアクセスを付与されました。<br><br>このページは今閉じても構いません。"
   },
   "grant_page_refresh_btn": {
     "message": "再読み込み"
@@ -173,5 +183,14 @@
   },
   "browser_action_command_description": {
     "message": "ポップアップを表示"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "スキャン領域を選択"
+  },
+  "scan_with_camera_command_description": {
+    "message": "カメラでスキャン"
+  },
+  "picker_close_btn_title": {
+    "message": "閉じる"
   }
 }

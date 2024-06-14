@@ -1,4 +1,4 @@
-import { getText, renderTemplate } from '../utils/i18n'
+import { renderTemplate } from '../utils/i18n'
 import { addClass, query as $, removeClass } from '../utils/dom'
 import { apiNs } from '../utils/compat'
 
@@ -22,7 +22,7 @@ import { apiNs } from '../utils/compat'
       return
   }
 
-  document.title = getText('grant_permissions_window_title')
+  document.title = apiNs.i18n.getMessage('grant_permissions_window_title')
   renderTemplate($('#template'))
   removeClass('hidden', selector)
 

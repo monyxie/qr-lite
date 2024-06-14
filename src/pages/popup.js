@@ -6,7 +6,7 @@ import { apiNs, clipboard, storage } from '../utils/compat'
 import { scan } from '../utils/qrcode'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
-import { getText, renderTemplate } from '../utils/i18n'
+import { renderTemplate } from '../utils/i18n'
 import { isUrl, sleep } from '../utils/misc'
 
 class Popup {
@@ -105,7 +105,10 @@ class Popup {
     if (isUrl(url) && !await apiNs.permissions.contains({ origins: ['<all_urls>'] })) {
       removeClass('hidden', '#permissionInstructions')
       addClass('hidden', '#scanInstructions', '#scanInput')
-      $('#grant-permissions-instructions').innerHTML = getText('grant_permissions_instructions_html', getText('grant_all_urls_permission_name'))
+      $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
+        'grant_permissions_instructions_html',
+        apiNs.i18n.getMessage('grant_all_urls_permission_name')
+      )
       $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?all-urls')
       return
     }
@@ -252,7 +255,10 @@ class Popup {
     } catch (e) {
       // getUserMedia() failed
       removeClass('hidden', '#permissionInstructions')
-      $('#grant-permissions-instructions').innerHTML = getText('grant_permissions_instructions_html', getText('grant_camera_permission_name'))
+      $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
+        'grant_permissions_instructions_html',
+        apiNs.i18n.getMessage('grant_camera_permission_name')
+      )
       $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?camera')
       addClass('hidden', $scanInstructions)
       addClass('hidden', $scanInput)

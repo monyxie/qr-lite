@@ -1,9 +1,11 @@
 {
   "extension_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_short_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_description": {
     "message": "離線產生或掃描二維碼。"
@@ -37,12 +39,6 @@
   },
   "tab_history_title": {
     "message": "歷史記錄"
-  },
-  "back_btn": {
-    "message": "返回"
-  },
-  "back_btn_title": {
-    "message": "返回"
   },
   "clear_history_btn": {
     "message": "清除"
@@ -80,6 +76,9 @@
   "content_title": {
     "message": "二維碼內容"
   },
+  "content_placeholder": {
+    "message": "在此輸入文字即可產生二維碼"
+  },
   "context_menu_make_qr_code_for_link": {
     "message": "為該連結產生二維碼"
   },
@@ -96,19 +95,13 @@
     "message": "用攝影機掃描"
   },
   "scan_region_picker_tips_html": {
-    "message": "您現在正處於 QR Lite 的「選擇掃描區域」模式。拖曳滑鼠以選擇要掃描的區域。按 &lt;Esc&gt; 鍵取消。"
+    "message": "<kbd>滾輪</kbd> 調整大小 <kbd>左鍵點選</kbd> 掃描 <kbd>Esc</kbd> 退出"
   },
   "copy_btn": {
     "message": "複製"
   },
   "copy_btn_copied": {
     "message": "已複製"
-  },
-  "open_link_btn": {
-    "message": "開啟網址"
-  },
-  "decoding": {
-    "message": "正在掃碼..."
   },
   "decoding_failed": {
     "message": "掃碼失敗：$MSG$",
@@ -117,6 +110,9 @@
         "content": "$1"
       }
     }
+  },
+  "unable_to_decode": {
+    "message": "無法讀取二維碼"
   },
   "scan_instructions_html": {
     "message": "右鍵單擊任意圖片並選擇<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 掃描圖片中的二維碼」"
@@ -130,31 +126,46 @@
   "rescan_btn_label": {
     "message": "重新掃描"
   },
-  "camera_rescan_btn_title": {
+  "rescan_btn_title": {
     "message": "開始新的掃描"
   },
-  "grant_permissions_instructions_html": {
-    "message": "此功能需要攝影機的使用權限。<br>單擊下方連結以授予權限。"
+  "grant_camera_permission_name": {
+    "message": "使用攝影機"
   },
-  "grant_permissions_btn": {
-    "message": "授予攝影機權限"
+  "grant_all_urls_permission_name": {
+    "message": "存取所有網站中的資料"
   },
   "grant_permissions_window_title": {
-    "message": "授予攝影機權限"
+    "message": "授予權限"
   },
-  "grant_page_initial_instructions_html": {
-    "message": "當被詢問是否要允許 QR Lite 使用您的攝影機時，請確保<strong>「記住此決定」</strong>已勾中，然後單擊<strong>「允許」</strong>。"
+  "grant_camera_initial_instructions_html": {
+    "message": "您即將授予 QR Lite 使用攝影機的權限。<br><br>當瀏覽器詢問您是否允許 QR Lite 使用攝影機時，請確保<strong>「記住此決定」</strong>已勾中，然後單擊<strong>「允許」</strong>。<br><br>單擊下方按鈕開始。"
   },
-  "grant_page_blocked_instructions_html": {
-    "message": "QR Lite 的攝影機權限似乎已經被設定爲<strong>封鎖</strong>了。<br><br>若要改變此設定，請點擊網址列左邊的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 權限小圖標，然後將「使用攝影機」旁邊的「已封鎖」狀態<strong>移除</strong>。<br><br>完成此操作後，請重新載入本頁。",
+  "grant_camera_blocked_instructions_html": {
+    "message": "QR Lite 的攝影機權限似乎已經被設定爲<strong>封鎖</strong>了。<br><br>若要改變此設定，請點擊網址列左邊的 <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 權限小圖標，然後將「使用攝影機」旁邊的「已封鎖」狀態<strong>移除</strong>。<br><br>完成此操作後，請重新載入本頁。"
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite 已经成功获得攝影機權限。<br><br>現在您可以關閉本頁了。"
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "您即將授予 QR Lite 存取您所有網站中的資料的權限。<br><br>單擊下方按鈕開始。"
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "權限未授予，請重新載入本頁面後重試。"
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "您已授予 QR Lite 存取您所有網站中的資料的權限。<br><br>您現在可以關閉本頁面了。"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "此功能需要以下附加權限<br><br><strong>$PERMISSION$</strong><br>",
     "placeholders": {
-      "icon": {
+      "permission": {
         "content": "$1"
       }
     }
   },
-  "grant_page_granted_instructions_html": {
-    "message": "QR Lite 已经成功获得攝影機權限。<br><br>現在您可以關閉本頁了。"
+  "grant_permissions_btn": {
+    "message": "授予權限"
   },
   "grant_page_refresh_btn": {
     "message": "重新載入"
@@ -173,5 +184,14 @@
   },
   "browser_action_command_description": {
     "message": "展開彈出視窗"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "選擇掃描區域"
+  },
+  "scan_with_camera_command_description": {
+    "message": "用攝影機掃描"
+  },
+  "picker_close_btn_title": {
+    "message": "關閉"
   }
 }

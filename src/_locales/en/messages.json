@@ -38,12 +38,6 @@
   "tab_history_title": {
     "message": "History"
   },
-  "back_btn": {
-    "message": "Back"
-  },
-  "back_btn_title": {
-    "message": "Back"
-  },
   "clear_history_btn": {
     "message": "Clear"
   },
@@ -107,13 +101,7 @@
   "copy_btn_copied": {
     "message": "Copied"
   },
-  "open_link_btn": {
-    "message": "Open link"
-  },
-  "decoding": {
-    "message": "Decoding..."
-  },
-  "decoding_failed": {
+   "decoding_failed": {
     "message": "Decoding failed: $MSG$",
     "placeholders": {
       "msg" : {
