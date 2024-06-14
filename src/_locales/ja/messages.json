@@ -1,9 +1,9 @@
 {
   "extension_name": {
-    "message": "QRライト"
+    "message": "QR Lite"
   },
   "extension_short_name": {
-    "message": "QRライト"
+    "message": "QR Lite"
   },
   "extension_description": {
     "message": "オフラインでQRコードを生成またはスキャンします。"
@@ -45,7 +45,7 @@
     "message": "履歴をクリアする"
   },
   "github_link_title": {
-    "message": "QRライトのGithub上のプロジェクトページを訪問する"
+    "message": "QR LiteのGithub上のプロジェクトページを訪問する"
   },
   "error_correction_level_btn_low_title": {
     "message": "低、データバイトの7%を復元できます"
@@ -149,22 +149,22 @@
     "message": "権限を許可"
   },
   "grant_camera_initial_instructions_html": {
-    "message": "QR Lite にカメラへのアクセスを許可しようとしています。<br><br>QR Lite にカメラの使用を許可するかどうかを尋ねられたら、<strong>「今後も同様に処理する」</strong>チェックボックスがオンになっていることを確認してから、<strong>「許可する」</strong>をクリックしてください。<br><br>開始するには、下のボタンをクリックしてください。"
+    "message": "QR Liteにカメラへのアクセスを許可しようとしています。<br><br>QR Liteにカメラの使用を許可するかどうかを尋ねられたら、<strong>「今後も同様に処理する」</strong>チェックボックスがオンになっていることを確認してから、<strong>「許可する」</strong>をクリックしてください。<br><br>開始するには、下のボタンをクリックしてください。"
   },
   "grant_camera_blocked_instructions_html": {
-    "message": "QRライトがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
+    "message": "QR Liteがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
   },
   "grant_camera_granted_instructions_html": {
-    "message": "QRライトはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"
+    "message": "QR Liteはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"
   },
   "grant_all_urls_initial_instructions_html": {
-    "message": "QRライトに全てのサイトに対するアクセスを許可しようとしています。<br><br>開始するには、下のボタンをクリックしてください。"
+    "message": "QR Liteに全てのサイトに対するアクセスを許可しようとしています。<br><br>開始するには、下のボタンをクリックしてください。"
   },
   "grant_all_urls_blocked_instructions_html": {
     "message": "権限が付与されていません。このページを更新してもう一度お試しください。"
   },
   "grant_all_urls_granted_instructions_html": {
-    "message": "QRライトは全てのサイトに対するアクセスを付与されました。<br><br>このページは今閉じても構いません。"
+    "message": "QR Liteは全てのサイトに対するアクセスを付与されました。<br><br>このページは今閉じても構いません。"
   },
   "grant_page_refresh_btn": {
     "message": "再読み込み"
