@@ -56,15 +56,13 @@ Build steps on Linux:
 
 ## Localization
 
-QR Lite supports the following languages:
+As of now, QR Lite supports the following languages:
 
 - English
 - 中文
 - 日本語
 
-Help us translate QR Lite into your language at [Crowdin](https://crowdin.com/project/qr-lite).
-
-[![Crowdin](https://badges.crowdin.net/qr-lite/localized.svg)](https://crowdin.com/project/qr-lite)
+You're welcome to help translate QR Lite into your language, just submit a pull request.
 
 ## Credits
 
