@@ -1,6 +1,7 @@
 import inquirer from 'inquirer'
 import jwt from 'jsonwebtoken'
 import fs from 'node:fs'
+import path from 'node:path'
 
 async function genToken () {
   const questions = [{ type: 'password', name: 'key' }, { type: 'password', name: 'secret' }]
@@ -79,7 +80,7 @@ async function request () {
 }
 
 (async function main () {
-  process.chdir(import.meta.dirname)
+  process.chdir(path.dirname(import.meta.dirname))
   const response = await request()
   console.log('response body: ', await response.json())
   if (response.ok) {

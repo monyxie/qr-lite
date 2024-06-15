@@ -1,6 +1,7 @@
-const util = require('node:util')
-const fs = require('node:fs')
-const { exec, spawn } = require('node:child_process')
+import util from 'node:util'
+import fs from 'node:fs'
+import { exec, spawn } from 'node:child_process'
+import path from 'node:path'
 
 function readDirectory (dirPath) {
   return new Promise((resolve, reject) => {
@@ -53,7 +54,7 @@ async function extractKeysFromSource () {
   return await new Promise((resolve, reject) => {
     let stdout = ''
     let stderr = ''
-    const rg = spawn('rg', args, { cwd: __dirname })
+    const rg = spawn('rg', args)
     rg.stdout.on('data', (data) => {
       stdout += data
     })
@@ -76,7 +77,7 @@ async function extractKeysFromSource () {
 }
 
 (async function main () {
-  process.chdir(__dirname)
+  process.chdir(path.dirname(import.meta.dirname))
 
   // ================= extract message keys from source code =================
   let keysInSource

@@ -18,7 +18,7 @@ case "$BROWSER" in
     ;;
 esac
 
-pushd "$(dirname "$0")" || exit
+pushd "$(dirname `dirname "$0"`)" || exit
 
 if output=$(git status --porcelain) && [ -z "$output" ]; then
   echo "Working tree clean."
