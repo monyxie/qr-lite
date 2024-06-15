@@ -1,46 +1,53 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Grant camera access</title>
+    <link rel="icon" type="image/png" href="/icons/qrlite-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/icons/qrlite-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/icons/qrlite-48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/icons/qrlite-128.png" sizes="128x128">
     <link href="common.css" rel="stylesheet">
     <link href="grant.css" rel="stylesheet">
     <script defer src="grant.js"></script>
 </head>
+
 <body>
-<template id="template">
-    <div class="container">
-        <div class="box">
-            <img src="../icons/qrlite.svg" class="logo"/>
-            <p id="initial">
-                <span class="grant-camera hidden"> {{__MSG_grant_camera_initial_instructions_html__}} </span>
-                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_initial_instructions_html__}} </span>
-                <br>
-                <br>
-                <a class="clickable" id="trigger">
-                    <img class="icon" src="../icons/key.svg"/>{{__MSG_grant_permissions_btn__}}
-                </a>
-            </p>
-            <p class="hidden" id="blocked">
-                <span class="grant-camera hidden"> {{__MSG_grant_camera_blocked_instructions_html__}} </span>
-                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_blocked_instructions_html__}} </span>
-                <br>
-                <br>
-                <a class="clickable" id="refresh">
-                    <img class="icon" src="../icons/refresh.svg"/>{{__MSG_grant_page_refresh_btn__}}
-                </a>
-            </p>
-            <p class="hidden" id="granted">
-                <span class="grant-camera hidden"> {{__MSG_grant_camera_granted_instructions_html__}} </span>
-                <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_granted_instructions_html__}} </span>
-                <br>
-                <br>
-                <a class="clickable" id="close">
-                    <img class="icon" src="../icons/close.svg"/>{{__MSG_grant_page_close_btn__}}
-                </a>
-            </p>
+    <template id="template">
+        <div class="container">
+            <div class="box">
+                <img src="../icons/qrlite.svg" class="logo" />
+                <p id="initial">
+                    <span class="grant-camera hidden"> {{__MSG_grant_camera_initial_instructions_html__}} </span>
+                    <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_initial_instructions_html__}} </span>
+                    <br>
+                    <br>
+                    <a class="clickable" id="trigger">
+                        <img class="icon" src="../icons/key.svg" />{{__MSG_grant_permissions_btn__}}
+                    </a>
+                </p>
+                <p class="hidden" id="blocked">
+                    <span class="grant-camera hidden"> {{__MSG_grant_camera_blocked_instructions_html__}} </span>
+                    <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_blocked_instructions_html__}} </span>
+                    <br>
+                    <br>
+                    <a class="clickable" id="refresh">
+                        <img class="icon" src="../icons/refresh.svg" />{{__MSG_grant_page_refresh_btn__}}
+                    </a>
+                </p>
+                <p class="hidden" id="granted">
+                    <span class="grant-camera hidden"> {{__MSG_grant_camera_granted_instructions_html__}} </span>
+                    <span class="grant-all-urls hidden"> {{__MSG_grant_all_urls_granted_instructions_html__}} </span>
+                    <br>
+                    <br>
+                    <a class="clickable" id="close">
+                        <img class="icon" src="../icons/close.svg" />{{__MSG_grant_page_close_btn__}}
+                    </a>
+                </p>
+            </div>
         </div>
-    </div>
-</template>
+    </template>
 </body>
+
 </html>

@@ -32,7 +32,7 @@ function generateConfig (browser) {
     { from: './' + manifestFile, to: 'manifest.json' },
     './_locales/**/*',
     {
-      from: './icons/' + (browser === 'firefox' ? '*.svg' : '*.*'),
+      from: './icons/*.*',
       transform: {
         transformer: (content, absoluteFrom) => {
           // The `content` argument is a [`Buffer`](https://nodejs.org/api/buffer.html) object, it could be converted to a `String` to be processed using `content.toString()`
