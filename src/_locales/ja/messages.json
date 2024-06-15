@@ -1,9 +1,11 @@
 {
   "extension_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_short_name": {
-    "message": "QR Lite"
+    "message": "QR Lite",
+    "description": "[keep-original]"
   },
   "extension_description": {
     "message": "オフラインでQRコードを生成またはスキャンします。"
