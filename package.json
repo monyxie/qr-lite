@@ -29,6 +29,11 @@
   "scripts": {
     "dev": "webpack watch --mode development",
     "build": "webpack build --mode development",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "release:firefox": "scripts/release.sh firefox",
+    "release:chrome": "scripts/release.sh chrome",
+    "check-locales": "node scripts/check-locales.mjs",
+    "convert-icons": "scripts/convert-icons.sh",
+    "update-amo-metadata": "node scripts/update-amo-metadata.mjs"
   }
 }
