@@ -28,7 +28,8 @@ html {
 }
 
 .clickable:hover {
-    background-color: rgba(100,100,100,0.2)
+    background-color: rgba(100, 100, 100, 0.2);
+    color: #444;
 }
 
 .icon {
@@ -40,6 +41,10 @@ html {
 .clickable .icon {
     position: relative;
     top: 1px;
+}
+
+.clickable:hover .icon {
+    opacity: 1;
 }
 
 textarea[readonly] {
