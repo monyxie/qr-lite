@@ -42,10 +42,10 @@
       "description": "__MSG_browser_action_command_description__"
     },
     "select-region-to-scan": {
-      "description": "Select region to scan"
+      "description": "__MSG_select_region_to_scan_command_description__"
     },
     "scan-with-camera": {
-      "description": "Scan with camera"
+      "description": "__MSG_scan_with_camera_command_description__"
     }
   },
   "web_accessible_resources": [
