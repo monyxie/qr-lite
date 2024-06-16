@@ -61,6 +61,7 @@ body {
     transition: opacity 0.1s linear 0s;
     display: block;
     opacity: 1;
+    cursor: auto;
 }
 
 .logo {

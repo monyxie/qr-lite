@@ -166,6 +166,9 @@ class Picker {
       this.setScaleLevel(this.scaleLevel + (event.deltaY > 0 ? -1 : 1))
       this.updateSpotLight(event.clientX, event.clientY, undefined, undefined, '.1s')
     })
+    this.domTips.addEventListener('click', e => {
+      e.stopPropagation()
+    })
 
     $('#copy-btn').addEventListener('click', () => this.copyResult())
     $('#rescan-btn').addEventListener('click', (ev) => {
@@ -204,7 +207,11 @@ class Picker {
       this.y2 = Math.floor(this.y1 + h)
     }
 
-    if (this.x1 === this.x2 && this.y1 === this.y2) {
+    let shouldHideSpotLight = this.hideOrShowUiElements()
+    shouldHideSpotLight = shouldHideSpotLight || (this.x1 === this.x2 && this.y1 === this.y2)
+    const rect = shouldHideSpotLight ? { x1: 0, y1: 0, x2: 0, y2: 0 } : { x1: this.x1, x2: this.x2, y1: this.y1, y2: this.y2 }
+
+    if (shouldHideSpotLight) {
       addClass('off', this.domSpotlight)
     } else {
       removeClass('off', this.domSpotlight)
@@ -220,27 +227,32 @@ class Picker {
       this.domMask.style.transitionTimingFunction = ''
     }
     this.domMask.style.backgroundColor = 'transparent'
-    this.domMask.style.borderTopWidth = Math.max(0, this.y1) + 'px'
-    this.domMask.style.borderBottomWidth = Math.max(0, this.winH - this.y2) + 'px'
-    this.domMask.style.borderLeftWidth = Math.max(0, this.x1) + 'px'
-    this.domMask.style.borderRightWidth = Math.max(0, this.winW - this.x2) + 'px'
-
-    this.hideOrShowUiElements()
+    this.domMask.style.borderTopWidth = Math.max(0, rect.y1) + 'px'
+    this.domMask.style.borderBottomWidth = Math.max(0, this.winH - rect.y2) + 'px'
+    this.domMask.style.borderLeftWidth = Math.max(0, rect.x1) + 'px'
+    this.domMask.style.borderRightWidth = Math.max(0, this.winW - rect.x2) + 'px'
   }
 
   hideOrShowUiElements () {
-    const isSpotlightOff = this.x1 === this.x2 && this.y1 === this.y2
-
     const mouseRect = { x: this.mouseX, y: this.mouseY, width: 0, height: 0 }
     const spotlightRect = { x: this.x1, y: this.y1, width: this.x2 - this.x1, height: this.y2 - this.y1 }
 
-    const tipsRect = this.domTips.getBoundingClientRect()
-    const shouldHideTips = !isSpotlightOff && !this.collides(tipsRect, mouseRect) && this.collides(tipsRect, spotlightRect)
-    this.domTips.style.opacity = shouldHideTips ? '0' : '1'
+    let shouldHideSpotLight = false
 
-    const xRect = this.domX.getBoundingClientRect()
-    const shouldHideX = !isSpotlightOff && !this.collides(xRect, mouseRect) && this.collides(xRect, spotlightRect)
-    this.domX.style.opacity = shouldHideX ? '0' : '1'
+    // elements to auto-hide when they overlap with the scan area
+    const elements = [this.domTips, this.domX]
+
+    for (const el of elements) {
+      const rect = el.getBoundingClientRect()
+      const overlaps = this.collides(rect, spotlightRect)
+      const mouseover = this.collides(rect, mouseRect)
+      const shouldHide = overlaps && !mouseover
+      el.style.opacity = shouldHide ? '0' : '1'
+
+      shouldHideSpotLight = shouldHideSpotLight || mouseover
+    }
+
+    return shouldHideSpotLight
   }
 
   /**
