@@ -2,7 +2,8 @@
     font-size: 16px;
 }
 
-html, body {
+html,
+body {
     background-color: transparent;
     height: 100vh;
     height: 100svh;
@@ -37,6 +38,11 @@ html, body {
     outline: white solid 2px;
     border-radius: 4px;
     box-shadow: #80ff80 0 0 20px;
+}
+
+.spotlight.off {
+    outline: none;
+    box-shadow: none;
 }
 
 .captured {
@@ -87,7 +93,7 @@ html, body {
     border: 1px solid #b4b4b4;
     text-shadow: none;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-    0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
     color: #333;
     display: inline-block;
     font-size: 0.85em;
@@ -160,4 +166,3 @@ html, body {
 .loading {
     cursor: wait !important;
 }
-

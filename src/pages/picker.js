@@ -107,6 +107,7 @@ class Picker {
     renderTemplate($('#template'))
 
     this.domMask = $('#mask')
+    this.domSpotlight = $('#spotlight')
     this.domTips = $('#tips')
     this.domX = $('#x-mark')
     this.domResult = $('#result')
@@ -146,6 +147,13 @@ class Picker {
         this.mouseX = event.clientX
         this.mouseY = event.clientY
         this.updateSpotLight(event.clientX, event.clientY)
+      }
+    })
+    this.domMask.addEventListener('mouseleave', event => {
+      if (!this.isScanning) {
+        this.mouseX = event.clientX
+        this.mouseY = event.clientY
+        this.updateSpotLight(0, 0, 0, 0)
       }
     })
     this.domMask.addEventListener('wheel', event => {
@@ -196,6 +204,12 @@ class Picker {
       this.y2 = Math.floor(this.y1 + h)
     }
 
+    if (this.x1 === this.x2 && this.y1 === this.y2) {
+      addClass('off', this.domSpotlight)
+    } else {
+      removeClass('off', this.domSpotlight)
+    }
+
     if (td) {
       this.domMask.style.transitionDuration = td
       this.domMask.style.transitionProperty = tp || 'all'
@@ -215,15 +229,17 @@ class Picker {
   }
 
   hideOrShowUiElements () {
+    const isSpotlightOff = this.x1 === this.x2 && this.y1 === this.y2
+
     const mouseRect = { x: this.mouseX, y: this.mouseY, width: 0, height: 0 }
     const spotlightRect = { x: this.x1, y: this.y1, width: this.x2 - this.x1, height: this.y2 - this.y1 }
 
     const tipsRect = this.domTips.getBoundingClientRect()
-    const shouldHideTips = !this.collides(tipsRect, mouseRect) && this.collides(tipsRect, spotlightRect)
+    const shouldHideTips = !isSpotlightOff && !this.collides(tipsRect, mouseRect) && this.collides(tipsRect, spotlightRect)
     this.domTips.style.opacity = shouldHideTips ? '0' : '1'
 
     const xRect = this.domX.getBoundingClientRect()
-    const shouldHideX = !this.collides(xRect, mouseRect) && this.collides(xRect, spotlightRect)
+    const shouldHideX = !isSpotlightOff && !this.collides(xRect, mouseRect) && this.collides(xRect, spotlightRect)
     this.domX.style.opacity = shouldHideX ? '0' : '1'
   }
 
