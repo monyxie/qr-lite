@@ -101,11 +101,12 @@
   "copy_btn_copied": {
     "message": "Copied"
   },
-   "decoding_failed": {
+  "decoding_failed": {
     "message": "Decoding failed: $MSG$",
     "placeholders": {
-      "msg" : {
-        "content" : "$1"
+      "msg": {
+        "content": "$1",
+        "default": "Unknown error"
       }
     }
   },
@@ -114,6 +115,9 @@
   },
   "scan_instructions_html": {
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "Scan clipboard image by pressing<br><kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd>"
   },
   "pick_region_to_scan_btn": {
     "message": "Select region to scan"

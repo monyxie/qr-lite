@@ -117,6 +117,9 @@
   "scan_instructions_html": {
     "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描此图片中的二维码”"
   },
+  "scan_from_clipboard_instructions_html": {
+    "message": "按 <kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 来扫描剪贴板中的图片"
+  },
   "pick_region_to_scan_btn": {
     "message": "选择扫描区域"
   },
@@ -173,7 +176,7 @@
   "grant_permissions_btn": {
     "message": "授予权限"
   },
-   "or": {
+  "or": {
     "message": "或者"
   },
   "scanning": {

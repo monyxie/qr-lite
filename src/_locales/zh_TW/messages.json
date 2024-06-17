@@ -117,6 +117,9 @@
   "scan_instructions_html": {
     "message": "右鍵單擊任意圖片並選擇<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 掃描圖片中的二維碼」"
   },
+  "scan_from_clipboard_instructions_html": {
+    "message": "按 <kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 來掃描剪貼簿中的圖片"
+  },
   "pick_region_to_scan_btn": {
     "message": "選擇掃描區域"
   },

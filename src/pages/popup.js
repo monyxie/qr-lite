@@ -149,7 +149,7 @@ class Popup {
       error = e.toString()
     }
 
-    $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', error)
+    $scanOutput.placeholder = error ? apiNs.i18n.getMessage('decoding_failed', error) : apiNs.i18n.getMessage('unable_to_decode')
   }
 
   getFilenameFromTitle (title) {
@@ -416,6 +416,7 @@ class Popup {
 
     const $sourceInput = $('#sourceInput')
     const handleSourceInputChange = e => {
+      e.stopPropagation()
       if ($sourceInput.value !== this.currentText) {
         this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'debounce')
       }
@@ -423,6 +424,19 @@ class Popup {
     $sourceInput.addEventListener('keyup', handleSourceInputChange)
     $sourceInput.addEventListener('paste', handleSourceInputChange)
     $sourceInput.addEventListener('cut', handleSourceInputChange)
+
+    window.addEventListener('paste', e => {
+      if (e.clipboardData?.files?.length === 0) {
+        return
+      }
+      const file = e.clipboardData.files[0]
+      if (!file.type.startsWith('image/')) {
+        return
+      }
+
+      const url = URL.createObjectURL(file)
+      this.decodeImage(url)
+    })
 
     $('#ecLevels').addEventListener('click', (e) => {
       switch (e.target.id) {

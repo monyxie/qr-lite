@@ -118,6 +118,9 @@
   "scan_instructions_html": {
     "message": "画像を右クリックし、<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> この画像のQRコードをスキャン」を選択"
   },
+  "scan_from_clipboard_instructions_html": {
+    "message": "<kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 押してクリップボードの画像をスキャン"
+  },
   "pick_region_to_scan_btn": {
     "message": "スキャン領域を選択"
   },

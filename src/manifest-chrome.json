@@ -31,7 +31,7 @@
     "default_popup": "pages/popup.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data:; style-src 'self';"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data: blob:; style-src 'self';"
   },
   "background": {
     "service_worker": "background.js"
