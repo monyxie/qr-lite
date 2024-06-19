@@ -2,7 +2,7 @@ import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
 import { BrowserQRCodeSvgWriter } from '@zxing/browser'
 import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
 import SanitizeFilename from 'sanitize-filename'
-import { apiNs, clipboard, storage } from '../utils/compat'
+import { apiNs, clipboard, storage, tabs } from '../utils/compat'
 import { scan } from '../utils/qrcode'
 import * as History from '../utils/history'
 import { addClass, query as $, removeClass } from '../utils/dom'
@@ -12,15 +12,20 @@ import { isUrl, sleep } from '../utils/misc'
 class Popup {
   constructor () {
     this.renderPage()
-
     this.ecLevel = ECLevel.M
     this.currentText = null
     this.currentTitle = null
     this.historyTimer = null
     this.currentTab = null
+    // is this page opened in a standalone page instead of in a popup window?
+    this.isStandalone = apiNs.extension.getViews({ type: 'popup' }).length === 0
   }
 
   async init () {
+    if (this.isStandalone) {
+      addClass('standalone', document.documentElement)
+    }
+
     $('#tab-history').addEventListener('click', () => {
       this.showTab('history')
     })
@@ -104,7 +109,7 @@ class Popup {
     })
 
     $('#openLinkBtn').addEventListener('click', (e) => {
-      apiNs.tabs.create({
+      tabs.create({
         url: $('#scanOutput').value,
         active: true
       })
@@ -563,9 +568,9 @@ class Popup {
     let options = await apiNs.runtime.sendMessage({ action: 'POPUP_GET_OPTIONS' })
 
     if (!options) {
-      const tabs = await apiNs.tabs.query({ active: true, currentWindow: true })
-      if (tabs.length > 0) {
-        options = { action: 'POPUP_ENCODE', text: tabs[0].url, title: tabs[0].title }
+      const queryTabs = await tabs.query({ active: true, currentWindow: true })
+      if (queryTabs.length > 0) {
+        options = { action: 'POPUP_ENCODE', text: queryTabs[0].url, title: queryTabs[0].title }
       }
     }
 

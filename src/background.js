@@ -157,7 +157,7 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // In firefox we can return a promise but we can't do that in Chrome
   switch (request.action) {
     case 'BG_INJECT_PICKER_LOADER':
-      apiNs.tabs.query({ active: true, currentWindow: true })
+      tabs.query({ active: true, currentWindow: true })
         .then(tabs => tabs[0])
         .then(injectPickerLoader)
       break

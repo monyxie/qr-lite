@@ -312,3 +312,7 @@ kbd {
     white-space: nowrap;
     display: inline-block;
 }
+
+.standalone .hide-if-standalone {
+    display: none !important;
+}
