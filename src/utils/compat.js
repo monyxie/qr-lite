@@ -53,15 +53,15 @@ export const storage = QRLITE_BROWSER === 'firefox'
       }
     }
 
-export const openPopup = QRLITE_BROWSER === 'firefox'
-  ? options => apiNs.action.openPopup(options)
-  : (options) => {
-      return new Promise((resolve, reject) => {
-        apiNs.action.openPopup(options, (data) => {
-          resolve(data)
-        })
-      })
-    }
+export const openPopup = (options) => {
+  // In Chrome-based browsers, `action.openPopup` is only available to policy installed extensions
+  // https://developer.chrome.com/docs/extensions/reference/api/action#method-openPopup
+  try {
+    return apiNs.action.openPopup(options)
+  } catch (e) {
+    return apiNs.tabs.create({ url: apiNs.runtime.getURL('/pages/popup.html') })
+  }
+}
 
 // chrome: https://developer.chrome.com/docs/extensions/reference/api/tabs#method-captureVisibleTab
 // firefox: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/captureVisibleTab

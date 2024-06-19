@@ -61,47 +61,40 @@ async function injectPickerLoader (tab) {
 }
 
 function getMenuItems () {
-  let items = {
+  const items = {
     context_menu_pick_region_to_scan: {
       title: apiNs.i18n.getMessage('context_menu_pick_region_to_scan'),
       contexts: ['page', 'action', 'image', 'video', 'audio'],
       onclick: async function (info, tab) {
         await injectPickerLoader(tab)
       }
-    }
-  }
-
-  // only Firefox supports opening the popup programatically :)
-  if (QRLITE_BROWSER === 'firefox') {
-    items = {
-      ...items,
-      context_menu_make_qr_code_for_selected_text: {
-        title: apiNs.i18n.getMessage('context_menu_make_qr_code_for_selected_text'),
-        contexts: ['selection'],
-        onclick: function (info, tab) {
-          openPopupWithOptions({ action: 'POPUP_ENCODE', text: info.selectionText, title: info.selectionText })
-        }
-      },
-      context_menu_make_qr_code_for_link: {
-        title: apiNs.i18n.getMessage('context_menu_make_qr_code_for_link'),
-        contexts: ['link'],
-        onclick: function (info, tab) {
-          openPopupWithOptions({ action: 'POPUP_ENCODE', text: info.linkUrl, title: info.linkText })
-        }
-      },
-      context_menu_scan_qr_code_in_image: {
-        title: apiNs.i18n.getMessage('context_menu_scan_qr_code_in_image'),
-        contexts: ['image'],
-        onclick: (info, tab) => {
-          openPopupWithOptions({ action: 'POPUP_DECODE', image: info.srcUrl })
-        }
-      },
-      context_menu_scan_with_camera: {
-        title: apiNs.i18n.getMessage('context_menu_scan_with_camera'),
-        contexts: ['action'],
-        onclick: function (info, tab) {
-          openPopupWithOptions({ action: 'POPUP_DECODE_CAMERA' })
-        }
+    },
+    context_menu_make_qr_code_for_selected_text: {
+      title: apiNs.i18n.getMessage('context_menu_make_qr_code_for_selected_text'),
+      contexts: ['selection'],
+      onclick: function (info, tab) {
+        openPopupWithOptions({ action: 'POPUP_ENCODE', text: info.selectionText, title: info.selectionText })
+      }
+    },
+    context_menu_make_qr_code_for_link: {
+      title: apiNs.i18n.getMessage('context_menu_make_qr_code_for_link'),
+      contexts: ['link'],
+      onclick: function (info, tab) {
+        openPopupWithOptions({ action: 'POPUP_ENCODE', text: info.linkUrl, title: info.linkText })
+      }
+    },
+    context_menu_scan_qr_code_in_image: {
+      title: apiNs.i18n.getMessage('context_menu_scan_qr_code_in_image'),
+      contexts: ['image'],
+      onclick: (info, tab) => {
+        openPopupWithOptions({ action: 'POPUP_DECODE', image: info.srcUrl })
+      }
+    },
+    context_menu_scan_with_camera: {
+      title: apiNs.i18n.getMessage('context_menu_scan_with_camera'),
+      contexts: ['action'],
+      onclick: function (info, tab) {
+        openPopupWithOptions({ action: 'POPUP_DECODE_CAMERA' })
       }
     }
   }

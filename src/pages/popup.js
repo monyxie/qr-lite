@@ -20,6 +20,124 @@ class Popup {
     this.currentTab = null
   }
 
+  async init () {
+    $('#tab-history').addEventListener('click', () => {
+      this.showTab('history')
+    })
+    $('#tab-generate').addEventListener('click', e => {
+      this.showTab('generate')
+    })
+    $('#tab-scan').addEventListener('click', e => {
+      this.showTab('scan')
+    })
+
+    $('#history').addEventListener('click', e => {
+      if (e.target.tagName.toUpperCase() === 'LI') {
+        this.createQrCode(e.target.title, this.ecLevel, undefined, 'now')
+      }
+    })
+    $('#clear-history-btn').addEventListener('click', e => {
+      this.clearHistory()
+    })
+
+    const $sourceInput = $('#sourceInput')
+    const handleSourceInputChange = e => {
+      e.stopPropagation()
+      if ($sourceInput.value !== this.currentText) {
+        this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'debounce')
+      }
+    }
+    $sourceInput.addEventListener('keyup', handleSourceInputChange)
+    $sourceInput.addEventListener('paste', handleSourceInputChange)
+    $sourceInput.addEventListener('cut', handleSourceInputChange)
+
+    window.addEventListener('paste', e => {
+      if (e.clipboardData?.files?.length === 0) {
+        return
+      }
+      const file = e.clipboardData.files[0]
+      if (!file.type.startsWith('image/')) {
+        return
+      }
+
+      const url = URL.createObjectURL(file)
+      this.decodeImage(url)
+    })
+
+    $('#ecLevels').addEventListener('click', (e) => {
+      switch (e.target.id) {
+        case 'ecL':
+        case 'ecM':
+        case 'ecQ':
+        case 'ecH':
+          this.ecLevel = ECLevel.fromString(e.target.id.substr(2))
+          break
+        default:
+          return
+      }
+
+      storage.set({
+        ecLevel: this.ecLevel.toString()
+      })
+
+      this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'none')
+    })
+
+    $('#save').addEventListener('click', (e) => {
+      this.downloadImage()
+    })
+
+    $('#copy').addEventListener('click', (e) => {
+      this.copyImage()
+    })
+
+    $('#scanRegion').addEventListener('click', (e) => {
+      apiNs.runtime.sendMessage({
+        action: 'BG_INJECT_PICKER_LOADER'
+      })
+      // close self (popup)
+      window.close()
+    })
+
+    $('#cameraScan').addEventListener('click', (e) => {
+      this.startCameraScan()
+    })
+
+    $('#openLinkBtn').addEventListener('click', (e) => {
+      apiNs.tabs.create({
+        url: $('#scanOutput').value,
+        active: true
+      })
+    })
+
+    $('#grantPermissionsBtn').addEventListener('click', (ev) => {
+      ev.preventDefault()
+      apiNs.tabs.create({
+        url: ev.target.href
+      })
+      // close self (popup)
+      window.close()
+    })
+
+    const results = await storage.get('ecLevel')
+    if (results.ecLevel) {
+      try {
+        this.ecLevel = ECLevel.fromString(results.ecLevel)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      switch (request.action) {
+        case 'POPUP_DECODE':
+          return this.decodeImage(request.image)
+      }
+    })
+
+    await this.performInitialAction()
+  }
+
   updateActiveEcLevel (activeEcLevel) {
     $('#ecLevels').querySelectorAll('.ec-level').forEach(function (el) {
       el.classList.remove('ec-level-active')
@@ -48,13 +166,18 @@ class Popup {
     this.showTab('generate')
     addClass('hidden', $save, $copy, $copied, $('#openLinkBtn'))
 
+    if (!text) {
+      text = ''
+    }
+
     $('#sourceInput').value = text
     $('#counter').innerText = '' + text.length
     this.updateActiveEcLevel(activeEcLevel)
 
     this.currentText = text
     $result.innerText = ''
-    if (!text) {
+
+    if (text === '') {
       return
     }
 
@@ -70,7 +193,6 @@ class Popup {
     const writer = new BrowserQRCodeSvgWriter()
     const hints = new Map()
     hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
-    $result.innerText = ''
     writer.writeToDom($result, text, 300, 300, hints)
 
     $save.classList.remove('hidden')
@@ -103,7 +225,7 @@ class Popup {
     this.showTab('scan')
 
     if (isUrl(url) && !await apiNs.permissions.contains({ origins: ['<all_urls>'] })) {
-      removeClass('hidden', '#permissionInstructions')
+      removeClass('hidden', '', '#permissionInstructions')
       addClass('hidden', '#scanInstructions', '#scanInput')
       $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
         'grant_permissions_instructions_html',
@@ -159,16 +281,18 @@ class Popup {
   /**
    * @returns {Promise<HTMLCanvasElement>}
    */
-  createCanvasForQrCode () {
+  createCanvasForQrCode (size) {
+    size = size || 500
     return new Promise((resolve, reject) => {
-      const svg = document.querySelector('svg')
+      const svg = document.querySelector('svg').cloneNode(true)
+      svg.setAttribute('width', size)
+      svg.setAttribute('height', size)
       const img = document.createElement('img')
       const canvas = document.createElement('canvas')
       const xml = new XMLSerializer().serializeToString(svg)
       const svg64 = btoa(xml)
 
-      canvas.width = svg.getBoundingClientRect().width
-      canvas.height = svg.getBoundingClientRect().height
+      canvas.width = canvas.height = size
       img.src = 'data:image/svg+xml;base64,' + svg64
       img.onload = function () {
         const context = canvas.getContext('2d')
@@ -354,36 +478,77 @@ class Popup {
    * @param tab {string:'scan'|'generate'|'history'}
    */
   showTab (tab) {
-    if (tab !== 'scan') {
-      addClass('hidden', '#scanOutput', '#scanInputImage', '#cameraRescanBtn', '#openLinkBtn', '#scanVideo', '#positionMarker', '#permissionInstructions')
-      removeClass('hidden', '#scanInput', '#scanInstructions')
+    const M = {
+      scanOutput: null,
+      scanInputImage: null,
+      cameraRescanBtn: null,
+      openLinkBtn: null,
+      scanVideo: null,
+      positionMarker: null,
+      permissionInstructions: null,
+      scanInput: null,
+      scanInstructions: null,
+      history: null,
+      main: null,
+      scan: null,
+      'tab-generate': null,
+      'tab-history': null,
+      'tab-scan': null
     }
 
-    if (tab === 'history') {
-      $('#tab-generate').classList.remove('active')
-      $('#tab-scan').classList.remove('active')
-      $('#tab-history').classList.add('active')
-      $('#main').classList.add('hidden')
-      $('#scan').classList.add('hidden')
-      $('#history').classList.remove('hidden')
-
-      this.renderHistory()
-    } else if (tab === 'scan') {
-      $('#tab-generate').classList.remove('active')
-      $('#tab-scan').classList.add('active')
-      $('#tab-history').classList.remove('active')
-      $('#main').classList.add('hidden')
-      $('#scanInput').classList.add('hidden')
-      $('#scan').classList.remove('hidden')
-      $('#history').classList.add('hidden')
-    } else if (tab === 'generate') {
-      $('#tab-generate').classList.add('active')
-      $('#tab-scan').classList.remove('active')
-      $('#tab-history').classList.remove('active')
-      $('#main').classList.remove('hidden')
-      $('#scan').classList.add('hidden')
-      $('#history').classList.add('hidden')
+    for (const id in M) {
+      M[id] = $('#' + id)
     }
+
+    // tabs config {id: {tab: TAB_ID, content: CONTENT_ID, in: IN_CALLBACK, out: OUT_CALLBACK}}
+    const config = {
+      generate: {
+        tab: '#tab-generate',
+        content: '#main',
+        in: () => {},
+        out: () => {}
+      },
+      scan: {
+        tab: '#tab-scan',
+        content: '#scan',
+        in: () => {
+          // addClass('hidden', M.scanInput)
+        },
+        out: () => {
+          addClass('hidden',
+            M.scanOutput,
+            M.scanInputImage,
+            M.cameraRescanBtn,
+            M.openLinkBtn,
+            M.scanVideo,
+            M.positionMarker,
+            M.permissionInstructions,
+            M.scanInput
+          )
+          removeClass('hidden', M.scanInput, M.scanInstructions)
+        }
+      },
+      history: {
+        tab: '#tab-history',
+        content: '#history',
+        in: () => {
+          this.renderHistory()
+        },
+        out: () => {}
+      }
+    }
+
+    for (const k in config) {
+      if (k !== tab) {
+        config[k].out()
+        removeClass('active', config[k].tab)
+        addClass('hidden', config[k].content)
+      }
+    }
+
+    config[tab].in()
+    addClass('active', config[tab].tab)
+    removeClass('hidden', config[tab].content)
 
     this.currentTab = tab
   }
@@ -392,124 +557,6 @@ class Popup {
     if (window.innerHeight < document.documentElement.scrollHeight) {
       document.documentElement.style.zoom = window.innerHeight / document.documentElement.scrollHeight
     }
-  }
-
-  async init () {
-    $('#tab-history').addEventListener('click', () => {
-      this.showTab('history')
-    })
-    $('#tab-generate').addEventListener('click', e => {
-      this.showTab('generate')
-    })
-    $('#tab-scan').addEventListener('click', e => {
-      this.showTab('scan')
-    })
-
-    $('#history').addEventListener('click', e => {
-      if (e.target.tagName.toUpperCase() === 'LI') {
-        this.createQrCode(e.target.title, this.ecLevel, undefined, 'now')
-      }
-    })
-    $('#clear-history-btn').addEventListener('click', e => {
-      this.clearHistory()
-    })
-
-    const $sourceInput = $('#sourceInput')
-    const handleSourceInputChange = e => {
-      e.stopPropagation()
-      if ($sourceInput.value !== this.currentText) {
-        this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'debounce')
-      }
-    }
-    $sourceInput.addEventListener('keyup', handleSourceInputChange)
-    $sourceInput.addEventListener('paste', handleSourceInputChange)
-    $sourceInput.addEventListener('cut', handleSourceInputChange)
-
-    window.addEventListener('paste', e => {
-      if (e.clipboardData?.files?.length === 0) {
-        return
-      }
-      const file = e.clipboardData.files[0]
-      if (!file.type.startsWith('image/')) {
-        return
-      }
-
-      const url = URL.createObjectURL(file)
-      this.decodeImage(url)
-    })
-
-    $('#ecLevels').addEventListener('click', (e) => {
-      switch (e.target.id) {
-        case 'ecL':
-        case 'ecM':
-        case 'ecQ':
-        case 'ecH':
-          this.ecLevel = ECLevel.fromString(e.target.id.substr(2))
-          break
-        default:
-          return
-      }
-
-      storage.set({
-        ecLevel: this.ecLevel.toString()
-      })
-
-      this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'none')
-    })
-
-    $('#save').addEventListener('click', (e) => {
-      this.downloadImage()
-    })
-
-    $('#copy').addEventListener('click', (e) => {
-      this.copyImage()
-    })
-
-    $('#scanRegion').addEventListener('click', (e) => {
-      apiNs.runtime.sendMessage({
-        action: 'BG_INJECT_PICKER_LOADER'
-      })
-      // close self (popup)
-      window.close()
-    })
-
-    $('#cameraScan').addEventListener('click', (e) => {
-      this.startCameraScan()
-    })
-
-    $('#openLinkBtn').addEventListener('click', (e) => {
-      apiNs.tabs.create({
-        url: $('#scanOutput').value,
-        active: true
-      })
-    })
-
-    $('#grantPermissionsBtn').addEventListener('click', (ev) => {
-      ev.preventDefault()
-      apiNs.tabs.create({
-        url: ev.target.href
-      })
-      // close self (popup)
-      window.close()
-    })
-
-    const results = await storage.get('ecLevel')
-    if (results.ecLevel) {
-      try {
-        this.ecLevel = ECLevel.fromString(results.ecLevel)
-      } catch (e) {
-        console.error(e)
-      }
-    }
-
-    apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      switch (request.action) {
-        case 'POPUP_DECODE':
-          return this.decodeImage(request.image)
-      }
-    })
-
-    await this.performInitialAction()
   }
 
   async performInitialAction () {

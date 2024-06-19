@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
     <title>QR Lite</title>
+    <link rel="icon" type="image/png" href="/icons/qrlite-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/icons/qrlite-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/icons/qrlite-48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/icons/qrlite-128.png" sizes="128x128">
     <link href="common.css" rel="stylesheet">
     <link rel="stylesheet" href="popup.css">
     <script defer src="popup.js"></script>
@@ -13,117 +17,144 @@
 
 <body>
     <template id="template">
-        <div class="tabs-container">
-            <div class="tabs-item active" id="tab-generate" title="{{__MSG_tab_generate_title__}}">
-                <img class="icon" src="../icons/generate.svg" />
-                <div class="tabs-item-text">{{__MSG_tab_generate_title__}}</div>
-            </div>
-            <div class="tabs-item" id="tab-scan" title="{{__MSG_tab_scan_title__}}">
-                <img class="icon" src="../icons/scan.svg" />
-                <div class="tabs-item-text">{{__MSG_tab_scan_title__}}</div>
-            </div>
-            <div class="tabs-item" id="tab-history" title="{{__MSG_tab_history_title__}}">
-                <img class="icon" src="../icons/history.svg" />
-                <div class="tabs-item-text">{{__MSG_tab_history_title__}}</div>
-            </div>
-        </div>
-        <div class="container" data-role="content">
-            <div class="main" id="main">
-                <textarea class="source" id="sourceInput" title="{{__MSG_content_title__}}" spellcheck="false"
-                    placeholder="{{__MSG_content_placeholder__}}"></textarea>
-                <div class="necker length-view">
-                    <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
-                        <span class="counter" id="counter"></span>
-                    </span>
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs-item active" id="tab-generate" title="{{__MSG_tab_generate_title__}}">
+                    <div class="tabs-item-label">
+                        <img class="icon" src="../icons/generate.svg" />
+                        <span class="tabs-item-text">
+                            {{__MSG_tab_generate_title__}}
+                        </span>
+                    </div>
                 </div>
-                <div class="necker ec-view">
-                    <span
-                        title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
-                    <span id="ecLevels" class="ec-levels-container">
-                        <span class="clickable ec-level" id="ecL"
-                            title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
-                        <span class="clickable ec-level" id="ecM"
-                            title="{{__MSG_error_correction_level_btn_medium_title__}}">M</span>
-                        <span class="clickable ec-level" id="ecQ"
-                            title="{{__MSG_error_correction_level_btn_quartile_title__}}">Q</span>
-                        <span class="clickable ec-level" id="ecH"
-                            title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
-                    </span>
+                <div class="tabs-item" id="tab-scan" title="{{__MSG_tab_scan_title__}}">
+                    <div class="tabs-item-label">
+                        <img class="icon" src="../icons/scan.svg" />
+                        <span class="tabs-item-text">
+                            {{__MSG_tab_scan_title__}}
+                        </span>
+                    </div>
                 </div>
-                <div class="result" id="result"></div>
-                <div class="footer actions1">
-                    <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}"><img class="icon"
-                            src="../icons/save.svg" />{{__MSG_save_image_btn__}}</span>
-                </div>
-                <div class="footer actions2">
-                    <span class="clickable" id="copy" title="{{__MSG_copy_image_btn_title__}}">
-                        <img class="icon" src="../icons/copy.svg" />{{__MSG_copy_image_btn__}}</span>
-                    <span class="hidden" id="copied">{{__MSG_copy_image_ok__}}</span>
-                </div>
-                <div class="footer actions3">
-                    <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
-                        title="{{__MSG_github_link_title__}}">
-                        <img class="icon" src="../icons/code.svg" />v{{__MSG_version__}}</a>
+                <div class="tabs-item" id="tab-history" title="{{__MSG_tab_history_title__}}">
+                    <div class="tabs-item-label">
+                        <img class="icon" src="../icons/history.svg" />
+                        <span class="tabs-item-text">
+                            {{__MSG_tab_history_title__}}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="scan hidden" id="scan">
-                <p class="instructions instruction-screen" id="scanInstructions">
-                    <span class="chrome-hidden">
-                        {{__MSG_scan_instructions_html__}}
-                        <br><br>
-                        {{__MSG_or__}}
-                        <br><br>
-                    </span>
-                    {{__MSG_scan_from_clipboard_instructions_html__}}
-                    <br><br>
-                    {{__MSG_or__}}
-                    <br><br>
-                    <a class="clickable" id="scanRegion">
-                        <img class="icon" src="../icons/scan-region.svg" />{{__MSG_pick_region_to_scan_btn__}}</a>
-                    <br><br>{{__MSG_or__}}<br><br>
-                    <a class="clickable" id="cameraScan">
-                        <img class="icon" src="../icons/camera.svg" />{{__MSG_camera_scan_btn__}}</a>
-                </p>
-                <p class="instructions instruction-screen hidden" id="permissionInstructions">
-                    <span id="grant-permissions-instructions"></span>
-                    <br><br>
-                    <a class="clickable" id="grantPermissionsBtn" target="_blank"><img class="icon"
-                            src="../icons/open-url.svg" />{{__MSG_grant_permissions_btn__}}</a>
-                </p>
-                <div class="input hidden" id="scanInput">
-                    <div class="input-box">
-                        <video class="camera hidden" id="scanVideo"></video>
-                        <img class="scan-input-image hidden" id="scanInputImage">
-                        <div class="qr-position-marker-wrapper" id="positionMarker">
+            <div class="content-container" data-role="content">
+                <div class="main" id="main">
+                    <textarea class="source" id="sourceInput" title="{{__MSG_content_title__}}" spellcheck="false"
+                        placeholder="{{__MSG_content_placeholder__}}"></textarea>
+                    <div class="necker-container">
+                        <div class="necker length-view">
+                            <span title="{{__MSG_content_length_label_title__}}">{{__MSG_content_length_label__}}
+                                <span class="counter" id="counter"></span>
+                            </span>
+                        </div>
+                        <div class="necker ec-view">
+                            <span
+                                title="{{__MSG_error_correction_level_label_title__}}">{{__MSG_error_correction_level_label__}}</span>
+                            <span id="ecLevels" class="ec-levels-container">
+                                <span class="clickable ec-level" id="ecL"
+                                    title="{{__MSG_error_correction_level_btn_low_title__}}">L</span>
+                                <span class="clickable ec-level" id="ecM"
+                                    title="{{__MSG_error_correction_level_btn_medium_title__}}">M</span>
+                                <span class="clickable ec-level" id="ecQ"
+                                    title="{{__MSG_error_correction_level_btn_quartile_title__}}">Q</span>
+                                <span class="clickable ec-level" id="ecH"
+                                    title="{{__MSG_error_correction_level_btn_high_title__}}">H</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="result" id="result"></div>
+                    <div class="footer-container">
+                        <div class="footer actions1">
+                            <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}"><img class="icon"
+                                    src="../icons/save.svg" />{{__MSG_save_image_btn__}}</span>
+                        </div>
+                        <div class="footer actions2">
+                            <span class="clickable" id="copy" title="{{__MSG_copy_image_btn_title__}}">
+                                <img class="icon" src="../icons/copy.svg" />{{__MSG_copy_image_btn__}}</span>
+                            <span class="hidden" id="copied">{{__MSG_copy_image_ok__}}</span>
+                        </div>
+                        <div class="footer actions3">
+                            <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
+                                title="{{__MSG_github_link_title__}}">
+                                <img class="icon" src="../icons/code.svg" />v{{__MSG_version__}}</a>
                         </div>
                     </div>
                 </div>
-                <div class="necker instructions">
-                    <p class="hidden" id="scanningText">{{__MSG_scanning__}}</p>
-                    <a class="clickable hidden" id="cameraRescanBtn" title="{{__MSG_rescan_btn_title__}}"><img
-                            class="icon" src="../icons/refresh.svg" />{{__MSG_rescan_btn_label__}}</a>
+                <div class="scan hidden" id="scan">
+                    <div class="instructions instruction-screen hidden" id="scanInstructions">
+                        <p>
+                            {{__MSG_scan_instructions_html__}}
+                        </p>
+                        <div class="divider">{{__MSG_or__}}</div>
+                        <p>
+                            {{__MSG_scan_from_clipboard_instructions_html__}}
+                        </p>
+                        <div class="divider">{{__MSG_or__}}</div>
+                        <p>
+                            <a class="clickable" id="scanRegion">
+                                <img class="icon"
+                                    src="../icons/scan-region.svg" />{{__MSG_pick_region_to_scan_btn__}}</a>
+                        </p>
+                        <div class="divider">{{__MSG_or__}}</div>
+                        <p>
+                            <a class="clickable" id="cameraScan">
+                                <img class="icon" src="../icons/camera.svg" />{{__MSG_camera_scan_btn__}}</a>
+                        </p>
+                    </div>
+                    <div class="instructions instruction-screen hidden" id="permissionInstructions">
+                        <p>
+                            <span id="grant-permissions-instructions"></span>
+                            <br><br>
+                            <a class="clickable" id="grantPermissionsBtn" target="_blank"><img class="icon"
+                                    src="../icons/open-url.svg" />{{__MSG_grant_permissions_btn__}}</a>
+                        </p>
+                    </div>
+                    <div class="input hidden" id="scanInput">
+                        <div class="input-box">
+                            <video class="camera hidden" id="scanVideo"></video>
+                            <img class="scan-input-image hidden" id="scanInputImage">
+                            <div class="qr-position-marker-wrapper" id="positionMarker">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="necker-container">
+                        <div class="necker instructions">
+                            <p class="hidden" id="scanningText">{{__MSG_scanning__}}</p>
+                            <a class="clickable hidden" id="cameraRescanBtn" title="{{__MSG_rescan_btn_title__}}"><img
+                                    class="icon" src="../icons/refresh.svg" />{{__MSG_rescan_btn_label__}}</a>
+                        </div>
+                    </div>
+                    <textarea class="output hidden" id="scanOutput" title="{{__MSG_content_title__}}" readonly
+                        spellcheck="false"></textarea>
+                    <div class="footer-container">
+                        <div class="footer actions1">
+                            <span class="clickable" id="openLinkBtn" title="{{__MSG_open_url_btn_title__}}"><img
+                                    class="icon" src="../icons/open-url.svg" />{{__MSG_open_url_btn__}}</span>
+                        </div>
+                        <div class="footer actions2">
+                        </div>
+                        <div class="footer actions3">
+                        </div>
+                    </div>
                 </div>
-                <textarea class="output hidden" id="scanOutput" title="{{__MSG_content_title__}}" readonly
-                    spellcheck="false"></textarea>
-                <div class="footer actions1">
-                    <span class="clickable" id="openLinkBtn" title="{{__MSG_open_url_btn_title__}}"><img class="icon"
-                            src="../icons/open-url.svg" />{{__MSG_open_url_btn__}}</span>
-                </div>
-                <div class="footer actions2">
-                </div>
-                <div class="footer actions3">
-                    <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
-                        title="{{__MSG_github_link_title__}}"><img class="icon"
-                            src="../icons/code.svg" />v{{__MSG_version__}}</a>
-                </div>
-            </div>
-            <div class="history hidden" id="history">
-                <ul class="history-items" id="history-items"></ul>
-                <div class="footer actions1">
-                    <span class="clickable" id="clear-history-btn" title="{{__MSG_clear_history_btn_title__}}"><img
-                            class="icon" src="../icons/trash.svg" />{{__MSG_clear_history_btn__}}</span>
-                </div>
-                <div class="footer actions2">
+                <div class="history hidden" id="history">
+                    <ul class="history-items" id="history-items"></ul>
+                    <div class="footer-container">
+                        <div class="footer actions1">
+                            <span class="clickable" id="clear-history-btn"
+                                title="{{__MSG_clear_history_btn_title__}}"><img class="icon"
+                                    src="../icons/trash.svg" />{{__MSG_clear_history_btn__}}</span>
+                        </div>
+                        <div class="footer actions2">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
