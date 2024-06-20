@@ -1,6 +1,6 @@
 {
     "amo_summary": {
-        "message": "A simple, open-source extension for generating and scanning QR codes offline."
+        "message": "👌Easy, 🛡️privacy-friendly QR code creator & scanner."
     },
     "amo_description": {
         "message": "QR Lite is a simple browser extension for generating and scanning QR codes offline.\n\nFeatures:\n<ul>\n<li>Generate QR code for the current tab.</li>\n<li>Generate QR code for selected link/text.</li>\n<li>Generate QR code for user entered text.</li>\n<li>Scan QR code in images. </li>\n<li>Scan QR code in choosen screen region. </li>\n<li>Scan QR code with camera.</li>\n<li>View generating and scanning history, up to 100 items.</li>\n</ul>"
