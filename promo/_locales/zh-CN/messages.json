@@ -4,5 +4,29 @@
     },
     "amo_description": {
         "message": "QR Lite 是一个简单的浏览器扩展，用于离线生成和扫描二维码。\n\n功能：\n<ul>\n<li>为当前选项卡生成二维码。</li>\n<li>为选定的链接/文本生成二维码。</li>\n<li>为用户输入的文字产生二维码。</li>\n<li>扫描图像中的二维码。</li>\n<li>扫描所选屏幕区域中的二维码。</li>\n<li>使用相机扫描二维码。</li>\n<li>生成和扫描历史记录，最多 100 项。</li>\n</ul>"
+    },
+    "promo_banner_modifying_html": {
+        "message": "👌简单易用 🛡️隐私友好"
+    },
+    "promo_banner_defining_html": {
+        "message": "<span>二维码<br><strong>生成器</strong> 和 <strong>扫描器</strong>"
+    },
+    "promo_screenshot_generator_title_html": {
+        "message": "生成<strong>二维码</strong>"
+    },
+    "promo_screenshot_generator_description_html": {
+        "message": "<ul><li>当前页面</li><li>链接</li><li>文本</li></ul>"
+    },
+    "promo_screenshot_scanner_title_html": {
+        "message": "扫描<strong>二维码</strong>"
+    },
+    "promo_screenshot_scanner_description_html": {
+        "message": "<ul><li>图片</li><li>剪贴板</li><li>摄像头</li><li>网页任意区域</li></ul>"
+    },
+    "promo_screenshot_history_title_html": {
+        "message": "查看最近<strong>生成</strong>和<strong>扫描</strong>的<strong>历史记录</strong>"
+    },
+    "promo_screenshot_history_description_html": {
+        "message": ""
     }
 }

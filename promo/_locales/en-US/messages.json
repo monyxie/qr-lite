@@ -1,8 +1,35 @@
 {
+    "extension_name": {
+        "message": "QR Lite"
+    },
     "amo_summary": {
-        "message": "👌Easy, 🛡️privacy-friendly QR code creator & scanner."
+        "message": "👌Easy, 🛡️privacy-friendly QR code generator & scanner."
     },
     "amo_description": {
-        "message": "QR Lite is a simple browser extension for generating and scanning QR codes offline.\n\nFeatures:\n<ul>\n<li>Generate QR code for the current tab.</li>\n<li>Generate QR code for selected link/text.</li>\n<li>Generate QR code for user entered text.</li>\n<li>Scan QR code in images. </li>\n<li>Scan QR code in choosen screen region. </li>\n<li>Scan QR code with camera.</li>\n<li>View generating and scanning history, up to 100 items.</li>\n</ul>"
+        "message": "<strong>QR Lite</strong> generates and scans QR codes without relying on 3rd-party services.\n\n\n<strong> === Features === </strong>\n\n✅ Generate QR codes for:\n<ul>\n<li> Active tab </li>\n<li> Links </li>\n<li> Selected text </li>\n<li> User input </li>\n</ul>\n✅ Scan QR code from:\n<ul>\n<li> Images </li>\n<li> Clipboard </li>\n<li> Any part of the web page </li>\n<li> Webcam </li>\n</ul>\n✅ Remember what you generated or scanned.\n✅ Everything works completely offline, nothing is sent over the network.\n\n\nQR Lite is open-source software distributed under the MIT license.\nIf you enjoy this extension, please give us a 5-star review, thank you :)"
+    },
+    "promo_banner_modifying_html": {
+        "message": "👌Easy 🛡️Privacy-friendly"
+    },
+    "promo_banner_defining_html": {
+        "message": "<span>QR Code<br><strong>Generator</strong> and <strong>Scanner</strong>"
+    },
+    "promo_screenshot_generator_title_html": {
+        "message": "Generate<br><strong>QR Code</strong> for"
+    },
+    "promo_screenshot_generator_description_html": {
+        "message": "<ul><li>Active tab</li><li>Links</li><li>Text</li></ul>"
+    },
+    "promo_screenshot_scanner_title_html": {
+        "message": "Scan<br><strong>QR Code</strong> from"
+    },
+    "promo_screenshot_scanner_description_html": {
+        "message": "<ul><li>Images</li><li>Clipboard</li><li>Camera</li><li>Any part of<br>web page</li></ul>"
+    },
+    "promo_screenshot_history_title_html": {
+        "message": "View <strong>history</strong> of recently <strong>generated</strong> and <strong>scanned</strong> items"
+    },
+    "promo_screenshot_history_description_html": {
+        "message": ""
     }
 }

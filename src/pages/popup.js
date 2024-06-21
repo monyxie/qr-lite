@@ -17,11 +17,15 @@ class Popup {
     this.currentTitle = null
     this.historyTimer = null
     this.currentTab = null
-    // is this page opened in a standalone page instead of in a popup window?
-    this.isStandalone = apiNs.extension.getViews({ type: 'popup' }).length === 0
+    this.isStandalone = false
   }
 
   async init () {
+    if (window.location.search.indexOf('forcepopup') === -1) {
+      // is this page opened in a standalone page instead of in a popup window?
+      this.isStandalone = apiNs.extension.getViews({ type: 'popup' }).length === 0
+    }
+
     if (this.isStandalone) {
       addClass('standalone', document.documentElement)
     }

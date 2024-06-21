@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 1280px;
+            height: 800px;
+            outline: 1px solid gray;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .logo {
+            width: 450px;
+            outline: 6px solid #888;
+            box-shadow: gray 10px 10px 30px;
+            display: block;
+        }
+
+        .logo.stack-bot {
+            margin-left: -50px;
+            margin-top: 30px;
+        }
+
+        .logo.stack-top {
+            margin-left: -300px;
+            margin-top: -30px;
+        }
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 600px;
+            gap: 40px;
+        }
+
+        .title-text {
+            font-family: Cantarell, Arial, Helvetica, sans-serif;
+            font-size: 64px;
+            font-weight: bold;
+            color: #333333;
+            display: block;
+            /* text-shadow: #fff 6px 6px 2px; */
+        }
+
+        .title-text strong {
+            font-weight: bolder;
+        }
+
+        .autoscale {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .line1 {
+            font-family: 'Fantasque Sans Mono', 'Courier New', Courier, monospace;
+            font-size: 80px;
+            text-shadow: #fff 1px 1px 1px;
+            /* text-align: center; */
+            padding: 0 1em;
+        }
+
+        .line2 {
+            font-size: 60px;
+            font-family: 'Cantarell', 'Courier New', Courier, monospace;
+            /* text-shadow: #fff 1px 1px 1px; */
+            /* text-align: center; */
+            width: 100%;
+            padding: 0 1em;
+            margin-left: 20px;
+            opacity: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .line2 strong {
+            color: #702589;
+            font-size: 1.2em;
+        }
+
+        ul {
+            list-style-type: circle;
+        }
+    </style>
+</head>
+
+<body>
+    <template id="template">
+        <div class="container">
+            <img class="logo" data-variant="generator" src="../screenshots/generate-1.5x.png">
+            <img class="logo stack-bot" data-variant="scanner" src="../screenshots/scan-1.5x.png">
+            <img class="logo stack-top" data-variant="scanner" src="../screenshots/scan-result-1.5x.png">
+            <img class="logo" data-variant="history" src="../screenshots/history-1.5x.png">
+            <div class="right">
+                <div class="title">
+                    <span class="title-text"
+                        data-variant="generator">{{__MSG_promo_screenshot_generator_title_html__}}</span>
+                    <span class="title-text"
+                        data-variant="scanner">{{__MSG_promo_screenshot_scanner_title_html__}}</span>
+                    <span class="title-text"
+                        data-variant="history">{{__MSG_promo_screenshot_history_title_html__}}</span>
+                </div>
+                <div class="line2 autoscale">
+                    <span data-variant="generator">{{__MSG_promo_screenshot_generator_description_html__}}</span>
+                    <span data-variant="scanner">{{__MSG_promo_screenshot_scanner_description_html__}}</span>
+                    <span data-variant="history">{{__MSG_promo_screenshot_history_description_html__}}</span>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+<script src="script.js"></script>
+
+</html>

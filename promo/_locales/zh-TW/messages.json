@@ -4,5 +4,26 @@
     },
     "amo_description": {
         "message": "QR Lite 是一個簡單的瀏覽器擴展，用於離線產生和掃描二維碼。\n\n功能：\n<ul>\n<li>為目前選項卡產生二維碼。 </li>\n<li>為選定的連結/文字產生二維碼。 </li>\n<li>為使用者輸入的文字產生二維碼。 </li>\n<li>掃描影像中的二維碼。 </li>\n<li>掃描所選螢幕區域中的二維碼。 </li>\n<li>使用相機掃描二維碼。 </li>\n<li>產生和掃描歷史記錄，最多 100 項。 </li>\n</ul>"
+    },
+    "promo_banner_modifying_html": {
+        "message": "👌簡單易用 🛡️隱私友好"
+    },
+    "promo_screenshot_generator_title_html": {
+        "message": "產生<strong>二維碼</strong>"
+    },
+    "promo_screenshot_generator_description_html": {
+        "message": "<ul><li>目前頁面</li><li>連結</li><li>文字</li></ul>"
+    },
+    "promo_screenshot_scanner_title_html": {
+        "message": "掃描<strong>二維碼</strong>"
+    },
+    "promo_screenshot_scanner_description_html": {
+        "message": "<ul><li>圖片</li><li>剪貼簿</li><li>網路攝影機</li><li>網頁任意區域</li></ul>"
+    },
+    "promo_screenshot_history_title_html": {
+        "message": "查看最近<strong>產生</strong>和<strong>掃描</strong>的<strong>歷史記錄</strong>"
+    },
+    "promo_screenshot_history_description_html": {
+        "message": ""
     }
 }
