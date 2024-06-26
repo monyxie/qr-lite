@@ -4,17 +4,21 @@
 
 QR Lite is a browser extension for generating and scanning QR codes offline.
 
-[![Get the addon](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png 'Get the addon')](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
+[![Get the addon](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png "Get the addon")](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
+[![Get the addon](https://user-images.githubusercontent.com/585534/107280673-a5ece780-6a26-11eb-9cc7-9fa9f9f81180.png "Get from Microsoft")](https://addons.mozilla.org/en-US/firefox/addon/qr-lite/)
+
+> Chrome is supported but this extension is NOT available on Chrome Web Store, you have to build and install it from source yourself.
 
 ## Features
 
-* Generate QR code for current tab in popup.
-* Generate QR code for selected link/text.
-* Change error correction level of generated QR code.
-* Scan QR codes in images.
-* Keep track of generating and scanning history.
+- Generate QR code for current tab in popup.
+- Generate QR code for selected link/text.
+- Change error correction level of generated QR code.
+- Scan QR codes in images.
+- Keep track of generating and scanning history.
 
 ## Permissions
+
 QR Lite requires the following permissions:
 
 - Access to the active tab (`activeTab`): mandatory, enables capturing image of the active page for scanning
@@ -22,16 +26,10 @@ QR Lite requires the following permissions:
 - Storage (`storage`): mandatory, enables preferences and history persistence on disk
 - Clipboard write (`clipboardWrite`): mandatory, enables copying QR code images or text to clipboard
 - Scripting (`scripting`): mandatory, enables script injection for the following scenarios:
-  - When *Select region to scan..* is chosen, a script need to be injected to the active page to load the "scan region picker" UI
-  - When *Scan QR code in Image* is chosen, a script need to be injected to the active page to retrieve the image data
+  - When _Select region to scan.._ is chosen, a script need to be injected to the active page to load the "scan region picker" UI
+  - When _Scan QR code in Image_ is chosen, a script need to be injected to the active page to retrieve the image data
 - Access to all websites (`<all_urls>`): optional, required to read image data from websites when you click "Scan QR code in image" in the context menu. Also in older Firefox versions, this permission is also needed to capture image of the web page.
 - Camera access: optional, enables QR code scanning with camera
-
-## Supported Browsers
-
-- Firefox: v109 or newer
-- Chrome/Chromium: latest
-- Microsoft Edge: latest
 
 ## Development
 
