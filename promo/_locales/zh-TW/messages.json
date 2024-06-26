@@ -8,6 +8,9 @@
     "promo_banner_modifying_html": {
         "message": "👌簡單易用 🛡️隱私友好"
     },
+    "promo_banner_defining_html": {
+        "message": "<span>二維碼<br><strong>產生器</strong> 和 <strong>掃描器</strong>"
+    },
     "promo_screenshot_generator_title_html": {
         "message": "產生<strong>二維碼</strong>"
     },
