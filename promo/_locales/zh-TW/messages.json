@@ -3,7 +3,7 @@
         "message": "👌簡單易用、🛡️隱私友好的二維碼產生器和掃描器。"
     },
     "amo_description": {
-        "message": "QR Lite 是一個簡單的瀏覽器擴展，用於離線產生和掃描二維碼。\n\n功能：\n<ul>\n<li>為目前選項卡產生二維碼。 </li>\n<li>為選定的連結/文字產生二維碼。 </li>\n<li>為使用者輸入的文字產生二維碼。 </li>\n<li>掃描影像中的二維碼。 </li>\n<li>掃描所選螢幕區域中的二維碼。 </li>\n<li>使用相機掃描二維碼。 </li>\n<li>產生和掃描歷史記錄，最多 100 項。 </li>\n</ul>"
+        "message": "<strong>QR Lite</strong> 是一個完全本地運作的二維碼產生器和掃描器。\n\n\n<strong> === 功能 === </strong>\n\n✅ 為以下內容產生二維碼：\n<ul>\n<li> 目前網頁 </li>\n<li> 任意連結 </li>\n<li> 選取的文字 </li>\n<li> 使用者輸入的文字 </li>\n</ul>\n✅ 從下列地方掃描二維碼：\n<ul>\n<li> 任一圖片 </li>\n<li> 剪貼簿 </li>\n<li> 網頁上的任意區域 </li>\n<li> 網路攝影機 </li>\n</ul>\n✅ 記錄產生和掃描的歷史。\n✅ 所有功能完全本地運作，無需聯網。\n\n\nQR Lite 是以 MIT 授權分發的開源軟體。\n如果您喜歡本擴展，請給我們打個5星好評，謝謝 :)"
     },
     "promo_banner_modifying_html": {
         "message": "👌簡單易用 🛡️隱私友好"
