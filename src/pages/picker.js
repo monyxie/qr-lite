@@ -26,7 +26,8 @@ class Picker {
   }
 
   getBaseScanSize () {
-    return Math.min(this.winW, this.winH) / 10 * 1.1
+    // Use outer size here because inner size may change during initialization
+    return Math.min(window.outerWidth, window.outerHeight) / 10 * 1.1
   }
 
   setScaleLevel (value) {
