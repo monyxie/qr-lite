@@ -234,7 +234,7 @@ class Popup {
     this.showTab('scan')
 
     if (isUrl(url) && !await apiNs.permissions.contains({ origins: ['<all_urls>'] })) {
-      removeClass('hidden', '', '#permissionInstructions')
+      removeClass('hidden', '#permissionInstructions')
       addClass('hidden', '#scanInstructions', '#scanInput')
       $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
         'grant_permissions_instructions_html',
