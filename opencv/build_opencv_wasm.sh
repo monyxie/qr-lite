@@ -3,8 +3,8 @@
 set -e
 set -x
 
-OPENCV_COMMIT="4.9.0"
-OPENCV_CONTRIB_COMMIT="4.9.0"
+OPENCV_COMMIT="4.11.0"
+OPENCV_CONTRIB_COMMIT="4.11.0"
 
 if ! command -v emcmake &>/dev/null; then
     echo "Command 'emcmake' not found. Install and/or activate emsdk/emscripten before running this script."
