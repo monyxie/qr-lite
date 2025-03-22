@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta charset="utf-8">
+    <meta name="color-scheme" content="light dark" />
     <title>QR Lite</title>
     <link rel="icon" type="image/png" href="/icons/qrlite-16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/icons/qrlite-32.png" sizes="32x32">
@@ -21,7 +22,7 @@
             <div class="tabs-container">
                 <div class="tabs-item active" id="tab-generate" title="{{__MSG_tab_generate_title__}}">
                     <div class="tabs-item-label">
-                        <img class="icon" src="../icons/generate.svg" />
+                        <img class="icon icon-invert" src="../icons/generate.svg" />
                         <span class="tabs-item-text">
                             {{__MSG_tab_generate_title__}}
                         </span>
@@ -29,7 +30,7 @@
                 </div>
                 <div class="tabs-item" id="tab-scan" title="{{__MSG_tab_scan_title__}}">
                     <div class="tabs-item-label">
-                        <img class="icon" src="../icons/scan.svg" />
+                        <img class="icon icon-invert" src="../icons/scan.svg" />
                         <span class="tabs-item-text">
                             {{__MSG_tab_scan_title__}}
                         </span>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="tabs-item" id="tab-history" title="{{__MSG_tab_history_title__}}">
                     <div class="tabs-item-label">
-                        <img class="icon" src="../icons/history.svg" />
+                        <img class="icon icon-invert" src="../icons/history.svg" />
                         <span class="tabs-item-text">
                             {{__MSG_tab_history_title__}}
                         </span>
@@ -72,18 +73,19 @@
                     <div class="result" id="result"></div>
                     <div class="footer-container">
                         <div class="footer actions1">
-                            <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}"><img class="icon"
-                                    src="../icons/save.svg" />{{__MSG_save_image_btn__}}</span>
+                            <span class="clickable" id="save" title="{{__MSG_save_image_btn_title__}}"><img
+                                    class="icon icon-invert" src="../icons/save.svg" />{{__MSG_save_image_btn__}}</span>
                         </div>
                         <div class="footer actions2">
                             <span class="clickable" id="copy" title="{{__MSG_copy_image_btn_title__}}">
-                                <img class="icon" src="../icons/copy.svg" />{{__MSG_copy_image_btn__}}</span>
+                                <img class="icon icon-invert"
+                                    src="../icons/copy.svg" />{{__MSG_copy_image_btn__}}</span>
                             <span class="hidden" id="copied">{{__MSG_copy_image_ok__}}</span>
                         </div>
                         <div class="footer actions3">
                             <a class="clickable" target="_blank" href="https://github.com/monyxie/qr-lite" rel=""
                                 title="{{__MSG_github_link_title__}}">
-                                <img class="icon" src="../icons/code.svg" />v{{__MSG_version__}}</a>
+                                <img class="icon icon-invert" src="../icons/code.svg" />v{{__MSG_version__}}</a>
                         </div>
                     </div>
                 </div>
@@ -99,20 +101,21 @@
                         <div class="divider hide-if-standalone">{{__MSG_or__}}</div>
                         <p class="hide-if-standalone">
                             <a class="clickable" id="scanRegion">
-                                <img class="icon"
+                                <img class="icon icon-invert"
                                     src="../icons/scan-region.svg" />{{__MSG_pick_region_to_scan_btn__}}</a>
                         </p>
                         <div class="divider">{{__MSG_or__}}</div>
                         <p>
                             <a class="clickable" id="cameraScan">
-                                <img class="icon" src="../icons/camera.svg" />{{__MSG_camera_scan_btn__}}</a>
+                                <img class="icon icon-invert"
+                                    src="../icons/camera.svg" />{{__MSG_camera_scan_btn__}}</a>
                         </p>
                     </div>
                     <div class="instructions instruction-screen hidden" id="permissionInstructions">
                         <p>
                             <span id="grant-permissions-instructions"></span>
                             <br><br>
-                            <a class="clickable" id="grantPermissionsBtn" target="_blank"><img class="icon"
+                            <a class="clickable" id="grantPermissionsBtn" target="_blank"><img class="icon icon-invert"
                                     src="../icons/open-url.svg" />{{__MSG_grant_permissions_btn__}}</a>
                         </p>
                     </div>
@@ -134,13 +137,15 @@
                     <div class="footer-container">
                         <div class="footer actions1">
                             <span class="clickable" id="openLinkBtn" title="{{__MSG_open_url_btn_title__}}"><img
-                                    class="icon" src="../icons/open-url.svg" />{{__MSG_open_url_btn__}}</span>
+                                    class="icon icon-invert"
+                                    src="../icons/open-url.svg" />{{__MSG_open_url_btn__}}</span>
                         </div>
                         <div class="footer actions2">
                         </div>
                         <div class="footer actions3">
                             <a class="clickable hidden" id="cameraRescanBtn" title="{{__MSG_rescan_btn_title__}}"><img
-                                    class="icon" src="../icons/refresh.svg" />{{__MSG_rescan_btn_label__}}</a>
+                                    class="icon icon-invert"
+                                    src="../icons/refresh.svg" />{{__MSG_rescan_btn_label__}}</a>
                         </div>
                     </div>
                 </div>
@@ -149,7 +154,7 @@
                     <div class="footer-container">
                         <div class="footer actions1">
                             <span class="clickable" id="clear-history-btn"
-                                title="{{__MSG_clear_history_btn_title__}}"><img class="icon"
+                                title="{{__MSG_clear_history_btn_title__}}"><img class="icon icon-invert"
                                     src="../icons/trash.svg" />{{__MSG_clear_history_btn__}}</span>
                         </div>
                         <div class="footer actions2">

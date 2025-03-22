@@ -34,3 +34,14 @@ body {
     align-self: center;
     box-shadow: gray 1px 1px 10px;
 }
+
+@media (prefers-color-scheme: dark) {
+    .container {
+        background: linear-gradient(#223322 0%, #112211 30%);
+    }
+    .box {
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #999999;
+        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    }
+}

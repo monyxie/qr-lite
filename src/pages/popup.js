@@ -353,6 +353,7 @@ class Popup {
           li.title = history[i].text || ''
 
           const img = document.createElement('img')
+          img.className = 'icon icon-invert'
           if (history[i].type === 'decode') {
             img.src = '../icons/scan.svg'
           } else {

@@ -32,6 +32,16 @@ html {
     color: #444;
 }
 
+@media (prefers-color-scheme: dark) {
+    .clickable {
+        color: rgb(140, 140, 140);
+    }
+    .clickable:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #BBB;  
+    }
+}
+
 .icon {
     height: 1em;
     vertical-align: middle;
@@ -68,6 +78,22 @@ html {
     background-color: lightgray;
 }
 
+@media (prefers-color-scheme: dark) {
+    .divider {
+        color: #777;
+    }
+    .divider::before,
+    .divider::after {
+        background-color: rgb(45, 45, 45);
+    }
+}
+
 textarea[readonly] {
     outline: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon-invert {
+        filter: invert(1);    
+    }
 }

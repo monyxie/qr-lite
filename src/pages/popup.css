@@ -1,15 +1,24 @@
 :root {
     font-size: 16px;
     --gap: 4px;
+    color-scheme: light dark;
 }
 
 body {
     background: #F8F8FF linear-gradient(#dfffdf 0%, #eeffee 33%, #F8F8FF 100%) no-repeat;
+    /* background: #ddd; */
     margin: 0;
     padding: 0;
     display: flex;
     gap: var(--gap);
     justify-content: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #F8F8FF linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
+        /* background: #0a0a1d; */
+    }
 }
 
 .container {
@@ -53,7 +62,12 @@ body {
     line-height: 22px;
     white-space: nowrap;
 }
-
+@media (prefers-color-scheme: dark) {
+    .necker-container>*,
+    .footer-container>* {
+        color: #ccc;
+    }
+}    
 /* main tab */
 
 .main {
@@ -85,6 +99,17 @@ body {
     outline: green 2px solid;
 }
 
+@media (prefers-color-scheme: dark) {
+    .main .source {
+        border-color: #333;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    .main .source:focus {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(5, 5, 5, 0.7) 90%, rgba(32, 32, 32, 0.7) 100%);
+        outline: rgb(0, 95, 0) 2px solid;    
+    }
+}
+
 .main .result {
     display: flex;
     gap: var(--gap);
@@ -99,6 +124,12 @@ body {
 .main .result>svg {
     height: 100%;
     width: auto;
+}
+@media (prefers-color-scheme: dark) {
+    .main .result {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 10px rgb(0, 84, 0) inset;
+    }
 }
 
 .main .ec-levels-container {
@@ -119,6 +150,13 @@ body {
     cursor: default;
     font-weight: bolder;
     text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .main .ec-level.ec-level-active {
+        background-color: rgba(100, 100, 100, 0.8);
+        color: white;
+    }
 }
 
 /* history tab */
@@ -163,8 +201,19 @@ body {
 }
 
 .history li:hover {
-    border-top: 1px solid #CCCCCC;
-    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+@media (prefers-color-scheme: dark) {
+    .history .history-items li:nth-child(odd) {
+        background-color: rgba(155, 155, 155, 0.1);
+    }
+    
+    .history li:hover {
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+    }    
 }
 
 /* scan tab */
@@ -227,6 +276,13 @@ body {
     resize: none;
     background-color: rgba(255, 255, 255, 0.7);
     box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+    .scan .output {
+        border-color: #333;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 }
 
 .scan .qr-position-marker-wrapper {
@@ -301,6 +357,21 @@ body {
     padding-left: 0.5em;
     max-width: 100%;
     transition: max-width .2s;
+}
+
+@media (prefers-color-scheme: dark) {
+    .tabs-item {
+        border-color: #333;
+        color: #888;
+    }
+    .tabs-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    .tabs-item.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        color: #CCC;
+    }    
 }
 
 /* utils */
