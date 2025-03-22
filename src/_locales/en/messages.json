@@ -44,6 +44,18 @@
   "clear_history_btn_title": {
     "message": "Clear history"
   },
+  "disable_history_btn_title": {
+    "message": "Pause recording history"
+  },
+  "disable_history_btn_label": {
+    "message": "Pause"
+  },
+  "enable_history_btn_title": {
+    "message": "Resume recording history"
+  },
+  "enable_history_btn_label": {
+    "message": "Resume"
+  },
   "github_link_title": {
     "message": "Visit QR Lite's project page on Github"
   },

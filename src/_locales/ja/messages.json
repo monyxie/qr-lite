@@ -197,5 +197,17 @@
   },
   "picker_close_btn_title": {
     "message": "閉じる"
+  },
+  "disable_history_btn_title": {
+    "message": "履歴の記録を一時停止"
+  },
+  "disable_history_btn_label": {
+    "message": "一時停止"
+  },
+  "enable_history_btn_title": {
+    "message": "履歴の記録を再開"
+  },
+  "enable_history_btn_label": {
+    "message": "再開"
   }
 }

@@ -196,5 +196,17 @@
   },
   "picker_close_btn_title": {
     "message": "關閉"
+  },
+  "disable_history_btn_title": {
+    "message": "暫停記錄歷史"
+  },
+  "disable_history_btn_label": {
+    "message": "暫停"
+  },
+  "enable_history_btn_title": {
+    "message": "恢復記錄歷史"
+  },
+  "enable_history_btn_label": {
+    "message": "恢復"
   }
 }

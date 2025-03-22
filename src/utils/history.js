@@ -1,5 +1,10 @@
 import { storage } from './compat'
 
+async function isHistoryEnabled () {
+  const result = await storage.get('historyEnabled')
+  return result.historyEnabled !== false // Default to enabled if not set
+}
+
 export async function getHistory () {
   try {
     const results = await storage.get('history')
@@ -22,6 +27,10 @@ export async function addHistory (type, text) {
   if (type !== 'encode' && type !== 'decode') {
     return
   }
+
+  if (!(await isHistoryEnabled())) {
+    return
+  }
   let history = await getHistory()
   // Don't add duplicate items
   if (history && history.length > 0) {
@@ -40,4 +49,16 @@ export async function addHistory (type, text) {
   await storage.set({
     history: JSON.stringify(history)
   })
+}
+
+export async function toggleHistory () {
+  const enabled = await isHistoryEnabled()
+  await storage.set({
+    historyEnabled: !enabled
+  })
+  return !enabled
+}
+
+export async function getHistoryState () {
+  return isHistoryEnabled()
 }

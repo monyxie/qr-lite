@@ -30,6 +30,24 @@ class Popup {
       addClass('standalone', document.documentElement)
     }
 
+    // Initialize history toggle button
+    const $toggleHistoryBtn = $('#toggle-history-btn')
+    const updateToggleButton = async () => {
+      const enabled = await History.getHistoryState()
+      $toggleHistoryBtn.title = enabled
+        ? apiNs.i18n.getMessage('disable_history_btn_title')
+        : apiNs.i18n.getMessage('enable_history_btn_title')
+      $toggleHistoryBtn.textContent = enabled
+        ? apiNs.i18n.getMessage('disable_history_btn_label')
+        : apiNs.i18n.getMessage('enable_history_btn_label')
+    }
+    await updateToggleButton()
+    $toggleHistoryBtn.addEventListener('click', async () => {
+      await History.toggleHistory()
+      await updateToggleButton()
+      this.renderHistory()
+    })
+
     $('#tab-history').addEventListener('click', () => {
       this.showTab('history')
     })
