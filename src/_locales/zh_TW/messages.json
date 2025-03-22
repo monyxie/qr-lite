@@ -208,5 +208,11 @@
   },
   "enable_history_btn_label": {
     "message": "恢復"
+  },
+  "remove_history_btn_title": {
+    "message": "從歷史記錄中刪除此條目"
+  },
+  "remove_history_btn_label": {
+    "message": "刪除"
   }
 }

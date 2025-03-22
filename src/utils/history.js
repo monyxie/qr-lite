@@ -51,6 +51,16 @@ export async function addHistory (type, text) {
   })
 }
 
+export async function removeHistory (text) {
+  let history = await getHistory()
+  history = history.filter(function (item) {
+    return item.text !== text
+  })
+  await storage.set({
+    history: JSON.stringify(history)
+  })
+}
+
 export async function toggleHistory () {
   const enabled = await isHistoryEnabled()
   await storage.set({

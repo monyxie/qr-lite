@@ -61,6 +61,8 @@ class Popup {
     $('#history').addEventListener('click', e => {
       if (e.target.tagName.toUpperCase() === 'LI') {
         this.createQrCode(e.target.title, this.ecLevel, undefined, 'now')
+      } else if (e.target.classList.contains('remove-history-btn')) {
+        this.removeHistory(e.target.parentElement.title).then(() => this.renderHistory())
       }
     })
     $('#clear-history-btn').addEventListener('click', e => {
@@ -182,6 +184,10 @@ class Popup {
 
   addHistory (type, text) {
     return History.addHistory(type, text)
+  }
+
+  removeHistory (text) {
+    return History.removeHistory(text)
   }
 
   createQrCode (text, activeEcLevel, title, historyMode) {
@@ -363,6 +369,9 @@ class Popup {
   renderHistory () {
     this.getHistory()
       .then(function (history) {
+        const removeBtnTitle = apiNs.i18n.getMessage('remove_history_btn_title')
+        const removeBtnLabel = apiNs.i18n.getMessage('remove_history_btn_label')
+
         const ul = $('#history-items')
         ul.innerHTML = ''
         history.reverse()
@@ -378,7 +387,19 @@ class Popup {
             img.src = '../icons/generate.svg'
           }
           li.appendChild(img)
-          li.appendChild(document.createTextNode(' ' + (history[i].text || '')))
+
+          const text = document.createTextNode(' ' + (history[i].text || ''))
+          const span = document.createElement('span')
+          span.className = 'history-item-text'
+          span.appendChild(text)
+          li.appendChild(span)
+
+          const removeBtn = document.createElement('span')
+          removeBtn.className = 'remove-history-btn clickable'
+          removeBtn.title = removeBtnTitle
+          removeBtn.innerText = removeBtnLabel
+          li.appendChild(removeBtn)
+
           ul.appendChild(li)
         }
       })

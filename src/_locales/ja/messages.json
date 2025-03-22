@@ -209,5 +209,11 @@
   },
   "enable_history_btn_label": {
     "message": "再開"
+  },
+  "remove_history_btn_title": {
+    "message": "履歴からこのエントリを削除"
+  },
+  "remove_history_btn_label": {
+    "message": "削除"
   }
 }

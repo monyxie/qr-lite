@@ -56,6 +56,12 @@
   "enable_history_btn_label": {
     "message": "Resume"
   },
+  "remove_history_btn_title": {
+    "message": "Remove this entry from history"
+  },
+  "remove_history_btn_label": {
+    "message": "Remove"
+  },
   "github_link_title": {
     "message": "Visit QR Lite's project page on Github"
   },

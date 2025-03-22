@@ -173,21 +173,36 @@ body {
     margin: 0;
     padding: 0;
     overflow: auto;
+    overflow-x: hidden;
     width: 100%;
     flex: 1 1 100px;
 }
 
 .history .history-items li {
     cursor: pointer;
+    width: 100%;
+    height: 32px;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0 2px;
+}
+
+.history .history-items .history-item-text {
+    line-height: 30px;
     font-size: 14px;
     font-family: sans-serif;
-    height: 30px;
-    line-height: 30px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border: 1px solid transparent;
-    /*color: gray;*/
+    flex-grow: 1;
+}
+
+.history .history-items li .remove-history-btn {
+    margin-right: 4px;
+    display: none;
+    white-space: nowrap;
 }
 
 .history .history-items li>img {
@@ -200,9 +215,13 @@ body {
     background-color: rgba(100, 100, 100, 0.1);
 }
 
-.history li:hover {
+.history .history-items li:hover {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+}
+
+.history .history-items li:hover .remove-history-btn {
+    display: block;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -213,7 +232,7 @@ body {
     .history li:hover {
         border-top: 1px solid #333;
         border-bottom: 1px solid #333;
-    }    
+    }
 }
 
 /* scan tab */
