@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "Tạo hoặc quét mã QR ngoại tuyến."
+  },
+  "save_image_btn": {
+    "message": "Lưu"
+  },
+  "save_image_btn_title": {
+    "message": "Lưu ảnh mã QR này"
+  },
+  "copy_image_btn": {
+    "message": "Sao chép"
+  },
+  "copy_image_btn_title": {
+    "message": "Sao chép ảnh mã QR này vào khay nhớ tạm"
+  },
+  "copy_image_ok": {
+    "message": "Đã sao chép!"
+  },
+  "open_url_btn": {
+    "message": "Mở URL"
+  },
+  "open_url_btn_title": {
+    "message": "Mở URL đã quét trong tab mới"
+  },
+  "tab_generate_title": {
+    "message": "Tạo"
+  },
+  "tab_scan_title": {
+    "message": "Quét"
+  },
+  "tab_history_title": {
+    "message": "Lịch sử"
+  },
+  "clear_history_btn": {
+    "message": "Xóa"
+  },
+  "clear_history_btn_title": {
+    "message": "Xóa lịch sử"
+  },
+  "disable_history_btn_title": {
+    "message": "Dừng ghi lại lịch sử"
+  },
+  "disable_history_btn_label": {
+    "message": "Dừng"
+  },
+  "enable_history_btn_title": {
+    "message": "Tiếp tục ghi lại lịch sử"
+  },
+  "enable_history_btn_label": {
+    "message": "Tiếp tục"
+  },
+  "remove_history_btn_title": {
+    "message": "Xóa mục này khỏi lịch sử"
+  },
+  "github_link_title": {
+    "message": "Xem trang dự án QR Lite trên Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "Thấp, có thể khôi phục 7% byte dữ liệu"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "Trung bình, có thể khôi phục 15% byte dữ liệu"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "Phần tư, có thể khôi phục 25% byte dữ liệu"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "Cao, có thể khôi phục 30% byte dữ liệu"
+  },
+  "error_correction_level_label": {
+    "message": "Sửa lỗi:"
+  },
+  "error_correction_level_label_title": {
+    "message": "Mức độ sửa lỗi"
+  },
+  "content_length_label_title": {
+    "message": "Độ dài nội dung mã QR tính bằng ký tự"
+  },
+  "content_length_label": {
+    "message": "Độ dài:"
+  },
+  "content_title": {
+    "message": "Nội dung mã QR"
+  },
+  "content_placeholder": {
+    "message": "Nhập văn bản để tạo mã QR"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "Tạo mã QR cho liên kết này"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "Tạo mã QR cho \"%s\""
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "Quét mã QR trong hình ảnh"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "Chọn vùng để quét…"
+  },
+  "context_menu_scan_with_camera": {
+    "message": "Quét bằng camera"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "Bánh xe cuộn"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "Điều chỉnh kích thước"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "Nhấp chuột trái"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "Quét"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "Thoát"
+  },
+  "copy_btn": {
+    "message": "Sao chép"
+  },
+  "copy_btn_copied": {
+    "message": "Đã sao chép"
+  },
+  "decoding_failed": {
+    "message": "Giải mã thất bại: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "Lỗi không xác định"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "Không thể giải mã mã QR"
+  },
+  "scan_instructions_html": {
+    "message": "Nhấp chuột phải vào bất kỳ hình ảnh nào và chọn<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Quét mã QR trong hình ảnh này\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "Để quét hình ảnh từ khay nhớ tạm, nhấn<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> hoặc <kbd>⌘</kbd> + <kbd>V</kbd> trên Mac"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "Chọn vùng để quét"
+  },
+  "camera_scan_btn": {
+    "message": "Quét bằng camera"
+  },
+  "rescan_btn_label": {
+    "message": "Quét lại"
+  },
+  "rescan_btn_title": {
+    "message": "Bắt đầu quét khác"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "Tính năng này yêu cầu quyền bổ sung sau.<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "Cấp quyền"
+  },
+  "grant_camera_permission_name": {
+    "message": "Truy cập vào camera của bạn"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "Truy cập vào dữ liệu của bạn cho tất cả các trang web"
+  },
+  "grant_permissions_window_title": {
+    "message": "Cấp quyền"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào camera của mình.<br><br>Khi bạn được nhắc cho phép QR Lite sử dụng camera của bạn, hãy đảm bảo rằng hộp kiểm <strong>\"Ghi nhớ quyết định này\"</strong> đã được chọn, sau đó nhấp vào <strong>\"Cho phép\"</strong>.<br><br>Nhấp vào nút bên dưới để bắt đầu."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "Có vẻ như việc sử dụng camera đã bị <strong>chặn</strong> đối với QR Lite.<br><br>Để thay đổi cài đặt này, hãy nhấp vào biểu tượng quyền <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> ở bên trái thanh địa chỉ và <strong>xóa</strong> trạng thái \"Bị chặn\" trong dòng \"Sử dụng camera\".<br><br>Sau khi thực hiện việc này, hãy tải lại trang này."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite đã nhận được quyền truy cập vào camera thành công.<br><br>Bây giờ bạn có thể đóng trang này."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào dữ liệu của bạn cho tất cả các trang web.<br><br>Nhấp vào nút bên dưới để bắt đầu."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "Quyền bị từ chối. Vui lòng tải lại trang này và thử lại."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite đã nhận được quyền truy cập vào dữ liệu của bạn cho tất cả các trang web thành công.<br><br>Bây giờ bạn có thể đóng trang này."
+  },
+  "grant_page_refresh_btn": {
+    "message": "Tải lại"
+  },
+  "grant_page_close_btn": {
+    "message": "Đóng"
+  },
+  "or": {
+    "message": "hoặc"
+  },
+  "scanning": {
+    "message": "Đang quét…"
+  },
+  "unable_to_decode_qr_code": {
+    "message": "Không thể giải mã mã QR"
+  },
+  "browser_action_command_description": {
+    "message": "Hiển thị cửa sổ bật lên"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Chọn vùng để quét"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Quét bằng camera"
+  },
+  "picker_close_btn_title": {
+    "message": "Đóng"
+  }
+}

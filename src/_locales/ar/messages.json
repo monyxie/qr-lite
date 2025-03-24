@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "أنشئ أو امسح رموز QR ضوئيًا دون اتصال بالإنترنت."
+  },
+  "save_image_btn": {
+    "message": "حفظ"
+  },
+  "save_image_btn_title": {
+    "message": "حفظ صورة رمز QR هذه"
+  },
+  "copy_image_btn": {
+    "message": "نسخ"
+  },
+  "copy_image_btn_title": {
+    "message": "نسخ صورة رمز QR هذه إلى الحافظة"
+  },
+  "copy_image_ok": {
+    "message": "تم النسخ!"
+  },
+  "open_url_btn": {
+    "message": "فتح الرابط"
+  },
+  "open_url_btn_title": {
+    "message": "فتح الرابط الممسوح ضوئيًا في علامة تبويب جديدة"
+  },
+  "tab_generate_title": {
+    "message": "إنشاء"
+  },
+  "tab_scan_title": {
+    "message": "مسح"
+  },
+  "tab_history_title": {
+    "message": "السجل"
+  },
+  "clear_history_btn": {
+    "message": "مسح"
+  },
+  "clear_history_btn_title": {
+    "message": "مسح السجل"
+  },
+  "disable_history_btn_title": {
+    "message": "إيقاف تسجيل السجل"
+  },
+  "disable_history_btn_label": {
+    "message": "إيقاف"
+  },
+  "enable_history_btn_title": {
+    "message": "استئناف تسجيل السجل"
+  },
+  "enable_history_btn_label": {
+    "message": "استئناف"
+  },
+  "remove_history_btn_title": {
+    "message": "إزالة هذا الإدخال من السجل"
+  },
+  "github_link_title": {
+    "message": "عرض صفحة مشروع QR Lite على Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "منخفض، يمكن استعادة 7٪ من بايتات البيانات"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "متوسط، يمكن استعادة 15٪ من بايتات البيانات"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "الربيع، يمكن استعادة 25٪ من بايتات البيانات"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "مرتفع، يمكن استعادة 30٪ من بايتات البيانات"
+  },
+  "error_correction_level_label": {
+    "message": "تصحيح الخطأ:"
+  },
+  "error_correction_level_label_title": {
+    "message": "مستوى تصحيح الخطأ"
+  },
+  "content_length_label_title": {
+    "message": "طول محتوى رمز QR بالأحرف"
+  },
+  "content_length_label": {
+    "message": "الطول:"
+  },
+  "content_title": {
+    "message": "محتوى رمز QR"
+  },
+  "content_placeholder": {
+    "message": "اكتب بعض النص لإنشاء رمز QR"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "إنشاء رمز QR لهذا الرابط"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "إنشاء رمز QR لـ \"%s\""
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "مسح رمز QR ضوئيًا في الصورة"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "تحديد المنطقة المراد مسحها ضوئيًا…"
+  },
+  "context_menu_scan_with_camera": {
+    "message": "مسح ضوئي باستخدام الكاميرا"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "عجلة التمرير"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "تعديل الحجم"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "النقر بالزر الأيسر"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "مسح"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "خروج"
+  },
+  "copy_btn": {
+    "message": "نسخ"
+  },
+  "copy_btn_copied": {
+    "message": "تم النسخ"
+  },
+  "decoding_failed": {
+    "message": "فشل فك التشفير: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "خطأ غير معروف"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "تعذر فك تشفير رمز QR"
+  },
+  "scan_instructions_html": {
+    "message": "انقر بزر الماوس الأيمن على أي صورة وحدد<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> مسح رمز QR في هذه الصورة\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "لمسح صورة الحافظة ضوئيًا، اضغط على<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> أو <kbd>⌘</kbd> + <kbd>V</kbd> على نظام Mac"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "تحديد المنطقة المراد مسحها ضوئيًا"
+  },
+  "camera_scan_btn": {
+    "message": "مسح ضوئي باستخدام الكاميرا"
+  },
+  "rescan_btn_label": {
+    "message": "مسح جديد"
+  },
+  "rescan_btn_title": {
+    "message": "بدء مسح آخر"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "تتطلب هذه الميزة الإذن الإضافي التالي.<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "منح الإذن"
+  },
+  "grant_camera_permission_name": {
+    "message": "الوصول إلى الكاميرا"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "الوصول إلى بياناتك لجميع مواقع الويب"
+  },
+  "grant_permissions_window_title": {
+    "message": "منح الإذن"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى الكاميرا.<br><br>عند مطالبتك بالسماح لـ QR Lite باستخدام الكاميرا، تأكد من تحديد خانة الاختيار <strong>\"تذكر هذا القرار\"</strong>، ثم انقر فوق <strong>\"السماح\"</strong>.<br><br>انقر فوق الزر أدناه للبدء."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "يبدو أن استخدام الكاميرا <strong>محظور</strong> لـ QR Lite.<br><br>لتغيير هذا الإعداد، انقر فوق رمز الأذونات <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> على يسار شريط العناوين، و<strong>أزل</strong> حالة \"محظور\" في صف \"استخدام الكاميرا\".<br><br>بعد القيام بذلك، قم بتحديث هذه الصفحة."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "تم منح QR Lite إمكانية الوصول إلى الكاميرا بنجاح.<br><br>يمكنك الآن إغلاق هذه الصفحة."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى بياناتك لجميع مواقع الويب.<br><br>انقر فوق الزر أدناه للبدء."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "تم رفض الإذن. يرجى تحديث هذه الصفحة وإعادة المحاولة."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "تم منح QR Lite إمكانية الوصول إلى بياناتك لجميع مواقع الويب بنجاح.<br><br>يمكنك الآن إغلاق هذه الصفحة."
+  },
+  "grant_page_refresh_btn": {
+    "message": "تحديث"
+  },
+  "grant_page_close_btn": {
+    "message": "إغلاق"
+  },
+  "or": {
+    "message": "أو"
+  },
+  "scanning": {
+    "message": "جاري المسح…"
+  },
+  "unable_to_decode_qr_code": {
+    "message": "تعذر فك تشفير رمز QR"
+  },
+  "browser_action_command_description": {
+    "message": "إظهار النافذة المنبثقة"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "تحديد المنطقة المراد مسحها ضوئيًا"
+  },
+  "scan_with_camera_command_description": {
+    "message": "مسح ضوئي باستخدام الكاميرا"
+  },
+  "picker_close_btn_title": {
+    "message": "إغلاق"
+  }
+}

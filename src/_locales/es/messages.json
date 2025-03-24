@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "Genera o escanea códigos QR sin conexión."
+  },
+  "save_image_btn": {
+    "message": "Guardar"
+  },
+  "save_image_btn_title": {
+    "message": "Guardar esta imagen de código QR"
+  },
+  "copy_image_btn": {
+    "message": "Copiar"
+  },
+  "copy_image_btn_title": {
+    "message": "Copiar esta imagen de código QR al portapapeles"
+  },
+  "copy_image_ok": {
+    "message": "¡Copiado!"
+  },
+  "open_url_btn": {
+    "message": "Abrir URL"
+  },
+  "open_url_btn_title": {
+    "message": "Abrir la URL escaneada en una nueva pestaña"
+  },
+  "tab_generate_title": {
+    "message": "Generar"
+  },
+  "tab_scan_title": {
+    "message": "Escanear"
+  },
+  "tab_history_title": {
+    "message": "Historial"
+  },
+  "clear_history_btn": {
+    "message": "Limpiar"
+  },
+  "clear_history_btn_title": {
+    "message": "Limpiar historial"
+  },
+  "disable_history_btn_title": {
+    "message": "Detener la grabación del historial"
+  },
+  "disable_history_btn_label": {
+    "message": "Detener"
+  },
+  "enable_history_btn_title": {
+    "message": "Reanudar la grabación del historial"
+  },
+  "enable_history_btn_label": {
+    "message": "Reanudar"
+  },
+  "remove_history_btn_title": {
+    "message": "Eliminar esta entrada del historial"
+  },
+  "github_link_title": {
+    "message": "Ver la página del proyecto QR Lite en Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "Bajo, se pueden restaurar el 7% de los bytes de datos"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "Medio, se pueden restaurar el 15% de los bytes de datos"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "Cuartil, se pueden restaurar el 25% de los bytes de datos"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "Alto, se pueden restaurar el 30% de los bytes de datos"
+  },
+  "error_correction_level_label": {
+    "message": "Corrección de errores:"
+  },
+  "error_correction_level_label_title": {
+    "message": "Nivel de corrección de errores"
+  },
+  "content_length_label_title": {
+    "message": "Longitud del contenido del código QR en caracteres"
+  },
+  "content_length_label": {
+    "message": "Longitud:"
+  },
+  "content_title": {
+    "message": "Contenido del código QR"
+  },
+  "content_placeholder": {
+    "message": "Escribe algún texto para generar un código QR"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "Generar código QR para este enlace"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "Generar código QR para \"%s\""
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "Escanear código QR en la imagen"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "Seleccionar región para escanear..."
+  },
+  "context_menu_scan_with_camera": {
+    "message": "Escanear con la cámara"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "Rueda de desplazamiento"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "Ajustar tamaño"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "Clic izquierdo"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "Escanear"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "Salir"
+  },
+  "copy_btn": {
+    "message": "Copiar"
+  },
+  "copy_btn_copied": {
+    "message": "Copiado"
+  },
+  "decoding_failed": {
+    "message": "Error al decodificar: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "Error desconocido"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "No se puede decodificar el código QR"
+  },
+  "scan_instructions_html": {
+    "message": "Haz clic derecho en cualquier imagen y selecciona<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Escanear código QR en esta imagen\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "Para escanear la imagen del portapapeles, presiona<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> o <kbd>⌘</kbd> + <kbd>V</kbd> en Mac"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "Seleccionar región para escanear"
+  },
+  "camera_scan_btn": {
+    "message": "Escanear con la cámara"
+  },
+  "rescan_btn_label": {
+    "message": "Nuevo escaneo"
+  },
+  "rescan_btn_title": {
+    "message": "Iniciar otro escaneo"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "Esta función requiere el siguiente permiso adicional.<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "Conceder permiso"
+  },
+  "grant_camera_permission_name": {
+    "message": "Acceso a tu cámara"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "Acceso a tus datos para todos los sitios web"
+  },
+  "grant_permissions_window_title": {
+    "message": "Conceder permiso"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "Estás a punto de conceder a QR Lite acceso a tu cámara.<br><br>Cuando se te pida que permitas a QR Lite usar tu cámara, asegúrate de que la casilla <strong>\"Recordar esta decisión\"</strong> esté marcada y luego haz clic en <strong>\"Permitir\"</strong>.<br><br>Haz clic en el botón de abajo para empezar."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "Parece que QR Lite tiene el uso de la cámara <strong>bloqueado</strong>.<br><br>Para cambiar esta configuración, haz clic en el icono de permisos <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> a la izquierda de la barra de direcciones, y <strong>elimina</strong> el estado \"Bloqueado\" en la fila \"Usar la cámara\".<br><br>Después de hacer esto, actualiza esta página."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite ha recibido acceso a la cámara correctamente.<br><br>Ahora puedes cerrar esta página."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "Estás a punto de conceder a QR Lite acceso a tus datos para todos los sitios web.<br><br>Haz clic en el botón de abajo para empezar."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "Permiso denegado. Por favor, actualiza esta página y vuelve a intentarlo."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite ha recibido acceso a tus datos para todos los sitios web correctamente.<br><br>Ahora puedes cerrar esta página."
+  },
+  "grant_page_refresh_btn": {
+    "message": "Actualizar"
+  },
+  "grant_page_close_btn": {
+    "message": "Cerrar"
+  },
+  "or": {
+    "message": "o"
+  },
+  "scanning": {
+    "message": "Escaneando..."
+  },
+  "unable_to_decode_qr_code": {
+    "message": "No se puede decodificar el código QR"
+  },
+  "browser_action_command_description": {
+    "message": "Mostrar popup"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Seleccionar región para escanear"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Escanear con la cámara"
+  },
+  "picker_close_btn_title": {
+    "message": "Cerrar"
+  }
+}

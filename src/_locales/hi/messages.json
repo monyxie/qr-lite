@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "ऑफ़लाइन QR कोड जनरेट या स्कैन करें।"
+  },
+  "save_image_btn": {
+    "message": "सहेजें"
+  },
+  "save_image_btn_title": {
+    "message": "इस QR कोड छवि को सहेजें"
+  },
+  "copy_image_btn": {
+    "message": "कॉपी करें"
+  },
+  "copy_image_btn_title": {
+    "message": "इस QR कोड छवि को क्लिपबोर्ड में कॉपी करें"
+  },
+  "copy_image_ok": {
+    "message": "कॉपी हो गया!"
+  },
+  "open_url_btn": {
+    "message": "URL खोलें"
+  },
+  "open_url_btn_title": {
+    "message": "स्कैन किए गए URL को नए टैब में खोलें"
+  },
+  "tab_generate_title": {
+    "message": "बनाएं"
+  },
+  "tab_scan_title": {
+    "message": "स्कैन करें"
+  },
+  "tab_history_title": {
+    "message": "इतिहास"
+  },
+  "clear_history_btn": {
+    "message": "साफ़ करें"
+  },
+  "clear_history_btn_title": {
+    "message": "इतिहास साफ़ करें"
+  },
+  "disable_history_btn_title": {
+    "message": "इतिहास रिकॉर्डिंग रोकें"
+  },
+  "disable_history_btn_label": {
+    "message": "रोकें"
+  },
+  "enable_history_btn_title": {
+    "message": "इतिहास रिकॉर्डिंग फिर से शुरू करें"
+  },
+  "enable_history_btn_label": {
+    "message": "फिर से शुरू करें"
+  },
+  "remove_history_btn_title": {
+    "message": "इस प्रविष्टि को इतिहास से हटाएं"
+  },
+  "github_link_title": {
+    "message": "Github पर QR Lite का प्रोजेक्ट पेज देखें"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "कम, 7% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "मध्यम, 15% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "चतुर्थांश, 25% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "उच्च, 30% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+  },
+  "error_correction_level_label": {
+    "message": "त्रुटि सुधार:"
+  },
+  "error_correction_level_label_title": {
+    "message": "त्रुटि सुधार स्तर"
+  },
+  "content_length_label_title": {
+    "message": "QR कोड सामग्री की अक्षरों में लंबाई"
+  },
+  "content_length_label": {
+    "message": "लंबाई:"
+  },
+  "content_title": {
+    "message": "QR कोड सामग्री"
+  },
+  "content_placeholder": {
+    "message": "QR कोड जनरेट करने के लिए कुछ टेक्स्ट टाइप करें"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "इस लिंक के लिए QR कोड बनाएं"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "\"%s\" के लिए QR कोड बनाएं"
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "छवि में QR कोड स्कैन करें"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "स्कैन करने के लिए क्षेत्र चुनें..."
+  },
+  "context_menu_scan_with_camera": {
+    "message": "कैमरे से स्कैन करें"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "स्क्रॉल व्हील"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "आकार समायोजित करें"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "बायाँ क्लिक"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "स्कैन करें"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "बाहर निकलें"
+  },
+  "copy_btn": {
+    "message": "कॉपी करें"
+  },
+  "copy_btn_copied": {
+    "message": "कॉपी हो गया"
+  },
+  "decoding_failed": {
+    "message": "डिकोडिंग विफल: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "अज्ञात त्रुटि"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "QR कोड को डिकोड करने में असमर्थ"
+  },
+  "scan_instructions_html": {
+    "message": "किसी भी छवि पर राइट-क्लिक करें और चुनें<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> इस छवि में QR कोड स्कैन करें\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "क्लिपबोर्ड छवि को स्कैन करने के लिए<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> या Mac पर <kbd>⌘</kbd> + <kbd>V</kbd> दबाएं"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "स्कैन करने के लिए क्षेत्र चुनें"
+  },
+  "camera_scan_btn": {
+    "message": "कैमरे से स्कैन करें"
+  },
+  "rescan_btn_label": {
+    "message": "नया स्कैन"
+  },
+  "rescan_btn_title": {
+    "message": "एक और स्कैन शुरू करें"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "इस सुविधा के लिए निम्नलिखित अतिरिक्त अनुमति की आवश्यकता है।<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "अनुमति दें"
+  },
+  "grant_camera_permission_name": {
+    "message": "आपके कैमरे तक पहुंच"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "सभी वेबसाइटों के लिए आपके डेटा तक पहुंच"
+  },
+  "grant_permissions_window_title": {
+    "message": "अनुमति दें"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "आप QR Lite को अपने कैमरे तक पहुंच की अनुमति देने वाले हैं।<br><br>जब QR Lite को आपका कैमरा उपयोग करने की अनुमति के लिए पूछा जाए, तो सुनिश्चित करें कि <strong>\"इस निर्णय को याद रखें\"</strong> चेकबॉक्स चेक किया गया है, फिर <strong>\"अनुमति दें\"</strong> पर क्लिक करें।<br><br>शुरू करने के लिए नीचे दिए बटन पर क्लिक करें।"
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "ऐसा लगता है कि QR Lite को कैमरा उपयोग करने से <strong>ब्लॉक</strong> किया गया है।<br><br>इस सेटिंग को बदलने के लिए, पता बार के बाईं ओर <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> अनुमतियां आइकन पर क्लिक करें, और \"कैमरा का उपयोग करें\" पंक्ति पर \"ब्लॉक किया गया\" स्थिति को <strong>हटाएं</strong>।<br><br>ऐसा करने के बाद, इस पेज को रिफ्रेश करें।"
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite को कैमरा उपयोग करने की अनुमति सफलतापूर्वक दी गई है।<br><br>अब आप इस पेज को बंद कर सकते हैं।"
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "आप QR Lite को सभी वेबसाइटों के लिए अपने डेटा तक पहुंच की अनुमति देने वाले हैं।<br><br>शुरू करने के लिए नीचे दिए बटन पर क्लिक करें।"
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "अनुमति नहीं दी गई। कृपया इस पेज को रिफ्रेश करें और फिर से प्रयास करें।"
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite को सभी वेबसाइटों के लिए आपके डेटा तक पहुंच सफलतापूर्वक दी गई है।<br><br>अब आप इस पेज को बंद कर सकते हैं।"
+  },
+  "grant_page_refresh_btn": {
+    "message": "रिफ्रेश करें"
+  },
+  "grant_page_close_btn": {
+    "message": "बंद करें"
+  },
+  "or": {
+    "message": "या"
+  },
+  "scanning": {
+    "message": "स्कैन हो रहा है..."
+  },
+  "unable_to_decode_qr_code": {
+    "message": "QR कोड को डिकोड करने में असमर्थ"
+  },
+  "browser_action_command_description": {
+    "message": "पॉपअप दिखाएं"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "स्कैन करने के लिए क्षेत्र चुनें"
+  },
+  "scan_with_camera_command_description": {
+    "message": "कैमरे से स्कैन करें"
+  },
+  "picker_close_btn_title": {
+    "message": "बंद करें"
+  }
+}

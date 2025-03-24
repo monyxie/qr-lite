@@ -54,13 +54,7 @@ Build steps on Linux:
 
 ## Localization
 
-As of now, QR Lite supports the following languages:
-
-- English
-- 中文
-- 日本語
-
-You're welcome to help translate QR Lite into your language, just submit a pull request.
+As of now, translations for most of the languages are done by AI. You're welcome to help improve the translation or add your own translations, just submit a pull request.
 
 ## Credits
 

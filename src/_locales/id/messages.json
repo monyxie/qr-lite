@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "Hasilkan atau pindai kode QR secara offline."
+  },
+  "save_image_btn": {
+    "message": "Simpan"
+  },
+  "save_image_btn_title": {
+    "message": "Simpan gambar kode QR ini"
+  },
+  "copy_image_btn": {
+    "message": "Salin"
+  },
+  "copy_image_btn_title": {
+    "message": "Salin gambar kode QR ini ke papan klip"
+  },
+  "copy_image_ok": {
+    "message": "Disalin!"
+  },
+  "open_url_btn": {
+    "message": "Buka URL"
+  },
+  "open_url_btn_title": {
+    "message": "Buka URL yang dipindai di tab baru"
+  },
+  "tab_generate_title": {
+    "message": "Hasilkan"
+  },
+  "tab_scan_title": {
+    "message": "Pindai"
+  },
+  "tab_history_title": {
+    "message": "Riwayat"
+  },
+  "clear_history_btn": {
+    "message": "Bersihkan"
+  },
+  "clear_history_btn_title": {
+    "message": "Bersihkan riwayat"
+  },
+  "disable_history_btn_title": {
+    "message": "Hentikan perekaman riwayat"
+  },
+  "disable_history_btn_label": {
+    "message": "Hentikan"
+  },
+  "enable_history_btn_title": {
+    "message": "Lanjutkan perekaman riwayat"
+  },
+  "enable_history_btn_label": {
+    "message": "Lanjutkan"
+  },
+  "remove_history_btn_title": {
+    "message": "Hapus entri ini dari riwayat"
+  },
+  "github_link_title": {
+    "message": "Lihat halaman proyek QR Lite di Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "Rendah, 7% byte data dapat dipulihkan"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "Sedang, 15% byte data dapat dipulihkan"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "Kuartil, 25% byte data dapat dipulihkan"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "Tinggi, 30% byte data dapat dipulihkan"
+  },
+  "error_correction_level_label": {
+    "message": "Koreksi Kesalahan:"
+  },
+  "error_correction_level_label_title": {
+    "message": "Tingkat koreksi kesalahan"
+  },
+  "content_length_label_title": {
+    "message": "Panjang konten kode QR dalam karakter"
+  },
+  "content_length_label": {
+    "message": "Panjang:"
+  },
+  "content_title": {
+    "message": "Konten kode QR"
+  },
+  "content_placeholder": {
+    "message": "Ketik beberapa teks untuk menghasilkan kode QR"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "Hasilkan kode QR untuk tautan ini"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "Hasilkan kode QR untuk \"%s\""
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "Pindai kode QR dalam gambar"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "Pilih wilayah untuk dipindai…"
+  },
+  "context_menu_scan_with_camera": {
+    "message": "Pindai dengan kamera"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "Roda gulir"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "Sesuaikan ukuran"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "Klik kiri"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "Pindai"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "Keluar"
+  },
+  "copy_btn": {
+    "message": "Salin"
+  },
+  "copy_btn_copied": {
+    "message": "Tersalin"
+  },
+  "decoding_failed": {
+    "message": "Gagal mendekode: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "Kesalahan tidak diketahui"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "Tidak dapat mendekode kode QR"
+  },
+  "scan_instructions_html": {
+    "message": "Klik kanan pada gambar apa pun dan pilih<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Pindai kode QR dalam gambar ini\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "Untuk memindai gambar dari papan klip, tekan<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> atau <kbd>⌘</kbd> + <kbd>V</kbd> di Mac"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "Pilih wilayah untuk dipindai"
+  },
+  "camera_scan_btn": {
+    "message": "Pindai dengan kamera"
+  },
+  "rescan_btn_label": {
+    "message": "Pindai ulang"
+  },
+  "rescan_btn_title": {
+    "message": "Mulai pemindaian lain"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "Fitur ini memerlukan izin tambahan berikut.<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "Berikan izin"
+  },
+  "grant_camera_permission_name": {
+    "message": "Akses ke kamera Anda"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "Akses ke data Anda untuk semua situs web"
+  },
+  "grant_permissions_window_title": {
+    "message": "Berikan izin"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "Anda akan memberikan QR Lite akses ke kamera Anda.<br><br>Ketika Anda diminta untuk mengizinkan QR Lite menggunakan kamera Anda, pastikan kotak centang <strong>\"Ingat keputusan ini\"</strong> dicentang, lalu klik <strong>\"Izinkan\"</strong>.<br><br>Klik tombol di bawah untuk memulai."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "Sepertinya penggunaan kamera <strong>diblokir</strong> untuk QR Lite.<br><br>Untuk mengubah pengaturan ini, klik ikon izin <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> di sebelah kiri bilah alamat, dan <strong>hapus</strong> status \"Diblokir\" di baris \"Gunakan kamera\".<br><br>Setelah melakukan ini, segarkan halaman ini."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite telah berhasil mendapatkan akses ke kamera.<br><br>Sekarang Anda dapat menutup halaman ini."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "Anda akan memberikan QR Lite akses ke data Anda untuk semua situs web.<br><br>Klik tombol di bawah untuk memulai."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "Izin ditolak. Harap segarkan halaman ini dan coba lagi."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite telah berhasil mendapatkan akses ke data Anda untuk semua situs web.<br><br>Sekarang Anda dapat menutup halaman ini."
+  },
+  "grant_page_refresh_btn": {
+    "message": "Segarkan"
+  },
+  "grant_page_close_btn": {
+    "message": "Tutup"
+  },
+  "or": {
+    "message": "atau"
+  },
+  "scanning": {
+    "message": "Memindai…"
+  },
+  "unable_to_decode_qr_code": {
+    "message": "Tidak dapat mendekode kode QR"
+  },
+  "browser_action_command_description": {
+    "message": "Tampilkan popup"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Pilih wilayah untuk dipindai"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Pindai dengan kamera"
+  },
+  "picker_close_btn_title": {
+    "message": "Tutup"
+  }
+}

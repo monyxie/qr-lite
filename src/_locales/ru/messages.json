@@ -1,0 +1,232 @@
+{
+  "extension_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_short_name": {
+    "message": "QR Lite",
+    "description": "[keep-original]"
+  },
+  "extension_description": {
+    "message": "Создавайте или сканируйте QR-коды в автономном режиме."
+  },
+  "save_image_btn": {
+    "message": "Сохранить"
+  },
+  "save_image_btn_title": {
+    "message": "Сохранить это изображение QR-кода"
+  },
+  "copy_image_btn": {
+    "message": "Копировать"
+  },
+  "copy_image_btn_title": {
+    "message": "Скопировать это изображение QR-кода в буфер обмена"
+  },
+  "copy_image_ok": {
+    "message": "Скопировано!"
+  },
+  "open_url_btn": {
+    "message": "Открыть URL"
+  },
+  "open_url_btn_title": {
+    "message": "Открыть отсканированный URL в новой вкладке"
+  },
+  "tab_generate_title": {
+    "message": "Создать"
+  },
+  "tab_scan_title": {
+    "message": "Сканировать"
+  },
+  "tab_history_title": {
+    "message": "История"
+  },
+  "clear_history_btn": {
+    "message": "Очистить"
+  },
+  "clear_history_btn_title": {
+    "message": "Очистить историю"
+  },
+  "disable_history_btn_title": {
+    "message": "Остановить запись истории"
+  },
+  "disable_history_btn_label": {
+    "message": "Остановить"
+  },
+  "enable_history_btn_title": {
+    "message": "Возобновить запись истории"
+  },
+  "enable_history_btn_label": {
+    "message": "Возобновить"
+  },
+  "remove_history_btn_title": {
+    "message": "Удалить эту запись из истории"
+  },
+  "github_link_title": {
+    "message": "Посмотреть страницу проекта QR Lite на Github"
+  },
+  "error_correction_level_btn_low_title": {
+    "message": "Низкий, можно восстановить 7% байтов данных"
+  },
+  "error_correction_level_btn_medium_title": {
+    "message": "Средний, можно восстановить 15% байтов данных"
+  },
+  "error_correction_level_btn_quartile_title": {
+    "message": "Квартиль, можно восстановить 25% байтов данных"
+  },
+  "error_correction_level_btn_high_title": {
+    "message": "Высокий, можно восстановить 30% байтов данных"
+  },
+  "error_correction_level_label": {
+    "message": "Коррекция ошибок:"
+  },
+  "error_correction_level_label_title": {
+    "message": "Уровень коррекции ошибок"
+  },
+  "content_length_label_title": {
+    "message": "Длина содержимого QR-кода в символах"
+  },
+  "content_length_label": {
+    "message": "Длина:"
+  },
+  "content_title": {
+    "message": "Содержимое QR-кода"
+  },
+  "content_placeholder": {
+    "message": "Введите текст для создания QR-кода"
+  },
+  "context_menu_make_qr_code_for_link": {
+    "message": "Создать QR-код для этой ссылки"
+  },
+  "context_menu_make_qr_code_for_selected_text": {
+    "message": "Создать QR-код для \"%s\""
+  },
+  "context_menu_scan_qr_code_in_image": {
+    "message": "Сканировать QR-код на изображении"
+  },
+  "context_menu_pick_region_to_scan": {
+    "message": "Выбрать область для сканирования…"
+  },
+  "context_menu_scan_with_camera": {
+    "message": "Сканировать с помощью камеры"
+  },
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "Колесо прокрутки"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "Изменить размер"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "Левый клик"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "Сканировать"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "Выйти"
+  },
+  "copy_btn": {
+    "message": "Копировать"
+  },
+  "copy_btn_copied": {
+    "message": "Скопировано"
+  },
+  "decoding_failed": {
+    "message": "Ошибка декодирования: $MSG$",
+    "placeholders": {
+      "msg": {
+        "content": "$1",
+        "default": "Неизвестная ошибка"
+      }
+    }
+  },
+  "unable_to_decode": {
+    "message": "Невозможно декодировать QR-код"
+  },
+  "scan_instructions_html": {
+    "message": "Щелкните правой кнопкой мыши любое изображение и выберите<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Сканировать QR-код на этом изображении\""
+  },
+  "scan_from_clipboard_instructions_html": {
+    "message": "Чтобы сканировать изображение из буфера обмена, нажмите<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> или <kbd>⌘</kbd> + <kbd>V</kbd> на Mac"
+  },
+  "pick_region_to_scan_btn": {
+    "message": "Выбрать область для сканирования"
+  },
+  "camera_scan_btn": {
+    "message": "Сканировать с помощью камеры"
+  },
+  "rescan_btn_label": {
+    "message": "Новое сканирование"
+  },
+  "rescan_btn_title": {
+    "message": "Начать другое сканирование"
+  },
+  "grant_permissions_instructions_html": {
+    "message": "Для этой функции требуется следующее дополнительное разрешение.<br><br><strong>$PERMISSION$</strong><br>",
+    "placeholders": {
+      "permission": {
+        "content": "$1"
+      }
+    }
+  },
+  "grant_permissions_btn": {
+    "message": "Предоставить разрешение"
+  },
+  "grant_camera_permission_name": {
+    "message": "Доступ к вашей камере"
+  },
+  "grant_all_urls_permission_name": {
+    "message": "Доступ к вашим данным для всех веб-сайтов"
+  },
+  "grant_permissions_window_title": {
+    "message": "Предоставить разрешение"
+  },
+  "grant_camera_initial_instructions_html": {
+    "message": "Вы собираетесь предоставить QR Lite доступ к вашей камере.<br><br>Когда вам будет предложено разрешить QR Lite использовать вашу камеру, убедитесь, что установлен флажок <strong>\"Запомнить это решение\"</strong>, затем нажмите <strong>\"Разрешить\"</strong>.<br><br>Нажмите кнопку ниже, чтобы начать."
+  },
+  "grant_camera_blocked_instructions_html": {
+    "message": "Похоже, что использование камеры <strong>заблокировано</strong> для QR Lite.<br><br>Чтобы изменить этот параметр, щелкните значок разрешений <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> слева от адресной строки и <strong>удалите</strong> статус \"Заблокировано\" в строке \"Использовать камеру\".<br><br>После этого обновите эту страницу."
+  },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite успешно получил доступ к камере.<br><br>Теперь вы можете закрыть эту страницу."
+  },
+  "grant_all_urls_initial_instructions_html": {
+    "message": "Вы собираетесь предоставить QR Lite доступ к вашим данным для всех веб-сайтов.<br><br>Нажмите кнопку ниже, чтобы начать."
+  },
+  "grant_all_urls_blocked_instructions_html": {
+    "message": "Разрешение отклонено. Обновите эту страницу и попробуйте еще раз."
+  },
+  "grant_all_urls_granted_instructions_html": {
+    "message": "QR Lite успешно получил доступ к вашим данным для всех веб-сайтов.<br><br>Теперь вы можете закрыть эту страницу."
+  },
+  "grant_page_refresh_btn": {
+    "message": "Обновить"
+  },
+  "grant_page_close_btn": {
+    "message": "Закрыть"
+  },
+  "or": {
+    "message": "или"
+  },
+  "scanning": {
+    "message": "Сканирование…"
+  },
+  "unable_to_decode_qr_code": {
+    "message": "Невозможно декодировать QR-код"
+  },
+  "browser_action_command_description": {
+    "message": "Показать всплывающее окно"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "Выбрать область для сканирования"
+  },
+  "scan_with_camera_command_description": {
+    "message": "Сканировать с помощью камеры"
+  },
+  "picker_close_btn_title": {
+    "message": "Закрыть"
+  }
+}
