@@ -43,15 +43,6 @@ async function captureScan (request) {
 }
 
 async function injectPickerLoader (tab) {
-  // in firefox, the '<all_urls>' permission is required to call captureVisibleTab
-  // https://bugzilla.mozilla.org/show_bug.cgi?id=1784920
-  if (typeof apiNs.tabs.captureVisibleTab !== 'function') {
-    const res = await apiNs.permissions.request({ origins: ['<all_urls>'] })
-    if (!res) {
-      throw new Error('Permission not granted')
-    }
-  }
-
   apiNs.scripting.executeScript({
     files: ['content_scripts/picker-loader.js'],
     target: {

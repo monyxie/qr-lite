@@ -12,7 +12,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "@qrlite",
-      "strict_min_version": "109.0"
+      "strict_min_version": "126.0"
     }
   },
   "permissions": [
@@ -22,9 +22,7 @@
     "clipboardWrite",
     "scripting"
   ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_icon": "icons/qrlite.svg",
     "default_popup": "pages/popup.html"
@@ -33,9 +31,7 @@
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data: blob:; style-src 'self';"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "commands": {
     "_execute_action": {
@@ -50,12 +46,8 @@
   },
   "web_accessible_resources": [
     {
-      "resources": [
-        "pages/picker.html"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "resources": ["pages/picker.html"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
