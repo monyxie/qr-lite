@@ -5,8 +5,7 @@
 }
 
 body {
-    background: #F8F8FF linear-gradient(#dfffdf 0%, #eeffee 33%, #F8F8FF 100%) no-repeat;
-    /* background: #ddd; */
+    background: linear-gradient(#dfffdf 0%, #eeffee 33%, #F8F8FF 100%) no-repeat;
     margin: 0;
     padding: 0;
     display: flex;
@@ -16,8 +15,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
     body {
-        background: #F8F8FF linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
-        /* background: #0a0a1d; */
+        background: linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
     }
 }
 
