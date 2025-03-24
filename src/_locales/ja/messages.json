@@ -95,8 +95,24 @@
   "context_menu_scan_with_camera": {
     "message": "カメラでスキャン"
   },
-  "scan_region_picker_tips_html": {
-    "message": "<kbd>スクロールホイール</kbd> サイズ調整 <kbd>左クリック</kbd> スキャン <kbd>Esc</kbd> 終了"
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "スクロールホイール"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "サイズ調整"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "左クリック"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "スキャン"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "終了"
   },
   "copy_btn": {
     "message": "コピー"
@@ -119,7 +135,7 @@
     "message": "画像を右クリックし、<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> この画像のQRコードをスキャン」を選択"
   },
   "scan_from_clipboard_instructions_html": {
-    "message": "<kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 押してクリップボードの画像をスキャン"
+    "message": "クリップボードの画像をスキャンするには、<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> Mac の場合は <kbd>⌘</kbd> + <kbd>V</kbd> を押し"
   },
   "pick_region_to_scan_btn": {
     "message": "スキャン領域を選択"
@@ -212,8 +228,5 @@
   },
   "remove_history_btn_title": {
     "message": "履歴からこのエントリを削除"
-  },
-  "remove_history_btn_label": {
-    "message": "削除"
   }
 }

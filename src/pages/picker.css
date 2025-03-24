@@ -99,10 +99,16 @@ body {
     display: inline-block;
     font-size: 0.85em;
     font-weight: 700;
-    line-height: 1;
     padding: 2px 4px;
     white-space: nowrap;
     margin-left: 0.5rem;
+    height: 1.5em;
+    vertical-align: middle;
+}
+
+.tips-text kbd .icon {
+    display: block;
+    height: 1.5em;
 }
 
 .x-mark {

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360">
+    <path fill="#000000" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke="#000000"
+        stroke-miterlimit="10" d="M120 60s-60 0-60 80M60 140h60V60" />
+    <path fill="none" stroke-width="70" stroke-linecap="round" stroke-linejoin="round" stroke="#8b8b8b"
+        stroke-miterlimit="10" d="M180 80v40" />
+    <path fill="#8b8b8b" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke="#8b8b8b"
+        stroke-miterlimit="10" d="M240 60s60 0 60 80M300 140h-60V60" />
+    <path fill="none" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke="#8b8b8b"
+        stroke-miterlimit="10" d="M60 180h240M300 180s0 140-120 140M180 320S60 320 60 180" />
+</svg>

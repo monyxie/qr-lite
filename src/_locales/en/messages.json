@@ -59,9 +59,6 @@
   "remove_history_btn_title": {
     "message": "Remove this entry from history"
   },
-  "remove_history_btn_label": {
-    "message": "Remove"
-  },
   "github_link_title": {
     "message": "Visit QR Lite's project page on Github"
   },
@@ -110,8 +107,23 @@
   "context_menu_scan_with_camera": {
     "message": "Scan with Camera"
   },
-  "scan_region_picker_tips_html": {
-    "message": "<kbd>Scroll Wheel</kbd> Adjust size <kbd>Left Click</kbd> Scan <kbd>Esc</kbd> Exit"
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "Scroll Wheel"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "Adjust Size"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "Left Click"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "Scan"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "Exit"
   },
   "copy_btn": {
     "message": "Copy"
@@ -135,7 +147,7 @@
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
   "scan_from_clipboard_instructions_html": {
-    "message": "Scan clipboard image by pressing<br><kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd>"
+    "message": "Scan clipboard image by pressing<br><kbd>Ctrl</kbd> + <kbd>V</kbd> <br> or <kbd>⌘</kbd> + <kbd>V</kbd> on Mac"
   },
   "pick_region_to_scan_btn": {
     "message": "Select region to scan"

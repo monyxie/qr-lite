@@ -402,10 +402,11 @@ body {
 kbd {
     font-weight: bold;
     border: 1px solid #666;
-    padding: 0.2em 0.4em;
+    padding: 0 0.2em;
     border-radius: 0.2em;
     white-space: nowrap;
     display: inline-block;
+    margin-top: 1px;
 }
 
 .standalone .hide-if-standalone {

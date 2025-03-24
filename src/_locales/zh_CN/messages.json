@@ -94,8 +94,24 @@
   "context_menu_scan_with_camera": {
     "message": "用摄像头扫描"
   },
-  "scan_region_picker_tips_html": {
-    "message": "<kbd>滚轮</kbd> 调整大小 <kbd>左键单击</kbd> 扫描 <kbd>Esc</kbd> 退出"
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "滚轮"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "调整大小"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "左键单击"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "扫描"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "退出"
   },
   "copy_btn": {
     "message": "复制"
@@ -118,7 +134,7 @@
     "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描此图片中的二维码”"
   },
   "scan_from_clipboard_instructions_html": {
-    "message": "按 <kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 来扫描剪贴板中的图片"
+    "message": "按 <kbd>Ctrl</kbd> + <kbd>V</kbd> <br> 或 <kbd>⌘</kbd> + <kbd>V</kbd> 来扫描剪贴板中的图片"
   },
   "pick_region_to_scan_btn": {
     "message": "选择扫描区域"
@@ -211,8 +227,5 @@
   },
   "remove_history_btn_title": {
     "message": "从历史记录中删除此条目"
-  },
-  "remove_history_btn_label": {
-    "message": "删除"
   }
 }

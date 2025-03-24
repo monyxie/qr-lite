@@ -94,8 +94,24 @@
   "context_menu_scan_with_camera": {
     "message": "用攝影機掃描"
   },
-  "scan_region_picker_tips_html": {
-    "message": "<kbd>滾輪</kbd> 調整大小 <kbd>左鍵點選</kbd> 掃描 <kbd>Esc</kbd> 退出"
+  "scan_region_picker_tips_scrollwheel": {
+    "message": "滾輪"
+  },
+  "scan_region_picker_tips_adjust_size": {
+    "message": "調整大小"
+  },
+  "scan_region_picker_tips_leftclick": {
+    "message": "左鍵點選"
+  },
+  "scan_region_picker_tips_scan": {
+    "message": "掃描"
+  },
+  "scan_region_picker_tips_esc": {
+    "message": "Esc",
+    "description": "[keep-original]"
+  },
+  "scan_region_picker_tips_exit": {
+    "message": "退出"
   },
   "copy_btn": {
     "message": "複製"
@@ -118,7 +134,7 @@
     "message": "右鍵單擊任意圖片並選擇<br>「<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 掃描圖片中的二維碼」"
   },
   "scan_from_clipboard_instructions_html": {
-    "message": "按 <kbd>Ctrl-V</kbd> / <kbd>Cmd-V</kbd> 來掃描剪貼簿中的圖片"
+    "message": "按 <kbd>Ctrl</kbd> + <kbd>V</kbd> <br> 或 <kbd>⌘</kbd> + <kbd>V</kbd> 來掃描剪貼簿中的圖片"
   },
   "pick_region_to_scan_btn": {
     "message": "選擇掃描區域"
@@ -211,8 +227,5 @@
   },
   "remove_history_btn_title": {
     "message": "從歷史記錄中刪除此條目"
-  },
-  "remove_history_btn_label": {
-    "message": "刪除"
   }
 }
