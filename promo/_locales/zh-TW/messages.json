@@ -1,32 +1,32 @@
 {
-    "amo_summary": {
-        "message": "👌簡單易用、🛡️隱私友好的二維碼產生器和掃描器。"
-    },
-    "amo_description": {
-        "message": "<strong>QR Lite</strong> 是一個完全本地運作的二維碼產生器和掃描器。\n\n\n<strong> === 功能 === </strong>\n\n✅ 為以下內容產生二維碼：\n<ul>\n<li> 目前網頁 </li>\n<li> 任意連結 </li>\n<li> 選取的文字 </li>\n<li> 使用者輸入的文字 </li>\n</ul>\n✅ 從下列地方掃描二維碼：\n<ul>\n<li> 任一圖片 </li>\n<li> 剪貼簿 </li>\n<li> 網頁上的任意區域 </li>\n<li> 網路攝影機 </li>\n</ul>\n✅ 記錄產生和掃描的歷史。\n✅ 所有功能完全本地運作，無需聯網。\n\n\nQR Lite 是以 MIT 授權分發的開源軟體。\n如果您喜歡本擴展，請給我們打個5星好評，謝謝 :)"
-    },
-    "promo_banner_modifying_html": {
-        "message": "👌簡單易用 🛡️隱私友好"
-    },
-    "promo_banner_defining_html": {
-        "message": "<span>二維碼<br><strong>產生器</strong> 和 <strong>掃描器</strong>"
-    },
-    "promo_screenshot_generator_title_html": {
-        "message": "產生<strong>二維碼</strong>"
-    },
-    "promo_screenshot_generator_description_html": {
-        "message": "<ul><li>目前頁面</li><li>連結</li><li>文字</li></ul>"
-    },
-    "promo_screenshot_scanner_title_html": {
-        "message": "掃描<strong>二維碼</strong>"
-    },
-    "promo_screenshot_scanner_description_html": {
-        "message": "<ul><li>圖片</li><li>剪貼簿</li><li>網路攝影機</li><li>網頁任意區域</li></ul>"
-    },
-    "promo_screenshot_history_title_html": {
-        "message": "查看最近<strong>產生</strong>和<strong>掃描</strong>的<strong>歷史記錄</strong>"
-    },
-    "promo_screenshot_history_description_html": {
-        "message": ""
-    }
+  "amo_summary": {
+    "message": "👌簡單易用、🛡️隱私友好的二維碼產生器和掃描器。"
+  },
+  "amo_description": {
+    "message": "**QR Lite** 是一個完全本地運作的二維碼產生器和掃描器。\n\n\n**=== 功能 ===**\n\n✅ 為以下內容產生二維碼：\n\n-  目前網頁 \n\n-  任意連結 \n\n-  選取的文字 \n\n-  使用者輸入的文字 \n\n\n✅ 從下列地方掃描二維碼：\n\n-  任一圖片 \n\n-  剪貼簿 \n\n-  網頁上的任意區域 \n\n-  網路攝影機 \n\n\n✅ 記錄產生和掃描的歷史。\n✅ 所有功能完全本地運作，無需聯網。\n\n\nQR Lite 是以 MIT 授權分發的開源軟體。\n如果您喜歡本擴展，請給我們打個5星好評，謝謝 :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌簡單易用 🛡️隱私友好"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>二維碼<br><strong>產生器</strong> 和 <strong>掃描器</strong>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "產生<br>二維碼"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "从分頁，連結，文字皆可"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "掃描<br>二維碼"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "無論是圖片，剪貼簿，網路攝影機，<br>抑或網頁任意區域"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "管理<br>歷史記錄"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "隨時查看最近產生和掃描的內容"
+  }
 }

@@ -1,0 +1,35 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "amo_summary": {
+    "message": "👌 Dễ sử dụng, 🛡️ trình tạo & quét mã QR thân thiện với quyền riêng tư."
+  },
+  "amo_description": {
+    "message": "**QR Lite** tạo và quét mã QR mà không cần dựa vào các dịch vụ của bên thứ ba.\n\n\n**=== Tính năng ===**\n\n✅ Tạo mã QR cho:\n\n-  Tab đang hoạt động \n\n-  Liên kết \n\n-  Văn bản đã chọn \n\n-  Nhập liệu của người dùng \n\n\n✅ Quét mã QR từ:\n\n-  Hình ảnh \n\n-  Bảng tạm \n\n-  Bất kỳ phần nào của trang web \n\n-  Webcam \n\n\n✅ Ghi nhớ những gì bạn đã tạo hoặc quét.\n✅ Mọi thứ đều hoạt động hoàn toàn ngoại tuyến, không có gì được gửi qua mạng.\n\n\nQR Lite là phần mềm mã nguồn mở được phân phối theo giấy phép MIT.\nNếu bạn thích tiện ích mở rộng này, vui lòng cho chúng tôi đánh giá 5 sao, cảm ơn bạn :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌 Dễ sử dụng 🛡️ Thân thiện với quyền riêng tư"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>Mã QR<br><strong>Trình tạo</strong> và <strong>Máy quét</strong></span>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "Tạo<br>Mã QR"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "từ tab, liên kết và văn bản"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "Quét<br>Mã QR"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "từ hình ảnh, webcam, bảng tạm,<br>hoặc bất cứ đâu trên trang web"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "Quản lý<br>Lịch sử"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "các mục đã tạo và quét gần đây"
+  }
+}

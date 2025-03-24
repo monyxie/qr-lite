@@ -1,0 +1,35 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "amo_summary": {
+    "message": "👌 Einfacher, 🛡️ datenschutzfreundlicher QR-Code-Generator & Scanner."
+  },
+  "amo_description": {
+    "message": "**QR Lite** generiert und scannt QR-Codes, ohne auf Dienste von Drittanbietern angewiesen zu sein.\n\n\n**=== Funktionen ===**\n\n✅ Generieren von QR-Codes für:\n\n-  Aktiver Tab \n\n-  Links \n\n-  Markierter Text \n\n-  Benutzereingabe \n\n\n✅ Scannen von QR-Codes aus:\n\n-  Bildern \n\n-  Zwischenablage \n\n-  Jedem Teil der Webseite \n\n-  Webcam \n\n\n✅ Merken, was Sie generiert oder gescannt haben.\n✅ Alles funktioniert komplett offline, es wird nichts über das Netzwerk gesendet.\n\n\nQR Lite ist Open-Source-Software, die unter der MIT-Lizenz vertrieben wird.\nWenn Ihnen diese Erweiterung gefällt, geben Sie uns bitte eine 5-Sterne-Bewertung, vielen Dank :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌 Benutzerfreundlich 🛡️ Datenschutzfreundlich"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>QR-Code<br><strong>Generator</strong> und <strong>Scanner</strong></span>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "QR-Code<br>generieren"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "aus Tabs, Links und Text"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "QR-Code<br>scannen"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "aus Bildern, Webcam, Zwischenablage,<br>oder überall auf der Webseite"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "Verlauf<br>verwalten"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "von kürzlich generierten und gescannten Elementen"
+  }
+}

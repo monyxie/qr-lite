@@ -1,0 +1,35 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "amo_summary": {
+    "message": "👌 Mudah digunakan, 🛡️ generator & pemindai kode QR yang ramah privasi."
+  },
+  "amo_description": {
+    "message": "**QR Lite** menghasilkan dan memindai kode QR tanpa bergantung pada layanan pihak ketiga.\n\n\n**=== Fitur ===**\n\n✅ Hasilkan kode QR untuk:\n\n-  Tab aktif \n\n-  Tautan \n\n-  Teks yang dipilih \n\n-  Input pengguna \n\n\n✅ Pindai kode QR dari:\n\n-  Gambar \n\n-  Papan klip \n\n-  Bagian mana pun dari halaman web \n\n-  Webcam \n\n\n✅ Ingat apa yang Anda hasilkan atau pindai.\n✅ Semuanya berfungsi sepenuhnya offline, tidak ada yang dikirim melalui jaringan.\n\n\nQR Lite adalah perangkat lunak sumber terbuka yang didistribusikan di bawah lisensi MIT.\nJika Anda menikmati ekstensi ini, beri kami ulasan bintang 5, terima kasih :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌 Mudah digunakan 🛡️ Ramah privasi"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>Kode QR<br><strong>Generator</strong> dan <strong>Pemindai</strong></span>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "Hasilkan<br>Kode QR"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "dari tab, tautan, dan teks"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "Pindai<br>Kode QR"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "dari gambar, webcam, papan klip,<br>atau di mana saja di halaman web"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "Kelola<br>Riwayat"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "dari item yang baru dihasilkan dan dipindai"
+  }
+}

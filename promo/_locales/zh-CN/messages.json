@@ -1,32 +1,32 @@
 {
-    "amo_summary": {
-        "message": "👌简单易用、🛡️隐私友好的二维码生成器和扫描器。"
-    },
-    "amo_description": {
-        "message": "<strong>QR Lite</strong> 是一个完全本地运行的二维码生成器和扫描器。\n\n\n<strong> === 功能 === </strong>\n\n✅ 为以下内容生成二维码：\n<ul>\n<li> 当前网页 </li>\n<li> 任意链接 </li>\n<li> 选中的文本 </li>\n<li> 用户输入的文本 </li>\n</ul>\n✅ 从以下地方扫描二维码：\n<ul>\n<li> 任意图片 </li>\n<li> 剪贴板 </li>\n<li> 网页上的任意区域 </li>\n<li> 摄像头 </li>\n</ul>\n✅ 记录生成和扫描的历史。\n✅ 所有功能完全本地运行，无需联网。\n\n\nQR Lite 是以 MIT 许可证分发的开源软件。\n如果您喜欢本扩展，请给我们打个5星好评，谢谢 :)"
-    },
-    "promo_banner_modifying_html": {
-        "message": "👌简单易用 🛡️隐私友好"
-    },
-    "promo_banner_defining_html": {
-        "message": "<span>二维码<br><strong>生成器</strong> 和 <strong>扫描器</strong>"
-    },
-    "promo_screenshot_generator_title_html": {
-        "message": "生成<strong>二维码</strong>"
-    },
-    "promo_screenshot_generator_description_html": {
-        "message": "<ul><li>当前页面</li><li>链接</li><li>文本</li></ul>"
-    },
-    "promo_screenshot_scanner_title_html": {
-        "message": "扫描<strong>二维码</strong>"
-    },
-    "promo_screenshot_scanner_description_html": {
-        "message": "<ul><li>图片</li><li>剪贴板</li><li>摄像头</li><li>网页任意区域</li></ul>"
-    },
-    "promo_screenshot_history_title_html": {
-        "message": "查看最近<strong>生成</strong>和<strong>扫描</strong>的<strong>历史记录</strong>"
-    },
-    "promo_screenshot_history_description_html": {
-        "message": ""
-    }
+  "amo_summary": {
+    "message": "👌简单易用、🛡️隐私友好的二维码生成器和扫描器。"
+  },
+  "amo_description": {
+    "message": "**QR Lite** 是一个完全本地运行的二维码生成器和扫描器。\n\n\n**=== 功能 ===**\n\n✅ 为以下内容生成二维码：\n\n-  当前网页 \n\n-  任意链接 \n\n-  选中的文本 \n\n-  用户输入的文本 \n\n\n✅ 从以下地方扫描二维码：\n\n-  任意图片 \n\n-  剪贴板 \n\n-  网页上的任意区域 \n\n-  摄像头 \n\n\n✅ 记录生成和扫描的历史。\n✅ 所有功能完全本地运行，无需联网。\n\n\nQR Lite 是以 MIT 许可证分发的开源软件。\n如果您喜欢本扩展，请给我们打个5星好评，谢谢 :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌简单易用 🛡️隐私友好"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>二维码<br><strong>生成器</strong> 和 <strong>扫描器</strong>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "生成<br>二维码"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "从标签页，链接，文本皆可"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "扫描<br>二维码"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "无论是图片，剪贴板，摄像头，<br>还是网页的任意区域"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "管理<br>历史记录"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "随时查看最近生成和扫描的内容"
+  }
 }

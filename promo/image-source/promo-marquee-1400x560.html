@@ -9,57 +9,49 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             width: 1400px;
             height: 560px;
             outline: 1px solid gray;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
             width: 100%;
             height: 100%;
-            background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
+            background-image: url(../screenshots/marquee-bg.png), linear-gradient(200deg, #01ffa2, #30c0ff 100%);
             display: flex;
             flex-direction: row;
-            justify-content: space-evenly;
             align-items: center;
+            padding-left: 50px;
+            gap: 50px;
         }
 
         .logo {
             width: 300px;
             height: 300px;
-            outline: 6px solid #888;
-            box-shadow: gray 10px 10px 30px;
             display: block;
         }
-        
+
         .right {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             height: 100%;
             max-width: 800px;
+            gap: 10px;
+            justify-content: center;
         }
-
-        .title {
-            /* padding: 10px; */
-            /* height: 100px; */
-            /* display: flex; */
-            /* width: 100%; */
-            /* justify-content: space-evenly; */
-        }
-
 
         .title-text {
-            font-family: Cantarell, Arial, Helvetica, sans-serif;
-            font-size: 120px;
-            font-weight: bold;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-size: 90px;
+            font-weight: 700;
             color: #333333;
-            display: block;
-            text-shadow: #fff 6px 6px 2px;
+            text-shadow: #fff 2px 2px 1px;
+            line-height: 0.9;
         }
 
         .autoscale {
@@ -67,26 +59,17 @@
             overflow: hidden;
         }
 
-        .line1 {
-            font-family: 'Fantasque Sans Mono', 'Courier New', Courier, monospace;
-            font-size: 24px;
+        .line2 {
+            font-size: 36px;
+            font-weight: 400;
             text-shadow: #fff 1px 1px 1px;
-            text-align: center;
-            padding: 0 1em;
+            opacity: 0.9;
         }
 
-        .line2 {
-            font-size: 60px;
-            font-family: 'Cantarell', 'Courier New', Courier, monospace;
-            text-shadow: #fff 1px 1px 1px;
-            text-align: center;
-            padding: 0 1em;
-            opacity: 0.8;
-       }
-
         .line2 strong {
-            color: #702589;
-            font-size: 1.2em;
+            color: #1b7c00;
+            /* Changed to green */
+            font-weight: 700;
         }
     </style>
 </head>
@@ -102,7 +85,7 @@
                 <div class="autoscale line2">
                     <span>{{__MSG_promo_banner_defining_html__}}<span>
                 </div>
-           </div>
+            </div>
         </div>
     </template>
 </body>

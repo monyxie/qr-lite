@@ -1,32 +1,32 @@
 {
-    "amo_summary": {
-        "message": "👌使いやすく、🛡️プライバシーに配慮した QR コード ジェネレーターおよびスキャナー。"
-    },
-    "amo_description": {
-        "message": "<strong>QR Lite</strong> は、サードパーティのサービスに依存しない QR コード ジェネレーターおよびスキャナーです。\n\n\n<strong> === 機能 === </strong>\n\n✅ QR コード以下から生成可能:\n<ul>\n<li> アクティブ タブ </li>\n<li> リンク </li>\n<li> 選択したテキスト </li>\n<li> ユーザー入力 </li>\n</ul>\n✅ QR コード以下からスキャン可能:\n<ul>\n<li> 画像 </li>\n<li> クリップボード </li>\n<li> Web ページの任意の部分 </li>\n<li> Web カメラ </li>\n</ul>\n✅ 生成またはスキャンした履歴を記憶。\n✅ すべて完全にオフラインで動作し、ネットワーク経由で送信されるものはありません。\n\n\nQR Lite は、MIT ライセンスに基づいて配布されるオープン ソース ソフトウェアです。\nこの拡張機能を気に入っていただけましたら、5 つ星のレビューをお願いします。"
-    },
-    "promo_banner_modifying_html": {
-        "message": "👌使いやすく 🛡️プライバシーに配慮した"
-    },
-    "promo_banner_defining_html": {
-        "message": "<span>QRコード<br><strong>ジェネレーター</strong> と <strong>スキャナー</strong>"
-    },
-    "promo_screenshot_generator_title_html": {
-        "message": "<strong>QRコード</strong>生成"
-    },
-    "promo_screenshot_generator_description_html": {
-        "message": "<ul><li>アクティブなタブ</li><li>リンク</li><li>テキスト</li></ul>"
-    },
-    "promo_screenshot_scanner_title_html": {
-        "message": "<strong>QRコード</strong>スキャン"
-    },
-    "promo_screenshot_scanner_description_html": {
-        "message": "<ul><li>画像</li><li>クリップボード</li><li>カメラ</li><li>ウェブページの<br>任意の部分</li></ul>"
-    },
-    "promo_screenshot_history_title_html": {
-        "message": "最近<strong>生成</strong>と<strong>スキャン</strong>された<strong>履歴</strong>を表示"
-    },
-    "promo_screenshot_history_description_html": {
-        "message": ""
-    }
+  "amo_summary": {
+    "message": "👌使いやすい、🛡️プライバシーに配慮したQRコードジェネレーターとスキャナー。"
+  },
+  "amo_description": {
+    "message": "**QR Lite** は、サードパーティのサービスに依存せずにQRコードを生成およびスキャンします。\n\n\n**=== 機能 ===**\n\n✅ QRコードを以下に対して生成：\n\n-  アクティブなタブ \n\n-  リンク \n\n-  選択されたテキスト \n\n-  ユーザー入力 \n\n\n✅ QRコードを以下からスキャン：\n\n-  画像 \n\n-  クリップボード \n\n-  ウェブページの任意の部分 \n\n-  ウェブカメラ \n\n\n✅ 生成またはスキャンした内容を記憶。\n✅ すべてが完全にオフラインで動作し、ネットワーク経由で送信されるものはありません。\n\n\nQR LiteはMITライセンスの下で配布されるオープンソースソフトウェアです。\nこの拡張機能を楽しんでいただけたら、5つ星のレビューをお願いします。ありがとうございます！😊"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌使いやすい 🛡️プライバシーに配慮"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>QRコード<br><strong>ジェネレーター</strong>と<strong>スキャナー</strong></span>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "QRコードを<br>生成"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "タブ、リンク、テキストから"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "QRコードを<br>スキャン"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "画像、ウェブカメラ、クリップボード、<br>またはウェブページのどこからでも"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "履歴を<br>管理"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "最近生成およびスキャンしたアイテムの"
+  }
 }

@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <style>
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             width: 440px;
             height: 280px;
             outline: 1px solid gray;
+            font-family: 'Roboto', sans-serif;
         }
 
         .container {
@@ -23,61 +24,54 @@
             background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: center;
             align-items: center;
+            gap: 10px;
         }
 
         .title {
-            padding: 10px;
-            height: 100px;
             display: flex;
-            width: 100%;
-            justify-content: space-evenly;
+            align-items: center;
+            gap: 10px;
+            padding: 0 10px;
         }
 
         .title-logo {
-            width: 100px;
-            height: 100px;
-            outline: 2px solid #888;
-            box-shadow: gray 2px 2px 5px;
-            display: block;
+            width: 50px;
+            height: 50px;
         }
 
         .title-text {
-            font-family: Cantarell, Arial, Helvetica, sans-serif;
-            font-size: 72px;
+            font-size: 36px;
             font-weight: bold;
             color: #333333;
-            display: block;
-            text-shadow: #fff 3px 3px 1px;
+            text-shadow: #fff 2px 2px 1px;
         }
 
         .autoscale {
             white-space: nowrap;
             overflow: hidden;
+            text-align: center;
+            padding: 0 1em;
         }
 
         .line1 {
-            font-family: 'Fantasque Sans Mono', 'Courier New', Courier, monospace;
-            font-size: 24px;
+            font-family: 'Roboto', monospace;
+            font-size: 18px;
             text-shadow: #fff 1px 1px 1px;
-            text-align: center;
-            padding: 0 1em;
-            display: none;
+            font-weight: 400;
         }
 
         .line2 {
-            font-size: 30px;
-            font-family: 'Cantarell', 'Courier New', Courier, monospace;
+            font-size: 22px;
+            font-weight: 400;
             text-shadow: #fff 1px 1px 1px;
-            text-align: center;
-            padding: 0 1em;
             opacity: 0.8;
         }
 
         .line2 strong {
-            color: #702589;
-            font-size: 1.2em;
+            color: #1b7c00;
+            font-weight: 700;
         }
     </style>
 </head>

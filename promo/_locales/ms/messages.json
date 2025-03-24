@@ -1,0 +1,35 @@
+{
+  "extension_name": {
+    "message": "QR Lite"
+  },
+  "amo_summary": {
+    "message": "👌 Mudah digunakan, 🛡️ penjana & pengimbas kod QR yang mesra privasi."
+  },
+  "amo_description": {
+    "message": "**QR Lite** menjana dan mengimbas kod QR tanpa bergantung pada perkhidmatan pihak ketiga.\n\n\n**=== Ciri-ciri ===**\n\n✅ Jana kod QR untuk:\n\n-  Tab aktif \n\n-  Pautan \n\n-  Teks terpilih \n\n-  Input pengguna \n\n\n✅ Imbas kod QR daripada:\n\n-  Imej \n\n-  Papan keratan \n\n-  Mana-mana bahagian halaman web \n\n-  Kamera web \n\n\n✅ Ingat apa yang anda jana atau imbas.\n✅ Semuanya berfungsi sepenuhnya di luar talian, tiada apa-apa yang dihantar melalui rangkaian.\n\n\nQR Lite ialah perisian sumber terbuka yang diedarkan di bawah lesen MIT.\nJika anda menikmati sambungan ini, sila berikan kami ulasan 5 bintang, terima kasih :)"
+  },
+  "promo_banner_modifying_html": {
+    "message": "👌 Mudah digunakan 🛡️ Mesra privasi"
+  },
+  "promo_banner_defining_html": {
+    "message": "<span>Kod QR<br><strong>Penjana</strong> dan <strong>Pengimbas</strong></span>"
+  },
+  "promo_screenshot_generator_title_html": {
+    "message": "Jana<br>Kod QR"
+  },
+  "promo_screenshot_generator_description_html": {
+    "message": "daripada tab, pautan dan teks"
+  },
+  "promo_screenshot_scanner_title_html": {
+    "message": "Imbas<br>Kod QR"
+  },
+  "promo_screenshot_scanner_description_html": {
+    "message": "daripada imej, kamera web, papan keratan,<br>atau di mana-mana sahaja pada halaman web"
+  },
+  "promo_screenshot_history_title_html": {
+    "message": "Urus<br>Sejarah"
+  },
+  "promo_screenshot_history_description_html": {
+    "message": "bagi item yang baru dijana dan diimbas"
+  }
+}
