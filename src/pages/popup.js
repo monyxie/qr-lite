@@ -31,22 +31,25 @@ class Popup {
     }
 
     // Initialize history toggle button
-    const $toggleHistoryBtn = $('#toggle-history-btn')
     const updateToggleButton = async () => {
       const enabled = await History.getHistoryState()
-      $toggleHistoryBtn.title = enabled
-        ? apiNs.i18n.getMessage('disable_history_btn_title')
-        : apiNs.i18n.getMessage('enable_history_btn_title')
-      $toggleHistoryBtn.textContent = enabled
-        ? apiNs.i18n.getMessage('disable_history_btn_label')
-        : apiNs.i18n.getMessage('enable_history_btn_label')
+      if (enabled) {
+        removeClass('hidden', $('#disable-history-btn'))
+        addClass('hidden', $('#enable-history-btn'))
+      } else {
+        removeClass('hidden', $('#enable-history-btn'))
+        addClass('hidden', $('#disable-history-btn'))
+      }
     }
-    await updateToggleButton()
-    $toggleHistoryBtn.addEventListener('click', async () => {
-      await History.toggleHistory()
+    $('#disable-history-btn').addEventListener('click', async () => {
+      await History.setHistoryState(false)
       await updateToggleButton()
-      this.renderHistory()
     })
+    $('#enable-history-btn').addEventListener('click', async () => {
+      await History.setHistoryState(true)
+      await updateToggleButton()
+    })
+    await updateToggleButton()
 
     $('#tab-history').addEventListener('click', () => {
       this.showTab('history')
@@ -59,10 +62,18 @@ class Popup {
     })
 
     $('#history').addEventListener('click', e => {
-      if (e.target.tagName.toUpperCase() === 'LI') {
-        this.createQrCode(e.target.title, this.ecLevel, undefined, 'now')
-      } else if (e.target.classList.contains('remove-history-btn')) {
-        this.removeHistory(e.target.parentElement.title).then(() => this.renderHistory())
+      const historyItem = e.target.closest('.history-item')
+      if (!historyItem) {
+        return
+      }
+      e.preventDefault()
+      e.stopPropagation()
+
+      const removeHistoryBtn = e.target.closest('.remove-history-btn')
+      if (removeHistoryBtn) {
+        this.removeHistory(historyItem.title).then(() => this.renderHistory())
+      } else {
+        this.createQrCode(historyItem.title, this.ecLevel, undefined, 'now')
       }
     })
     $('#clear-history-btn').addEventListener('click', e => {
@@ -370,13 +381,13 @@ class Popup {
     this.getHistory()
       .then(function (history) {
         const removeBtnTitle = apiNs.i18n.getMessage('remove_history_btn_title')
-        const removeBtnLabel = apiNs.i18n.getMessage('remove_history_btn_label')
 
         const ul = $('#history-items')
         ul.innerHTML = ''
         history.reverse()
         for (let i = 0; i < history.length; i++) {
           const li = document.createElement('li')
+          li.className = 'history-item'
           li.title = history[i].text || ''
 
           const img = document.createElement('img')
@@ -397,7 +408,10 @@ class Popup {
           const removeBtn = document.createElement('span')
           removeBtn.className = 'remove-history-btn clickable'
           removeBtn.title = removeBtnTitle
-          removeBtn.innerText = removeBtnLabel
+          const removeIcon = document.createElement('img')
+          removeIcon.className = 'icon icon-invert'
+          removeIcon.src = '../icons/trash.svg'
+          removeBtn.appendChild(removeIcon)
           li.appendChild(removeBtn)
 
           ul.appendChild(li)

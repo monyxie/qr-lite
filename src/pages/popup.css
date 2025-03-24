@@ -219,7 +219,7 @@ body {
 }
 
 .history .history-items li:hover .remove-history-btn {
-    display: block;
+    display: inline-flex;
 }
 
 @media (prefers-color-scheme: dark) {

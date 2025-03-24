@@ -61,12 +61,10 @@ export async function removeHistory (text) {
   })
 }
 
-export async function toggleHistory () {
-  const enabled = await isHistoryEnabled()
+export async function setHistoryState (enabled) {
   await storage.set({
-    historyEnabled: !enabled
+    historyEnabled: enabled
   })
-  return !enabled
 }
 
 export async function getHistoryState () {

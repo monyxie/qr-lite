@@ -155,13 +155,20 @@
                         <div class="footer actions1">
                             <span class="clickable" id="clear-history-btn"
                                 title="{{__MSG_clear_history_btn_title__}}"><img class="icon icon-invert"
-                                    src="../icons/trash.svg" />{{__MSG_clear_history_btn__}}</span>
+                                    src="../icons/swipe.svg" />{{__MSG_clear_history_btn__}}</span>
                         </div>
                         <div class="footer actions2">
                         </div>
                         <div class="footer actions3">
-                            <a class="clickable" id="toggle-history-btn" title="{{__MSG_disable_history_btn_title__}}">
-                                {{__MSG_disable_history_btn_label__}}
+                            <a class="clickable hidden" id="disable-history-btn"
+                                title="{{__MSG_disable_history_btn_title__}}">
+                                <img class="icon icon-invert"
+                                    src="../icons/pause.svg" />{{__MSG_disable_history_btn_label__}}
+                            </a>
+                            <a class="clickable hidden" id="enable-history-btn"
+                                title="{{__MSG_enable_history_btn_title__}}">
+                                <img class="icon icon-invert"
+                                    src="../icons/play.svg" />{{__MSG_enable_history_btn_label__}}
                             </a>
                         </div>
                     </div>
