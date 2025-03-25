@@ -73,9 +73,12 @@ class AmoUpdater {
 
   async updateMetadata () {
     const allLocales = (await readDirectory('./promo/_locales'))
+    const supportedLocales = this.getSupportedLocales()
     const locales = await checkbox({
       message: 'Select the locales you wish to update',
-      choices: allLocales.map(locale => ({ name: locale, value: locale }))
+      choices: allLocales.filter((locale) => {
+        return supportedLocales.includes(locale.toLowerCase())
+      }).map(locale => ({ name: locale, value: locale }))
     })
     if (locales.length === 0) {
       console.log('No locales selected')
@@ -174,6 +177,11 @@ class AmoUpdater {
     return 'qr-lite'
   }
 
+  getSupportedLocales () {
+    // supported locales on AMO
+    return ['ar', 'ja', 'zh-cn', 'zh-tw', 'ko', 'de', 'es-es', 'fr', 'id', 'ms', 'pt-br', 'ru', 'vi', 'bg', 'cak', 'cs', 'da', 'dsb', 'el', 'en-ca', 'en-gb', 'es-ar', 'es-cl', 'es-mx', 'fi', 'fur', 'fy-nl', 'he', 'hr', 'hsb', 'hu', 'ia', 'is', 'it', 'ka', 'kab', 'nb-no', 'nl', 'nn-no', 'pa-in', 'pl', 'pt-pt', 'ro', 'si', 'sk', 'sl', 'sq', 'sv-se', 'te', 'th', 'tr', 'uk']
+  }
+
   async checkSiteStatus () {
     console.log('Checking AMO site status')
     const response = await fetch(`${this.getBaseUrl()}/site/`, {
@@ -186,10 +194,10 @@ class AmoUpdater {
   async start () {
     if (this.checkSiteStatus()) {
       if (await confirm({ message: 'Update title and description?' })) {
-        this.updateMetadata()
+        await this.updateMetadata()
       }
       if (await confirm({ message: 'Update screenshots?' })) {
-        this.updatePreviews()
+        await this.updatePreviews()
       }
     }
   }
@@ -227,11 +235,11 @@ class MsEdgeUpdater {
 (async function main () {
   if (await confirm({ message: 'Start AMO Updater?' })) {
     const amo = new AmoUpdater()
-    amo.start()
+    await amo.start()
   }
 
   if (await confirm({ message: 'Start MsEdge Updater?' })) {
     const ms = new MsEdgeUpdater()
-    ms.start()
+    await ms.start()
   }
 })()
