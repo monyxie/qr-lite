@@ -37,19 +37,16 @@ body {
     height: 100%;
     outline: white solid 2px;
     border-radius: 4px;
-    box-shadow: #80ff80 0 0 20px;
 }
 
 @media (prefers-color-scheme: dark) {
     .spotlight {
         outline: rgb(85, 85, 85) solid 2px;
-        box-shadow: #000000 0 0 20px;
     }
 }
 
 .spotlight.off {
     outline: none;
-    box-shadow: none;
 }
 
 .captured {
