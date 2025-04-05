@@ -40,6 +40,13 @@ body {
     box-shadow: #80ff80 0 0 20px;
 }
 
+@media (prefers-color-scheme: dark) {
+    .spotlight {
+        outline: rgb(85, 85, 85) solid 2px;
+        box-shadow: #000000 0 0 20px;
+    }
+}
+
 .spotlight.off {
     outline: none;
     box-shadow: none;
@@ -168,6 +175,20 @@ body {
     display: flex;
     gap: 0.5rem;
     margin: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .result {
+        outline: rgb(85, 85, 85) solid 2px;
+        box-shadow: #000000 0 0 20px;
+        background: linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
+    }
+
+    .result textarea {
+        color: #ccc;
+        border-color: #333;
+        background-color: rgba(0, 0, 0, 0.7);
+    }    
 }
 
 .loading {
