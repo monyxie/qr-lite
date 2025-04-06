@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "বন্ধ করুন"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং URL খুলুন"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং নতুন ব্যাকগ্রাউন্ড ট্যাবে URL খুলুন"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং নতুন অগ্রভাগের ট্যাবে URL খুলুন"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "স্বয়ংক্রিয়ভাবে URL খুলবেন না"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "বর্তমান ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "নতুন ব্যাকগ্রাউন্ড ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "নতুন অগ্রভাগের ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
   }
 }

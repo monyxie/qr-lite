@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "Đóng"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "Chọn vùng để quét và mở URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "Chọn vùng để quét và mở URL trong tab nền mới"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "Chọn vùng để quét và mở URL trong tab trước nền mới"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "Không tự động mở URL"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "Tự động mở URL trong tab hiện tại"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "Tự động mở URL trong tab nền mới"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "Tự động mở URL trong tab trước nền mới"
   }
 }

@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "Tutup"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "Pilih kawasan untuk diimbas dan buka URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "Pilih kawasan untuk diimbas dan buka URL dalam tab latar belakang baharu"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "Pilih kawasan untuk diimbas dan buka URL dalam tab latar depan baharu"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "Jangan buka URL secara automatik"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "Buka URL secara automatik dalam tab semasa"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "Buka URL secara automatik dalam tab latar belakang baharu"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "Buka URL secara automatik dalam tab latar depan baharu"
   }
 }

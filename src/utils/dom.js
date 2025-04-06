@@ -16,7 +16,7 @@ export function addClass (cls, ...el) {
   el.forEach(a => {
     if (typeof a === 'string') {
       queryAll(a).forEach(el => el.classList.add(cls))
-    } else {
+    } else if (a) {
       a.classList.add(cls)
     }
   })
@@ -26,7 +26,7 @@ export function removeClass (cls, ...el) {
   el.forEach(a => {
     if (typeof a === 'string') {
       queryAll(a).forEach(el => el.classList.remove(cls))
-    } else {
+    } else if (a) {
       a.classList.remove(cls)
     }
   })

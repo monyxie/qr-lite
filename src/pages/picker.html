@@ -23,14 +23,28 @@
             <div class="tips" id="tips">
                 <img class="logo" src="../icons/qrlite.svg" title="{{__MSG_extension_name__}}">
                 <span class="tips-text">
-                    <kbd><img class="icon" src="../icons/mouse-scrollwheel.svg"
-                            title="{{__MSG_scan_region_picker_tips_scrollwheel__}}"></kbd>
-                    {{__MSG_scan_region_picker_tips_adjust_size__}}
-                    <kbd><img class="icon" src="../icons/mouse-leftclick.svg"
-                            title="{{__MSG_scan_region_picker_tips_leftclick__}}"></kbd>
-                    {{__MSG_scan_region_picker_tips_scan__}}
-                    <kbd>{{__MSG_scan_region_picker_tips_esc__}}</kbd>
-                    {{__MSG_scan_region_picker_tips_exit__}}
+                    <span class="hide-on-result">
+                        <kbd><img class="icon icon-invert" src="../icons/mouse-scrollwheel.svg"
+                                title="{{__MSG_scan_region_picker_tips_scrollwheel__}}"></kbd>
+                        {{__MSG_scan_region_picker_tips_adjust_size__}}
+                    </span>
+                    <span class="hide-on-result">
+                        <kbd><img class="icon icon-invert" src="../icons/mouse-leftclick.svg"
+                                title="{{__MSG_scan_region_picker_tips_leftclick__}}"></kbd>
+                        {{__MSG_scan_region_picker_tips_scan__}}
+                    </span>
+                    <span>
+                        <kbd>{{__MSG_scan_region_picker_tips_esc__}}</kbd>
+                        {{__MSG_scan_region_picker_tips_exit__}}
+                    </span>
+                </span>
+                <span class="options hide-on-result">
+                    <select id="select-open-url-mode" title="Choose how to handle URLs in scan results">
+                        <option value="NO_OPEN">{{__MSG_picker_url_mode_auto_open_no__}}</option>
+                        <option value="OPEN">{{__MSG_picker_url_mode_auto_open_in_current_tab__}}</option>
+                        <option value="OPEN_NEW_BG_TAB">{{__MSG_picker_url_mode_auto_open_in_bg_tab__}}</option>
+                        <option value="OPEN_NEW_FG_TAB">{{__MSG_picker_url_mode_auto_open_in_fg_tab__}}</option>
+                    </select>
                 </span>
             </div>
             <div class=" x-mark" id="x-mark" title="{{__MSG_picker_close_btn_title__}}">×

@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "بند کریں"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور URL کھولیں"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور نئے پس منظر ٹیب میں URL کھولیں"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور نئے پیش منظر ٹیب میں URL کھولیں"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "خود بخود URL نہ کھولیں"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "موجودہ ٹیب میں خود بخود URL کھولیں"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "نئے پس منظر ٹیب میں خود بخود URL کھولیں"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "نئے پیش منظر ٹیب میں خود بخود URL کھولیں"
   }
 }

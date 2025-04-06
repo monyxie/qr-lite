@@ -225,5 +225,26 @@
   },
   "picker_close_btn_title": {
     "message": "Close"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "Select region to scan and open URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "Select region to scan and open URL in new background tab"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "Select region to scan and open URL in new foreground tab"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "Don't automatically open URL"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "Auto open URL in current tab"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "Auto open URL in new background tab"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "Auto open URL in new foreground tab"
   }
 }

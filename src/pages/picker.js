@@ -23,6 +23,7 @@ class Picker {
     this.distance = (this.maxFactor - this.minFactor) / this.numLevel
     this.baseScanSize = this.getBaseScanSize()
     this.setScaleLevel(10)
+    this.defaultOptions = { openUrlMode: 'NO_OPEN' }
   }
 
   getBaseScanSize () {
@@ -105,13 +106,20 @@ class Picker {
       return
     }
 
+    const options = Object.assign(this.defaultOptions, await apiNs.runtime.sendMessage({ action: 'PICKER_GET_OPTIONS' }))
+
     renderTemplate($('#template'))
 
+    this.domSelectUrlMode = $('#select-open-url-mode')
     this.domMask = $('#mask')
     this.domSpotlight = $('#spotlight')
     this.domTips = $('#tips')
     this.domX = $('#x-mark')
     this.domResult = $('#result')
+
+    if (options.openUrlMode) {
+      this.domSelectUrlMode.value = options.openUrlMode
+    }
 
     this.updateSpotLight(this.winW / 2, this.winH / 2)
 
@@ -172,14 +180,18 @@ class Picker {
     })
 
     $('#copy-btn').addEventListener('click', () => this.copyResult())
-    $('#rescan-btn').addEventListener('click', (ev) => {
-      this.isScanning = false
-      addClass('hidden', '#captured')
-      addClass('hidden', this.domResult)
-      removeClass('showing-result', this.domMask)
-      this.updateSpotLight(ev.clientX, ev.clientY)
-    })
+    $('#rescan-btn').addEventListener('click', (ev) => this.newScan(ev))
     $('#open-link-btn').addEventListener('click', () => this.hide())
+  }
+
+  newScan (ev) {
+    this.isScanning = false
+    addClass('hidden', '#captured')
+    addClass('hidden', this.domResult)
+    removeClass('showing-result', this.domMask)
+    if (ev) {
+      this.updateSpotLight(ev.clientX, ev.clientY)
+    }
   }
 
   updateSpotLight (x, y, w, h, td, tp, ttf) {
@@ -218,20 +230,22 @@ class Picker {
       removeClass('off', this.domSpotlight)
     }
 
-    if (td) {
-      this.domMask.style.transitionDuration = td
-      this.domMask.style.transitionProperty = tp || 'all'
-      this.domMask.style.transitionTimingFunction = ttf || 'ease-out'
-    } else {
-      this.domMask.style.transitionProperty = ''
-      this.domMask.style.transitionDuration = ''
-      this.domMask.style.transitionTimingFunction = ''
+    if (this.domMask) {
+      if (td) {
+        this.domMask.style.transitionDuration = td
+        this.domMask.style.transitionProperty = tp || 'all'
+        this.domMask.style.transitionTimingFunction = ttf || 'ease-out'
+      } else {
+        this.domMask.style.transitionProperty = ''
+        this.domMask.style.transitionDuration = ''
+        this.domMask.style.transitionTimingFunction = ''
+      }
+      this.domMask.style.backgroundColor = 'transparent'
+      this.domMask.style.borderTopWidth = Math.max(0, rect.y1) + 'px'
+      this.domMask.style.borderBottomWidth = Math.max(0, this.winH - rect.y2) + 'px'
+      this.domMask.style.borderLeftWidth = Math.max(0, rect.x1) + 'px'
+      this.domMask.style.borderRightWidth = Math.max(0, this.winW - rect.x2) + 'px'
     }
-    this.domMask.style.backgroundColor = 'transparent'
-    this.domMask.style.borderTopWidth = Math.max(0, rect.y1) + 'px'
-    this.domMask.style.borderBottomWidth = Math.max(0, this.winH - rect.y2) + 'px'
-    this.domMask.style.borderLeftWidth = Math.max(0, rect.x1) + 'px'
-    this.domMask.style.borderRightWidth = Math.max(0, this.winW - rect.x2) + 'px'
   }
 
   hideOrShowUiElements () {
@@ -244,6 +258,7 @@ class Picker {
     const elements = [this.domTips, this.domX]
 
     for (const el of elements) {
+      if (!el) { continue }
       const rect = el.getBoundingClientRect()
       const overlaps = this.collides(rect, spotlightRect)
       const mouseover = this.collides(rect, mouseRect)
@@ -380,6 +395,31 @@ class Picker {
   }
 
   showResult (err, content, image, successful) {
+    const isContentUrl = isUrl(content)
+
+    let showResult = true
+    if (isContentUrl) {
+      showResult = false
+      switch (this.domSelectUrlMode.value) {
+        case 'OPEN':
+          window.open(content, '_top')
+          this.hide()
+          break
+        case 'OPEN_NEW_BG_TAB':
+          apiNs.runtime.sendMessage({ action: 'BG_CREATE_TAB', active: false, url: content })
+          break
+        case 'OPEN_NEW_FG_TAB':
+          apiNs.runtime.sendMessage({ action: 'BG_CREATE_TAB', active: true, url: content })
+          break
+        default:
+          showResult = true
+      }
+    }
+    if (!showResult) {
+      this.newScan()
+      return
+    }
+
     addClass('showing-result', this.domMask)
     const textarea = $('#result-content')
     if (err) {
@@ -423,7 +463,7 @@ class Picker {
 
     // show or hide "Open Link" button
     const openLinkBtn = $('#open-link-btn')
-    if (isUrl(content)) {
+    if (isContentUrl) {
       openLinkBtn.href = content
       removeClass('hidden', openLinkBtn)
     } else {

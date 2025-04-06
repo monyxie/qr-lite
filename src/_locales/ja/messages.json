@@ -228,5 +228,26 @@
   },
   "remove_history_btn_title": {
     "message": "履歴からこのエントリを削除"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "スキャンする領域を選択してURLを開く"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "スキャンする領域を選択し、新しいバックグラウンドタブでURLを開く"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "スキャンする領域を選択し、新しいフォアグラウンドタブでURLを開く"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "URLを自動的に開かない"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "現在のタブでURLを自動的に開く"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "新しいバックグラウンドタブでURLを自動的に開く"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "新しいフォアグラウンドタブでURLを自動的に開く"
   }
 }

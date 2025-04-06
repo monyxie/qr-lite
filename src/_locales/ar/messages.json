@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "إغلاق"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "حدد المنطقة المراد مسحها وفتح عنوان URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "حدد المنطقة المراد مسحها وفتح عنوان URL في علامة تبويب خلفية جديدة"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "حدد المنطقة المراد مسحها وفتح عنوان URL في علامة تبويب أمامية جديدة"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "عدم فتح عنوان URL تلقائيًا"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "فتح عنوان URL تلقائيًا في علامة التبويب الحالية"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "فتح عنوان URL تلقائيًا في علامة تبويب خلفية جديدة"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "فتح عنوان URL تلقائيًا في علامة تبويب أمامية جديدة"
   }
 }

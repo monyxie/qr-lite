@@ -40,6 +40,15 @@
     "select-region-to-scan": {
       "description": "__MSG_select_region_to_scan_command_description__"
     },
+    "select-region-to-scan-open": {
+      "description": "__MSG_select_region_to_scan_open_command_description__"
+    },
+    "select-region-to-scan-open-new-bg-tab": {
+      "description": "__MSG_select_region_to_scan_open_new_bg_tab_command_description__"
+    },
+    "select-region-to-scan-open-new-fg-tab": {
+      "description": "__MSG_select_region_to_scan_open_new_fg_tab_command_description__"
+    },
     "scan-with-camera": {
       "description": "__MSG_scan_with_camera_command_description__"
     }

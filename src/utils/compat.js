@@ -21,7 +21,7 @@ export const tabs = QRLITE_BROWSER === 'firefox'
       },
       create: options => {
         return new Promise((resolve, reject) => {
-          apiNs.tabs.query(options, (data) => {
+          apiNs.tabs.create(options, (data) => {
             resolve(data)
           })
         })

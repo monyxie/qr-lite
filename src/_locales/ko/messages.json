@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "닫기"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "스캔할 영역을 선택하고 URL 열기"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "스캔할 영역을 선택하고 새 백그라운드 탭에서 URL 열기"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "스캔할 영역을 선택하고 새 포그라운드 탭에서 URL 열기"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "URL을 자동으로 열지 않음"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "현재 탭에서 URL 자동 열기"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "새 백그라운드 탭에서 URL 자동 열기"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "새 포그라운드 탭에서 URL 자동 열기"
   }
 }

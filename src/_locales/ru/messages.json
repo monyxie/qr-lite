@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "Закрыть"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "Выберите область для сканирования и откройте URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "Выберите область для сканирования и откройте URL в новой фоновой вкладке"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "Выберите область для сканирования и откройте URL в новой активной вкладке"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "Не открывать URL автоматически"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "Автоматически открывать URL в текущей вкладке"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "Автоматически открывать URL в новой фоновой вкладке"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "Автоматически открывать URL в новой активной вкладке"
   }
 }

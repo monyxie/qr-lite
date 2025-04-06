@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "Cerrar"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "Seleccionar región para escanear y abrir URL"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "Seleccionar región para escanear y abrir URL en una nueva pestaña en segundo plano"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "Seleccionar región para escanear y abrir URL en una nueva pestaña en primer plano"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "No abrir URL automáticamente"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "Abrir URL automáticamente en la pestaña actual"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "Abrir URL automáticamente en una nueva pestaña en segundo plano"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "Abrir URL automáticamente en una nueva pestaña en primer plano"
   }
 }

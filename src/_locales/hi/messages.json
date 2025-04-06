@@ -228,5 +228,26 @@
   },
   "picker_close_btn_title": {
     "message": "बंद करें"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "स्कैन करने के लिए क्षेत्र का चयन करें और URL खोलें"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "स्कैन करने के लिए क्षेत्र का चयन करें और नए पृष्ठभूमि टैब में URL खोलें"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "स्कैन करने के लिए क्षेत्र का चयन करें और नए अग्रभूमि टैब में URL खोलें"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "URL स्वचालित रूप से न खोलें"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "वर्तमान टैब में URL स्वचालित रूप से खोलें"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "नए पृष्ठभूमि टैब में URL स्वचालित रूप से खोलें"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "नए अग्रभूमि टैब में URL स्वचालित रूप से खोलें"
   }
 }

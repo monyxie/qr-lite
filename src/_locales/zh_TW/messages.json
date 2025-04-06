@@ -227,5 +227,26 @@
   },
   "remove_history_btn_title": {
     "message": "從歷史記錄中刪除此條目"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "選擇要掃描的區域並打開網址"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "選擇要掃描的區域並在新的背景分頁中打開網址"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "選擇要掃描的區域並在新的前景分頁中打開網址"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "不要自動打開網址"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "在目前分頁中自動打開網址"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "在新的背景分頁中自動打開網址"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "在新的前景分頁中自動打開網址"
   }
 }

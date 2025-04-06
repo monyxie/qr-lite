@@ -11,12 +11,23 @@ let openPopupOptions = null
  * @type {string[]}
  */
 let pickerSecrets = []
+/**
+ * @type {{openUrlMode:'NO_OPEN'|'OPEN'|'OPEN_NEW_BG_TAB'|'OPEN_NEW_FG_TAB'}}
+ */
+let pickerOptions = null
 
 initDecoder()
 
 function openPopupWithOptions (options) {
   openPopupOptions = options
   openPopup()
+}
+
+function openPickerWithOptions (options) {
+  pickerOptions = options
+  tabs.query({ active: true, currentWindow: true })
+    .then(tabs => tabs[0])
+    .then(injectPickerLoader)
 }
 
 async function captureScan (request) {
@@ -118,9 +129,16 @@ apiNs.contextMenus.onClicked.addListener((info, tab) => {
 apiNs.commands.onCommand.addListener((command) => {
   switch (command) {
     case 'select-region-to-scan':
-      tabs.query({ active: true, currentWindow: true })
-        .then(tabs => tabs[0])
-        .then(injectPickerLoader)
+      openPickerWithOptions({ openUrlMode: 'NO_OPEN' })
+      break
+    case 'select-region-to-scan-open':
+      openPickerWithOptions({ openUrlMode: 'OPEN' })
+      break
+    case 'select-region-to-scan-open-new-bg-tab':
+      openPickerWithOptions({ openUrlMode: 'OPEN_NEW_BG_TAB' })
+      break
+    case 'select-region-to-scan-open-new-fg-tab':
+      openPickerWithOptions({ openUrlMode: 'OPEN_NEW_FG_TAB' })
       break
     case 'scan-with-camera':
       openPopupWithOptions({ action: 'POPUP_DECODE_CAMERA' })
@@ -156,10 +174,17 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case 'BG_CAPTURE':
       captureScan(request).then(sendResponse)
       return true
+    case 'BG_CREATE_TAB':
+      tabs.create({ url: request.url, active: request.active, openerTabId: sender.tab?.id }).then(sendResponse)
+      return true
     // get popup options
     case 'POPUP_GET_OPTIONS':
       sendResponse(openPopupOptions)
       openPopupOptions = null
+      break
+    case 'PICKER_GET_OPTIONS':
+      sendResponse(pickerOptions)
+      pickerOptions = null
       break
     case 'BG_GET_PICKER_URL': {
       const url = new URL(apiNs.runtime.getURL('pages/picker.html'))
