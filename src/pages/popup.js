@@ -285,6 +285,7 @@ class Popup {
     $scanInputImage.src = url
 
     let error
+    let success = false
     try {
       // wait for decode to complete before appending to dom and scanning
       await $scanInputImage.decode()
@@ -293,6 +294,7 @@ class Popup {
       if (result.length < 1) {
         $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
       } else {
+        success = true
         const text = result[0].content
         const vertices = result[0].vertices
 
@@ -315,7 +317,15 @@ class Popup {
       error = e.toString()
     }
 
-    $scanOutput.placeholder = error ? apiNs.i18n.getMessage('decoding_failed', error) : apiNs.i18n.getMessage('unable_to_decode')
+    if (success) {
+      this.playSound('/audio/success.mp3')
+    } else {
+      if (error) {
+        $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', error)
+      } else {
+        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode', error)
+      }
+    }
   }
 
   getFilenameFromTitle (title) {
@@ -499,6 +509,8 @@ class Popup {
         return
       }
 
+      this.playSound('/audio/success.mp3')
+
       const text = result[0].content
       const rect = result[0].vertices
 
@@ -535,6 +547,16 @@ class Popup {
       addClass('hidden', $scanningText)
       addClass('hidden', $scanVideo)
     }
+  }
+
+  playSound (name) {
+    if (!this.sounds) {
+      this.sounds = {}
+    }
+    if (!this.sounds[name]) {
+      this.sounds[name] = new Audio(name)
+    }
+    this.sounds[name].play()
   }
 
   /**

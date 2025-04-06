@@ -395,6 +395,10 @@ class Picker {
   }
 
   showResult (err, content, image, successful) {
+    if (successful && content) {
+      this.playSound('/audio/success.mp3')
+    }
+
     const isContentUrl = isUrl(content)
 
     let showResult = true
@@ -475,6 +479,16 @@ class Picker {
     } else {
       textarea.focus()
     }
+  }
+
+  playSound (name) {
+    if (!this.sounds) {
+      this.sounds = {}
+    }
+    if (!this.sounds[name]) {
+      this.sounds[name] = new Audio(name)
+    }
+    this.sounds[name].play()
   }
 }
 

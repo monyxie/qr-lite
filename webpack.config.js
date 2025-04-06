@@ -48,7 +48,8 @@ function generateConfig (browser) {
     './pages/*.{html,css}',
     { from: './opencv/opencv_js.wasm', to: 'opencv_js.wasm' },
     // './opencv/opencv.js', // has to be placed in extension's root to make both `import('...')` and `importScripts('...')` work
-    './opencv/models/*'
+    './opencv/models/*',
+    './audio/*.mp3'
   ]
 
   return {
