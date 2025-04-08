@@ -60,6 +60,11 @@ class Popup {
     $('#tab-scan').addEventListener('click', e => {
       this.showTab('scan')
     })
+    $('#tab-settings').addEventListener('click', e => {
+      apiNs.runtime.openOptionsPage()
+      // close popup
+      window.close()
+    })
 
     $('#history').addEventListener('click', e => {
       const historyItem = e.target.closest('.history-item')
@@ -549,7 +554,11 @@ class Popup {
     }
   }
 
-  playSound (name) {
+  async playSound (name) {
+    if ((await storage.get('soundEnabled')).soundEnabled !== '1') {
+      return
+    }
+
     if (!this.sounds) {
       this.sounds = {}
     }

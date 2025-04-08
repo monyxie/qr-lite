@@ -60,5 +60,8 @@
       "matches": ["<all_urls>"],
       "use_dynamic_url": true
     }
-  ]
+  ],
+  "options_ui": {
+    "page": "pages/settings.html?minimal=true"
+  }
 }

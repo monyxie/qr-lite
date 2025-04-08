@@ -246,5 +246,17 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "Auto open URL in new foreground tab"
+  },
+  "settings_window_title": {
+    "message": "QR Lite Settings"
+  },
+  "settings_sound_enabled_label": {
+    "message": "Play sound on successful scan"
+  },
+  "settings_scanner_legend": {
+    "message": "Scanner"
+  },
+  "tab_settings_title": {
+    "message": "Change QR Lite's settings"
   }
 }

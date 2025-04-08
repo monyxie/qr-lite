@@ -58,5 +58,8 @@
       "resources": ["pages/picker.html"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "options_ui": {
+    "page": "pages/settings.html?minimal=true"
+  }
 }

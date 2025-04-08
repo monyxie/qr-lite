@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Grant camera access</title>
+    <link rel="icon" type="image/png" href="/icons/qrlite-16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/icons/qrlite-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/icons/qrlite-48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/icons/qrlite-128.png" sizes="128x128">
+    <link href="common.css" rel="stylesheet">
+    <link href="settings.css" rel="stylesheet">
+    <script defer src="settings.js"></script>
+</head>
+
+<body>
+    <template id="template">
+        <div class="container">
+            <div class="box">
+                <div class="header">
+                    <img src="../icons/qrlite.svg" class="logo" />
+                    <h1>{{__MSG_settings_window_title__}}</h1>
+                </div>
+                <form>
+                    <fieldset>
+                        <legend>{{__MSG_settings_scanner_legend__}}</legend>
+                        <div class="form-entry">
+                            <input id="soundEnabledCheckbox" name="soundEnabled" type="checkbox" />
+                            <label for="soundEnabledCheckbox">{{__MSG_settings_sound_enabled_label__}}</label>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </template>
+</body>
+
+</html>

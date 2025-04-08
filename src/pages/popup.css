@@ -332,7 +332,7 @@ body {
     text-align: center;
     border-bottom: 2px solid #ccc;
     flex: 1 1 30%;
-    padding: 0.5em 2em;
+    padding: 0.5em 1em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -343,6 +343,11 @@ body {
     text-transform: uppercase;
     background-color: transparent;
     cursor: pointer;
+}
+
+#tab-settings {
+    padding: 0.5em 0.5em;
+    flex: 0 0 10%;
 }
 
 .tabs-item:hover {

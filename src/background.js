@@ -1,4 +1,4 @@
-import { apiNs, capturePartialScreen, openPopup, tabs } from './utils/compat'
+import { apiNs, capturePartialScreen, openPopup, storage, tabs } from './utils/compat'
 import { addHistory } from './utils/history'
 import { initDecoder, scan } from './utils/qrcode'
 import { convertBlobToDataUri, randomStr } from './utils/misc'
@@ -108,11 +108,10 @@ apiNs.runtime.onInstalled.addListener(() => {
   if (!menuItems) menuItems = getMenuItems()
   for (const id in menuItems) {
     if (Object.hasOwnProperty.call(menuItems, id)) {
-      apiNs.contextMenus.create({
-        id,
-        title: menuItems[id].title,
-        contexts: menuItems[id].contexts
-      })
+      const createProperties = Object.assign({}, menuItems[id])
+      createProperties.id = id
+      delete createProperties.onclick
+      apiNs.contextMenus.create(createProperties)
     }
   }
 })

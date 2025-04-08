@@ -1,5 +1,5 @@
 import { addClass, query as $, removeClass } from '../utils/dom'
-import { apiNs } from '../utils/compat'
+import { apiNs, storage } from '../utils/compat'
 import { renderTemplate } from '../utils/i18n'
 import { isUrl } from '../utils/misc'
 
@@ -106,7 +106,7 @@ class Picker {
       return
     }
 
-    const options = Object.assign(this.defaultOptions, await apiNs.runtime.sendMessage({ action: 'PICKER_GET_OPTIONS' }))
+    const options = Object.assign({}, this.defaultOptions, await apiNs.runtime.sendMessage({ action: 'PICKER_GET_OPTIONS' }))
 
     renderTemplate($('#template'))
 
@@ -481,7 +481,11 @@ class Picker {
     }
   }
 
-  playSound (name) {
+  async playSound (name) {
+    if ((await storage.get('soundEnabled')).soundEnabled !== '1') {
+      return
+    }
+
     if (!this.sounds) {
       this.sounds = {}
     }

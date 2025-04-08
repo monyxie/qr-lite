@@ -22,6 +22,7 @@ function generateConfig (browser) {
     './pages/popup.js',
     './pages/grant.js',
     './pages/picker.js',
+    './pages/settings.js',
     './content_scripts/picker-loader.js'
   ].reduce((acc, f) => {
     acc[f] = f
