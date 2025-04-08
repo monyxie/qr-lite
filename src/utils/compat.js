@@ -120,3 +120,17 @@ export const clipboard = QRLITE_BROWSER === 'firefox'
         })
       }
     }
+
+export const canOpenShortcutSettings = QRLITE_BROWSER === 'firefox'
+  ? () => typeof apiNs.commands.openShortcutSettings === 'function'
+  : () => true
+
+export const openShortcutSettings = QRLITE_BROWSER === 'firefox'
+  ? async () => {
+    if (typeof apiNs.commands.openShortcutSettings === 'function') {
+      return apiNs.commands.openShortcutSettings()
+    }
+  }
+  : async () => {
+    return tabs.create({ url: 'chrome://extensions/shortcuts', active: true })
+  }

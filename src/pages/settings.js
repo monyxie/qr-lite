@@ -1,6 +1,6 @@
 import { renderTemplate } from '../utils/i18n'
 import { query as $, addClass } from '../utils/dom'
-import { apiNs, storage } from '../utils/compat'
+import { apiNs, storage, openShortcutSettings, canOpenShortcutSettings } from '../utils/compat'
 
 (async () => {
   document.title = apiNs.i18n.getMessage('settings_window_title')
@@ -42,4 +42,12 @@ import { apiNs, storage } from '../utils/compat'
       }
     }
   })
+
+  if (!canOpenShortcutSettings()) {
+    $('#configKeyboardShortcutsBtn').style.display = 'none'
+  } else {
+    $('#configKeyboardShortcutsBtn').addEventListener('click', (e) => {
+      openShortcutSettings()
+    })
+  }
 })()

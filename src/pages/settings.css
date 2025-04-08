@@ -50,6 +50,12 @@ html {
     display: none;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
 fieldset {
     border: 1px solid gray;
     border-radius: 4px;
