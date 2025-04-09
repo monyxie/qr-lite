@@ -6,9 +6,16 @@
   "license": "MIT",
   "sideEffects": false,
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/plugin-transform-react-jsx": "^7.25.9",
+    "@babel/preset-env": "^7.26.9",
+    "@eslint/compat": "^1.2.8",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.24.0",
     "@inquirer/prompts": "^7.4.0",
     "@zxing/browser": "^0.1.5",
     "@zxing/library": "^0.21.3",
+    "babel-loader": "^10.0.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^9.24.0",
@@ -16,9 +23,13 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-n": "^17.17.0",
     "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "file-loader": "^6.2.0",
     "glob": "^11.0.1",
+    "globals": "^16.0.0",
     "jsonwebtoken": "^9.0.2",
+    "preact": "^10.26.5",
     "puppeteer": "^24.6.0",
     "sanitize-filename": "^1.6.3",
     "serve-handler": "^6.1.6",
@@ -35,5 +46,9 @@
     "check-locales": "node scripts/check-locales.mjs",
     "convert-icons": "scripts/convert-icons.sh",
     "update-listings": "node scripts/update-listings.mjs"
+  },
+  "dependencies": {
+    "react": "npm:@preact/compat",
+    "react-dom": "npm:@preact/compat"
   }
 }

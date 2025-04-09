@@ -54,7 +54,7 @@ export const storage = QRLITE_BROWSER === 'firefox'
     }
 
 export const openPopup = (options) => {
-  // In Chrome-based browsers, `action.openPopup` is only available to policy installed extensions
+  // Between Chrome 118 and Chrome 126 (October 2023 - June 2024), `action.openPopup()` is only available to policy installed extensions
   // https://developer.chrome.com/docs/extensions/reference/api/action#method-openPopup
   try {
     return apiNs.action.openPopup(options)
