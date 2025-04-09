@@ -258,5 +258,8 @@
   },
   "tab_settings_title": {
     "message": "Change QR Lite's settings"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Configure Keyboard Shortcuts"
   }
 }

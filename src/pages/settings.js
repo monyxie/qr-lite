@@ -1,53 +1,62 @@
-import { renderTemplate } from '../utils/i18n'
-import { query as $, addClass } from '../utils/dom'
-import { apiNs, storage, openShortcutSettings, canOpenShortcutSettings } from '../utils/compat'
+import { TT } from "../utils/i18n";
+import {
+  apiNs,
+  openShortcutSettings,
+  canOpenShortcutSettings,
+} from "../utils/compat";
+import { render } from "preact";
+import { useMemo } from "react";
+import { usePageTitle, useSettings, useURLParams } from "../utils/hooks";
 
-(async () => {
-  document.title = apiNs.i18n.getMessage('settings_window_title')
-  const searchParams = (new URL(location.href)).searchParams
-  if (searchParams.get('minimal') === 'true') {
-    addClass('minimal', 'body')
-  }
+function SettingsPage() {
+  const showKeyboardShortcutsSetting = useMemo(canOpenShortcutSettings, []);
+  const [settings, saveSettings] = useSettings({});
+  const params = useURLParams();
 
-  renderTemplate($('#template'))
+  usePageTitle(apiNs.i18n.getMessage("settings_window_title"));
 
-  // define individual setting items
-  const items = {
-    soundEnabled: {
-      dom: $('#soundEnabledCheckbox'),
-      fromStorage: (el, value) => { el.checked = value === '1' },
-      toStorage: (el) => el.checked ? '1' : '0'
-    }
-  }
+  return (
+    <div class="container">
+      <div class="box">
+        {params?.get("minimal") !== "true" && (
+          <div class="header">
+            <img src="../icons/qrlite.svg" class="logo" />
+            <h1>{TT("settings_window_title")}</h1>
+          </div>
+        )}
+        <form>
+          <fieldset>
+            <legend>{TT("settings_scanner_legend")}</legend>
+            <div class="form-entry">
+              <input
+                id="soundEnabledCheckbox"
+                name="soundEnabled"
+                type="checkbox"
+                checked={settings.soundEnabled === "1"}
+                onChange={(e) => {
+                  saveSettings({ soundEnabled: e.target.checked ? "1" : "0" });
+                }}
+              />
+              <label htmlFor="soundEnabledCheckbox">
+                {TT("settings_sound_enabled_label")}
+              </label>
+            </div>
+          </fieldset>
+          {showKeyboardShortcutsSetting && (
+            <div class="form-entry">
+              <span
+                class="clickable"
+                id="configKeyboardShortcutsBtn"
+                onClick={openShortcutSettings}
+              >
+                {TT("settings_config_keyboard_shortcuts_btn_label")}
+              </span>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+}
 
-  // setup change listener and populate existing value
-  const settings = await storage.get(['soundEnabled'])
-  for (const key in items) {
-    items[key].fromStorage(items[key].dom, settings[key])
-    items[key].dom.addEventListener('change', (e) => {
-      storage.set({ [key]: items[key].toStorage(items[key].dom) })
-    })
-  }
-
-  // setup storage change listener in case the values are changed in other places
-  apiNs.storage.onChanged.addListener((changes, area) => {
-    if (area !== 'local') {
-      return
-    }
-    for (const changedKey in changes) {
-      for (const key in items) {
-        if (changedKey === key) {
-          items[key].fromStorage(items[key].dom, changes[changedKey].newValue)
-        }
-      }
-    }
-  })
-
-  if (!canOpenShortcutSettings()) {
-    $('#configKeyboardShortcutsBtn').style.display = 'none'
-  } else {
-    $('#configKeyboardShortcutsBtn').addEventListener('click', (e) => {
-      openShortcutSettings()
-    })
-  }
-})()
+render(<SettingsPage />, document.body);
