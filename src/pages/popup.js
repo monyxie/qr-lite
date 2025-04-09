@@ -280,7 +280,7 @@ class Popup {
         'grant_permissions_instructions_html',
         apiNs.i18n.getMessage('grant_all_urls_permission_name')
       )
-      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?all-urls')
+      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?permission=all-urls')
       return
     }
 
@@ -462,7 +462,7 @@ class Popup {
         'grant_permissions_instructions_html',
         apiNs.i18n.getMessage('grant_camera_permission_name')
       )
-      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?camera')
+      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?permission=camera')
       addClass('hidden', $scanInstructions)
       addClass('hidden', $scanInput)
       return
