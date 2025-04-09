@@ -5,7 +5,7 @@ body {
 }
 
 html {
-  background: #efe;
+  background: var(--bg);
   min-height: 100vh;
 }
 
@@ -23,11 +23,25 @@ html {
   padding: 2rem 2rem;
   width: 40em;
   max-width: 100%;
-  color: #666;
+  color: var(--text-primary-color);
   font-family: sans-serif;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: var(--bg-content);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  margin-top: 1em;
+}
+
+@media screen and (max-width: 40em) {
+  html {
+    background: var(--bg-content);
+  }
+  .box {
+    border: none;
+    margin-top: 0;
+  }
 }
 
 .header {
@@ -53,7 +67,7 @@ form {
 }
 
 fieldset {
-  border: 1px solid gray;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
 }
 
@@ -61,13 +75,4 @@ fieldset {
   display: flex;
   gap: 0.2rem;
   align-items: center;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    background: #121;
-  }
-  .box {
-    color: #999999;
-  }
 }

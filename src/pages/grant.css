@@ -1,47 +1,35 @@
 html,
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
-    background: linear-gradient(#DFD 0%, #EFE 30%);
-    box-sizing: border-box;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  background: var(--bg);
+  box-sizing: border-box;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .box {
-    padding: 2rem 2rem;
-    max-width: 40rem;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 1rem;
-    color: #666;
-    font-family: sans-serif;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  padding: 2rem 2rem;
+  max-width: 40rem;
+  background-color: var(--bg-content);
+  border-radius: var(--border-radius);
+  color: var(--text-primary-color);
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  outline: 1px solid var(--border-color);
 }
 
 .logo {
-    width: 4rem;
-    height: 4rem;
-    align-self: center;
-    box-shadow: gray 1px 1px 10px;
-}
-
-@media (prefers-color-scheme: dark) {
-    .container {
-        background: linear-gradient(#223322 0%, #112211 30%);
-    }
-    .box {
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #999999;
-        box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-    }
+  width: 4rem;
+  height: 4rem;
+  align-self: center;
 }
