@@ -1,691 +1,1027 @@
-import { QRCodeDecoderErrorCorrectionLevel as ECLevel } from '@zxing/library'
-import { BrowserQRCodeSvgWriter } from '@zxing/browser'
-import EncodeHintType from '@zxing/library/esm/core/EncodeHintType'
-import SanitizeFilename from 'sanitize-filename'
-import { apiNs, clipboard, storage, tabs } from '../utils/compat'
-import { scan } from '../utils/qrcode'
-import * as History from '../utils/history'
-import { addClass, query as $, removeClass } from '../utils/dom'
-import { renderTemplate } from '../utils/i18n'
-import { isUrl, sleep } from '../utils/misc'
+import { BrowserQRCodeSvgWriter } from "@zxing/browser";
+import EncodeHintType from "@zxing/library/esm/core/EncodeHintType";
+import SanitizeFilename from "sanitize-filename";
+import { apiNs, clipboard, tabs } from "../utils/compat";
 
-class Popup {
-  constructor () {
-    this.renderPage()
-    this.ecLevel = ECLevel.M
-    this.currentText = null
-    this.currentTitle = null
-    this.historyTimer = null
-    this.currentTab = null
-    this.isStandalone = false
+import { render } from "preact";
+import {
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
+import { PropTypes } from "prop-types";
+
+import { T, TT } from "../utils/i18n";
+import { useAudioPlayer, useSettings, useURLParams } from "../utils/hooks";
+import { scan } from "../utils/qrcode";
+import { debouncer, isUrl, sleep } from "../utils/misc";
+import {
+  addHistory,
+  removeHistory,
+  getHistory,
+  clearHistory,
+} from "../utils/history";
+
+function QRPositionMarker({ children, width, height, result, mirror }) {
+  let marker = null;
+  if (result?.vertices) {
+    const points = result.vertices.map((v) => v.join(",")).join(" ");
+    marker = (
+      <svg
+        aria-hidden="true"
+        fill="lightgreen"
+        viewBox={`0 0 ${width} ${height}`}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polygon
+          fill="green"
+          fillOpacity="0.3"
+          stroke="#88FF00"
+          strokeWidth="1%"
+          strokeLinejoin="round"
+          strokeOpacity="0.9"
+          points={`${points.trim()}`}
+        ></polygon>
+      </svg>
+    );
   }
 
-  async init () {
-    if (window.location.search.indexOf('forcepopup') === -1) {
-      // is this page opened in a standalone page instead of in a popup window?
-      this.isStandalone = apiNs.extension.getViews({ type: 'popup' }).length === 0
+  const styles = {
+    position: "relative",
+    padding: 0,
+    margin: 0,
+    display: result ? "block" : "none",
+    transform: mirror ? "scaleX(-1)" : "none",
+  };
+
+  return (
+    <div style={styles}>
+      {children}
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          margin: 0,
+          padding: 0,
+          top: 0,
+          left: 0,
+        }}
+      >
+        {marker}
+      </div>
+    </div>
+  );
+}
+
+QRPositionMarker.propTypes = {
+  children: PropTypes.node,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  result: PropTypes.object,
+  mirror: PropTypes.bool,
+};
+
+const Generator = forwardRef(function Generator(props, ref) {
+  const [settings, saveSettings] = useSettings();
+  const [content, setContent] = useState(props.content || "");
+  const [title] = useState(props.title || "");
+  const [copyTime, setCopyTime] = useState(null);
+  const resultNode = useRef(null);
+  const addHistoryDebouncer = useRef(debouncer(1000));
+
+  useImperativeHandle(ref, () => ({
+    setContent,
+  }));
+
+  useEffect(() => {
+    if (!content) {
+      return;
     }
-
-    if (this.isStandalone) {
-      addClass('standalone', document.documentElement)
+    if (content === props.content) {
+      addHistory("encode", content);
+      return;
     }
+    addHistoryDebouncer.current.debounce(() => {
+      addHistory("encode", content);
+    });
+  }, [content, props.content]);
 
-    // Initialize history toggle button
-    const updateToggleButton = async () => {
-      const enabled = await History.getHistoryState()
-      if (enabled) {
-        removeClass('hidden', $('#disable-history-btn'))
-        addClass('hidden', $('#enable-history-btn'))
-      } else {
-        removeClass('hidden', $('#enable-history-btn'))
-        addClass('hidden', $('#disable-history-btn'))
-      }
+  const qrCodeImage = useMemo(() => {
+    if (!content || content === "") {
+      return "";
     }
-    $('#disable-history-btn').addEventListener('click', async () => {
-      await History.setHistoryState(false)
-      await updateToggleButton()
-    })
-    $('#enable-history-btn').addEventListener('click', async () => {
-      await History.setHistoryState(true)
-      await updateToggleButton()
-    })
-    await updateToggleButton()
+    const writer = new BrowserQRCodeSvgWriter();
+    const hints = new Map();
+    hints.set(EncodeHintType.ERROR_CORRECTION, settings.ecLevel);
+    return writer.write(content, 300, 300, hints);
+  }, [content, settings.ecLevel]);
 
-    $('#tab-history').addEventListener('click', () => {
-      this.showTab('history')
-    })
-    $('#tab-generate').addEventListener('click', e => {
-      this.showTab('generate')
-    })
-    $('#tab-scan').addEventListener('click', e => {
-      this.showTab('scan')
-    })
-    $('#tab-settings').addEventListener('click', e => {
-      apiNs.runtime.openOptionsPage()
-      // close popup
-      window.close()
-    })
-
-    $('#history').addEventListener('click', e => {
-      const historyItem = e.target.closest('.history-item')
-      if (!historyItem) {
-        return
-      }
-      e.preventDefault()
-      e.stopPropagation()
-
-      const removeHistoryBtn = e.target.closest('.remove-history-btn')
-      if (removeHistoryBtn) {
-        this.removeHistory(historyItem.title).then(() => this.renderHistory())
-      } else {
-        this.createQrCode(historyItem.title, this.ecLevel, undefined, 'now')
-      }
-    })
-    $('#clear-history-btn').addEventListener('click', e => {
-      this.clearHistory()
-    })
-
-    const $sourceInput = $('#sourceInput')
-    const handleSourceInputChange = e => {
-      e.stopPropagation()
-      if ($sourceInput.value !== this.currentText) {
-        this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'debounce')
-      }
+  useEffect(() => {
+    if (resultNode.current?.firstChild) {
+      resultNode.current.removeChild(resultNode.current.firstChild);
     }
-    $sourceInput.addEventListener('keyup', handleSourceInputChange)
-    $sourceInput.addEventListener('paste', handleSourceInputChange)
-    $sourceInput.addEventListener('cut', handleSourceInputChange)
-
-    window.addEventListener('paste', e => {
-      if (e.clipboardData?.files?.length === 0) {
-        return
-      }
-      const file = e.clipboardData.files[0]
-      if (!file.type.startsWith('image/')) {
-        return
-      }
-
-      const url = URL.createObjectURL(file)
-      this.decodeImage(url)
-    })
-
-    $('#ecLevels').addEventListener('click', (e) => {
-      switch (e.target.id) {
-        case 'ecL':
-        case 'ecM':
-        case 'ecQ':
-        case 'ecH':
-          this.ecLevel = ECLevel.fromString(e.target.id.substr(2))
-          break
-        default:
-          return
-      }
-
-      storage.set({
-        ecLevel: this.ecLevel.toString()
-      })
-
-      this.createQrCode($sourceInput.value, this.ecLevel, undefined, 'none')
-    })
-
-    $('#save').addEventListener('click', (e) => {
-      this.downloadImage()
-    })
-
-    $('#copy').addEventListener('click', (e) => {
-      this.copyImage()
-    })
-
-    $('#scanRegion').addEventListener('click', (e) => {
-      apiNs.runtime.sendMessage({
-        action: 'BG_INJECT_PICKER_LOADER'
-      })
-      // close self (popup)
-      window.close()
-    })
-
-    $('#cameraScan').addEventListener('click', (e) => {
-      this.startCameraScan()
-    })
-
-    $('#openLinkBtn').addEventListener('click', (e) => {
-      tabs.create({
-        url: $('#scanOutput').value,
-        active: true
-      })
-    })
-
-    $('#grantPermissionsBtn').addEventListener('click', (ev) => {
-      ev.preventDefault()
-      apiNs.tabs.create({
-        url: ev.target.href
-      })
-      // close self (popup)
-      window.close()
-    })
-
-    const results = await storage.get('ecLevel')
-    if (results.ecLevel) {
-      try {
-        this.ecLevel = ECLevel.fromString(results.ecLevel)
-      } catch (e) {
-        console.error(e)
-      }
+    if (qrCodeImage) {
+      resultNode.current?.appendChild(qrCodeImage);
     }
+  }, [resultNode, qrCodeImage]);
 
-    apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      switch (request.action) {
-        case 'POPUP_DECODE':
-          return this.decodeImage(request.image)
+  useEffect(() => {
+    let timer;
+    if (copyTime) {
+      timer = setTimeout(() => {
+        setCopyTime(null);
+      }, 3000);
+    }
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
       }
-    })
-
-    await this.performInitialAction()
-  }
-
-  updateActiveEcLevel (activeEcLevel) {
-    $('#ecLevels').querySelectorAll('.ec-level').forEach(function (el) {
-      el.classList.remove('ec-level-active')
-    })
-    $('#ec' + activeEcLevel.toString()).classList.add('ec-level-active')
-  }
-
-  getHistory () {
-    return History.getHistory()
-  }
-
-  clearHistory () {
-    return History.clearHistory().then(() => this.renderHistory())
-  }
-
-  addHistory (type, text) {
-    return History.addHistory(type, text)
-  }
-
-  removeHistory (text) {
-    return History.removeHistory(text)
-  }
-
-  createQrCode (text, activeEcLevel, title, historyMode) {
-    const that = this
-    const $save = $('#save')
-    const $copy = $('#copy')
-    const $copied = $('#copied')
-    const $result = $('#result')
-    this.showTab('generate')
-    addClass('hidden', $save, $copy, $copied, $('#openLinkBtn'))
-
-    if (!text) {
-      text = ''
-    }
-
-    $('#sourceInput').value = text
-    $('#counter').innerText = '' + text.length
-    this.updateActiveEcLevel(activeEcLevel)
-
-    this.currentText = text
-    $result.innerText = ''
-
-    if (text === '') {
-      return
-    }
-
-    if (historyMode === 'now') {
-      that.addHistory('encode', text)
-    } else if (historyMode === 'debounce') {
-      clearTimeout(this.historyTimer)
-      this.historyTimer = setTimeout(() => {
-        that.addHistory('encode', text)
-      }, 1000)
-    }
-
-    const writer = new BrowserQRCodeSvgWriter()
-    const hints = new Map()
-    hints.set(EncodeHintType.ERROR_CORRECTION, activeEcLevel)
-    writer.writeToDom($result, text, 300, 300, hints)
-
-    $save.classList.remove('hidden')
-    $copy.classList.remove('hidden')
-    this.currentTitle = title || ''
-  }
-
-  createRectMarker (vertices, containerEl, imgEl) {
-    const $positionMarker = $('#positionMarker')
-    const points = vertices.map(v => v.join(',')).join(' ')
-
-    $positionMarker.innerHTML =
-      `<svg
-      class="qr-position-marker"
-      aria-hidden="true"
-      fill="lightgreen"
-      viewBox="0 0 ${imgEl.width} ${imgEl.height}"
-      xmlns="http://www.w3.org/2000/svg">
-      <polygon fill="green" fill-opacity="0.3" stroke="#88FF00" stroke-width="1%" stroke-linejoin="round" stroke-opacity="0.9" points="${points.trim()}"></polygon>
-   </svg>`
-    removeClass('hidden', $positionMarker)
-  }
-
-  async decodeImage (url) {
-    const that = this
-    const $scanOutput = $('#scanOutput')
-    const $scanInputImage = $('#scanInputImage')
-    const $openLinkBtn = $('#openLinkBtn')
-
-    this.showTab('scan')
-
-    if (isUrl(url) && !await apiNs.permissions.contains({ origins: ['<all_urls>'] })) {
-      removeClass('hidden', '#permissionInstructions')
-      addClass('hidden', '#scanInstructions', '#scanInput')
-      $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
-        'grant_permissions_instructions_html',
-        apiNs.i18n.getMessage('grant_all_urls_permission_name')
-      )
-      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?permission=all-urls')
-      return
-    }
-
-    addClass('hidden', '#scanInstructions', '#scanVideo', '#positionMarker', $openLinkBtn)
-    removeClass('hidden', '#scanInput', $scanOutput, $scanInputImage)
-    $scanOutput.value = ''
-    $scanInputImage.src = url
-
-    let error
-    let success = false
-    try {
-      // wait for decode to complete before appending to dom and scanning
-      await $scanInputImage.decode()
-
-      const result = await scan($scanInputImage)
-      if (result.length < 1) {
-        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode_qr_code')
-      } else {
-        success = true
-        const text = result[0].content
-        const vertices = result[0].vertices
-
-        $scanOutput.placeholder = ''
-        $scanOutput.value = text
-        $scanOutput.select()
-
-        if (vertices) {
-          that.createRectMarker(vertices, '#scanInput', $scanInputImage)
-        }
-
-        await that.addHistory('decode', text)
-
-        if (isUrl(text)) {
-          $openLinkBtn.classList.remove('hidden')
-        }
-      }
-    } catch (e) {
-      console.error(e)
-      error = e.toString()
-    }
-
-    if (success) {
-      this.playSound('/audio/success.mp3')
-    } else {
-      if (error) {
-        $scanOutput.placeholder = apiNs.i18n.getMessage('decoding_failed', error)
-      } else {
-        $scanOutput.placeholder = apiNs.i18n.getMessage('unable_to_decode', error)
-      }
-    }
-  }
-
-  getFilenameFromTitle (title) {
-    return SanitizeFilename(title).substr(0, 100) + '.png'
-  }
+    };
+  }, [copyTime]);
 
   /**
    * @returns {Promise<HTMLCanvasElement>}
    */
-  createCanvasForQrCode (size) {
-    size = size || 500
-    return new Promise((resolve, reject) => {
-      const svg = document.querySelector('svg').cloneNode(true)
-      svg.setAttribute('width', size)
-      svg.setAttribute('height', size)
-      const img = document.createElement('img')
-      const canvas = document.createElement('canvas')
-      const xml = new XMLSerializer().serializeToString(svg)
-      const svg64 = btoa(xml)
+  const createCanvasForQrCode = (size) => {
+    size = size || 500;
+    return new Promise((resolve) => {
+      const svg = document.querySelector("svg").cloneNode(true);
+      svg.setAttribute("width", size);
+      svg.setAttribute("height", size);
+      const img = document.createElement("img");
+      const canvas = document.createElement("canvas");
+      const xml = new XMLSerializer().serializeToString(svg);
+      const svg64 = btoa(xml);
 
-      canvas.width = canvas.height = size
-      img.src = 'data:image/svg+xml;base64,' + svg64
+      canvas.width = canvas.height = size;
+      img.src = "data:image/svg+xml;base64," + svg64;
       img.onload = function () {
-        const context = canvas.getContext('2d')
-        context.fillStyle = '#FFFFFF'
-        context.fillRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(img, 0, 0)
-        resolve(canvas)
-      }
-    })
-  }
+        const context = canvas.getContext("2d");
+        context.fillStyle = "#FFFFFF";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0);
+        resolve(canvas);
+      };
+    });
+  };
 
-  downloadImage () {
-    const that = this
+  const getFilenameFromTitle = (title) => {
+    return SanitizeFilename(title).substr(0, 100) + ".png";
+  };
 
-    this.createCanvasForQrCode().then(canvas => {
-      const a = document.createElement('a')
-      a.href = canvas.toDataURL('image/png')
-      a.download = that.currentTitle ? that.getFilenameFromTitle(that.currentTitle) : 'qr-code.png'
-      a.click()
-    })
-  }
+  const downloadImage = () => {
+    createCanvasForQrCode().then((canvas) => {
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = title ? getFilenameFromTitle(title) : "qr-code.png";
+      a.click();
+    });
+  };
 
-  copyImage () {
-    this.createCanvasForQrCode()
-      .then(canvas => clipboard.copyPng(canvas))
-      .then(() => {
-        addClass('hidden', $('#copy'))
-        removeClass('hidden', $('#copied'))
-        setTimeout(() => {
-          removeClass('hidden', $('#copy'))
-          addClass('hidden', $('#copied'))
-        }, 2000)
-      })
-  }
+  const copyImage = () => {
+    createCanvasForQrCode()
+      .then((canvas) => clipboard.copyPng(canvas))
+      .then(() => setCopyTime(Date.now()));
+  };
 
-  renderPage () {
-    renderTemplate($('#template'))
-    document.documentElement.classList.add(QRLITE_BROWSER)
-  }
+  const ecLevels = [
+    ["L", T("error_correction_level_btn_low_title")],
+    ["M", T("error_correction_level_btn_medium_title")],
+    ["Q", T("error_correction_level_btn_quartile_title")],
+    ["H", T("error_correction_level_btn_high_title")],
+  ];
 
-  renderHistory () {
-    this.getHistory()
-      .then(function (history) {
-        const removeBtnTitle = apiNs.i18n.getMessage('remove_history_btn_title')
+  return (
+    <div class={"main" + (props.hidden ? " hidden" : "")} id="main">
+      <textarea
+        class="source"
+        id="sourceInput"
+        title={T("content_title")}
+        spellCheck="false"
+        placeholder={T("content_placeholder")}
+        value={content}
+        onChange={(e) => {
+          setContent(e.target.value);
+        }}
+        onPaste={(e) => {
+          // avoid getting caught by global paste event listener
+          e.stopPropagation();
+        }}
+      ></textarea>
+      <div class="necker-container">
+        <div class="necker length-view">
+          <span title={T("content_length_label_title")}>
+            {TT("content_length_label")}
+            <span class="counter" id="counter">
+              {content.length}
+            </span>
+          </span>
+        </div>
+        <div class="necker ec-view">
+          <span title={T("error_correction_level_label_title")}>
+            {TT("error_correction_level_label")}
+          </span>
+          <span id="ecLevels" class="ec-levels-container">
+            {ecLevels.map(([level, title]) => (
+              <span
+                key={level}
+                class={
+                  "clickable ec-level " +
+                  (settings.ecLevel === level ? "ec-level-active" : "")
+                }
+                title={title}
+                onClick={() => saveSettings({ ecLevel: level })}
+              >
+                {level}
+              </span>
+            ))}
+          </span>
+        </div>
+      </div>
+      <div class="result" id="result" ref={resultNode}></div>
+      <div class="footer-container">
+        <div class="footer actions1">
+          {qrCodeImage && (
+            <span
+              class="clickable"
+              id="save"
+              title={T("save_image_btn_title")}
+              onClick={() => downloadImage()}
+            >
+              <img class="icon icon-invert" src="../icons/save.svg" />
+              {TT("save_image_btn")}
+            </span>
+          )}
+        </div>
+        <div class="footer actions2">
+          {qrCodeImage && (
+            <>
+              {!copyTime || copyTime + 3000 < Date.now() ? (
+                <span
+                  class="clickable"
+                  id="copy"
+                  title={T("copy_image_btn_title")}
+                  onClick={copyImage}
+                >
+                  <img class="icon icon-invert" src="../icons/copy.svg" />
+                  {TT("copy_image_btn")}
+                </span>
+              ) : (
+                <span class="" id="copied">
+                  {TT("copy_image_ok")}
+                </span>
+              )}
+            </>
+          )}
+        </div>
+        <div class="footer actions3">
+          <a
+            class="clickable"
+            target="_blank"
+            href="https://github.com/monyxie/qr-lite"
+            rel="noreferrer"
+            title={T("github_link_title")}
+          >
+            <img class="icon icon-invert" src="../icons/code.svg" />v
+            {TT("version")}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+});
 
-        const ul = $('#history-items')
-        ul.innerHTML = ''
-        history.reverse()
-        for (let i = 0; i < history.length; i++) {
-          const li = document.createElement('li')
-          li.className = 'history-item'
-          li.title = history[i].text || ''
+Generator.propTypes = {
+  content: PropTypes.string,
+  title: PropTypes.string,
+  hidden: PropTypes.bool,
+  ref: PropTypes.any,
+};
 
-          const img = document.createElement('img')
-          img.className = 'icon icon-invert'
-          if (history[i].type === 'decode') {
-            img.src = '../icons/scan.svg'
-          } else {
-            img.src = '../icons/generate.svg'
-          }
-          li.appendChild(img)
+function PermissionPrompt({ type }) {
+  const permissionName =
+    type === "camera"
+      ? T("grant_camera_permission_name")
+      : type === "all-urls"
+      ? T("grant_all_urls_permission_name")
+      : null;
+  return (
+    <div class="instructions instruction-screen" id="permissionInstructions">
+      <p>
+        <span id="grant-permissions-instructions">
+          {TT("grant_permissions_instructions_html", permissionName)}
+        </span>
+        <br />
+        <br />
+        <a
+          class="clickable"
+          id="grantPermissionsBtn"
+          target="_blank"
+          rel="noreferrer"
+          href={apiNs.runtime.getURL(`/pages/grant.html?permission=${type}`)}
+        >
+          <img class="icon icon-invert" src="../icons/open-url.svg" />
+          {TT("grant_permissions_btn")}
+        </a>
+      </p>
+    </div>
+  );
+}
 
-          const text = document.createTextNode(' ' + (history[i].text || ''))
-          const span = document.createElement('span')
-          span.className = 'history-item-text'
-          span.appendChild(text)
-          li.appendChild(span)
+PermissionPrompt.propTypes = {
+  type: PropTypes.string,
+};
 
-          const removeBtn = document.createElement('span')
-          removeBtn.className = 'remove-history-btn clickable'
-          removeBtn.title = removeBtnTitle
-          const removeIcon = document.createElement('img')
-          removeIcon.className = 'icon icon-invert'
-          removeIcon.src = '../icons/trash.svg'
-          removeBtn.appendChild(removeIcon)
-          li.appendChild(removeBtn)
+function ImageScanner(props) {
+  const needsUrlPermission = isUrl(props.url);
+  const [hasUrlPermission, setHasUrlPermission] = useState(false);
+  const [error, setError] = useState(null);
+  const inputImgNode = useRef(null);
+  const outputContentNode = useRef(null);
+  const [result, setResult] = useState(null);
+  const audioPlayer = useRef(useAudioPlayer());
+  const [settings] = useSettings();
+  const [decodeTime, setDecodeTime] = useState(null);
 
-          ul.appendChild(li)
-        }
-      })
-  }
+  useEffect(() => {
+    if (needsUrlPermission) {
+      apiNs.permissions
+        .contains({ origins: ["<all_urls>"] })
+        .then(setHasUrlPermission);
+    }
+  }, [needsUrlPermission]);
 
-  async startCameraScan () {
-    const that = this
-    const $scanOutput = $('#scanOutput')
-    const $scanInputImage = $('#scanInputImage')
-    const $cameraRescanBtn = $('#cameraRescanBtn')
-    const $scanVideo = $('#scanVideo')
-    const $scanInput = $('#scanInput')
-    const $scanInstructions = $('#scanInstructions')
-    const $scanningText = $('#scanningText')
+  useEffect(() => {
+    if (decodeTime && settings?.soundEnabled) {
+      audioPlayer.current?.play("/audio/success.mp3");
+    }
+  }, [decodeTime]);
 
-    $cameraRescanBtn.onclick = () => this.startCameraScan()
-    $scanVideo.onplay = () => removeClass('hidden', $scanningText)
-    $scanVideo.onpause = () => addClass('hidden', $scanningText)
-
-    this.showTab('scan')
-    removeClass('hidden', '#scanInput')
-
-    let stream
-    try {
-      stream = await navigator.mediaDevices
-        .getUserMedia({ video: true, audio: false })
-    } catch (e) {
-      // getUserMedia() failed
-      removeClass('hidden', '#permissionInstructions')
-      $('#grant-permissions-instructions').innerHTML = apiNs.i18n.getMessage(
-        'grant_permissions_instructions_html',
-        apiNs.i18n.getMessage('grant_camera_permission_name')
-      )
-      $('#grantPermissionsBtn').href = apiNs.runtime.getURL('/pages/grant.html?permission=camera')
-      addClass('hidden', $scanInstructions)
-      addClass('hidden', $scanInput)
-      return
+  useEffect(() => {
+    if (needsUrlPermission && !hasUrlPermission) {
+      return;
+    }
+    if (!inputImgNode.current) {
+      return;
     }
 
-    try {
-      addClass('hidden', $scanInstructions, $scanInputImage, '#positionMarker', $cameraRescanBtn)
-      removeClass('hidden', $scanOutput)
-      $scanOutput.placeholder = ''
-      $scanOutput.value = ''
-      $scanVideo.classList.remove('hidden')
-      $scanVideo.srcObject = stream
-      $scanVideo.play()
-      const canvas = document.createElement('canvas')
+    (async () => {
+      let success = false;
+      let errMsg = "";
+      try {
+        // wait for decode to complete before scanning
+        await inputImgNode.current.decode();
 
-      let result
-      while (true) {
-        if (that.currentTab !== 'scan') {
-          break
+        /**
+         * Array<{content, vertices}>
+         */
+        const result = await scan(inputImgNode.current);
+        if (result.length < 1) {
+          errMsg = T("unable_to_decode_qr_code");
+        } else {
+          success = true;
+          setResult(result[0]);
+          outputContentNode.current?.select();
+          await addHistory("decode", result[0].content);
         }
-
-        if (!$scanVideo.videoHeight || !$scanVideo.videoWidth || $scanVideo.paused) {
-          await sleep(100)
-          continue
-        }
-
-        canvas.width = 300
-        canvas.height = $scanVideo.videoHeight / ($scanVideo.videoWidth / canvas.width)
-
-        // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
-        // This will affect all subsequent operations on the same canvas
-        const context = canvas.getContext('2d', { willReadFrequently: true })
-        context.drawImage($scanVideo, 0, 0, canvas.width, canvas.height)
-
-        try {
-          result = await scan(canvas)
-        } catch (e) {
-          console.error(e)
-        }
-
-        if (result && result.length > 0) {
-          break
-        }
-
-        await sleep(100)
+      } catch (e) {
+        console.error(e);
+        errMsg = T("decoding_failed", e);
       }
 
-      if (!result || !result.length) {
-        return
+      if (success) {
+        setDecodeTime(Date.now());
+      } else {
+        setError(errMsg || T("unable_to_decode"));
       }
+    })();
+  }, [hasUrlPermission, needsUrlPermission, inputImgNode, props.url]);
 
-      this.playSound('/audio/success.mp3')
+  useEffect(() => {
+    if (result && outputContentNode.current) {
+      outputContentNode.current.select();
+    }
+  }, [result]);
 
-      const text = result[0].content
-      const rect = result[0].vertices
+  if (needsUrlPermission && !hasUrlPermission) {
+    return <PermissionPrompt type="all-urls" />;
+  }
 
-      $scanOutput.placeholder = ''
-      $scanOutput.value = text
-      $scanOutput.select()
+  return (
+    <>
+      <div class="input " id="scanInput">
+        <div class="input-box">
+          <QRPositionMarker
+            result={result}
+            width={inputImgNode.current?.width || 0}
+            height={inputImgNode.current?.height || 0}
+          >
+            <img
+              class="scan-input-image"
+              id="scanInputImage"
+              crossOrigin="anonymous"
+              ref={inputImgNode}
+              src={props.url}
+            ></img>
+          </QRPositionMarker>
+        </div>
+      </div>
+      <div class="necker-container"></div>
+      <textarea
+        class="output"
+        id="scanOutput"
+        title={T("content_title")}
+        readOnly
+        placeholder={error}
+        value={result?.content}
+        spellCheck="false"
+        ref={outputContentNode}
+      ></textarea>
+      <div class="footer-container">
+        <div class="footer actions1">
+          {isUrl(result?.content) && (
+            <span
+              class="clickable"
+              id="openLinkBtn"
+              title={T("open_url_btn_title")}
+              onClick={() => {
+                window.open(result.content, "_blank");
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/open-url.svg" />
+              {TT("open_url_btn")}
+            </span>
+          )}
+        </div>
+        <div class="footer actions2"></div>
+        <div class="footer actions3"></div>
+      </div>
+    </>
+  );
+}
 
-      $scanInputImage.classList.remove('hidden')
-      $scanInputImage.src = canvas.toDataURL('image/png')
+ImageScanner.propTypes = {
+  url: PropTypes.string,
+};
 
-      $cameraRescanBtn.classList.remove('hidden')
+function ScanInstructions({ onClickScanRegion, onClickCameraScan }) {
+  const params = useURLParams();
+  const isStandalone =
+    !params?.has("forcepopup") &&
+    apiNs.extension.getViews({ type: "popup" }).length === 0;
 
-      that.addHistory('decode', text)
+  return (
+    <div class="instructions instruction-screen " id="scanInstructions">
+      <p>{TT("scan_instructions_html")}</p>
+      <div class="divider">{TT("or")}</div>
+      <p>{TT("scan_from_clipboard_instructions_html")}</p>
+      {!isStandalone && (
+        <>
+          <div class="divider">{TT("or")}</div>
+          <p class="">
+            <a class="clickable" id="scanRegion" onClick={onClickScanRegion}>
+              <img class="icon icon-invert" src="../icons/scan-region.svg" />
+              {TT("pick_region_to_scan_btn")}
+            </a>
+          </p>
+        </>
+      )}
+      <div class="divider">{TT("or")}</div>
+      <p>
+        <a class="clickable" id="cameraScan" onClick={onClickCameraScan}>
+          <img class="icon icon-invert" src="../icons/camera.svg" />
+          {TT("camera_scan_btn")}
+        </a>
+      </p>
+    </div>
+  );
+}
 
-      if (isUrl(text)) {
-        $('#openLinkBtn').classList.remove('hidden')
-      }
+ScanInstructions.propTypes = {
+  onClickScanRegion: PropTypes.func,
+  onClickCameraScan: PropTypes.func,
+};
 
-      $scanInputImage.decode().then(() => {
-        if (rect) {
-          that.createRectMarker(rect, $scanInput, $scanInputImage)
-        }
+function CameraScanner() {
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [stream, setStream] = useState(null);
+  const videoRef = useRef(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const audioPlayer = useRef(useAudioPlayer());
+  const outputContentNode = useRef(null);
+  const canvasRef = useRef(null);
+  const [settings] = useSettings();
+  const [captured, setCaptured] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [decodeTime, setDecodeTime] = useState(null);
+
+  useEffect(() => {
+    if (decodeTime && settings?.soundEnabled) {
+      audioPlayer.current?.play("/audio/success.mp3");
+    }
+  }, [decodeTime]);
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: false,
       })
-    } catch (err) {
-      console.error(`An error occurred: ${err}`)
-    } finally {
+      .then((r) => {
+        setStream(r);
+        setHasCameraPermission(true);
+      })
+      .catch(() => {
+        setHasCameraPermission(false);
+      });
+  }, []);
+
+  // setting up
+  useEffect(() => {
+    if (!stream || !videoRef.current) {
+      return;
+    }
+    const video = videoRef.current;
+    (async () => {
+      try {
+        video.srcObject = stream;
+        video.play();
+        while (!video.videoHeight || !video.videoWidth || video.paused) {
+          await sleep(100);
+        }
+        setIsVideoReady(true);
+      } catch (err) {
+        console.error(`An error occurred: ${err}`);
+        setError(err + "");
+      }
+    })();
+
+    return () => {
       if (stream) {
         stream.getTracks().forEach(function (track) {
-          track.stop()
-        })
+          track.stop();
+        });
       }
-      $scanVideo.pause()
-      $scanVideo.srcObject = undefined
-      addClass('hidden', $scanningText)
-      addClass('hidden', $scanVideo)
-    }
-  }
+      if (video) {
+        video.pause();
+        video.srcObject = undefined;
+      }
+    };
+  }, [stream]);
 
-  async playSound (name) {
-    if ((await storage.get('soundEnabled')).soundEnabled !== '1') {
-      return
+  // capturing
+  useEffect(() => {
+    if (!isVideoReady) {
+      return;
     }
-
-    if (!this.sounds) {
-      this.sounds = {}
+    if (captured) {
+      return;
     }
-    if (!this.sounds[name]) {
-      this.sounds[name] = new Audio(name)
-    }
-    this.sounds[name].play()
-  }
-
-  /**
-   * @param tab {string:'scan'|'generate'|'history'}
-   */
-  showTab (tab) {
-    const M = {
-      scanOutput: null,
-      scanInputImage: null,
-      cameraRescanBtn: null,
-      openLinkBtn: null,
-      scanVideo: null,
-      positionMarker: null,
-      permissionInstructions: null,
-      scanInput: null,
-      scanInstructions: null,
-      history: null,
-      main: null,
-      scan: null,
-      'tab-generate': null,
-      'tab-history': null,
-      'tab-scan': null
+    if (result) {
+      return;
     }
 
-    for (const id in M) {
-      M[id] = $('#' + id)
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) {
+      return;
     }
 
-    // tabs config {id: {tab: TAB_ID, content: CONTENT_ID, in: IN_CALLBACK, out: OUT_CALLBACK}}
-    const config = {
-      generate: {
-        tab: '#tab-generate',
-        content: '#main',
-        in: () => {},
-        out: () => {}
-      },
-      scan: {
-        tab: '#tab-scan',
-        content: '#scan',
-        in: () => {
-          // addClass('hidden', M.scanInput)
-        },
-        out: () => {
-          addClass('hidden',
-            M.scanOutput,
-            M.scanInputImage,
-            M.cameraRescanBtn,
-            M.openLinkBtn,
-            M.scanVideo,
-            M.positionMarker,
-            M.permissionInstructions,
-            M.scanInput
-          )
-          removeClass('hidden', M.scanInput, M.scanInstructions)
+    canvas.width = 300;
+    canvas.height = video.videoHeight / (video.videoWidth / canvas.width);
+    // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
+    // This will affect all subsequent operations on the same canvas
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    setCaptured(true);
+  }, [isVideoReady, captured, result]);
+
+  // scanning
+  useEffect(() => {
+    (async () => {
+      if (captured || canvasRef.current) {
+        try {
+          const results = await scan(canvasRef.current);
+          if (results && results.length > 0) {
+            setResult(results[0]);
+            setDecodeTime(Date.now());
+            addHistory("decode", results[0].content);
+          }
+        } catch (e) {
+          console.error(e);
         }
-      },
-      history: {
-        tab: '#tab-history',
-        content: '#history',
-        in: () => {
-          this.renderHistory()
-        },
-        out: () => {}
       }
+      await sleep(100);
+      setCaptured(false);
+    })();
+  }, [captured]);
+
+  useEffect(() => {
+    if (result && outputContentNode.current) {
+      outputContentNode.current.select();
     }
+  }, [result]);
 
-    for (const k in config) {
-      if (k !== tab) {
-        config[k].out()
-        removeClass('active', config[k].tab)
-        addClass('hidden', config[k].content)
-      }
-    }
-
-    config[tab].in()
-    addClass('active', config[tab].tab)
-    removeClass('hidden', config[tab].content)
-
-    this.currentTab = tab
+  if (hasCameraPermission === null) {
+    return null;
+  }
+  if (!hasCameraPermission) {
+    return <PermissionPrompt type="camera" />;
   }
 
-  setZoom () {
-    if (window.innerHeight < document.documentElement.scrollHeight) {
-      document.documentElement.style.zoom = window.innerHeight / document.documentElement.scrollHeight
+  return (
+    <>
+      <div class="input" id="scanInput">
+        <div class="input-box">
+          <video
+            id="scanVideo"
+            ref={videoRef}
+            class={"camera " + (result ? "hidden" : "")}
+          ></video>
+          <QRPositionMarker
+            width={canvasRef.current?.width || 0}
+            height={canvasRef.current?.height || 0}
+            result={result}
+            mirror={true}
+          >
+            <canvas id="canvas" ref={canvasRef}></canvas>
+          </QRPositionMarker>
+        </div>
+      </div>
+      <div class="necker-container">
+        {isVideoReady && !result && (
+          <div class="necker instructions">
+            <p class="" id="scanningText">
+              {TT("scanning")}
+            </p>
+          </div>
+        )}
+      </div>
+      <textarea
+        class="output "
+        id="scanOutput"
+        title={T("content_title")}
+        readOnly
+        placeholder={error}
+        value={result?.content}
+        spellCheck="false"
+        ref={outputContentNode}
+      ></textarea>
+      <div class="footer-container">
+        <div class="footer actions1">
+          {isUrl(result?.content) && (
+            <span
+              class="clickable"
+              id="openLinkBtn"
+              title={T("open_url_btn_title")}
+              onClick={() => {
+                window.open(result.content, "_blank");
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/open-url.svg" />
+              {TT("open_url_btn")}
+            </span>
+          )}
+        </div>
+        <div class="footer actions2"></div>
+        <div class="footer actions3">
+          {result && (
+            <a
+              class="clickable"
+              id="cameraRescanBtn"
+              title={T("rescan_btn_title")}
+              onClick={() => {
+                setResult(null);
+                setError(null);
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/refresh.svg" />
+              {TT("rescan_btn_label")}
+            </a>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+CameraScanner.propTypes = {};
+
+function Scanner(props) {
+  const [mode, setMode] = useState(props.mode);
+  const [component, setComponent] = useState(null);
+
+  useEffect(() => {
+    if (mode === "camera") {
+      setComponent(<CameraScanner />);
+    } else if (props.url) {
+      setComponent(<ImageScanner url={props.url} />);
+    } else {
+      setComponent(
+        <ScanInstructions
+          onClickScanRegion={() => {
+            apiNs.runtime.sendMessage({
+              action: "BG_INJECT_PICKER_LOADER",
+            });
+            // close self (popup)
+            window.close();
+          }}
+          onClickCameraScan={() => setMode("camera")}
+        />
+      );
     }
-  }
+  }, [props.url, mode]);
+  return (
+    <div class="scan" id="scan">
+      {component}
+    </div>
+  );
+}
 
-  async performInitialAction () {
-    let options = await apiNs.runtime.sendMessage({ action: 'POPUP_GET_OPTIONS' })
+Scanner.propTypes = {
+  url: PropTypes.string,
+  mode: PropTypes.string,
+};
 
-    if (!options) {
-      const queryTabs = await tabs.query({ active: true, currentWindow: true })
-      if (queryTabs.length > 0) {
-        options = { action: 'POPUP_ENCODE', text: queryTabs[0].url, title: queryTabs[0].title }
+function Historian(props) {
+  const [history, setHistory] = useState([]);
+  const [settings, saveSettings] = useSettings();
+
+  const getData = () =>
+    getHistory().then(function (history) {
+      history.reverse();
+      setHistory(history);
+    });
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const historyList = history.map((item) => {
+    return (
+      <li
+        class="history-item"
+        title={item.text || ""}
+        key={item.text}
+        onClick={() => {
+          if (props.onClickItem) {
+            props.onClickItem(item);
+          }
+        }}
+      >
+        <img
+          class="icon icon-invert"
+          src={
+            item.type === "decode"
+              ? "../icons/scan.svg"
+              : "../icons/generate.svg"
+          }
+        />
+        <span class="history-item-text">{item.text || ""}</span>
+        <span
+          class="remove-history-btn clickable"
+          title={T("remove_history_btn_title")}
+          onClick={(e) => {
+            e.stopPropagation();
+            removeHistory(item.text).then(getData);
+          }}
+        >
+          <img class="icon icon-invert" src="../icons/trash.svg" />
+        </span>
+      </li>
+    );
+  });
+
+  return (
+    <div class="history" id="history">
+      <ul class="history-items" id="history-items">
+        {historyList}
+      </ul>
+      <div class="footer-container">
+        <div class="footer actions1">
+          <span
+            class="clickable"
+            id="clear-history-btn"
+            title={T("clear_history_btn_title")}
+            onClick={() => {
+              clearHistory().then(getData);
+            }}
+          >
+            <img class="icon icon-invert" src="../icons/swipe.svg" />
+            {TT("clear_history_btn")}
+          </span>
+        </div>
+        <div class="footer actions2"></div>
+        <div class="footer actions3">
+          {settings.historyEnabled ? (
+            <a
+              class="clickable"
+              id="disable-history-btn"
+              title={T("disable_history_btn_title")}
+              onClick={() => {
+                saveSettings({ historyEnabled: false });
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/pause.svg" />
+              {TT("disable_history_btn_label")}
+            </a>
+          ) : (
+            <a
+              class="clickable"
+              id="enable-history-btn"
+              title={T("enable_history_btn_title")}
+              onClick={() => {
+                saveSettings({ historyEnabled: true });
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/play.svg" />
+              {TT("enable_history_btn_label")}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Historian.propTypes = {
+  onClickItem: PropTypes.func,
+};
+
+function Popup() {
+  const [options, setOptions] = useState(null);
+  const [component, setComponent] = useState(null);
+  const generatorRef = useRef(null);
+
+  const handlePaste = (e) => {
+    if (e.clipboardData?.files?.length > 0) {
+      const file = e.clipboardData.files[0];
+
+      if (file?.type?.startsWith("image/")) {
+        setOptions({
+          action: "POPUP_DECODE",
+          image: URL.createObjectURL(file),
+        });
+        return false;
       }
     }
 
-    if (!options) {
-      options = { action: 'POPUP_ENCODE', text: '' }
+    const text = e.clipboardData?.getData("text/plain");
+
+    if (text) {
+      generatorRef.current?.setContent(text);
+      setOptions({ action: "POPUP_ENCODE" });
+      return false;
     }
 
-    switch (options.action) {
-      case 'POPUP_ENCODE':
-        this.createQrCode(options.text, this.ecLevel, options.title, 'now')
-        break
-      case 'POPUP_DECODE':
-        this.decodeImage(options.image)
-        break
-      case 'POPUP_DECODE_CAMERA':
-        this.startCameraScan()
-        break
-    }
+    return true;
+  };
+
+  useEffect(() => {
+    window.addEventListener("paste", handlePaste);
+    return () => {
+      window.removeEventListener("paste", handlePaste);
+    };
+  }, []);
+
+  useEffect(() => {
+    apiNs.runtime
+      .sendMessage({
+        action: "POPUP_GET_OPTIONS",
+      })
+      .then((r) => {
+        if (r) {
+          return r;
+        }
+        return tabs
+          .query({ active: true, currentWindow: true })
+          .then((queryTabs) => {
+            if (queryTabs.length > 0) {
+              return {
+                action: "POPUP_ENCODE",
+                text: queryTabs[0].url,
+                title: queryTabs[0].title,
+              };
+            }
+          });
+      })
+      .then((r) => {
+        setOptions(r || { action: "POPUP_ENCODE" });
+      });
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.add(QRLITE_BROWSER);
 
     // needed in chrome to prevent the vertical scrollbar from showing up in the popup
     // when the default zoom level is set to a large value
-    if (QRLITE_BROWSER === 'chrome') {
-      this.setZoom()
+    if (QRLITE_BROWSER === "chrome") {
+      if (window.innerHeight < document.documentElement.scrollHeight) {
+        document.documentElement.style.zoom =
+          window.innerHeight / document.documentElement.scrollHeight;
+      }
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    if (options) {
+      switch (options.action) {
+        case "POPUP_DECODE":
+          setComponent(<Scanner url={options?.image} />);
+          break;
+        case "POPUP_DECODE_CAMERA":
+          setComponent(<Scanner mode={"camera"} />);
+          break;
+        case "POPUP_HISTORY":
+          setComponent(
+            <Historian
+              onClickItem={(item) => {
+                generatorRef.current?.setContent(item.text);
+                setOptions({ action: "POPUP_ENCODE" });
+              }}
+            ></Historian>
+          );
+          break;
+        default:
+          setComponent(null);
+          break;
+      }
+    }
+  }, [options]);
+
+  return (
+    <div class="container">
+      <div class="tabs-container">
+        <div
+          class={
+            "tabs-item " + (options?.action === "POPUP_ENCODE" ? "active" : "")
+          }
+          id="tab-generate"
+          title={T("tab_generate_title")}
+          onClick={() => setOptions({ action: "POPUP_ENCODE" })}
+        >
+          <div class="tabs-item-label">
+            <img class="icon icon-invert" src="../icons/generate.svg" />
+            <span class="tabs-item-text">{TT("tab_generate_title")}</span>
+          </div>
+        </div>
+        <div
+          class={
+            "tabs-item " + (options?.action === "POPUP_DECODE" ? "active" : "")
+          }
+          id="tab-scan"
+          title={T("tab_scan_title")}
+          onClick={() => setOptions({ action: "POPUP_DECODE" })}
+        >
+          <div class="tabs-item-label">
+            <img class="icon icon-invert" src="../icons/scan.svg" />
+            <span class="tabs-item-text">{TT("tab_scan_title")}</span>
+          </div>
+        </div>
+        <div
+          class={
+            "tabs-item " + (options?.action === "POPUP_HISTORY" ? "active" : "")
+          }
+          id="tab-history"
+          title={T("tab_history_title")}
+          onClick={() => setOptions({ action: "POPUP_HISTORY" })}
+        >
+          <div class="tabs-item-label">
+            <img class="icon icon-invert" src="../icons/history.svg" />
+            <span class="tabs-item-text">{TT("tab_history_title")}</span>
+          </div>
+        </div>
+        <div
+          class="tabs-item"
+          id="tab-settings"
+          title={T("tab_settings_title")}
+          onClick={() => apiNs.runtime.openOptionsPage()}
+        >
+          <div class="tabs-item-label">
+            <img class="icon icon-invert" src="../icons/gear.svg" />
+          </div>
+        </div>
+      </div>
+      <div class="content-container" data-role="content">
+        {/* keep generator mounted so that it doesn't lose its state */}
+        {options && (
+          <Generator
+            ref={generatorRef}
+            hidden={!!component}
+            content={
+              options.action === "POPUP_ENCODE" ? options.text || "" : ""
+            }
+            title={options.action === "POPUP_ENCODE" ? options.title || "" : ""}
+          />
+        )}
+        {component}
+      </div>
+    </div>
+  );
 }
 
-window.__popup = new Popup()
-window.__popup.init()
+render(<Popup />, document.body);

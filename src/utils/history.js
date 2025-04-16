@@ -1,72 +1,64 @@
-import { storage } from './compat'
+import { storage } from "./compat";
+import { getSettings } from "./settings";
 
-async function isHistoryEnabled () {
-  const result = await storage.get('historyEnabled')
-  return result.historyEnabled !== false // Default to enabled if not set
-}
-
-export async function getHistory () {
+export async function getHistory() {
   try {
-    const results = await storage.get('history')
+    const results = await storage.get("history");
     if (results.history) {
-      return JSON.parse(results.history)
+      return JSON.parse(results.history);
     }
-    return []
+    return [];
   } catch (e) {
-    console.error('error while parsing history', e)
+    console.error("error while parsing history", e);
   }
 }
 
-export async function clearHistory () {
+export async function clearHistory() {
   await storage.set({
-    history: '[]'
-  })
+    history: "[]",
+  });
 }
 
-export async function addHistory (type, text) {
-  if (type !== 'encode' && type !== 'decode') {
-    return
+/**
+ *
+ * @param {'encode'|'decode'} type
+ * @param {string} text
+ * @returns
+ */
+export async function addHistory(type, text) {
+  if (type !== "encode" && type !== "decode") {
+    return;
+  }
+  if (!(await getSettings()).historyEnabled) {
+    return;
   }
 
-  if (!(await isHistoryEnabled())) {
-    return
-  }
-  let history = await getHistory()
+  let history = await getHistory();
   // Don't add duplicate items
   if (history && history.length > 0) {
     if (history[history.length - 1].text === text) {
-      return
+      return;
     }
   }
   history = history.filter(function (item) {
-    return item.text && item.text !== text
-  })
-  history = [...history, { type, text }]
+    return item.text && item.text !== text;
+  });
+  history = [...history, { type, text }];
   if (history.length > 100) {
-    history = history.slice(history.length - 100, history.length)
+    history = history.slice(history.length - 100, history.length);
   }
 
   await storage.set({
-    history: JSON.stringify(history)
-  })
+    history: JSON.stringify(history),
+  });
 }
 
-export async function removeHistory (text) {
-  let history = await getHistory()
+export async function removeHistory(text) {
+  let history = await getHistory();
   history = history.filter(function (item) {
-    return item.text !== text
-  })
+    return item.text !== text;
+  });
   await storage.set({
-    history: JSON.stringify(history)
-  })
-}
-
-export async function setHistoryState (enabled) {
-  await storage.set({
-    historyEnabled: enabled
-  })
-}
-
-export async function getHistoryState () {
-  return isHistoryEnabled()
+    history: JSON.stringify(history),
+  });
 }

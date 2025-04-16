@@ -43,7 +43,7 @@ async function extractKeysFromSource() {
     "-e",
     "apiNs\\.i18n\\.getMessage\\s*\\(\\s*['\"](\\w+)['\"]",
     "-e",
-    "TT\\s*\\(\\s*['\"](\\w+)\\s*['\"]\\s*\\)",
+    "T?T\\s*\\(\\s*['\"](\\w+)\\s*['\"]",
     "src",
     "--glob",
     "src/**/*.{js,json,html}",
@@ -84,6 +84,7 @@ async function extractKeysFromSource() {
 }
 
 (async function main() {
+  // eslint-disable-next-line no-undef
   process.chdir(path.dirname(import.meta.dirname));
 
   // ================= extract message keys from source code =================

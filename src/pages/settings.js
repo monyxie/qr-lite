@@ -10,7 +10,7 @@ import { usePageTitle, useSettings, useURLParams } from "../utils/hooks";
 
 function SettingsPage() {
   const showKeyboardShortcutsSetting = useMemo(canOpenShortcutSettings, []);
-  const [settings, saveSettings] = useSettings({});
+  const [settings, saveSettings] = useSettings();
   const params = useURLParams();
 
   usePageTitle(apiNs.i18n.getMessage("settings_window_title"));
@@ -32,9 +32,9 @@ function SettingsPage() {
                 id="soundEnabledCheckbox"
                 name="soundEnabled"
                 type="checkbox"
-                checked={settings.soundEnabled === "1"}
+                checked={settings.soundEnabled}
                 onChange={(e) => {
-                  saveSettings({ soundEnabled: e.target.checked ? "1" : "0" });
+                  saveSettings({ soundEnabled: e.target.checked });
                 }}
               />
               <label htmlFor="soundEnabledCheckbox">

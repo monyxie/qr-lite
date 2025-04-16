@@ -1,27 +1,20 @@
-import { useEffect, useState } from "react";
-import { apiNs, storage } from "./compat";
-
-const settingsKeys = ["soundEnabled"];
+import { useEffect, useState, useRef, useCallback } from "react";
+import {
+  addListener,
+  getSettings,
+  removeListener,
+  saveSettings as saveSettingsOnStorage,
+} from "./settings";
 
 export function useSettings() {
   const [settings, setSettings] = useState({});
 
   useEffect(() => {
-    storage.get(settingsKeys).then((r) => {
+    getSettings().then((r) => {
       setSettings(r);
     });
 
-    const changedListener = (changes, area) => {
-      if (area !== "local") {
-        return;
-      }
-
-      const newValues = {};
-      for (const changedKey in changes) {
-        if (settingsKeys.indexOf(changedKey) !== -1) {
-          newValues[changedKey] = changes[changedKey].newValue;
-        }
-      }
+    const changedListener = (newValues) => {
       setSettings((prevSettings) => {
         return {
           ...prevSettings,
@@ -30,9 +23,9 @@ export function useSettings() {
       });
     };
 
-    apiNs.storage.onChanged.addListener(changedListener);
+    addListener(changedListener);
     return () => {
-      apiNs.storage.onChanged.removeListener(changedListener);
+      removeListener(changedListener);
     };
   }, []);
 
@@ -43,7 +36,8 @@ export function useSettings() {
         ...newValues,
       };
     });
-    storage.set(newValues);
+
+    saveSettingsOnStorage(newValues);
   };
 
   return [settings, saveSettings];
@@ -61,4 +55,19 @@ export function usePageTitle(title) {
   useEffect(() => {
     document.title = title;
   }, [title]);
+}
+
+export function useAudioPlayer() {
+  const sounds = useRef({});
+  const play = useCallback((name) => {
+    if (!sounds.current[name]) {
+      sounds.current[name] = new Audio(name);
+    }
+    sounds.current[name].play();
+  }, []);
+  const player = {
+    play,
+  };
+
+  return player;
 }
