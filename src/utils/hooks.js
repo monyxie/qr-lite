@@ -58,16 +58,142 @@ export function usePageTitle(title) {
 }
 
 export function useAudioPlayer() {
-  const sounds = useRef({});
-  const play = useCallback((name) => {
-    if (!sounds.current[name]) {
-      sounds.current[name] = new Audio(name);
-    }
-    sounds.current[name].play();
+  const [settings] = useSettings();
+  const play = (name) => {
+    return new Promise((resolve) => {
+      if (settings.soundEnabled) {
+        const audio = new Audio(name);
+        audio.addEventListener(
+          "ended",
+          () => {
+            resolve(true);
+          },
+          { once: true }
+        );
+        audio.play();
+      } else {
+        resolve(false);
+      }
+    });
+  };
+  return play;
+}
+
+export function useWindowSize() {
+  const [size, setSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const player = {
-    play,
+
+  return size;
+}
+
+export function useMousePosition() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const handleMouseEvent = (event) => {
+      setPosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mouseenter", handleMouseEvent);
+    window.addEventListener("mousemove", handleMouseEvent);
+    window.addEventListener("mouseleave", handleMouseEvent);
+    return () => {
+      window.removeEventListener("mouseenter", handleMouseEvent);
+      window.removeEventListener("mousemove", handleMouseEvent);
+      window.removeEventListener("mouseleave", handleMouseEvent);
+    };
+  }, []);
+  return position;
+}
+
+export function useKeyPress({
+  key,
+  event,
+  el,
+  preventDefault,
+  stopPropagation,
+  callback,
+}) {
+  if (!el) {
+    el = window;
+  }
+  useEffect(() => {
+    const handleEvent = (e) => {
+      if (e.key === key) {
+        if (preventDefault) e.preventDefault();
+        if (stopPropagation) e.stopPropagation();
+        callback();
+      }
+    };
+    el.addEventListener(event, handleEvent);
+    return () => {
+      el.removeEventListener(event, handleEvent);
+    };
+  });
+}
+
+export function useWindowMessage(callback) {
+  useEffect(() => {
+    const handleMessage = (event) => {
+      callback(event);
+    };
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  });
+}
+
+export function useTemporaryState(value, timeout) {
+  const [state, setState] = useState(value);
+  useEffect(() => {
+    setState(value);
+  }, [value]);
+  useEffect(() => {
+    if (state !== value) {
+      const timer = setTimeout(() => {
+        setState(value);
+      }, timeout);
+      return () => clearTimeout(timer);
+    }
+  }, [state, timeout, value]);
+  return [state, setState];
+}
+
+export function useConsoleLog(...args) {
+  useEffect(() => {
+    console.log(...args);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, args);
+}
+
+export function useTimer() {
+  const handles = useRef([]);
+
+  useEffect(() => {
+    return () => {
+      handles.current.forEach(clearTimeout);
+    };
+  }, []);
+
+  const setTimer = (callback, delay) => {
+    const handle = setTimeout(callback, delay);
+    handles.current.push(handle);
+    return handle;
   };
 
-  return player;
+  const clearTimer = (handle) => {
+    clearTimeout(handle);
+    handles.current = handles.current.filter((t) => t !== handle);
+  };
+
+  return { setTimer, clearTimer };
 }

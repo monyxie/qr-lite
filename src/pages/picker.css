@@ -1,224 +1,263 @@
 :root {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 html,
 body {
-    background-color: transparent;
-    height: 100vh;
-    height: 100svh;
-    margin: 0;
-    overflow: hidden;
-    width: 100vw;
+  background-color: transparent;
+  height: 100vh;
+  height: 100svh;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
 }
 
 .mask {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    background-color: transparent;
-    border-color: rgba(0, 0, 0, 0.5);
-    border-style: solid;
-    border-width: 0;
-    cursor: crosshair;
-}
-
-.mask.showing-result {
-    cursor: auto;
-    border-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.5);
+  border-style: solid;
+  border-width: 0;
+  cursor: crosshair;
 }
 
 .spotlight {
-    background-color: transparent;
-    width: 100%;
-    height: 100%;
-    outline: white solid 2px;
-    border-radius: 4px;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  outline: white solid 2px;
+  border-radius: 4px;
+}
+
+/* the following 2 rules hide the spotlight when the cursor is on one of mask's siblings */
+.mask:has(~ *:hover) {
+  border-color: transparent;
+  background: rgba(0, 0, 0, 0.5);
+}
+.mask:has(~ *:hover) .spotlight {
+  display: none;
 }
 
 @media (prefers-color-scheme: dark) {
-    .spotlight {
-        outline: rgb(85, 85, 85) solid 2px;
-    }
+  .spotlight {
+    outline: rgb(85, 85, 85) solid 2px;
+  }
 }
 
 .spotlight.off {
-    outline: none;
+  outline: none;
+}
+
+.input-image-container {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 100;
+  transition: 200ms ease-out;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  transform: translate(-50%, -50%);
 }
 
 .captured {
-    display: block;
-    width: 100%;
-    height: 100%;
-    cursor: auto;
+  background-color: transparent;
+  display: block;
+  cursor: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 4px;
+  outline: white solid 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .captured {
+    outline: rgb(85, 85, 85) solid 2px;
+  }
 }
 
 .tips {
-    padding: 4px;
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    min-width: 100px;
-    transition: opacity 0.1s linear 0s;
-    display: block;
-    opacity: 1;
-    cursor: auto;
-    color: white;
-    text-shadow: rgb(0, 0, 0) 0px 1px 10px, rgb(0, 0, 0) 0px 1px 10px, rgb(0, 0, 0) 0px 1px 10px;
-    user-select: none;
-    font-size: 1rem;
-    font-family: sans-serif;
+  padding: 4px;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  min-width: 100px;
+  transition: opacity 0.1s linear 0s;
+  opacity: 1;
+  cursor: auto;
+  color: white;
+  text-shadow: rgb(0, 0, 0) 0px 1px 10px, rgb(0, 0, 0) 0px 1px 10px,
+    rgb(0, 0, 0) 0px 1px 10px;
+  user-select: none;
+  font-size: 1rem;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tips:hover {
+  opacity: 1 !important;
 }
 
 .logo {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    padding: 0.25rem;
-    vertical-align: middle;
-    background: rgba(0, 0, 0, 0.5);
-    background: radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0) 80%)
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
+  vertical-align: middle;
+  background: rgba(0, 0, 0, 0.5);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0) 80%
+  );
 }
 
-.tips-text {
-    vertical-align: middle;
-}
-
-.options {
-    vertical-align: middle;
-    margin-left: 1em;
-}
-
-.options select {
-    height: 1.8em;
-    box-shadow: rgb(0, 0, 0) 0px 1px 10px;
-    background-color: #eee;
-    border-radius: 3px;
-    border: 1px solid #b4b4b4;
-    color: #333;
+.tips select {
+  height: 1.8em;
+  box-shadow: rgb(0, 0, 0) 0px 1px 10px;
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  color: #333;
 }
 
 @media (prefers-color-scheme: dark) {
-    .options select {
-        background-color: #222;
-        border: 1px solid #a5a5a5;
-        color: #ccc;
-    }
+  .tips select {
+    background-color: #222;
+    border: 1px solid #a5a5a5;
+    color: #ccc;
+  }
 }
 
 .showing-result .hide-on-result {
-    display: none;
+  display: none;
 }
 
-
-.tips-text kbd {
-    background-color: #eee;
-    border-radius: 3px;
-    border: 1px solid #b4b4b4;
-    text-shadow: none;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
-    color: #333;
-    display: inline-block;
-    font-size: 0.85em;
-    font-weight: 700;
-    padding: 2px 4px;
-    white-space: nowrap;
-    margin-left: 0.5rem;
-    height: 1.5em;
-    vertical-align: middle;
+.tips kbd {
+  background-color: #eee;
+  border-radius: 3px;
+  border: 1px solid #b4b4b4;
+  text-shadow: none;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+    0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  color: #333;
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 2px 4px;
+  white-space: nowrap;
+  margin: 0;
+  height: 1.5em;
+  vertical-align: text-top;
 }
 
 @media (prefers-color-scheme: dark) {
-    .tips-text kbd {
-        background-color: #222;
-        border: 1px solid #a5a5a5;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(18, 18, 18, 0.7) inset;
-        color: #ccc;
-    }
+  .tips kbd {
+    background-color: #222;
+    border: 1px solid #a5a5a5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+      0 2px 0 0 rgba(18, 18, 18, 0.7) inset;
+    color: #ccc;
+  }
 }
 
-.tips-text kbd .icon {
-    display: block;
-    height: 1.5em;
+.tips kbd .icon {
+  display: block;
+  height: 1.5em;
 }
 
 .x-mark {
-    position: fixed;
-    width: 36px;
-    height: 36px;
-    text-align: center;
-    line-height: 36px;
-    right: 0px;
-    top: 0px;
-    margin: 4px;
-    color: white;
-    text-shadow: rgb(0, 0, 0) 0px 0px 10px, rgb(0, 0, 0) 0px 0px 10px, rgb(0, 0, 0) 0px 0px 10px;
-    font-size: 2rem;
-    font-family: sans-serif;
-    cursor: pointer;
-    transition: opacity 0.1s linear 0s;
-    opacity: 1;
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 36px;
+  right: 0px;
+  top: 0px;
+  margin: 4px;
+  color: white;
+  text-shadow: rgb(0, 0, 0) 0px 0px 10px, rgb(0, 0, 0) 0px 0px 10px,
+    rgb(0, 0, 0) 0px 0px 10px;
+  font-size: 2rem;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: opacity 0.1s linear 0s;
+  opacity: 1;
+}
+
+.x-mark:hover {
+  opacity: 1 !important;
 }
 
 .result {
-    display: block;
-    border: none;
-    border-radius: 4px;
-    margin: 0;
-    padding: 0;
-    word-break: break-all;
-    position: fixed;
-    top: 55%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 25rem;
-    max-width: 90%;
-    box-shadow: #80ff80 0 0 20px;
-    outline: white solid 2px;
-    cursor: auto;
-    background: linear-gradient(#DFD 0%, #EFE 30%);
+  display: block;
+  border: none;
+  border-radius: 4px;
+  margin: 0;
+  padding: 0;
+  padding-top: 400px;
+  word-break: break-all;
+  position: fixed;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 25rem;
+  max-width: 90%;
+  box-shadow: #80ff80 0 0 20px;
+  outline: white solid 2px;
+  cursor: auto;
+  background: linear-gradient(#dfd 0%, #efe 30%);
+  transition: opacity 0.1s linear 0s;
 }
 
 .result textarea {
-    font-size: medium;
-    font-family: sans-serif;
-    width: calc(100% - 12px);
-    word-break: break-all;
-    border-width: 1px 0;
-    border-color: #CCCCCC;
-    border-style: solid;
-    padding: 1px;
-    margin: 6px;
-    resize: none;
-    color: #333;
-    background-color: rgba(255, 255, 255, 0.7);
-    box-sizing: border-box;
+  font-size: medium;
+  font-family: sans-serif;
+  width: calc(100% - 12px);
+  word-break: break-all;
+  border-width: 1px 0;
+  border-color: #cccccc;
+  border-style: solid;
+  padding: 1px;
+  margin: 6px;
+  resize: none;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-sizing: border-box;
 }
 
 .result-actions {
-    display: flex;
-    gap: 0.5rem;
-    margin: 6px;
+  display: flex;
+  gap: 0.5rem;
+  margin: 6px;
 }
 
 @media (prefers-color-scheme: dark) {
-    .result {
-        outline: rgb(85, 85, 85) solid 2px;
-        box-shadow: #000000 0 0 20px;
-        background: linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
-    }
+  .result {
+    outline: rgb(85, 85, 85) solid 2px;
+    box-shadow: #000000 0 0 20px;
+    background: linear-gradient(#002d00 0%, #011701 33%, #0a0a1d 100%) no-repeat;
+  }
 
-    .result textarea {
-        color: #ccc;
-        border-color: #333;
-        background-color: rgba(0, 0, 0, 0.7);
-    }    
+  .result textarea {
+    color: #ccc;
+    border-color: #333;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
 }
 
 .loading {
-    cursor: wait !important;
+  cursor: wait !important;
 }

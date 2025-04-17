@@ -1,545 +1,496 @@
-import { addClass, query as $, removeClass } from "../utils/dom";
-import { apiNs, storage } from "../utils/compat";
-import { renderTemplate } from "../utils/i18n";
+import { render } from "preact";
+import { T, TT } from "../utils/i18n";
+import {
+  useKeyPress,
+  useMousePosition,
+  useURLParams,
+  useWindowSize,
+  useAudioPlayer,
+  useTimer,
+  useSettings,
+} from "../utils/hooks";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { apiNs } from "../utils/compat";
+import { PropTypes } from "prop-types";
+import { useTemporaryState } from "../utils/hooks";
 import { isUrl } from "../utils/misc";
 
-class Picker {
-  constructor() {
-    this.resultContent = null;
-    this.winW = window.innerWidth;
-    this.winH = window.innerHeight;
-    this.x1 = this.x2 = this.winW / 2;
-    this.y1 = this.y2 = this.winH / 2;
-    this.mouseX = this.mouseY = null;
-    this.isScanning = false;
-    // scroll offset of the top frame
-    this.scroll = { top: 0, left: 0 };
+const minScaleFactor = 0.2;
+const maxScaleFactor = 10;
+const maxScaleLevel = 30;
+const distance = (maxScaleFactor - minScaleFactor) / maxScaleLevel;
+const initialScanLevel = 10;
+const baseScanSize = 100;
 
-    // size of the scan region and related stuff
-    this.minFactor = 0.2;
-    this.maxFactor = 10;
-    this.numLevel = 30;
-    // this.distance = Math.pow(this.maxFactor / this.minFactor, 1 / this.numLevel)
-    this.distance = (this.maxFactor - this.minFactor) / this.numLevel;
-    this.baseScanSize = this.getBaseScanSize();
-    this.setScaleLevel(10);
-    this.defaultOptions = { openUrlMode: "NO_OPEN" };
-  }
+/**
+ * collision detection
+ * @param a {{x,y,width,height}}
+ * @param b {{x,y,width,height}}
+ * @return {boolean}
+ */
+function collides(a, b) {
+  const ax1 = a.x;
+  const ay1 = a.y;
+  const ax2 = a.x + a.width;
+  const ay2 = a.y + a.height;
 
-  getBaseScanSize() {
-    // Use outer size here because inner size may change during initialization
-    return (Math.min(window.outerWidth, window.outerHeight) / 10) * 1.1;
-  }
+  const bx1 = b.x;
+  const by1 = b.y;
+  const bx2 = b.x + b.width;
+  const by2 = b.y + b.height;
 
-  setScaleLevel(value) {
-    if (value < 0) {
-      value = 0;
+  return !(ax2 < bx1 || bx2 < ax1 || ay2 < by1 || by2 < ay1);
+}
+
+function Picker({ port, scroll }) {
+  const windowSize = useWindowSize();
+  const mousePosition = useMousePosition();
+  const [scaleLevel, setScaleLevel] = useState(initialScanLevel);
+  const factor = minScaleFactor + distance * scaleLevel;
+  const scanSize = baseScanSize * factor;
+  const [inputImage, setInputImage] = useState(null);
+  const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
+  const [stage, setStage] = useState("picking");
+  const params = useURLParams();
+  const [validated, setValidated] = useState(false);
+  const [options, setOptions] = useState({ openUrlMode: "NO_OPEN" });
+  const [copied, setCopied] = useTemporaryState(false, 3000);
+  const resultContentNode = useRef(null);
+  const playAudio = useAudioPlayer();
+  const xMarkNode = useRef(null);
+  const tipsNode = useRef(null);
+  const [imagePosition, setImagePosition] = useState(null);
+  const { setTimer } = useTimer();
+  const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  const [resultVisible, setResultVisible] = useState(false);
+
+  // validate secret
+  useEffect(() => {
+    const secret = params?.get("secret");
+    if (!secret) {
+      return;
     }
-    if (value > this.numLevel) {
-      value = this.numLevel;
-    }
-    this.scaleLevel = value;
-    // const factor = this.minFactor * Math.pow(this.distance, this.scaleLevel)
-    const factor = this.minFactor + this.distance * this.scaleLevel;
-    this.scanSize = this.baseScanSize * factor;
-  }
 
-  handleKeyUp(event) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      event.stopPropagation();
-      this.hide();
-    }
-  }
-
-  handleWindowResize(event) {
-    const winW = window.innerWidth;
-    const winH = window.innerHeight;
-    const ncX = (((this.x1 + this.x2) / 2) * winW) / this.winW;
-    const ncY = (((this.y1 + this.y2) / 2) * winH) / this.winH;
-    this.winW = winW;
-    this.winH = winH;
-
-    const oldBaseScanSize = this.baseScanSize;
-    this.baseScanSize = this.getBaseScanSize();
-
-    const r = this.baseScanSize / oldBaseScanSize;
-    this.setScaleLevel(this.scaleLevel * r);
-    const nhW = ((this.x2 - this.x1) * r) / 2;
-    const nhH = ((this.y2 - this.y1) * r) / 2;
-    this.x1 = ncX - nhW;
-    this.y1 = ncY - nhH;
-    this.x2 = ncX + nhW;
-    this.y2 = ncY + nhH;
-    this.updateSpotLight();
-  }
-
-  async initConnection() {
-    [this.pickerLoaderPort, this.scroll] = await new Promise((resolve) => {
-      window.onmessage = (event) => {
-        switch (event.data?.action) {
-          case "PICKER_SHOW":
-            resolve([event.ports[0], event.data.scroll]);
-            break;
+    apiNs.runtime
+      .sendMessage({
+        action: "BG_VALIDATE_PICKER_SECRET",
+        secret,
+      })
+      .then((res) => {
+        setValidated(res);
+        if (!res) {
+          console.error("picker frame secret validation failed");
         }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [params]);
+
+  // get options
+  useEffect(() => {
+    if (!validated) {
+      return;
+    }
+    (async () => {
+      const options = Object.assign(
+        { openUrlMode: "NO_OPEN" },
+        await apiNs.runtime.sendMessage({ action: "PICKER_GET_OPTIONS" })
+      );
+      setOptions(options);
+    })();
+  }, [validated]);
+
+  const close = useCallback(() => {
+    if (port) {
+      port.postMessage({ action: "PICKER_CLOSE" });
+    }
+  }, [port]);
+
+  const copyResult = useCallback(() => {
+    if (!result?.content) {
+      return;
+    }
+    (async () => {
+      let ok = false;
+      if (navigator.clipboard) {
+        ok = await navigator.clipboard
+          .writeText(result.content)
+          .then(() => {
+            setCopied(true);
+            return true;
+          })
+          .catch(() => false);
+      }
+      if (!ok && resultContentNode.current) {
+        resultContentNode.current.select();
+        if (document.execCommand("copy")) {
+          setCopied(true);
+        }
+        resultContentNode.current.setSelectionRange(0, 0);
+      }
+    })();
+  }, [result, setCopied]);
+
+  const newScan = () => {
+    setStage("picking");
+    setInputImage(null);
+    setResult(null);
+    setError(null);
+    setResultVisible(false);
+  };
+
+  useKeyPress({ key: "Escape", event: "keyup", callback: close });
+  useKeyPress({ key: "r", event: "keyup", callback: newScan });
+
+  useEffect(() => {
+    setSpotRect((old) => {
+      if (stage === "scanning") {
+        return old;
+      }
+      return {
+        x: mousePosition.x - scanSize / 2,
+        y: mousePosition.y - scanSize / 2,
+        width: scanSize,
+        height: scanSize,
       };
     });
+  }, [mousePosition, scanSize, stage]);
 
-    if (!this.pickerLoaderPort) {
-      console.error("picker frame received no port");
-      return false;
-    }
-
-    if (!(await this.validateSecret())) {
-      console.error("picker frame secret validation failed");
-      return false;
-    }
-
-    // update window size because the initial value we got in the constructor may be incorrect
-    this.handleWindowResize();
-    return true;
-  }
-
-  async init() {
-    // initialize connection to picker-loader.js when running in iframe
-    if (window !== window.top && !(await this.initConnection())) {
-      return;
-    }
-
-    const options = Object.assign(
-      {},
-      this.defaultOptions,
-      await apiNs.runtime.sendMessage({ action: "PICKER_GET_OPTIONS" })
-    );
-
-    renderTemplate($("#template"));
-
-    this.domSelectUrlMode = $("#select-open-url-mode");
-    this.domMask = $("#mask");
-    this.domSpotlight = $("#spotlight");
-    this.domTips = $("#tips");
-    this.domX = $("#x-mark");
-    this.domResult = $("#result");
-
-    if (options.openUrlMode) {
-      this.domSelectUrlMode.value = options.openUrlMode;
-    }
-
-    this.updateSpotLight(this.winW / 2, this.winH / 2);
-
-    // setting up event listeners...
-
-    document.addEventListener("keyup", (e) => this.handleKeyUp(e));
-    window.addEventListener("resize", (e) => this.handleWindowResize(e));
-
-    this.domResult.addEventListener("mousedown", (e) => e.stopPropagation());
-    this.domResult.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-
-    this.domX.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      this.hide();
-    });
-    this.domMask.addEventListener("click", (event) => {
-      if (!this.isScanning) {
-        this.isScanning = true;
-        this.scan();
+  const collidesWithSpot = useCallback(
+    function (el) {
+      if (!el || !spotRect) {
+        return false;
       }
-    });
-    this.domMask.addEventListener("mouseenter", (event) => {
-      if (!this.isScanning) {
-        this.mouseX = event.clientX;
-        this.mouseY = event.clientY;
-        this.updateSpotLight(event.clientX, event.clientY);
-      }
-    });
-    this.domMask.addEventListener("mousemove", (event) => {
-      if (!this.isScanning) {
-        this.mouseX = event.clientX;
-        this.mouseY = event.clientY;
-        this.updateSpotLight(event.clientX, event.clientY);
-      }
-    });
-    this.domMask.addEventListener("mouseleave", (event) => {
-      if (!this.isScanning) {
-        this.mouseX = event.clientX;
-        this.mouseY = event.clientY;
-        this.updateSpotLight(0, 0, 0, 0);
-      }
-    });
-    this.domMask.addEventListener("wheel", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
+      return collides(spotRect, el.getBoundingClientRect());
+    },
+    [spotRect]
+  );
 
-      if (this.isScanning) {
-        return;
-      }
-      this.setScaleLevel(this.scaleLevel + (event.deltaY > 0 ? -1 : 1));
-      this.updateSpotLight(
-        event.clientX,
-        event.clientY,
-        undefined,
-        undefined,
-        ".1s"
-      );
-    });
-    this.domTips.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-
-    $("#copy-btn").addEventListener("click", () => this.copyResult());
-    $("#rescan-btn").addEventListener("click", (ev) => this.newScan(ev));
-    $("#open-link-btn").addEventListener("click", () => this.hide());
-  }
-
-  newScan(ev) {
-    this.isScanning = false;
-    addClass("hidden", "#captured");
-    addClass("hidden", this.domResult);
-    removeClass("showing-result", this.domMask);
-    if (ev) {
-      this.updateSpotLight(ev.clientX, ev.clientY);
-    }
-  }
-
-  updateSpotLight(x, y, w, h, td, tp, ttf) {
-    this.nextSpotlightState = [x, y, w, h, td, tp, ttf];
-    if (!this.renderSpotlightTimer) {
-      this.renderSpotlightTimer = requestAnimationFrame(() =>
-        this.renderSpotlight()
-      );
-    }
-  }
-
-  renderSpotlight() {
-    if (!this.nextSpotlightState) {
-      return;
-    }
-
-    let [x, y, w, h, td, tp, ttf] = this.nextSpotlightState;
-    this.renderSpotlightTimer = this.nextSpotlightState = null;
-
-    if (typeof x !== "undefined" && typeof y !== "undefined") {
-      if (typeof w === "undefined" || typeof h === "undefined") {
-        w = h = this.scanSize;
-      }
-
-      this.x1 = Math.floor(x - w / 2);
-      this.y1 = Math.floor(y - h / 2);
-      this.x2 = Math.floor(this.x1 + w);
-      this.y2 = Math.floor(this.y1 + h);
-    }
-
-    let shouldHideSpotLight = this.hideOrShowUiElements();
-    shouldHideSpotLight =
-      shouldHideSpotLight || (this.x1 === this.x2 && this.y1 === this.y2);
-    const rect = shouldHideSpotLight
-      ? { x1: 0, y1: 0, x2: 0, y2: 0 }
-      : { x1: this.x1, x2: this.x2, y1: this.y1, y2: this.y2 };
-
-    if (shouldHideSpotLight) {
-      addClass("off", this.domSpotlight);
-    } else {
-      removeClass("off", this.domSpotlight);
-    }
-
-    if (this.domMask) {
-      if (td) {
-        this.domMask.style.transitionDuration = td;
-        this.domMask.style.transitionProperty = tp || "all";
-        this.domMask.style.transitionTimingFunction = ttf || "ease-out";
-      } else {
-        this.domMask.style.transitionProperty = "";
-        this.domMask.style.transitionDuration = "";
-        this.domMask.style.transitionTimingFunction = "";
-      }
-      this.domMask.style.backgroundColor = "transparent";
-      this.domMask.style.borderTopWidth = Math.max(0, rect.y1) + "px";
-      this.domMask.style.borderBottomWidth =
-        Math.max(0, this.winH - rect.y2) + "px";
-      this.domMask.style.borderLeftWidth = Math.max(0, rect.x1) + "px";
-      this.domMask.style.borderRightWidth =
-        Math.max(0, this.winW - rect.x2) + "px";
-    }
-  }
-
-  hideOrShowUiElements() {
-    const mouseRect = { x: this.mouseX, y: this.mouseY, width: 0, height: 0 };
-    const spotlightRect = {
-      x: this.x1,
-      y: this.y1,
-      width: this.x2 - this.x1,
-      height: this.y2 - this.y1,
-    };
-
-    let shouldHideSpotLight = false;
-
-    // elements to auto-hide when they overlap with the scan area
-    const elements = [this.domTips, this.domX];
-
-    for (const el of elements) {
-      if (!el) {
-        continue;
-      }
-      const rect = el.getBoundingClientRect();
-      const overlaps = this.collides(rect, spotlightRect);
-      const mouseover = this.collides(rect, mouseRect);
-      const shouldHide = overlaps && !mouseover;
-      el.style.opacity = shouldHide ? "0" : "1";
-
-      shouldHideSpotLight = shouldHideSpotLight || mouseover;
-    }
-
-    return shouldHideSpotLight;
-  }
-
-  /**
-   * collision detection
-   * @param a {{x,y,width,height}}
-   * @param b {{x,y,width,height}}
-   * @return {boolean}
-   */
-  collides(a, b) {
-    const ax1 = a.x;
-    const ay1 = a.y;
-    const ax2 = a.x + a.width;
-    const ay2 = a.y + a.height;
-
-    const bx1 = b.x;
-    const by1 = b.y;
-    const bx2 = b.x + b.width;
-    const by2 = b.y + b.height;
-
-    return !(ax2 < bx1 || bx2 < ax1 || ay2 < by1 || by2 < ay1);
-  }
-
-  hide() {
-    if (this.pickerLoaderPort) {
-      this.pickerLoaderPort.postMessage({ action: "PICKER_CLOSE" });
-    }
-  }
-
-  copyResult() {
-    if (!this.resultContent) {
-      return;
-    }
-
-    let promise;
-    if (window === window.top) {
-      promise = navigator.clipboard.writeText(this.resultContent);
-    } else {
-      // chrome doesn't allow copying text from iframe unless the 'clipboard-write' permission policy is set
-      // we have to let the other side (picker-loader.js) do it for us
-      promise = new Promise((resolve, reject) => {
-        if (!this.pickerLoaderPort) {
-          reject(new Error("Connection port is not set"));
+  const handleWheel = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (stage === "picking") {
+      setScaleLevel((level) => {
+        level = level + (event.deltaY > 0 ? -1 : 1);
+        if (level < 0) {
+          level = 0;
+        } else if (level > maxScaleLevel) {
+          level = maxScaleLevel;
         }
-
-        const handleMessage = (message) => {
-          const action = message.data?.action;
-          if (action === "PICKER_COPY_TEXT_OK") {
-            resolve();
-          }
-          if (
-            action === "PICKER_COPY_TEXT_ERROR" ||
-            action === "PICKER_COPY_TEXT_OK"
-          ) {
-            if (this.pickerLoaderPort) {
-              this.pickerLoaderPort.removeEventListener(
-                "message",
-                handleMessage
-              );
-            }
-            reject(new Error("Copy failed"));
-          }
-        };
-        this.pickerLoaderPort.addEventListener("message", handleMessage);
-        this.pickerLoaderPort.postMessage({
-          action: "PICKER_COPY_TEXT",
-          text: this.resultContent,
-        });
-        this.pickerLoaderPort.start();
+        return level;
       });
     }
+  };
 
-    promise.then(() => {
-      addClass("hidden", "#copy-btn");
-      removeClass("hidden", "#copied-message");
-      setTimeout(() => {
-        addClass("hidden", "#copied-message");
-        removeClass("hidden", "#copy-btn");
-      }, 2000);
-    });
-  }
+  const cancelWheel = (e) => {
+    if (e.target.tagName !== "TEXTAREA") {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
 
-  async scan() {
-    addClass("hidden", this.domResult);
-    addClass("loading", this.domMask);
-    this.resultContent = null;
+  const maskBorders = {
+    top: spotRect.y,
+    left: spotRect.x,
+    right: windowSize.width - spotRect.x - scanSize,
+    bottom: windowSize.height - spotRect.y - scanSize,
+  };
 
-    let resImage;
-    let resText = "";
-    let err = "";
-    let successful = false;
-    const x = Math.max(this.x1, 0);
-    const y = Math.max(this.y1, 0);
-    const width = Math.min(this.x2, this.winW) - x;
-    const height = Math.min(this.y2, this.winH) - y;
+  const scan = async (rect) => {
+    setStage("scanning");
+    const x = Math.max(rect.x, 0);
+    const y = Math.max(rect.y, 0);
+    const width = Math.min(rect.x + rect.width, windowSize.width) - x;
+    const height = Math.min(rect.y + rect.height, windowSize.height) - y;
 
-    const rect = { x, y, width, height };
+    rect = { x, y, width, height };
+    let nextStage = "result";
     try {
       const res = await apiNs.runtime.sendMessage({
         action: "BG_CAPTURE",
         rect,
-        scroll: this.scroll,
+        scroll: scroll,
         devicePixelRatio: window.devicePixelRatio,
       });
-      successful = !res.err;
-      resImage = res.image;
-      if (successful && res.result && res.result.length) {
-        this.resultContent = resText = res.result[0].content;
-      } else {
-        err = apiNs.i18n.getMessage("unable_to_decode_qr_code");
+      setError(res.err);
+      setInputImage(res.image);
+      if (res.result.length > 0) {
+        const playAudioPromise = playAudio("/audio/success.mp3");
+        setResult(res.result[0]);
+        const content = res.result[0].content;
+        if (isUrl(content)) {
+          switch (options.openUrlMode) {
+            case "OPEN":
+              nextStage = null;
+              playAudioPromise.then(() => {
+                window.open(content, "_top");
+                close();
+              }, 0);
+              break;
+            case "OPEN_NEW_BG_TAB":
+              nextStage = null;
+              apiNs.runtime.sendMessage({
+                action: "BG_CREATE_TAB",
+                active: false,
+                url: content,
+              });
+              newScan();
+              break;
+            case "OPEN_NEW_FG_TAB":
+              nextStage = null;
+              apiNs.runtime.sendMessage({
+                action: "BG_CREATE_TAB",
+                active: true,
+                url: content,
+              });
+              newScan();
+              break;
+          }
+        }
       }
     } catch (e) {
-      console.error("picker frame error: ", e);
-      err = e ? e.toString() : "Unknown error";
+      setError(e);
     } finally {
-      removeClass("loading", this.domMask);
-    }
-    this.showResult(err, resText, resImage, successful);
-  }
-
-  validateSecret() {
-    const url = new URL(location.href);
-    const secret = url.searchParams.get("secret");
-    if (!secret) {
-      return false;
-    }
-    return apiNs.runtime.sendMessage({
-      action: "BG_VALIDATE_PICKER_SECRET",
-      secret,
-    });
-  }
-
-  showResult(err, content, image, successful) {
-    if (successful && content) {
-      this.playSound("/audio/success.mp3");
-    }
-
-    const isContentUrl = isUrl(content);
-
-    let showResult = true;
-    if (isContentUrl) {
-      showResult = false;
-      switch (this.domSelectUrlMode.value) {
-        case "OPEN":
-          window.open(content, "_top");
-          this.hide();
-          break;
-        case "OPEN_NEW_BG_TAB":
-          apiNs.runtime.sendMessage({
-            action: "BG_CREATE_TAB",
-            active: false,
-            url: content,
+      if (nextStage) {
+        if (nextStage === "result") {
+          setImagePosition({
+            top: `${rect.y + scanSize / 2}px`,
+            left: `${rect.x + scanSize / 2}px`,
+            width: `${scanSize}px`,
+            height: `${scanSize}px`,
           });
-          break;
-        case "OPEN_NEW_FG_TAB":
-          apiNs.runtime.sendMessage({
-            action: "BG_CREATE_TAB",
-            active: true,
-            url: content,
-          });
-          break;
-        default:
-          showResult = true;
+          setTimer(() => {
+            setImagePosition({
+              top: "270px",
+              left: "50%",
+              width: "300px",
+              height: "300px",
+            });
+          }, 100);
+          setTimer(() => {
+            setResultVisible(true);
+          }, 100);
+        }
+        setStage(nextStage);
       }
     }
-    if (!showResult) {
-      this.newScan();
-      return;
-    }
+  };
 
-    addClass("showing-result", this.domMask);
-    const textarea = $("#result-content");
-    if (err) {
-      textarea.innerText = "";
-      textarea.placeholder = err;
-    } else {
-      textarea.innerText = content;
-      textarea.placeholder = "";
-    }
+  const maskStyles = {
+    top: 0,
+    left: 0,
+    margin: 0,
+    padding: 0,
+    ...(stage === "result"
+      ? {
+          borderTopWidth: `${windowSize.width / 2}px`,
+          borderBottomWidth: `${windowSize.width / 2}px`,
+          borderLeftWidth: `${windowSize.height / 2}px`,
+          borderRightWidth: `${windowSize.height / 2}px`,
+        }
+      : {
+          borderTopWidth: `${maskBorders.top}px`,
+          borderBottomWidth: `${maskBorders.bottom}px`,
+          borderLeftWidth: `${maskBorders.left}px`,
+          borderRightWidth: `${maskBorders.right}px`,
+        }),
+  };
 
-    const rr = $("#spotlight").getBoundingClientRect();
-    const mr = this.domMask.getBoundingClientRect();
+  const tipsStyles = {
+    opacity:
+      stage === "picking" && collidesWithSpot(tipsNode.current) ? "0" : "1",
+  };
+  const xMarkStyles = {
+    opacity:
+      stage === "picking" && collidesWithSpot(xMarkNode.current) ? "0" : "1",
+  };
 
-    // show captured image
-    if (image) {
-      const [aW, aH] = [rr.width, rr.height];
-      const minW = mr.width * 0.5;
-      const maxW = mr.width * 0.8;
-      const minH = mr.height * 0.25;
-      const maxH = mr.height * 0.4;
-
-      const scaleX = aW < maxW ? (aW < minW ? minW / aW : 1) : maxW / aW;
-      const scaleY = aH < maxH ? (aH < minH ? minH / aH : 1) : maxH / aH;
-      const scale = Math.min(scaleX, scaleY);
-
-      const [bW, bH] = [aW * scale, aH * scale];
-
-      $("#captured").src = image;
-      removeClass("hidden", "#captured");
-      this.updateSpotLight(
-        mr.width / 2,
-        mr.height / 2 - bH / 2 - mr.height * 0.05,
-        bW,
-        bH,
-        ".2s",
-        "all",
-        "ease-out"
-      );
-    }
-
-    // show or hide "Copy" button
-    removeClass("hidden", this.domResult);
-    const copyBtn = $("#copy-btn");
-    if (content) {
-      removeClass("hidden", copyBtn);
-    } else {
-      addClass("hidden", copyBtn);
-    }
-
-    // show or hide "Open Link" button
-    const openLinkBtn = $("#open-link-btn");
-    if (isContentUrl) {
-      openLinkBtn.href = content;
-      removeClass("hidden", openLinkBtn);
-    } else {
-      addClass("hidden", openLinkBtn);
-    }
-
-    if (content) {
-      textarea.select();
-    } else {
-      textarea.focus();
-    }
+  if (!validated) {
+    return null;
   }
 
-  async playSound(name) {
-    if (!(await storage.get("soundEnabled")).soundEnabled) {
-      return;
-    }
-
-    if (!this.sounds) {
-      this.sounds = {};
-    }
-    if (!this.sounds[name]) {
-      this.sounds[name] = new Audio(name);
-    }
-    this.sounds[name].play();
-  }
+  return (
+    <>
+      <div class="mask" id="mask" style={maskStyles} onWheel={handleWheel}>
+        {stage !== "result" && (
+          <div
+            class="spotlight"
+            id="spotlight"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (stage === "picking") {
+                scan(spotRect);
+              }
+            }}
+          ></div>
+        )}
+      </div>
+      <div class="tips" id="tips" ref={tipsNode} style={tipsStyles}>
+        <img
+          class="logo"
+          src="../icons/qrlite.svg"
+          title={T("extension_name")}
+        />
+        {stage === "picking" && (
+          <>
+            <kbd>
+              <img
+                class="icon icon-invert"
+                src="../icons/mouse-scrollwheel.svg"
+                title={T("scan_region_picker_tips_scrollwheel")}
+              />
+            </kbd>
+            <span>{TT("scan_region_picker_tips_adjust_size")}</span>
+          </>
+        )}
+        {stage === "picking" && (
+          <>
+            <kbd>
+              <img
+                class="icon icon-invert"
+                src="../icons/mouse-leftclick.svg"
+                title={T("scan_region_picker_tips_leftclick")}
+              />
+            </kbd>
+            <span>{TT("scan_region_picker_tips_scan")}</span>
+          </>
+        )}
+        <>
+          <kbd>{TT("scan_region_picker_tips_esc")}</kbd>
+          <span>{TT("scan_region_picker_tips_exit")}</span>
+        </>
+        {stage === "picking" && (
+          <select
+            id="select-open-url-mode"
+            title="Choose how to handle URLs in scan results"
+            defaultValue={options.openUrlMode}
+            onChange={(e) => {
+              setOptions((old) => {
+                return {
+                  ...old,
+                  openUrlMode: e.target.value,
+                };
+              });
+            }}
+          >
+            <option value="NO_OPEN">
+              {TT("picker_url_mode_auto_open_no")}
+            </option>
+            <option value="OPEN">
+              {TT("picker_url_mode_auto_open_in_current_tab")}
+            </option>
+            <option value="OPEN_NEW_BG_TAB">
+              {TT("picker_url_mode_auto_open_in_bg_tab")}
+            </option>
+            <option value="OPEN_NEW_FG_TAB">
+              {TT("picker_url_mode_auto_open_in_fg_tab")}
+            </option>
+          </select>
+        )}
+      </div>
+      <div
+        class=" x-mark"
+        id="x-mark"
+        title={T("picker_close_btn_title")}
+        onClick={() => {
+          close();
+        }}
+        ref={xMarkNode}
+        style={xMarkStyles}
+      >
+        ×
+      </div>
+      {stage === "result" && (
+        <>
+          <div
+            class="input-image-container"
+            style={imagePosition}
+            onWheel={cancelWheel}
+          >
+            {inputImage && (
+              <img class="captured" id="captured" src={inputImage} />
+            )}
+          </div>
+          <div
+            class="result"
+            id="result"
+            style={{ opacity: resultVisible ? "1" : "0" }}
+            onWheel={cancelWheel}
+          >
+            <textarea
+              id="result-content"
+              placeholder={T("unable_to_decode")}
+              title={T("content_title")}
+              readOnly
+              rows="6"
+              value={result?.content || ""}
+              ref={resultContentNode}
+            ></textarea>
+            <div class="result-actions">
+              {!copied ? (
+                <a
+                  id="copy-btn"
+                  class=" clickable"
+                  title={T("copy_image_btn_title")}
+                  onClick={() => {
+                    copyResult();
+                  }}
+                >
+                  <img class="icon icon-invert" src="../icons/copy.svg" />
+                  {TT("copy_btn")}
+                </a>
+              ) : (
+                <span id="copied-message" class="clickable">
+                  {TT("copy_btn_copied")}
+                </span>
+              )}
+              {isUrl(result?.content) && (
+                <a
+                  id="open-link-btn"
+                  class=" clickable"
+                  target="_blank"
+                  title={T("open_url_btn_title")}
+                  onClick={() => {
+                    window.open(result.content, "_blank");
+                  }}
+                >
+                  <img class="icon icon-invert" src="../icons/open-url.svg" />
+                  {TT("open_url_btn")}
+                </a>
+              )}
+              <a
+                id="rescan-btn"
+                class="clickable"
+                title={T("rescan_btn_title")}
+                onClick={newScan}
+              >
+                <img class="icon icon-invert" src="../icons/refresh.svg" />
+                {TT("rescan_btn_label")}
+              </a>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
 }
 
-new Picker().init();
+Picker.propTypes = {
+  port: PropTypes.object,
+  scroll: PropTypes.object,
+};
+
+// set up message handler asap so that we don't miss the message
+window.onmessage = (event) => {
+  switch (event.data?.action) {
+    case "PICKER_SHOW":
+      window.onmessage = null;
+      render(
+        <Picker port={event.ports[0]} scroll={event.data.scroll} />,
+        document.body
+      );
+      break;
+  }
+};

@@ -42,7 +42,6 @@ const onChangedListener = (changes, area) => {
   if (area !== "local") {
     return;
   }
-  console.log(changes);
 
   const newValues = {};
   for (const changedKey in changes) {

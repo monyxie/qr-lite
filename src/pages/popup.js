@@ -15,7 +15,12 @@ import {
 import { PropTypes } from "prop-types";
 
 import { T, TT } from "../utils/i18n";
-import { useAudioPlayer, useSettings, useURLParams } from "../utils/hooks";
+import {
+  useAudioPlayer,
+  useSettings,
+  useTemporaryState,
+  useURLParams,
+} from "../utils/hooks";
 import { scan } from "../utils/qrcode";
 import { debouncer, isUrl, sleep } from "../utils/misc";
 import {
@@ -89,7 +94,7 @@ const Generator = forwardRef(function Generator(props, ref) {
   const [settings, saveSettings] = useSettings();
   const [content, setContent] = useState(props.content || "");
   const [title] = useState(props.title || "");
-  const [copyTime, setCopyTime] = useState(null);
+  const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultNode = useRef(null);
   const addHistoryDebouncer = useRef(debouncer(1000));
 
@@ -128,20 +133,6 @@ const Generator = forwardRef(function Generator(props, ref) {
       resultNode.current?.appendChild(qrCodeImage);
     }
   }, [resultNode, qrCodeImage]);
-
-  useEffect(() => {
-    let timer;
-    if (copyTime) {
-      timer = setTimeout(() => {
-        setCopyTime(null);
-      }, 3000);
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [copyTime]);
 
   /**
    * @returns {Promise<HTMLCanvasElement>}
@@ -185,7 +176,7 @@ const Generator = forwardRef(function Generator(props, ref) {
   const copyImage = () => {
     createCanvasForQrCode()
       .then((canvas) => clipboard.copyPng(canvas))
-      .then(() => setCopyTime(Date.now()));
+      .then(() => setCopied(true));
   };
 
   const ecLevels = [
@@ -260,7 +251,7 @@ const Generator = forwardRef(function Generator(props, ref) {
         <div class="footer actions2">
           {qrCodeImage && (
             <>
-              {!copyTime || copyTime + 3000 < Date.now() ? (
+              {!copied ? (
                 <span
                   class="clickable"
                   id="copy"
@@ -343,9 +334,7 @@ function ImageScanner(props) {
   const inputImgNode = useRef(null);
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
-  const audioPlayer = useRef(useAudioPlayer());
-  const [settings] = useSettings();
-  const [decodeTime, setDecodeTime] = useState(null);
+  const playAudio = useAudioPlayer();
 
   useEffect(() => {
     if (needsUrlPermission) {
@@ -354,12 +343,6 @@ function ImageScanner(props) {
         .then(setHasUrlPermission);
     }
   }, [needsUrlPermission]);
-
-  useEffect(() => {
-    if (decodeTime && settings?.soundEnabled) {
-      audioPlayer.current?.play("/audio/success.mp3");
-    }
-  }, [decodeTime]);
 
   useEffect(() => {
     if (needsUrlPermission && !hasUrlPermission) {
@@ -394,7 +377,7 @@ function ImageScanner(props) {
       }
 
       if (success) {
-        setDecodeTime(Date.now());
+        playAudio("/audio/success.mp3");
       } else {
         setError(errMsg || T("unable_to_decode"));
       }
@@ -512,19 +495,11 @@ function CameraScanner() {
   const videoRef = useRef(null);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const audioPlayer = useRef(useAudioPlayer());
+  const playAudio = useAudioPlayer();
   const outputContentNode = useRef(null);
   const canvasRef = useRef(null);
-  const [settings] = useSettings();
   const [captured, setCaptured] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
-  const [decodeTime, setDecodeTime] = useState(null);
-
-  useEffect(() => {
-    if (decodeTime && settings?.soundEnabled) {
-      audioPlayer.current?.play("/audio/success.mp3");
-    }
-  }, [decodeTime]);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -609,8 +584,8 @@ function CameraScanner() {
           const results = await scan(canvasRef.current);
           if (results && results.length > 0) {
             setResult(results[0]);
-            setDecodeTime(Date.now());
             addHistory("decode", results[0].content);
+            playAudio("/audio/success.mp3");
           }
         } catch (e) {
           console.error(e);
