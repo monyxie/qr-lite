@@ -59,7 +59,6 @@ body {
   position: absolute;
   z-index: 100;
   transition: 200ms ease-out;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +73,7 @@ body {
   max-width: 100%;
   max-height: 100%;
   border-radius: 4px;
-  outline: white solid 2px;
+  box-shadow: 0 0 10px gray;
 }
 
 @media (prefers-color-scheme: dark) {

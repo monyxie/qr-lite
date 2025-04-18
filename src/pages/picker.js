@@ -315,6 +315,7 @@ function Picker({ port, scroll }) {
       <div class="mask" id="mask" style={maskStyles} onWheel={handleWheel}>
         {stage !== "result" && (
           <div
+            style={{ cursor: stage === "scanning" ? "wait" : "auto" }}
             class="spotlight"
             id="spotlight"
             onClick={(e) => {
