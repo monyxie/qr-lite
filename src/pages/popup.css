@@ -13,9 +13,8 @@ body {
     no-repeat;
   margin: 0;
   padding: 0;
-  display: flex;
-  gap: var(--gap);
-  justify-content: center;
+  width: 400px;
+  height: 600px;
 }
 
 .container {

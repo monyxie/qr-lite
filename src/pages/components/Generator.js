@@ -31,8 +31,10 @@ const Generator = forwardRef(function Generator(props, ref) {
   const isDarkMode = useMatchMedia("(prefers-color-scheme: dark)");
 
   useImperativeHandle(ref, () => ({
-    setContent,
-    setTitle,
+    setContent: (content) => {
+      setContent(content || "");
+    },
+    setTitle: (title) => setTitle(title || ""),
   }));
 
   useEffect(() => {

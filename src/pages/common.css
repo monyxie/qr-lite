@@ -84,7 +84,7 @@ html {
   flex-direction: row;
   align-items: center;
   align-self: stretch;
-  margin: 1rem;
+  margin: 0;
   height: 1rem;
   white-space: nowrap;
   gap: 0.5rem;

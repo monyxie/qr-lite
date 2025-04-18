@@ -72,25 +72,8 @@ function Popup() {
   }, []);
 
   useEffect(() => {
-    // needed in chrome to prevent the vertical scrollbar from showing up in the popup
-    // when the default zoom level is set to a large value
-    if (QRLITE_BROWSER === "chrome") {
-      if (window.innerHeight < document.documentElement.scrollHeight) {
-        document.documentElement.style.zoom =
-          window.innerHeight / document.documentElement.scrollHeight;
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     if (options) {
       switch (options.action) {
-        case "POPUP_ENCODE":
-          if (generatorRef.current) {
-            generatorRef.current.setContent(options.text);
-            generatorRef.current.setTitle(options.title || "");
-          }
-          break;
         case "POPUP_DECODE":
           setComponent(<Scanner url={options?.image} />);
           break;
@@ -107,6 +90,16 @@ function Popup() {
             ></Historian>
           );
           break;
+        case "POPUP_ENCODE":
+          if (generatorRef.current) {
+            if (options.text) {
+              generatorRef.current.setContent(options.text);
+            }
+            if (options.title) {
+              generatorRef.current.setTitle(options.title || "");
+            }
+          }
+        // fallthrough
         default:
           setComponent(null);
           break;
@@ -181,6 +174,14 @@ function Popup() {
       </div>
     </div>
   );
+}
+
+// this, in combination with hard-coded body width and height (in popup.css)
+// prevents the UI being zoomed in chrome if the browser's default zoom level is >100%
+// this has to be done as fast as possible or it will cause visible flicker
+if (window.innerHeight < document.documentElement.scrollHeight) {
+  document.documentElement.style.zoom =
+    window.innerHeight / document.documentElement.scrollHeight;
 }
 
 render(
