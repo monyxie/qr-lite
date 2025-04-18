@@ -26,6 +26,27 @@ function SettingsPage() {
         )}
         <form>
           <fieldset>
+            <legend>{TT("settings_generator_legend")}</legend>
+            <div class="form-entry">
+              <input
+                id="whiteOnBlackQRCodeInDarkModeCheckbox"
+                name="whiteOnBlackQRCodeInDarkMode"
+                type="checkbox"
+                checked={settings.whiteOnBlackQRCodeInDarkMode}
+                onChange={(e) => {
+                  saveSettings({
+                    whiteOnBlackQRCodeInDarkMode: e.target.checked,
+                  });
+                }}
+              />
+              <label htmlFor="whiteOnBlackQRCodeInDarkModeCheckbox">
+                {TT(
+                  "settings_white_on_black_qr_ccode_in_dark_mode_enabled_label"
+                )}
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
             <legend>{TT("settings_scanner_legend")}</legend>
             <div class="form-entry">
               <input
@@ -38,7 +59,7 @@ function SettingsPage() {
                 }}
               />
               <label htmlFor="scanSuccessSoundEnabledCheckbox">
-                {TT("settings_sound_enabled_label")}
+                {TT("settings_scan_success_sound_enabled_label")}
               </label>
             </div>
           </fieldset>

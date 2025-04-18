@@ -199,3 +199,22 @@ export function useTimer() {
 
   return { setTimer, clearTimer };
 }
+
+export function useMatchMedia(query) {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const list = window.matchMedia(query);
+    setMatches(list.matches);
+
+    const handleChange = (e) => {
+      setMatches(e.matches);
+    };
+    list.addEventListener("change", handleChange);
+    return () => {
+      list.removeEventListener("change", handleChange);
+    };
+  }, [query]);
+
+  return matches;
+}

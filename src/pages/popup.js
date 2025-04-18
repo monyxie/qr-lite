@@ -1,5 +1,3 @@
-import { BrowserQRCodeSvgWriter } from "@zxing/browser";
-import EncodeHintType from "@zxing/library/esm/core/EncodeHintType";
 import SanitizeFilename from "sanitize-filename";
 import { apiNs, clipboard, tabs } from "../utils/compat";
 
@@ -7,7 +5,6 @@ import { render } from "preact";
 import {
   useEffect,
   useState,
-  useMemo,
   useRef,
   useImperativeHandle,
   forwardRef,
@@ -20,6 +17,7 @@ import {
   useSettings,
   useTemporaryState,
   useURLParams,
+  useMatchMedia,
 } from "../utils/hooks";
 import { scan } from "../utils/qrcode";
 import { debouncer, isUrl, sleep } from "../utils/misc";
@@ -29,6 +27,7 @@ import {
   getHistory,
   clearHistory,
 } from "../utils/history";
+import QRCodeSVG from "./components/QRCodeSVG";
 
 function QRPositionMarker({ children, width, height, result, mirror }) {
   let marker = null;
@@ -97,6 +96,7 @@ const Generator = forwardRef(function Generator(props, ref) {
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultNode = useRef(null);
   const addHistoryDebouncer = useRef(debouncer(1000));
+  const isDarkMode = useMatchMedia("(prefers-color-scheme: dark)");
 
   useImperativeHandle(ref, () => ({
     setContent,
@@ -115,34 +115,24 @@ const Generator = forwardRef(function Generator(props, ref) {
     });
   }, [content, props.content]);
 
-  const qrCodeImage = useMemo(() => {
-    if (!content || content === "") {
-      return "";
-    }
-    const writer = new BrowserQRCodeSvgWriter();
-    const hints = new Map();
-    hints.set(EncodeHintType.ERROR_CORRECTION, settings.ecLevel);
-    return writer.write(content, 300, 300, hints);
-  }, [content, settings.ecLevel]);
-
-  useEffect(() => {
-    if (resultNode.current?.firstChild) {
-      resultNode.current.removeChild(resultNode.current.firstChild);
-    }
-    if (qrCodeImage) {
-      resultNode.current?.appendChild(qrCodeImage);
-    }
-  }, [resultNode, qrCodeImage]);
-
   /**
    * @returns {Promise<HTMLCanvasElement>}
    */
   const createCanvasForQrCode = (size) => {
     size = size || 500;
     return new Promise((resolve) => {
-      const svg = document.querySelector("svg").cloneNode(true);
-      svg.setAttribute("width", size);
-      svg.setAttribute("height", size);
+      const el = document.createElement("div");
+      render(
+        <QRCodeSVG
+          width={size}
+          height={size}
+          content={content}
+          backgroundColor="white"
+          foregroundColor="black"
+        ></QRCodeSVG>,
+        el
+      );
+      const svg = el.querySelector("svg");
       const img = document.createElement("img");
       const canvas = document.createElement("canvas");
       const xml = new XMLSerializer().serializeToString(svg);
@@ -185,6 +175,22 @@ const Generator = forwardRef(function Generator(props, ref) {
     ["Q", T("error_correction_level_btn_quartile_title")],
     ["H", T("error_correction_level_btn_high_title")],
   ];
+
+  // handle dark mode & related settings
+  const resultBoxStyles = {
+    backgroundColor:
+      isDarkMode && !settings.whiteOnBlackQRCodeInDarkMode
+        ? "white"
+        : "transparent",
+    boxShadow:
+      isDarkMode && !settings.whiteOnBlackQRCodeInDarkMode
+        ? "0 0 10px rgb(0, 84, 0) inset"
+        : "none",
+  };
+  const svgProps =
+    isDarkMode && settings.whiteOnBlackQRCodeInDarkMode
+      ? { foregroundColor: "white", backgroundColor: "transparent" }
+      : { foregroundColor: "black", backgroundColor: "transparent" };
 
   return (
     <div class={"main" + (props.hidden ? " hidden" : "")} id="main">
@@ -233,10 +239,18 @@ const Generator = forwardRef(function Generator(props, ref) {
           </span>
         </div>
       </div>
-      <div class="result" id="result" ref={resultNode}></div>
+      <div class="result" id="result" ref={resultNode} style={resultBoxStyles}>
+        <QRCodeSVG
+          content={content}
+          width={300}
+          height={300}
+          errorCorrectionLevel={settings.ecLevel}
+          {...svgProps}
+        ></QRCodeSVG>
+      </div>
       <div class="footer-container">
         <div class="footer actions1">
-          {qrCodeImage && (
+          {content && (
             <span
               class="clickable"
               id="save"
@@ -249,7 +263,7 @@ const Generator = forwardRef(function Generator(props, ref) {
           )}
         </div>
         <div class="footer actions2">
-          {qrCodeImage && (
+          {content && (
             <>
               {!copied ? (
                 <span

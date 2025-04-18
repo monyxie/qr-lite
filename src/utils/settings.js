@@ -16,6 +16,11 @@ const settingsDefinition = {
       return ["L", "M", "Q", "H"].indexOf(value) === -1 ? "L" : value;
     },
   },
+  whiteOnBlackQRCodeInDarkMode: {
+    normalize(value) {
+      return typeof value === "undefined" ? false : value === true;
+    },
+  },
 };
 
 export async function getSettings() {

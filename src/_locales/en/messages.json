@@ -250,11 +250,17 @@
   "settings_window_title": {
     "message": "QR Lite Settings"
   },
-  "settings_sound_enabled_label": {
+  "settings_scan_success_sound_enabled_label": {
     "message": "Play sound on successful scan"
   },
+  "settings_white_on_black_qr_ccode_in_dark_mode_enabled_label": {
+    "message": "In dark mode, generate QR Codes with a white foreground color on a dark background. Some scanners may have trouble scanning such QR Codes."
+  },
   "settings_scanner_legend": {
-    "message": "Scanner"
+    "message": "QR Code Scanner"
+  },
+  "settings_generator_legend": {
+    "message": "QR Code Generator"
   },
   "tab_settings_title": {
     "message": "Change QR Lite's settings"
