@@ -21,7 +21,7 @@ export default function QRCodeSVG({
 }) {
   const svgElement = useMemo(() => {
     if (content.length === 0) {
-      console.error("[QRCodeSVG] Error: Found empty contents");
+      // console.error("[QRCodeSVG] Error: Found empty contents");
       return null;
     }
     if (width < 0 || height < 0) {

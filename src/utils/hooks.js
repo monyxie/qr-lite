@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, createContext, useContext } from "react";
 import {
   addListener,
   getSettings,
@@ -7,7 +7,7 @@ import {
 } from "./settings";
 
 export function useSettings() {
-  const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState(null);
 
   useEffect(() => {
     getSettings().then((r) => {
@@ -40,25 +40,26 @@ export function useSettings() {
     saveSettingsOnStorage(newValues);
   };
 
-  return [settings, saveSettings];
+  return { settings, saveSettings };
 }
 
-export function useURLParams() {
-  const [params, setParams] = useState(null);
-  useEffect(() => {
-    setParams(new URL(location.href).searchParams);
-  }, []);
-  return params;
+const SettingsContext = createContext(null);
+
+export function useSettingsContext() {
+  return useContext(SettingsContext);
 }
 
-export function usePageTitle(title) {
-  useEffect(() => {
-    document.title = title;
-  }, [title]);
+export function SettingsContextProvider({ children }) {
+  const { settings, saveSettings } = useSettings();
+  return (
+    <SettingsContext.Provider value={{ settings, saveSettings }}>
+      {children}
+    </SettingsContext.Provider>
+  );
 }
 
 export function useAudioPlayer() {
-  const [settings] = useSettings();
+  const { settings } = useSettingsContext();
   const makePlayFunc = (name) => {
     return () => {
       return new Promise((resolve) => {
@@ -79,6 +80,20 @@ export function useAudioPlayer() {
     };
   };
   return { scanSuccess: makePlayFunc("/audio/success.mp3") };
+}
+
+export function useURLParams() {
+  const [params, setParams] = useState(null);
+  useEffect(() => {
+    setParams(new URL(location.href).searchParams);
+  }, []);
+  return params;
+}
+
+export function usePageTitle(title) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 }
 
 export function useWindowSize() {

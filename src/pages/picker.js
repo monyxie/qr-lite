@@ -7,8 +7,9 @@ import {
   useWindowSize,
   useAudioPlayer,
   useTimer,
+  SettingsContextProvider,
 } from "../utils/hooks";
-import { useEffect, useState, useCallback, useRef, useMemo } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { apiNs } from "../utils/compat";
 import { PropTypes } from "prop-types";
 import { useTemporaryState } from "../utils/hooks";
@@ -488,7 +489,9 @@ window.onmessage = (event) => {
     case "PICKER_SHOW":
       window.onmessage = null;
       render(
-        <Picker port={event.ports[0]} scroll={event.data.scroll} />,
+        <SettingsContextProvider>
+          <Picker port={event.ports[0]} scroll={event.data.scroll} />
+        </SettingsContextProvider>,
         document.body
       );
       break;

@@ -7,6 +7,7 @@ import { T, TT } from "../utils/i18n";
 import Generator from "./components/Generator";
 import Scanner from "./components/Scanner";
 import Historian from "./components/Historian";
+import { SettingsContextProvider } from "../utils/hooks";
 
 function Popup() {
   const [options, setOptions] = useState(null);
@@ -71,8 +72,6 @@ function Popup() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.classList.add(QRLITE_BROWSER);
-
     // needed in chrome to prevent the vertical scrollbar from showing up in the popup
     // when the default zoom level is set to a large value
     if (QRLITE_BROWSER === "chrome") {
@@ -86,6 +85,12 @@ function Popup() {
   useEffect(() => {
     if (options) {
       switch (options.action) {
+        case "POPUP_ENCODE":
+          if (generatorRef.current) {
+            generatorRef.current.setContent(options.text);
+            generatorRef.current.setTitle(options.title || "");
+          }
+          break;
         case "POPUP_DECODE":
           setComponent(<Scanner url={options?.image} />);
           break;
@@ -164,20 +169,23 @@ function Popup() {
       </div>
       <div class="content-container" data-role="content">
         {/* keep generator mounted so that it doesn't lose its state */}
-        {options && (
-          <Generator
-            ref={generatorRef}
-            hidden={!!component}
-            content={
-              options.action === "POPUP_ENCODE" ? options.text || "" : ""
-            }
-            title={options.action === "POPUP_ENCODE" ? options.title || "" : ""}
-          />
-        )}
+        <Generator
+          ref={generatorRef}
+          hidden={!!component}
+          content={
+            options?.action === "POPUP_ENCODE" ? options?.text || "" : ""
+          }
+          title={options?.action === "POPUP_ENCODE" ? options?.title || "" : ""}
+        />
         {component}
       </div>
     </div>
   );
 }
 
-render(<Popup />, document.body);
+render(
+  <SettingsContextProvider>
+    <Popup />
+  </SettingsContextProvider>,
+  document.body
+);

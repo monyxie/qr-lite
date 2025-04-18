@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 
 import { T, TT } from "../../utils/i18n";
-import { useSettings } from "../../utils/hooks";
 import { removeHistory, getHistory, clearHistory } from "../../utils/history";
+import { useSettingsContext } from "../../utils/hooks";
 
 export default function Historian(props) {
   const [history, setHistory] = useState([]);
-  const [settings, saveSettings] = useSettings();
+  const { settings, saveSettings } = useSettingsContext();
 
   const getData = () =>
     getHistory().then(function (history) {

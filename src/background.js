@@ -1,10 +1,4 @@
-import {
-  apiNs,
-  capturePartialScreen,
-  openPopup,
-  storage,
-  tabs,
-} from "./utils/compat";
+import { apiNs, capturePartialScreen, openPopup, tabs } from "./utils/compat";
 import { addHistory } from "./utils/history";
 import { initDecoder, scan } from "./utils/qrcode";
 import { convertBlobToDataUri, randomStr } from "./utils/misc";

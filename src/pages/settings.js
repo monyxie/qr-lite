@@ -10,7 +10,7 @@ import { usePageTitle, useSettings, useURLParams } from "../utils/hooks";
 
 function SettingsPage() {
   const showKeyboardShortcutsSetting = useMemo(canOpenShortcutSettings, []);
-  const [settings, saveSettings] = useSettings();
+  const { settings, saveSettings } = useSettings();
   const params = useURLParams();
 
   usePageTitle(apiNs.i18n.getMessage("settings_window_title"));

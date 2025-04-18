@@ -13,18 +13,18 @@ import { PropTypes } from "prop-types";
 
 import { T, TT } from "../../utils/i18n";
 import {
-  useSettings,
   useTemporaryState,
   useMatchMedia,
+  useSettingsContext,
 } from "../../utils/hooks";
 import { debouncer } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRCodeSVG from "./QRCodeSVG";
 
 const Generator = forwardRef(function Generator(props, ref) {
-  const [settings, saveSettings] = useSettings();
+  const { settings, saveSettings } = useSettingsContext();
   const [content, setContent] = useState(props.content || "");
-  const [title] = useState(props.title || "");
+  const [title, setTitle] = useState(props.title || "");
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultNode = useRef(null);
   const addHistoryDebouncer = useRef(debouncer(1000));
@@ -32,6 +32,7 @@ const Generator = forwardRef(function Generator(props, ref) {
 
   useImperativeHandle(ref, () => ({
     setContent,
+    setTitle,
   }));
 
   useEffect(() => {
@@ -118,16 +119,16 @@ const Generator = forwardRef(function Generator(props, ref) {
   // handle dark mode & related settings
   const resultBoxStyles = {
     backgroundColor:
-      isDarkMode && !settings.whiteOnBlackQRCodeInDarkMode
+      isDarkMode && !settings?.whiteOnBlackQRCodeInDarkMode
         ? "white"
         : "transparent",
     boxShadow:
-      isDarkMode && !settings.whiteOnBlackQRCodeInDarkMode
+      isDarkMode && !settings?.whiteOnBlackQRCodeInDarkMode
         ? "0 0 10px rgb(0, 84, 0) inset"
         : "none",
   };
   const svgProps =
-    isDarkMode && settings.whiteOnBlackQRCodeInDarkMode
+    isDarkMode && settings?.whiteOnBlackQRCodeInDarkMode
       ? { foregroundColor: "white", backgroundColor: "transparent" }
       : { foregroundColor: "black", backgroundColor: "transparent" };
 
@@ -167,7 +168,7 @@ const Generator = forwardRef(function Generator(props, ref) {
                 key={level}
                 class={
                   "clickable ec-level " +
-                  (settings.ecLevel === level ? "ec-level-active" : "")
+                  (settings?.ecLevel === level ? "ec-level-active" : "")
                 }
                 title={title}
                 onClick={() => saveSettings({ ecLevel: level })}
@@ -183,7 +184,7 @@ const Generator = forwardRef(function Generator(props, ref) {
           content={content}
           width={300}
           height={300}
-          errorCorrectionLevel={settings.ecLevel}
+          errorCorrectionLevel={settings?.ecLevel}
           {...svgProps}
         ></QRCodeSVG>
       </div>
