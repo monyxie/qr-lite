@@ -30,10 +30,11 @@ function SettingsPage() {
             <div class="form-entry">
               <div class="form-entry-line">
                 <input
+                  disabled={!settings}
                   id="whiteOnBlackQRCodeInDarkModeCheckbox"
                   name="whiteOnBlackQRCodeInDarkMode"
                   type="checkbox"
-                  checked={settings.whiteOnBlackQRCodeInDarkMode}
+                  checked={settings?.whiteOnBlackQRCodeInDarkMode}
                   onChange={(e) => {
                     saveSettings({
                       whiteOnBlackQRCodeInDarkMode: e.target.checked,
@@ -54,10 +55,11 @@ function SettingsPage() {
             <div class="form-entry">
               <div class="form-entry-line">
                 <input
+                  disabled={!settings}
                   id="scanSuccessSoundEnabledCheckbox"
                   name="scanSuccessSoundEnabled"
                   type="checkbox"
-                  checked={settings.scanSuccessSoundEnabled}
+                  checked={settings?.scanSuccessSoundEnabled}
                   onChange={(e) => {
                     saveSettings({ scanSuccessSoundEnabled: e.target.checked });
                   }}
