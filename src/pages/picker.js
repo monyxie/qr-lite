@@ -191,13 +191,6 @@ function Picker({ port, scroll }) {
     }
   };
 
-  const maskBorders = {
-    top: spotRect.y,
-    left: spotRect.x,
-    right: windowSize.width - spotRect.x - scanSize,
-    bottom: windowSize.height - spotRect.y - scanSize,
-  };
-
   const scan = async (rect) => {
     setStage("scanning");
     const x = Math.max(rect.x, 0);
@@ -291,10 +284,16 @@ function Picker({ port, scroll }) {
           borderRightWidth: `${windowSize.height / 2}px`,
         }
       : {
-          borderTopWidth: `${maskBorders.top}px`,
-          borderBottomWidth: `${maskBorders.bottom}px`,
-          borderLeftWidth: `${maskBorders.left}px`,
-          borderRightWidth: `${maskBorders.right}px`,
+          borderTopWidth: `${Math.max(0, spotRect.y)}px`,
+          borderBottomWidth: `${Math.max(
+            0,
+            windowSize.height - spotRect.y - scanSize
+          )}px`,
+          borderLeftWidth: `${Math.max(0, spotRect.x)}px`,
+          borderRightWidth: `${Math.max(
+            0,
+            windowSize.width - spotRect.x - scanSize
+          )}px`,
         }),
   };
 
