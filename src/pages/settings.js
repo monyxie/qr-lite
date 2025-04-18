@@ -28,39 +28,47 @@ function SettingsPage() {
           <fieldset>
             <legend>{TT("settings_generator_legend")}</legend>
             <div class="form-entry">
-              <input
-                id="whiteOnBlackQRCodeInDarkModeCheckbox"
-                name="whiteOnBlackQRCodeInDarkMode"
-                type="checkbox"
-                checked={settings.whiteOnBlackQRCodeInDarkMode}
-                onChange={(e) => {
-                  saveSettings({
-                    whiteOnBlackQRCodeInDarkMode: e.target.checked,
-                  });
-                }}
-              />
-              <label htmlFor="whiteOnBlackQRCodeInDarkModeCheckbox">
-                {TT(
-                  "settings_white_on_black_qr_ccode_in_dark_mode_enabled_label"
-                )}
-              </label>
+              <div class="form-entry-line">
+                <input
+                  id="whiteOnBlackQRCodeInDarkModeCheckbox"
+                  name="whiteOnBlackQRCodeInDarkMode"
+                  type="checkbox"
+                  checked={settings.whiteOnBlackQRCodeInDarkMode}
+                  onChange={(e) => {
+                    saveSettings({
+                      whiteOnBlackQRCodeInDarkMode: e.target.checked,
+                    });
+                  }}
+                />
+                <label htmlFor="whiteOnBlackQRCodeInDarkModeCheckbox">
+                  {TT("settings_white_on_black_qr_ccode_in_dark_mode_label")}
+                </label>
+              </div>
+              <p class="form-entry-explainer">
+                {TT("settings_white_on_black_qr_ccode_in_dark_mode_explainer")}
+              </p>
             </div>
           </fieldset>
           <fieldset>
             <legend>{TT("settings_scanner_legend")}</legend>
             <div class="form-entry">
-              <input
-                id="scanSuccessSoundEnabledCheckbox"
-                name="scanSuccessSoundEnabled"
-                type="checkbox"
-                checked={settings.scanSuccessSoundEnabled}
-                onChange={(e) => {
-                  saveSettings({ scanSuccessSoundEnabled: e.target.checked });
-                }}
-              />
-              <label htmlFor="scanSuccessSoundEnabledCheckbox">
-                {TT("settings_scan_success_sound_enabled_label")}
-              </label>
+              <div class="form-entry-line">
+                <input
+                  id="scanSuccessSoundEnabledCheckbox"
+                  name="scanSuccessSoundEnabled"
+                  type="checkbox"
+                  checked={settings.scanSuccessSoundEnabled}
+                  onChange={(e) => {
+                    saveSettings({ scanSuccessSoundEnabled: e.target.checked });
+                  }}
+                />
+                <label htmlFor="scanSuccessSoundEnabledCheckbox">
+                  {TT("settings_scan_success_sound_enabled_label")}
+                </label>
+              </div>
+              <p class="form-entry-explainer">
+                {TT("settings_scan_success_sound_enabled_explainer")}
+              </p>
             </div>
           </fieldset>
           {showKeyboardShortcutsSetting && (

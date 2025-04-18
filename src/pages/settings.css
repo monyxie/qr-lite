@@ -73,6 +73,21 @@ fieldset {
 
 .form-entry {
   display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  color: var(--text-primary-color);
+}
+
+.form-entry-line {
+  display: flex;
   gap: 0.2rem;
   align-items: center;
+}
+
+.form-entry-explainer {
+  margin: 0;
+  margin-left: 1.3rem;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  opacity: 0.8;
 }

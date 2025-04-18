@@ -251,10 +251,16 @@
     "message": "QR Lite Settings"
   },
   "settings_scan_success_sound_enabled_label": {
-    "message": "Play sound on successful scan"
+    "message": "Play sound on successful scan."
   },
-  "settings_white_on_black_qr_ccode_in_dark_mode_enabled_label": {
-    "message": "In dark mode, generate QR Codes with a white foreground color on a dark background. Some scanners may have trouble scanning such QR Codes."
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Play a beep sound when a QR code is successfully scanned."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Generate white QR Codes on black background in dark mode"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "In dark mode, generate QR Codes with a light foreground color on a dark background. Some scanners may have trouble scanning such QR Codes. The QR code you save or copy via the \"Save\" and \"Copy\" buttons will always have a white background and black foreground."
   },
   "settings_scanner_legend": {
     "message": "QR Code Scanner"
