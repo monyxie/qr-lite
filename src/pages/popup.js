@@ -120,7 +120,7 @@ const Generator = forwardRef(function Generator(props, ref) {
    */
   const createCanvasForQrCode = (size) => {
     size = size || 500;
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const el = document.createElement("div");
       render(
         <QRCodeSVG
@@ -135,18 +135,25 @@ const Generator = forwardRef(function Generator(props, ref) {
       const svg = el.querySelector("svg");
       const img = document.createElement("img");
       const canvas = document.createElement("canvas");
+      canvas.width = canvas.height = size;
       const xml = new XMLSerializer().serializeToString(svg);
       const svg64 = btoa(xml);
+      const context = canvas.getContext("2d");
+      context.fillStyle = "#FFFFFF";
+      context.fillRect(0, 0, canvas.width, canvas.height);
 
-      canvas.width = canvas.height = size;
-      img.src = "data:image/svg+xml;base64," + svg64;
       img.onload = function () {
-        const context = canvas.getContext("2d");
-        context.fillStyle = "#FFFFFF";
-        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(img, 0, 0);
+        img.onload = null; // clean up
+        img.onerror = null; // clean up
         resolve(canvas);
       };
+      img.onerror = (error) => {
+        img.onload = null; // clean up
+        img.onerror = null; // clean up
+        reject(error);
+      };
+      img.src = "data:image/svg+xml;base64," + svg64;
     });
   };
 
