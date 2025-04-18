@@ -251,7 +251,7 @@
     "message": "QR Lite Settings"
   },
   "settings_scan_success_sound_enabled_label": {
-    "message": "Play sound on successful scan."
+    "message": "Play sound on successful scan"
   },
   "settings_scan_success_sound_enabled_explainer": {
     "message": "Play a beep sound when a QR code is successfully scanned."
