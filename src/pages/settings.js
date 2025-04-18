@@ -29,15 +29,15 @@ function SettingsPage() {
             <legend>{TT("settings_scanner_legend")}</legend>
             <div class="form-entry">
               <input
-                id="soundEnabledCheckbox"
-                name="soundEnabled"
+                id="scanSuccessSoundEnabledCheckbox"
+                name="scanSuccessSoundEnabled"
                 type="checkbox"
-                checked={settings.soundEnabled}
+                checked={settings.scanSuccessSoundEnabled}
                 onChange={(e) => {
-                  saveSettings({ soundEnabled: e.target.checked });
+                  saveSettings({ scanSuccessSoundEnabled: e.target.checked });
                 }}
               />
-              <label htmlFor="soundEnabledCheckbox">
+              <label htmlFor="scanSuccessSoundEnabledCheckbox">
                 {TT("settings_sound_enabled_label")}
               </label>
             </div>

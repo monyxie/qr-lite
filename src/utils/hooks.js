@@ -59,24 +59,26 @@ export function usePageTitle(title) {
 
 export function useAudioPlayer() {
   const [settings] = useSettings();
-  const play = (name) => {
-    return new Promise((resolve) => {
-      if (settings.soundEnabled) {
-        const audio = new Audio(name);
-        audio.addEventListener(
-          "ended",
-          () => {
-            resolve(true);
-          },
-          { once: true }
-        );
-        audio.play();
-      } else {
-        resolve(false);
-      }
-    });
+  const makePlayFunc = (name) => {
+    return () => {
+      return new Promise((resolve) => {
+        if (settings.scanSuccessSoundEnabled) {
+          const audio = new Audio(name);
+          audio.addEventListener(
+            "ended",
+            () => {
+              resolve(true);
+            },
+            { once: true }
+          );
+          audio.play();
+        } else {
+          resolve(false);
+        }
+      });
+    };
   };
-  return play;
+  return { scanSuccess: makePlayFunc("/audio/success.mp3") };
 }
 
 export function useWindowSize() {

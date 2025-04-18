@@ -334,7 +334,7 @@ function ImageScanner(props) {
   const inputImgNode = useRef(null);
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
-  const playAudio = useAudioPlayer();
+  const audioPlayer = useAudioPlayer();
 
   useEffect(() => {
     if (needsUrlPermission) {
@@ -377,7 +377,7 @@ function ImageScanner(props) {
       }
 
       if (success) {
-        playAudio("/audio/success.mp3");
+        audioPlayer.scanSuccess();
       } else {
         setError(errMsg || T("unable_to_decode"));
       }
@@ -495,7 +495,7 @@ function CameraScanner() {
   const videoRef = useRef(null);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const playAudio = useAudioPlayer();
+  const audioPlayer = useAudioPlayer();
   const outputContentNode = useRef(null);
   const canvasRef = useRef(null);
   const [captured, setCaptured] = useState(false);
@@ -585,7 +585,7 @@ function CameraScanner() {
           if (results && results.length > 0) {
             setResult(results[0]);
             addHistory("decode", results[0].content);
-            playAudio("/audio/success.mp3");
+            audioPlayer.scanSuccess();
           }
         } catch (e) {
           console.error(e);

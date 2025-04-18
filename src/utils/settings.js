@@ -6,7 +6,7 @@ const settingsDefinition = {
       return typeof value === "undefined" || value === true;
     },
   },
-  soundEnabled: {
+  scanSuccessSoundEnabled: {
     normalize(value) {
       return typeof value === "undefined" || value === true;
     },

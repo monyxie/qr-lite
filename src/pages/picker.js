@@ -7,7 +7,6 @@ import {
   useWindowSize,
   useAudioPlayer,
   useTimer,
-  useSettings,
 } from "../utils/hooks";
 import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { apiNs } from "../utils/compat";
@@ -57,7 +56,7 @@ function Picker({ port, scroll }) {
   const [options, setOptions] = useState({ openUrlMode: "NO_OPEN" });
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultContentNode = useRef(null);
-  const playAudio = useAudioPlayer();
+  const audioPlayer = useAudioPlayer();
   const xMarkNode = useRef(null);
   const tipsNode = useRef(null);
   const [imagePosition, setImagePosition] = useState(null);
@@ -217,7 +216,7 @@ function Picker({ port, scroll }) {
       setError(res.err);
       setInputImage(res.image);
       if (res.result.length > 0) {
-        const playAudioPromise = playAudio("/audio/success.mp3");
+        const playAudioPromise = audioPlayer.scanSuccess();
         setResult(res.result[0]);
         const content = res.result[0].content;
         if (isUrl(content)) {
