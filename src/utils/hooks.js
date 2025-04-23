@@ -1,4 +1,11 @@
-import { useEffect, useState, useRef, createContext, useContext } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
 import {
   addListener,
   getSettings,
@@ -60,25 +67,28 @@ export function SettingsContextProvider({ children }) {
 
 export function useAudioPlayer() {
   const { settings } = useSettingsContext();
-  const makePlayFunc = (name) => {
-    return () => {
-      return new Promise((resolve) => {
-        if (settings.scanSuccessSoundEnabled) {
-          const audio = new Audio(name);
-          audio.addEventListener(
-            "ended",
-            () => {
-              resolve(true);
-            },
-            { once: true }
-          );
-          audio.play();
-        } else {
-          resolve(false);
-        }
-      });
-    };
-  };
+  const makePlayFunc = useCallback(
+    (name) => {
+      return () => {
+        return new Promise((resolve) => {
+          if (settings.scanSuccessSoundEnabled) {
+            const audio = new Audio(name);
+            audio.addEventListener(
+              "ended",
+              () => {
+                resolve(true);
+              },
+              { once: true }
+            );
+            audio.play();
+          } else {
+            resolve(false);
+          }
+        });
+      };
+    },
+    [settings]
+  );
   return { scanSuccess: makePlayFunc("/audio/success.mp3") };
 }
 

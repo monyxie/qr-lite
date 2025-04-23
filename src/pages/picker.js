@@ -7,6 +7,7 @@ import {
   useTimer,
   SettingsContextProvider,
   useMousePositionRef,
+  useWindowSize,
 } from "../utils/hooks";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { apiNs } from "../utils/compat";
@@ -42,81 +43,70 @@ function collides(a, b) {
 }
 
 function Picker({ stage, onScan, onSpotChange }) {
+  const windowSize = useWindowSize();
   const [scaleLevel, setScaleLevel] = useState(initialScanLevel);
   const factor = minScaleFactor + distance * scaleLevel;
   const scanSize = baseScanSize * factor;
   const maskRef = useRef(null);
+  const pathRef = useRef(null);
 
   const prevScanSize = useRef(null);
   const prevMousePositionRef = useRef(null);
   const mousePositionRef = useMousePositionRef();
   const animationFrameRef = useRef(null);
 
-  const getMaskStyles = useCallback((spotRect) => {
-    return {
-      top: 0,
-      left: 0,
-      margin: 0,
-      padding: 0,
-      ...(!spotRect
-        ? {
-            borderTopWidth: `50vw`,
-            borderBottomWidth: `50vw`,
-            borderLeftWidth: `50vh`,
-            borderRightWidth: `50vh`,
-          }
-        : {
-            borderTopWidth: `${Math.max(0, Math.floor(spotRect.y))}px`,
-            borderBottomWidth: `${Math.max(
-              0,
-              Math.floor(window.innerHeight - spotRect.y - spotRect.height)
-            )}px`,
-            borderLeftWidth: `${Math.max(0, Math.floor(spotRect.x))}px`,
-            borderRightWidth: `${Math.max(
-              0,
-              Math.floor(window.innerWidth - spotRect.x - spotRect.width)
-            )}px`,
-          }),
-    };
-  }, []);
+  useEffect(() => {
+    maskRef.current?.setAttribute(
+      "viewBox",
+      `0 0 ${windowSize.width} ${windowSize.height}`
+    );
+  }, [windowSize]);
 
   useEffect(() => {
     cancelAnimationFrame(animationFrameRef.current);
-    if (stage === "picking") {
-      const updateSpotlight = () => {
-        if (stage === "picking") {
-          if (mousePositionRef.current && maskRef.current) {
-            if (
-              mousePositionRef.current !== prevMousePositionRef.current ||
-              prevScanSize.current !== scanSize
-            ) {
-              prevMousePositionRef.current = mousePositionRef.current;
-              prevScanSize.current = scanSize;
-              const rect = {
-                x: mousePositionRef.current.x - scanSize / 2,
-                y: mousePositionRef.current.y - scanSize / 2,
-                width: scanSize,
-                height: scanSize,
-              };
-              const styles = getMaskStyles(stage === "picking" ? rect : null);
-              Object.assign(maskRef.current.style, styles);
-              onSpotChange(rect);
-            }
-            animationFrameRef.current = requestAnimationFrame(
-              updateSpotlight,
-              1000
-            );
-          }
+    const updateSpotlight = () => {
+      if (mousePositionRef.current && pathRef.current) {
+        const ww = windowSize.width;
+        const wh = windowSize.height;
+
+        if (
+          mousePositionRef.current !== prevMousePositionRef.current ||
+          prevScanSize.current !== scanSize
+        ) {
+          prevMousePositionRef.current = mousePositionRef.current;
+          prevScanSize.current = scanSize;
+          const rect = {
+            x: mousePositionRef.current.x - scanSize / 2,
+            y: mousePositionRef.current.y - scanSize / 2,
+            width: scanSize,
+            height: scanSize,
+          };
+          onSpotChange(rect);
+
+          let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
+          pathDef += `M ${rect.x - 1} ${rect.y - 1} l 0 ${rect.height + 2} l ${
+            rect.width + 2
+          } 0 l 0 -${rect.height + 2} Z`;
+          pathRef.current.setAttribute("d", pathDef);
         }
-      };
-      updateSpotlight();
-    }
+        if (stage === "picking") {
+          animationFrameRef.current = requestAnimationFrame(
+            updateSpotlight,
+            1000
+          );
+        } else if (stage === "result") {
+          let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
+          pathRef.current.setAttribute("d", pathDef);
+        }
+      }
+    };
+    updateSpotlight();
   }, [
     stage,
-    getMaskStyles,
     mousePositionRef /* make eslint happy */,
     scanSize,
     onSpotChange,
+    windowSize,
   ]);
 
   const handleWheel = (event) => {
@@ -135,22 +125,39 @@ function Picker({ stage, onScan, onSpotChange }) {
     }
   };
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (stage === "picking") {
+      onScan();
+    }
+  };
+
   return (
-    <div class="mask" id="mask" onWheel={handleWheel} ref={maskRef}>
-      {stage !== "result" && (
-        <div
-          style={{ cursor: stage === "scanning" ? "wait" : "auto" }}
-          class="spotlight"
-          id="spotlight"
-          onClick={(e) => {
-            e.stopPropagation();
-            if (stage === "picking") {
-              onScan();
-            }
-          }}
-        ></div>
-      )}
-    </div>
+    <svg
+      class="mask"
+      width="100%"
+      height="100%"
+      viewBox="0 0 0 0"
+      xmlns="http://www.w3.org/2000/svg"
+      onWheel={handleWheel}
+      onClick={handleClick}
+      ref={maskRef}
+      style={{
+        cursor:
+          stage === "scanning"
+            ? "wait"
+            : stage === "picking"
+            ? "crosshair"
+            : "auto",
+      }}
+    >
+      <path
+        fill="black"
+        fillOpacity="50%"
+        fillRule="evenodd"
+        ref={pathRef}
+      ></path>
+    </svg>
   );
 }
 
@@ -160,7 +167,7 @@ Picker.propTypes = {
   onSpotChange: PropTypes.func.isRequired,
 };
 
-function UI({ port, scroll }) {
+function Scanner({ port, scroll }) {
   const [stage, setStage] = useState("picking");
   const [inputImage, setInputImage] = useState(null);
   const [error, setError] = useState(null);
@@ -269,6 +276,13 @@ function UI({ port, scroll }) {
 
   const handleSpotChange = useCallback((spot) => {
     setSpotRect(spot);
+  }, []);
+
+  const cancelWheel = useCallback((e) => {
+    if (e.target.tagName !== "TEXTAREA") {
+      e.stopPropagation();
+      e.preventDefault();
+    }
   }, []);
 
   const scan = useCallback(async () => {
@@ -458,7 +472,7 @@ function UI({ port, scroll }) {
           <div
             class="input-image-container"
             style={imagePosition}
-            // onWheel={cancelWheel}
+            onWheel={cancelWheel}
           >
             {inputImage && (
               <img class="captured" id="captured" src={inputImage} />
@@ -468,7 +482,7 @@ function UI({ port, scroll }) {
             class="result"
             id="result"
             style={{ opacity: resultVisible ? "1" : "0" }}
-            // onWheel={cancelWheel}
+            onWheel={cancelWheel}
           >
             <textarea
               id="result-content"
@@ -528,7 +542,7 @@ function UI({ port, scroll }) {
   );
 }
 
-UI.propTypes = {
+Scanner.propTypes = {
   port: PropTypes.object,
   scroll: PropTypes.object,
 };
@@ -540,7 +554,7 @@ window.onmessage = (event) => {
       window.onmessage = null;
       render(
         <SettingsContextProvider>
-          <UI port={event.ports[0]} scroll={event.data.scroll} />
+          <Scanner port={event.ports[0]} scroll={event.data.scroll} />
         </SettingsContextProvider>,
         document.body
       );

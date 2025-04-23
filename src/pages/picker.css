@@ -13,44 +13,13 @@ body {
 }
 
 .mask {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  background-color: transparent;
-  border-color: rgba(0, 0, 0, 0.5);
-  border-style: solid;
-  border-width: 0;
-  cursor: crosshair;
+  margin: 0;
+  padding: 0;
 }
 
-.spotlight {
-  background-color: transparent;
-  width: 100%;
-  height: 100%;
-  outline: white solid 2px;
-  border-radius: 4px;
-}
-
-/* the following 2 rules hide the spotlight when the cursor is on one of mask's siblings */
-.mask:has(~ *:hover) {
-  border-color: transparent;
-  background: rgba(0, 0, 0, 0.5);
-}
-.mask:has(~ *:hover) .spotlight {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .spotlight {
-    outline: rgb(85, 85, 85) solid 2px;
-  }
-}
-
-.spotlight.off {
-  outline: none;
+/* hide the spotlight when the cursor is on one of mask's siblings */
+.mask:has(~ *:hover) path {
+  fill-rule: nonzero;
 }
 
 .input-image-container {
@@ -72,14 +41,7 @@ body {
   cursor: auto;
   max-width: 100%;
   max-height: 100%;
-  border-radius: 4px;
-  box-shadow: 0 0 10px gray;
-}
-
-@media (prefers-color-scheme: dark) {
-  .captured {
-    outline: rgb(85, 85, 85) solid 2px;
-  }
+  outline: 1px solid #777;
 }
 
 .tips {
@@ -138,10 +100,6 @@ body {
     border: 1px solid #a5a5a5;
     color: #ccc;
   }
-}
-
-.showing-result .hide-on-result {
-  display: none;
 }
 
 .tips kbd {
@@ -255,8 +213,4 @@ body {
     border-color: #333;
     background-color: rgba(0, 0, 0, 0.7);
   }
-}
-
-.loading {
-  cursor: wait !important;
 }
