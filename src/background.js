@@ -1,4 +1,10 @@
-import { apiNs, capturePartialScreen, openPopup, tabs } from "./utils/compat";
+import {
+  apiNs,
+  capturePartialScreen,
+  openPopup,
+  storage,
+  tabs,
+} from "./utils/compat";
 import { addHistory } from "./utils/history";
 import { initDecoder, scan } from "./utils/qrcode";
 import { convertBlobToDataUri, randomStr } from "./utils/misc";
@@ -188,6 +194,13 @@ function validatePickerSecret(secret) {
 apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // In firefox we can return a promise but we can't do that in Chrome
   switch (request.action) {
+    case "BG_SAVE_PICKER_SCALE_LEVEL": {
+      const key = `tab_${sender.tab.id}_scaleLevel`;
+      storage("session")
+        .set({ [key]: request.scaleLevel })
+        .then(sendResponse);
+      return true;
+    }
     case "BG_INJECT_PICKER_LOADER":
       tabs
         .query({ active: true, currentWindow: true })
@@ -219,20 +232,31 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "POPUP_GET_OPTIONS":
       sendResponse(openPopupOptions);
       openPopupOptions = null;
-      break;
-    case "PICKER_GET_OPTIONS":
-      sendResponse(pickerOptions);
+      return true;
+    case "PICKER_GET_OPTIONS": {
+      const options = pickerOptions;
       pickerOptions = null;
-      break;
+      const key = `tab_${sender.tab.id}_scaleLevel`;
+      storage("session")
+        .get(key)
+        .then(
+          (r) => (key in r ? r[key] : null),
+          () => null
+        )
+        .then((scaleLevel) => {
+          sendResponse({ options, scaleLevel });
+        });
+      return true;
+    }
     case "BG_GET_PICKER_URL": {
       const url = new URL(apiNs.runtime.getURL("pages/picker.html"));
       url.searchParams.set("secret", createPickerSecret());
       sendResponse(url.href);
-      break;
+      return true;
     }
     case "BG_VALIDATE_PICKER_SECRET":
       sendResponse(validatePickerSecret(request.secret));
-      break;
+      return true;
     case "BG_APPLY_CSS":
       if (sender.tab?.id) {
         const promises = [];
@@ -260,6 +284,6 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
         Promise.all(promises).then(() => sendResponse());
       }
-      break;
+      return true;
   }
 });

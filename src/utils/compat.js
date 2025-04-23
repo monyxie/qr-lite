@@ -11,6 +11,9 @@ export const tabs =
         create: (options) => {
           return apiNs.tabs.create(options);
         },
+        getCurrent: () => {
+          return apiNs.tabs.getCurrent();
+        },
       }
     : {
         query: (options) => {
@@ -27,33 +30,36 @@ export const tabs =
             });
           });
         },
+        getCurrent: () => {
+          return apiNs.tabs.getCurrent();
+        },
       };
 export const storage =
   QRLITE_BROWSER === "firefox"
-    ? {
+    ? (area) => ({
         get: (keys) => {
-          return apiNs.storage.local.get(keys);
+          return apiNs.storage[area].get(keys);
         },
         set: (keys) => {
-          return apiNs.storage.local.set(keys);
+          return apiNs.storage[area].set(keys);
         },
-      }
-    : {
+      })
+    : (area) => ({
         get: (keys) => {
           return new Promise((resolve, reject) => {
-            apiNs.storage.local.get(keys, (data) => {
+            apiNs.storage[area].get(keys, (data) => {
               resolve(data);
             });
           });
         },
         set: (keys) => {
           return new Promise((resolve, reject) => {
-            apiNs.storage.local.set(keys, (data) => {
+            apiNs.storage[area].set(keys, (data) => {
               resolve(data);
             });
           });
         },
-      };
+      });
 
 export const openPopup = (options) => {
   // Between Chrome 118 and Chrome 126 (October 2023 - June 2024), `action.openPopup()` is only available to policy installed extensions

@@ -24,7 +24,7 @@ const settingsDefinition = {
 };
 
 export async function getSettings() {
-  const settings = await storage.get(Object.keys(settingsDefinition));
+  const settings = await storage("local").get(Object.keys(settingsDefinition));
   for (const key in settingsDefinition) {
     settings[key] = settingsDefinition[key].normalize(settings[key]);
   }
@@ -39,7 +39,7 @@ export async function saveSettings(settings) {
       settings[key] = settingsDefinition[key].normalize(settings[key]);
     }
   }
-  await storage.set(settings);
+  await storage("local").set(settings);
 }
 
 const listeners = [];

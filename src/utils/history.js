@@ -3,7 +3,7 @@ import { getSettings } from "./settings";
 
 export async function getHistory() {
   try {
-    const results = await storage.get("history");
+    const results = await storage("local").get("history");
     if (results.history) {
       return JSON.parse(results.history);
     }
@@ -14,7 +14,7 @@ export async function getHistory() {
 }
 
 export async function clearHistory() {
-  await storage.set({
+  await storage("local").set({
     history: "[]",
   });
 }
@@ -48,7 +48,7 @@ export async function addHistory(type, text) {
     history = history.slice(history.length - 100, history.length);
   }
 
-  await storage.set({
+  await storage("local").set({
     history: JSON.stringify(history),
   });
 }
@@ -58,7 +58,7 @@ export async function removeHistory(text) {
   history = history.filter(function (item) {
     return item.text !== text;
   });
-  await storage.set({
+  await storage("local").set({
     history: JSON.stringify(history),
   });
 }

@@ -10,7 +10,7 @@ import {
   useWindowSize,
 } from "../utils/hooks";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { apiNs } from "../utils/compat";
+import { apiNs, storage, tabs } from "../utils/compat";
 import { PropTypes } from "prop-types";
 import { useTemporaryState } from "../utils/hooks";
 import { isUrl } from "../utils/misc";
@@ -43,6 +43,10 @@ function collides(a, b) {
   return !(ax2 < bx1 || bx2 < ax1 || ay2 < by1 || by2 < ay1);
 }
 
+const getPickerOptionsPromise = apiNs.runtime.sendMessage({
+  action: "PICKER_GET_OPTIONS",
+});
+
 function Picker({ stage, onScan, onSpotChange }) {
   const windowSize = useWindowSize();
   const [scaleLevel, setScaleLevel] = useState(initialScanLevel);
@@ -55,6 +59,26 @@ function Picker({ stage, onScan, onSpotChange }) {
   const prevMousePositionRef = useRef(null);
   const mousePositionRef = useMousePositionRef();
   const animationFrameRef = useRef(null);
+  const scaleLevelInitialized = useRef(false);
+
+  useEffect(() => {
+    getPickerOptionsPromise.then((res) => {
+      scaleLevelInitialized.current = true;
+
+      if (res.scaleLevel !== null) {
+        setScaleLevel(res.scaleLevel);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (scaleLevelInitialized.current) {
+      apiNs.runtime.sendMessage({
+        action: "BG_SAVE_PICKER_SCALE_LEVEL",
+        scaleLevel: scaleLevel,
+      });
+    }
+  }, [scaleLevel]);
 
   useEffect(() => {
     maskRef.current?.setAttribute(
@@ -66,30 +90,33 @@ function Picker({ stage, onScan, onSpotChange }) {
   useEffect(() => {
     cancelAnimationFrame(animationFrameRef.current);
     const updateSpotlight = () => {
-      if (mousePositionRef.current && pathRef.current) {
+      if (pathRef.current) {
         const ww = windowSize.width;
         const wh = windowSize.height;
+        let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
 
-        if (
-          mousePositionRef.current !== prevMousePositionRef.current ||
-          prevScanSize.current !== scanSize
-        ) {
-          prevMousePositionRef.current = mousePositionRef.current;
-          prevScanSize.current = scanSize;
+        if (mousePositionRef.current) {
           const rect = {
             x: mousePositionRef.current.x - scanSize / 2,
             y: mousePositionRef.current.y - scanSize / 2,
             width: scanSize,
             height: scanSize,
           };
-          onSpotChange(rect);
-
-          let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
           pathDef += `M ${rect.x - 1} ${rect.y - 1} l 0 ${rect.height + 2} l ${
             rect.width + 2
           } 0 l 0 -${rect.height + 2} Z`;
-          pathRef.current.setAttribute("d", pathDef);
+
+          if (
+            mousePositionRef.current !== prevMousePositionRef.current ||
+            prevScanSize.current !== scanSize
+          ) {
+            prevMousePositionRef.current = mousePositionRef.current;
+            prevScanSize.current = scanSize;
+            onSpotChange(rect);
+          }
         }
+
+        pathRef.current.setAttribute("d", pathDef);
         if (stage === "picking") {
           animationFrameRef.current = requestAnimationFrame(
             updateSpotlight,
@@ -225,13 +252,9 @@ function Scanner({ port, scroll }) {
     if (!validated) {
       return;
     }
-    (async () => {
-      const options = Object.assign(
-        { openUrlMode: "NO_OPEN" },
-        await apiNs.runtime.sendMessage({ action: "PICKER_GET_OPTIONS" })
-      );
-      setOptions(options);
-    })();
+    getPickerOptionsPromise.then((res) => {
+      setOptions({ openUrlMode: "NO_OPEN", ...res.options });
+    });
   }, [validated]);
 
   const close = useCallback(() => {

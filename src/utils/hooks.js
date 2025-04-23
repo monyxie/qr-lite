@@ -153,10 +153,10 @@ export function useMousePosition(throttle = 0) {
 
 /**
  *
- * @return {React.RefObject<{x: number, y: number}>}
+ * @return {React.RefObject<{x: number, y: number}|null>}
  */
 export function useMousePositionRef() {
-  const position = useRef({ x: 0, y: 0 });
+  const position = useRef(null);
 
   useEffect(() => {
     const handleMouseEvent = (event) => {
