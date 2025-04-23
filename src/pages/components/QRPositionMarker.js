@@ -10,6 +10,7 @@ export default function QRPositionMarker({
   flashDelay = "0s",
 }) {
   let marker = null;
+
   if (width && height && result?.vertices) {
     const points = result.vertices.map((v) => v.join(",")).join(" ");
     marker = (
@@ -41,7 +42,7 @@ export default function QRPositionMarker({
     position: "relative",
     padding: 0,
     margin: 0,
-    display: result ? "block" : "none",
+    display: "block",
     transform: mirror ? "scaleX(-1)" : "none",
   };
 
