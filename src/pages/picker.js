@@ -2,12 +2,11 @@ import { render } from "preact";
 import { T, TT } from "../utils/i18n";
 import {
   useKeyPress,
-  useMousePosition,
   useURLParams,
-  useWindowSize,
   useAudioPlayer,
   useTimer,
   SettingsContextProvider,
+  useMousePositionRef,
 } from "../utils/hooks";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { apiNs } from "../utils/compat";
@@ -42,16 +41,130 @@ function collides(a, b) {
   return !(ax2 < bx1 || bx2 < ax1 || ay2 < by1 || by2 < ay1);
 }
 
-function Picker({ port, scroll }) {
-  const windowSize = useWindowSize();
-  const mousePosition = useMousePosition();
+function Picker({ stage, onScan, onSpotChange }) {
   const [scaleLevel, setScaleLevel] = useState(initialScanLevel);
   const factor = minScaleFactor + distance * scaleLevel;
   const scanSize = baseScanSize * factor;
+  const maskRef = useRef(null);
+
+  const prevScanSize = useRef(null);
+  const prevMousePositionRef = useRef(null);
+  const mousePositionRef = useMousePositionRef();
+  const animationFrameRef = useRef(null);
+
+  const getMaskStyles = useCallback((spotRect) => {
+    return {
+      top: 0,
+      left: 0,
+      margin: 0,
+      padding: 0,
+      ...(!spotRect
+        ? {
+            borderTopWidth: `50vw`,
+            borderBottomWidth: `50vw`,
+            borderLeftWidth: `50vh`,
+            borderRightWidth: `50vh`,
+          }
+        : {
+            borderTopWidth: `${Math.max(0, Math.floor(spotRect.y))}px`,
+            borderBottomWidth: `${Math.max(
+              0,
+              Math.floor(window.innerHeight - spotRect.y - spotRect.height)
+            )}px`,
+            borderLeftWidth: `${Math.max(0, Math.floor(spotRect.x))}px`,
+            borderRightWidth: `${Math.max(
+              0,
+              Math.floor(window.innerWidth - spotRect.x - spotRect.width)
+            )}px`,
+          }),
+    };
+  }, []);
+
+  useEffect(() => {
+    cancelAnimationFrame(animationFrameRef.current);
+    if (stage === "picking") {
+      const updateSpotlight = () => {
+        if (stage === "picking") {
+          if (mousePositionRef.current && maskRef.current) {
+            if (
+              mousePositionRef.current !== prevMousePositionRef.current ||
+              prevScanSize.current !== scanSize
+            ) {
+              prevMousePositionRef.current = mousePositionRef.current;
+              prevScanSize.current = scanSize;
+              const rect = {
+                x: mousePositionRef.current.x - scanSize / 2,
+                y: mousePositionRef.current.y - scanSize / 2,
+                width: scanSize,
+                height: scanSize,
+              };
+              const styles = getMaskStyles(stage === "picking" ? rect : null);
+              Object.assign(maskRef.current.style, styles);
+              onSpotChange(rect);
+            }
+            animationFrameRef.current = requestAnimationFrame(
+              updateSpotlight,
+              1000
+            );
+          }
+        }
+      };
+      updateSpotlight();
+    }
+  }, [
+    stage,
+    getMaskStyles,
+    mousePositionRef /* make eslint happy */,
+    scanSize,
+    onSpotChange,
+  ]);
+
+  const handleWheel = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (stage === "picking") {
+      setScaleLevel((level) => {
+        level = level + (event.deltaY > 0 ? -1 : 1);
+        if (level < 0) {
+          level = 0;
+        } else if (level > maxScaleLevel) {
+          level = maxScaleLevel;
+        }
+        return level;
+      });
+    }
+  };
+
+  return (
+    <div class="mask" id="mask" onWheel={handleWheel} ref={maskRef}>
+      {stage !== "result" && (
+        <div
+          style={{ cursor: stage === "scanning" ? "wait" : "auto" }}
+          class="spotlight"
+          id="spotlight"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (stage === "picking") {
+              onScan();
+            }
+          }}
+        ></div>
+      )}
+    </div>
+  );
+}
+
+Picker.propTypes = {
+  stage: PropTypes.oneOf(["picking", "scanning", "result"]).isRequired,
+  onScan: PropTypes.func.isRequired,
+  onSpotChange: PropTypes.func.isRequired,
+};
+
+function UI({ port, scroll }) {
+  const [stage, setStage] = useState("picking");
   const [inputImage, setInputImage] = useState(null);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
-  const [stage, setStage] = useState("picking");
   const params = useURLParams();
   const [validated, setValidated] = useState(false);
   const [options, setOptions] = useState({ openUrlMode: "NO_OPEN" });
@@ -62,8 +175,18 @@ function Picker({ port, scroll }) {
   const tipsNode = useRef(null);
   const [imagePosition, setImagePosition] = useState(null);
   const { setTimer } = useTimer();
-  const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [resultVisible, setResultVisible] = useState(false);
+  const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
+
+  const collidesWithSpot = useCallback(
+    function (el) {
+      if (!el || !spotRect) {
+        return false;
+      }
+      return collides(spotRect, el.getBoundingClientRect());
+    },
+    [spotRect]
+  );
 
   // validate secret
   useEffect(() => {
@@ -144,61 +267,19 @@ function Picker({ port, scroll }) {
   useKeyPress({ key: "Escape", event: "keyup", callback: close });
   useKeyPress({ key: "r", event: "keyup", callback: newScan });
 
-  useEffect(() => {
-    setSpotRect((old) => {
-      if (stage === "scanning") {
-        return old;
-      }
-      return {
-        x: mousePosition.x - scanSize / 2,
-        y: mousePosition.y - scanSize / 2,
-        width: scanSize,
-        height: scanSize,
-      };
-    });
-  }, [mousePosition, scanSize, stage]);
+  const handleSpotChange = useCallback((spot) => {
+    setSpotRect(spot);
+  }, []);
 
-  const collidesWithSpot = useCallback(
-    function (el) {
-      if (!el || !spotRect) {
-        return false;
-      }
-      return collides(spotRect, el.getBoundingClientRect());
-    },
-    [spotRect]
-  );
-
-  const handleWheel = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    if (stage === "picking") {
-      setScaleLevel((level) => {
-        level = level + (event.deltaY > 0 ? -1 : 1);
-        if (level < 0) {
-          level = 0;
-        } else if (level > maxScaleLevel) {
-          level = maxScaleLevel;
-        }
-        return level;
-      });
-    }
-  };
-
-  const cancelWheel = (e) => {
-    if (e.target.tagName !== "TEXTAREA") {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  };
-
-  const scan = async (rect) => {
+  const scan = useCallback(async () => {
     setStage("scanning");
-    const x = Math.max(rect.x, 0);
-    const y = Math.max(rect.y, 0);
-    const width = Math.min(rect.x + rect.width, windowSize.width) - x;
-    const height = Math.min(rect.y + rect.height, windowSize.height) - y;
+    const x = Math.max(spotRect.x, 0);
+    const y = Math.max(spotRect.y, 0);
+    const width = Math.min(spotRect.x + spotRect.width, window.innerWidth) - x;
+    const height =
+      Math.min(spotRect.y + spotRect.height, window.innerHeight) - y;
 
-    rect = { x, y, width, height };
+    const rect = { x, y, width, height };
     let nextStage = "result";
     try {
       const res = await apiNs.runtime.sendMessage({
@@ -249,10 +330,10 @@ function Picker({ port, scroll }) {
       if (nextStage) {
         if (nextStage === "result") {
           setImagePosition({
-            top: `${rect.y + scanSize / 2}px`,
-            left: `${rect.x + scanSize / 2}px`,
-            width: `${scanSize}px`,
-            height: `${scanSize}px`,
+            top: `${rect.y + rect.height / 2}px`,
+            left: `${rect.x + rect.width / 2}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
           });
           setTimer(() => {
             setImagePosition({
@@ -269,33 +350,17 @@ function Picker({ port, scroll }) {
         setStage(nextStage);
       }
     }
-  };
-
-  const maskStyles = {
-    top: 0,
-    left: 0,
-    margin: 0,
-    padding: 0,
-    ...(stage === "result"
-      ? {
-          borderTopWidth: `${windowSize.width / 2}px`,
-          borderBottomWidth: `${windowSize.width / 2}px`,
-          borderLeftWidth: `${windowSize.height / 2}px`,
-          borderRightWidth: `${windowSize.height / 2}px`,
-        }
-      : {
-          borderTopWidth: `${Math.max(0, spotRect.y)}px`,
-          borderBottomWidth: `${Math.max(
-            0,
-            windowSize.height - spotRect.y - scanSize
-          )}px`,
-          borderLeftWidth: `${Math.max(0, spotRect.x)}px`,
-          borderRightWidth: `${Math.max(
-            0,
-            windowSize.width - spotRect.x - scanSize
-          )}px`,
-        }),
-  };
+  }, [
+    audioPlayer,
+    close,
+    options.openUrlMode,
+    scroll,
+    setTimer,
+    spotRect.height,
+    spotRect.width,
+    spotRect.x,
+    spotRect.y,
+  ]);
 
   const tipsStyles = {
     opacity:
@@ -312,21 +377,7 @@ function Picker({ port, scroll }) {
 
   return (
     <>
-      <div class="mask" id="mask" style={maskStyles} onWheel={handleWheel}>
-        {stage !== "result" && (
-          <div
-            style={{ cursor: stage === "scanning" ? "wait" : "auto" }}
-            class="spotlight"
-            id="spotlight"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (stage === "picking") {
-                scan(spotRect);
-              }
-            }}
-          ></div>
-        )}
-      </div>
+      <Picker stage={stage} onSpotChange={handleSpotChange} onScan={scan} />
       <div class="tips" id="tips" ref={tipsNode} style={tipsStyles}>
         <img
           class="logo"
@@ -407,7 +458,7 @@ function Picker({ port, scroll }) {
           <div
             class="input-image-container"
             style={imagePosition}
-            onWheel={cancelWheel}
+            // onWheel={cancelWheel}
           >
             {inputImage && (
               <img class="captured" id="captured" src={inputImage} />
@@ -417,11 +468,11 @@ function Picker({ port, scroll }) {
             class="result"
             id="result"
             style={{ opacity: resultVisible ? "1" : "0" }}
-            onWheel={cancelWheel}
+            // onWheel={cancelWheel}
           >
             <textarea
               id="result-content"
-              placeholder={T("unable_to_decode")}
+              placeholder={T("unable_to_decode") + (error ? error.message : "")}
               title={T("content_title")}
               readOnly
               rows="6"
@@ -477,7 +528,7 @@ function Picker({ port, scroll }) {
   );
 }
 
-Picker.propTypes = {
+UI.propTypes = {
   port: PropTypes.object,
   scroll: PropTypes.object,
 };
@@ -489,7 +540,7 @@ window.onmessage = (event) => {
       window.onmessage = null;
       render(
         <SettingsContextProvider>
-          <Picker port={event.ports[0]} scroll={event.data.scroll} />
+          <UI port={event.ports[0]} scroll={event.data.scroll} />
         </SettingsContextProvider>,
         document.body
       );

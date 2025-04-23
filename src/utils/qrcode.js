@@ -50,7 +50,6 @@ export class OpenCvQrCodeDecoder {
     );
 
     try {
-      // eslint-disable-next-line new-cap
       this.qrcode_detector = new this.cv.wechat_qrcode_WeChatQRCode(
         ...files.map((a) => "/" + a)
       );

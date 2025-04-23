@@ -115,11 +115,42 @@ export function useWindowSize() {
   return size;
 }
 
-export function useMousePosition() {
+export function useMousePosition(throttle = 0) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const lastUpdate = useRef(0);
   useEffect(() => {
     const handleMouseEvent = (event) => {
+      if (throttle > 0) {
+        const now = Date.now();
+        if (now - lastUpdate.current < throttle) {
+          return;
+        }
+        lastUpdate.current = now;
+      }
       setPosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mouseenter", handleMouseEvent);
+    window.addEventListener("mousemove", handleMouseEvent);
+    window.addEventListener("mouseleave", handleMouseEvent);
+    return () => {
+      window.removeEventListener("mouseenter", handleMouseEvent);
+      window.removeEventListener("mousemove", handleMouseEvent);
+      window.removeEventListener("mouseleave", handleMouseEvent);
+    };
+  }, [throttle]);
+  return position;
+}
+
+/**
+ *
+ * @return {React.RefObject<{x: number, y: number}>}
+ */
+export function useMousePositionRef() {
+  const position = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseEvent = (event) => {
+      position.current = { x: event.clientX, y: event.clientY };
     };
     window.addEventListener("mouseenter", handleMouseEvent);
     window.addEventListener("mousemove", handleMouseEvent);
