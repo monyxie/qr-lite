@@ -14,6 +14,7 @@ import { apiNs } from "../utils/compat";
 import { PropTypes } from "prop-types";
 import { useTemporaryState } from "../utils/hooks";
 import { isUrl } from "../utils/misc";
+import QRPositionMarker from "./components/QRPositionMarker";
 
 const minScaleFactor = 0.2;
 const maxScaleFactor = 10;
@@ -184,6 +185,7 @@ function Scanner({ port, scroll }) {
   const { setTimer } = useTimer();
   const [resultVisible, setResultVisible] = useState(false);
   const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  const [inputImageSize, setInputImageSize] = useState(null);
 
   const collidesWithSpot = useCallback(
     function (el) {
@@ -304,6 +306,7 @@ function Scanner({ port, scroll }) {
       });
       setError(res.err);
       setInputImage(res.image);
+      setInputImageSize(res.imageSize);
       if (res.result.length > 0) {
         const playAudioPromise = audioPlayer.scanSuccess();
         setResult(res.result[0]);
@@ -475,7 +478,14 @@ function Scanner({ port, scroll }) {
             onWheel={cancelWheel}
           >
             {inputImage && (
-              <img class="captured" id="captured" src={inputImage} />
+              <QRPositionMarker
+                width={inputImageSize?.width}
+                height={inputImageSize?.height}
+                result={result}
+                flashDelay="0.5s"
+              >
+                <img class="captured" id="captured" src={inputImage} />
+              </QRPositionMarker>
             )}
           </div>
           <div

@@ -6,22 +6,29 @@ export default function QRPositionMarker({
   height,
   result,
   mirror,
+  flash = true,
+  flashDelay = "0s",
 }) {
   let marker = null;
-  if (result?.vertices) {
+  if (width && height && result?.vertices) {
     const points = result.vertices.map((v) => v.join(",")).join(" ");
     marker = (
       <svg
         aria-hidden="true"
-        fill="lightgreen"
+        // fill="lightgreen"
         viewBox={`0 0 ${width} ${height}`}
         xmlns="http://www.w3.org/2000/svg"
+        style={{
+          animation: flash
+            ? `0.2s steps(3, jump-start) ${flashDelay} 3 flash`
+            : "none",
+        }}
       >
         <polygon
-          fill="green"
+          fill="none"
           fillOpacity="0.3"
           stroke="#88FF00"
-          strokeWidth="1%"
+          strokeWidth="2%"
           strokeLinejoin="round"
           strokeOpacity="0.9"
           points={`${points.trim()}`}
@@ -64,4 +71,6 @@ QRPositionMarker.propTypes = {
   height: PropTypes.number,
   result: PropTypes.object,
   mirror: PropTypes.bool,
+  flash: PropTypes.bool,
+  flashDelay: PropTypes.string,
 };

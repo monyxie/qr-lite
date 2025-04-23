@@ -51,12 +51,14 @@ async function captureScan(request) {
     }
     return {
       image: await dataUri,
+      imageSize: { width: canvas.width, height: canvas.height },
       result,
     };
   } catch (err) {
     console.error("err", err);
     return {
       image: await dataUri,
+      imageSize: { width: canvas.width, height: canvas.height },
       err,
     };
   }
