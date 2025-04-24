@@ -84,8 +84,8 @@ export default function ImageScanner(props) {
         <div class="input-box">
           <QRPositionMarker
             result={result}
-            width={inputImgNode.current?.naturalWidth || 0}
-            height={inputImgNode.current?.naturalHeight || 0}
+            width={inputImgNode.current?.width || 0}
+            height={inputImgNode.current?.height || 0}
           >
             <img
               class="scan-input-image"
