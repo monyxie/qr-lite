@@ -8,6 +8,7 @@ export default function QRPositionMarker({
   mirror,
   flash = true,
   flashDelay = "0s",
+  hidden = false,
 }) {
   let marker = null;
 
@@ -42,7 +43,7 @@ export default function QRPositionMarker({
     position: "relative",
     padding: 0,
     margin: 0,
-    display: "block",
+    display: hidden ? "none" : "block",
     transform: mirror ? "scaleX(-1)" : "none",
   };
 
@@ -74,4 +75,5 @@ QRPositionMarker.propTypes = {
   mirror: PropTypes.bool,
   flash: PropTypes.bool,
   flashDelay: PropTypes.string,
+  hidden: PropTypes.bool,
 };

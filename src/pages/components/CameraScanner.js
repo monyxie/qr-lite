@@ -142,6 +142,7 @@ export default function CameraScanner() {
             height={canvasRef.current?.height || 0}
             result={result}
             mirror={true}
+            hidden={!result}
           >
             <canvas id="canvas" ref={canvasRef}></canvas>
           </QRPositionMarker>
