@@ -20,7 +20,7 @@ const minScaleFactor = 0.2;
 const maxScaleFactor = 10;
 const maxScaleLevel = 30;
 const distance = (maxScaleFactor - minScaleFactor) / maxScaleLevel;
-const initialScanLevel = 10;
+const defaultScaleLevel = 10;
 const baseScanSize = 100;
 
 /**
@@ -47,9 +47,11 @@ const getPickerOptionsPromise = apiNs.runtime.sendMessage({
   action: "PICKER_GET_OPTIONS",
 });
 
-function Picker({ stage, onScan, onSpotChange }) {
+function Picker({ stage, onScan, onSpotChange, initialScaleLevel }) {
   const windowSize = useWindowSize();
-  const [scaleLevel, setScaleLevel] = useState(initialScanLevel);
+  const [scaleLevel, setScaleLevel] = useState(
+    initialScaleLevel !== null ? initialScaleLevel : defaultScaleLevel
+  );
   const factor = minScaleFactor + distance * scaleLevel;
   const scanSize = baseScanSize * factor;
   const maskRef = useRef(null);
@@ -59,26 +61,6 @@ function Picker({ stage, onScan, onSpotChange }) {
   const prevMousePositionRef = useRef(null);
   const mousePositionRef = useMousePositionRef();
   const animationFrameRef = useRef(null);
-  const scaleLevelInitialized = useRef(false);
-
-  useEffect(() => {
-    getPickerOptionsPromise.then((res) => {
-      scaleLevelInitialized.current = true;
-
-      if (res.scaleLevel !== null) {
-        setScaleLevel(res.scaleLevel);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (scaleLevelInitialized.current) {
-      apiNs.runtime.sendMessage({
-        action: "BG_SAVE_PICKER_SCALE_LEVEL",
-        scaleLevel: scaleLevel,
-      });
-    }
-  }, [scaleLevel]);
 
   useEffect(() => {
     maskRef.current?.setAttribute(
@@ -112,7 +94,7 @@ function Picker({ stage, onScan, onSpotChange }) {
           ) {
             prevMousePositionRef.current = mousePositionRef.current;
             prevScanSize.current = scanSize;
-            onSpotChange(rect);
+            onSpotChange(rect, scaleLevel);
           }
         }
 
@@ -131,6 +113,7 @@ function Picker({ stage, onScan, onSpotChange }) {
     updateSpotlight();
   }, [
     stage,
+    scaleLevel,
     mousePositionRef /* make eslint happy */,
     scanSize,
     onSpotChange,
@@ -193,9 +176,10 @@ Picker.propTypes = {
   stage: PropTypes.oneOf(["picking", "scanning", "result"]).isRequired,
   onScan: PropTypes.func.isRequired,
   onSpotChange: PropTypes.func.isRequired,
+  savedScaleLevel: PropTypes.number,
 };
 
-function Scanner({ port, scroll }) {
+function Scanner({ port, scroll, initialScaleLevel }) {
   const [stage, setStage] = useState("picking");
   const [inputImage, setInputImage] = useState(null);
   const [error, setError] = useState(null);
@@ -213,6 +197,7 @@ function Scanner({ port, scroll }) {
   const [resultVisible, setResultVisible] = useState(false);
   const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [inputImageSize, setInputImageSize] = useState(null);
+  const scaleLevel = useRef(initialScaleLevel);
 
   const collidesWithSpot = useCallback(
     function (el) {
@@ -259,7 +244,10 @@ function Scanner({ port, scroll }) {
 
   const close = useCallback(() => {
     if (port) {
-      port.postMessage({ action: "PICKER_CLOSE" });
+      port.postMessage({
+        action: "PICKER_CLOSE",
+        scaleLevel: scaleLevel.current,
+      });
     }
   }, [port]);
 
@@ -299,8 +287,9 @@ function Scanner({ port, scroll }) {
   useKeyPress({ key: "Escape", event: "keyup", callback: close });
   useKeyPress({ key: "r", event: "keyup", callback: newScan });
 
-  const handleSpotChange = useCallback((spot) => {
+  const handleSpotChange = useCallback((spot, newScaleLevel) => {
     setSpotRect(spot);
+    scaleLevel.current = newScaleLevel;
   }, []);
 
   const cancelWheel = useCallback((e) => {
@@ -417,7 +406,12 @@ function Scanner({ port, scroll }) {
 
   return (
     <>
-      <Picker stage={stage} onSpotChange={handleSpotChange} onScan={scan} />
+      <Picker
+        stage={stage}
+        onSpotChange={handleSpotChange}
+        onScan={scan}
+        initialScaleLevel={initialScaleLevel}
+      />
       <div class="tips" id="tips" ref={tipsNode} style={tipsStyles}>
         <img
           class="logo"
@@ -587,7 +581,11 @@ window.onmessage = (event) => {
       window.onmessage = null;
       render(
         <SettingsContextProvider>
-          <Scanner port={event.ports[0]} scroll={event.data.scroll} />
+          <Scanner
+            port={event.ports[0]}
+            scroll={event.data.scroll}
+            initialScaleLevel={event.data.scaleLevel}
+          />
         </SettingsContextProvider>,
         document.body
       );

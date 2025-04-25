@@ -55,6 +55,11 @@ z-index: 2147483647
     switch (data.action) {
       case "PICKER_CLOSE":
         this.unload();
+        if (typeof data.scaleLevel !== "undefined") {
+          window.savedScaleLevel = data.scaleLevel;
+        }
+        break;
+      case "PICKER_SAVE_SCALE_LEVEL":
         break;
     }
   }
@@ -88,6 +93,10 @@ z-index: 2147483647
             left: document.documentElement.scrollLeft,
             top: document.documentElement.scrollTop,
           },
+          scaleLevel:
+            typeof window.savedScaleLevel === "undefined"
+              ? null
+              : window.savedScaleLevel,
         },
         origin,
         [channel.port2]

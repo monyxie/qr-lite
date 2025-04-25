@@ -194,13 +194,6 @@ function validatePickerSecret(secret) {
 apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // In firefox we can return a promise but we can't do that in Chrome
   switch (request.action) {
-    case "BG_SAVE_PICKER_SCALE_LEVEL": {
-      const key = `tab_${sender.tab.id}_scaleLevel`;
-      storage("session")
-        .set({ [key]: request.scaleLevel })
-        .then(sendResponse);
-      return true;
-    }
     case "BG_INJECT_PICKER_LOADER":
       tabs
         .query({ active: true, currentWindow: true })
@@ -236,16 +229,7 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "PICKER_GET_OPTIONS": {
       const options = pickerOptions;
       pickerOptions = null;
-      const key = `tab_${sender.tab.id}_scaleLevel`;
-      storage("session")
-        .get(key)
-        .then(
-          (r) => (key in r ? r[key] : null),
-          () => null
-        )
-        .then((scaleLevel) => {
-          sendResponse({ options, scaleLevel });
-        });
+      sendResponse({ options });
       return true;
     }
     case "BG_GET_PICKER_URL": {
