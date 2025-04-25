@@ -55,16 +55,19 @@ z-index: 2147483647
     switch (data.action) {
       case "PICKER_CLOSE":
         this.unload();
-        if (typeof data.scaleLevel !== "undefined") {
+        if (typeof data.scaleLevel === "number") {
           window.savedScaleLevel = data.scaleLevel;
         }
         break;
       case "PICKER_SAVE_SCALE_LEVEL":
+        if (typeof data.scaleLevel === "number") {
+          window.savedScaleLevel = data.scaleLevel;
+        }
         break;
     }
   }
 
-  async load() {
+  async load(options) {
     this.identifier = randomStr(10);
     const cssPromise = this.applyCss();
     const url = await apiNs.runtime.sendMessage({
@@ -93,10 +96,12 @@ z-index: 2147483647
             left: document.documentElement.scrollLeft,
             top: document.documentElement.scrollTop,
           },
+          options,
           scaleLevel:
-            typeof window.savedScaleLevel === "undefined"
-              ? null
-              : window.savedScaleLevel,
+            typeof window.savedScaleLevel === "number" &&
+            window.savedScaleLevel >= 0
+              ? window.savedScaleLevel
+              : null,
         },
         origin,
         [channel.port2]
@@ -115,10 +120,11 @@ z-index: 2147483647
   }
 }
 
-if (typeof window.picker === "undefined") {
-  window.picker = new PickerLoader();
-  window.picker.load();
-} else {
-  window.picker.unload();
-  window.picker.load();
-}
+window.loadPickerLoader = (options) => {
+  if (typeof window.picker === "undefined") {
+    window.picker = new PickerLoader();
+  } else {
+    window.picker.unload();
+  }
+  window.picker.load(options);
+};

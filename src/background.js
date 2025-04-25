@@ -1,10 +1,4 @@
-import {
-  apiNs,
-  capturePartialScreen,
-  openPopup,
-  storage,
-  tabs,
-} from "./utils/compat";
+import { apiNs, capturePartialScreen, openPopup, tabs } from "./utils/compat";
 import { addHistory } from "./utils/history";
 import { initDecoder, scan } from "./utils/qrcode";
 import { convertBlobToDataUri, randomStr } from "./utils/misc";
@@ -17,10 +11,6 @@ let openPopupOptions = null;
  * @type {string[]}
  */
 let pickerSecrets = [];
-/**
- * @type {{openUrlMode:'NO_OPEN'|'OPEN'|'OPEN_NEW_BG_TAB'|'OPEN_NEW_FG_TAB'}}
- */
-let pickerOptions = null;
 
 initDecoder();
 
@@ -29,12 +19,14 @@ function openPopupWithOptions(options) {
   openPopup();
 }
 
+/**
+ * @param {{openUrlMode:'NO_OPEN'|'OPEN'|'OPEN_NEW_BG_TAB'|'OPEN_NEW_FG_TAB'}} options
+ */
 function openPickerWithOptions(options) {
-  pickerOptions = options;
   tabs
     .query({ active: true, currentWindow: true })
     .then((tabs) => tabs[0])
-    .then(injectPickerLoader);
+    .then((tab) => injectPickerLoader(tab, options));
 }
 
 async function captureScan(request) {
@@ -70,9 +62,18 @@ async function captureScan(request) {
   }
 }
 
-async function injectPickerLoader(tab) {
-  apiNs.scripting.executeScript({
+async function injectPickerLoader(tab, options) {
+  await apiNs.scripting.executeScript({
     files: ["content_scripts/picker-loader.js"],
+    target: {
+      tabId: tab.id,
+    },
+  });
+  await apiNs.scripting.executeScript({
+    func: (options) => {
+      window.loadPickerLoader(options);
+    },
+    args: [options || {}],
     target: {
       tabId: tab.id,
     },
@@ -195,10 +196,7 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // In firefox we can return a promise but we can't do that in Chrome
   switch (request.action) {
     case "BG_INJECT_PICKER_LOADER":
-      tabs
-        .query({ active: true, currentWindow: true })
-        .then((tabs) => tabs[0])
-        .then(injectPickerLoader);
+      openPickerWithOptions({ openUrlMode: "NO_OPEN" });
       break;
     // image capturing
     case "BG_CAPTURE":
@@ -226,12 +224,6 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse(openPopupOptions);
       openPopupOptions = null;
       return true;
-    case "PICKER_GET_OPTIONS": {
-      const options = pickerOptions;
-      pickerOptions = null;
-      sendResponse({ options });
-      return true;
-    }
     case "BG_GET_PICKER_URL": {
       const url = new URL(apiNs.runtime.getURL("pages/picker.html"));
       url.searchParams.set("secret", createPickerSecret());

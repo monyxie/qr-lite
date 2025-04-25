@@ -43,14 +43,12 @@ function collides(a, b) {
   return !(ax2 < bx1 || bx2 < ax1 || ay2 < by1 || by2 < ay1);
 }
 
-const getPickerOptionsPromise = apiNs.runtime.sendMessage({
-  action: "PICKER_GET_OPTIONS",
-});
-
-function Picker({ stage, onScan, onSpotChange, initialScaleLevel }) {
+function Picker({ stage, onScan, onSpotChange, scaleLevel: propsScaleLevel }) {
   const windowSize = useWindowSize();
   const [scaleLevel, setScaleLevel] = useState(
-    initialScaleLevel !== null ? initialScaleLevel : defaultScaleLevel
+    typeof propsScaleLevel === "number" && propsScaleLevel >= 0
+      ? Math.floor(propsScaleLevel)
+      : defaultScaleLevel
   );
   const factor = minScaleFactor + distance * scaleLevel;
   const scanSize = baseScanSize * factor;
@@ -77,36 +75,46 @@ function Picker({ stage, onScan, onSpotChange, initialScaleLevel }) {
         const wh = windowSize.height;
         let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
 
-        if (mousePositionRef.current) {
-          const rect = {
+        let rect;
+        if (stage === "picking" && mousePositionRef.current) {
+          rect = {
             x: mousePositionRef.current.x - scanSize / 2,
             y: mousePositionRef.current.y - scanSize / 2,
             width: scanSize,
             height: scanSize,
           };
+        } else if (stage === "scanning" && prevMousePositionRef.current) {
+          rect = {
+            x: prevMousePositionRef.current.x - scanSize / 2,
+            y: prevMousePositionRef.current.y - scanSize / 2,
+            width: scanSize,
+            height: scanSize,
+          };
+        }
+
+        if (rect) {
           pathDef += `M ${rect.x - 1} ${rect.y - 1} l 0 ${rect.height + 2} l ${
             rect.width + 2
           } 0 l 0 -${rect.height + 2} Z`;
+        }
+        pathRef.current.setAttribute("d", pathDef);
 
+        if (stage === "picking") {
           if (
             mousePositionRef.current !== prevMousePositionRef.current ||
             prevScanSize.current !== scanSize
           ) {
             prevMousePositionRef.current = mousePositionRef.current;
             prevScanSize.current = scanSize;
-            onSpotChange(rect, scaleLevel);
+            if (rect) {
+              onSpotChange(rect, scaleLevel);
+            }
           }
-        }
 
-        pathRef.current.setAttribute("d", pathDef);
-        if (stage === "picking") {
           animationFrameRef.current = requestAnimationFrame(
             updateSpotlight,
             1000
           );
-        } else if (stage === "result") {
-          let pathDef = `M 0 0 L 0 ${wh} L ${ww} ${wh} L ${ww} 0 Z`;
-          pathRef.current.setAttribute("d", pathDef);
         }
       }
     };
@@ -176,17 +184,26 @@ Picker.propTypes = {
   stage: PropTypes.oneOf(["picking", "scanning", "result"]).isRequired,
   onScan: PropTypes.func.isRequired,
   onSpotChange: PropTypes.func.isRequired,
-  savedScaleLevel: PropTypes.number,
+  scaleLevel: PropTypes.number,
 };
 
-function Scanner({ port, scroll, initialScaleLevel }) {
+function Scanner({
+  port: propsPort,
+  scroll,
+  scaleLevel: propsScaleLevel,
+  options: propsOptions,
+}) {
+  const port = useRef(propsPort);
   const [stage, setStage] = useState("picking");
   const [inputImage, setInputImage] = useState(null);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
   const params = useURLParams();
   const [validated, setValidated] = useState(false);
-  const [options, setOptions] = useState({ openUrlMode: "NO_OPEN" });
+  const [options, setOptions] = useState({
+    openUrlMode: "NO_OPEN",
+    ...(propsOptions || {}),
+  });
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultContentNode = useRef(null);
   const audioPlayer = useAudioPlayer();
@@ -197,7 +214,7 @@ function Scanner({ port, scroll, initialScaleLevel }) {
   const [resultVisible, setResultVisible] = useState(false);
   const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [inputImageSize, setInputImageSize] = useState(null);
-  const scaleLevel = useRef(initialScaleLevel);
+  const scaleLevel = useRef(propsScaleLevel);
 
   const collidesWithSpot = useCallback(
     function (el) {
@@ -232,24 +249,14 @@ function Scanner({ port, scroll, initialScaleLevel }) {
       });
   }, [params]);
 
-  // get options
-  useEffect(() => {
-    if (!validated) {
-      return;
-    }
-    getPickerOptionsPromise.then((res) => {
-      setOptions({ openUrlMode: "NO_OPEN", ...res.options });
-    });
-  }, [validated]);
-
   const close = useCallback(() => {
-    if (port) {
-      port.postMessage({
+    if (port.current) {
+      port.current.postMessage({
         action: "PICKER_CLOSE",
         scaleLevel: scaleLevel.current,
       });
     }
-  }, [port]);
+  }, []);
 
   const copyResult = useCallback(() => {
     if (!result?.content) {
@@ -290,6 +297,10 @@ function Scanner({ port, scroll, initialScaleLevel }) {
   const handleSpotChange = useCallback((spot, newScaleLevel) => {
     setSpotRect(spot);
     scaleLevel.current = newScaleLevel;
+    port.current.postMessage({
+      action: "PICKER_SAVE_SCALE_LEVEL",
+      scaleLevel: newScaleLevel,
+    });
   }, []);
 
   const cancelWheel = useCallback((e) => {
@@ -410,7 +421,7 @@ function Scanner({ port, scroll, initialScaleLevel }) {
         stage={stage}
         onSpotChange={handleSpotChange}
         onScan={scan}
-        initialScaleLevel={initialScaleLevel}
+        scaleLevel={propsScaleLevel}
       />
       <div class="tips" id="tips" ref={tipsNode} style={tipsStyles}>
         <img
@@ -572,6 +583,8 @@ function Scanner({ port, scroll, initialScaleLevel }) {
 Scanner.propTypes = {
   port: PropTypes.object,
   scroll: PropTypes.object,
+  scaleLevel: PropTypes.number,
+  options: PropTypes.object,
 };
 
 // set up message handler asap so that we don't miss the message
@@ -584,7 +597,8 @@ window.onmessage = (event) => {
           <Scanner
             port={event.ports[0]}
             scroll={event.data.scroll}
-            initialScaleLevel={event.data.scaleLevel}
+            scaleLevel={event.data.scaleLevel}
+            options={event.data.options}
           />
         </SettingsContextProvider>,
         document.body
