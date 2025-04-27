@@ -19,6 +19,7 @@ export default function CameraScanner() {
   const canvasRef = useRef(null);
   const [captured, setCaptured] = useState(false);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const canvasContext = useRef(null);
 
   useEffect(() => {
     navigator.mediaDevices
@@ -88,10 +89,14 @@ export default function CameraScanner() {
 
     canvas.width = 300;
     canvas.height = video.videoHeight / (video.videoWidth / canvas.width);
-    // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
-    // This will affect all subsequent operations on the same canvas
-    const context = canvas.getContext("2d", { willReadFrequently: true });
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    if (!canvasContext.current) {
+      // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
+      // This will affect all subsequent operations on the same canvas
+      canvasContext.current = canvas.getContext("2d", {
+        willReadFrequently: true,
+      });
+    }
+    canvasContext.current.drawImage(video, 0, 0, canvas.width, canvas.height);
     setCaptured(true);
   }, [isVideoReady, captured, result]);
 
