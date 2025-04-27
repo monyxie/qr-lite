@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 import { T, TT } from "../../utils/i18n";
 import { scan } from "../../utils/qrcode";
@@ -18,49 +18,49 @@ export default function CameraScanner() {
   const canvasContext = useRef(null);
   const scanTimer = useRef(null);
 
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((r) => {
-        setStream(r);
-        setHasCameraPermission(true);
-      })
-      .catch(() => {
-        setHasCameraPermission(false);
-      });
+  const closeStream = useCallback((stream) => {
+    const tracks = stream.getTracks();
+
+    tracks.forEach((track) => {
+      track.stop();
+    });
+
+    setStream(null);
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
   }, []);
 
-  // setting up
   useEffect(() => {
-    if (!stream || !videoRef.current) {
-      return;
-    }
-    const video = videoRef.current;
-    (async () => {
-      try {
-        video.srcObject = stream;
-        video.play();
-      } catch (err) {
-        console.error(`An error occurred: ${err}`);
-        setError(err + "");
+    if (!result) {
+      if (!stream) {
+        navigator.mediaDevices
+          .getUserMedia({
+            video: true,
+            audio: false,
+          })
+          .then((r) => {
+            setStream(r);
+            setHasCameraPermission(true);
+          })
+          .catch(() => {
+            setHasCameraPermission(false);
+          });
       }
-    })();
+    } else {
+      if (stream) {
+        closeStream(stream);
+        setStream(null);
+      }
+    }
 
     return () => {
       if (stream) {
-        stream.getTracks().forEach(function (track) {
-          track.stop();
-        });
-      }
-      if (video) {
-        video.pause();
-        video.srcObject = undefined;
+        closeStream(stream);
+        setStream(null);
       }
     };
-  }, [stream]);
+  }, [stream, result, closeStream]);
 
   // scanning
   useEffect(() => {
@@ -68,7 +68,19 @@ export default function CameraScanner() {
       const canvas = canvasRef.current;
       const video = videoRef.current;
 
-      if (canvas && video && video.videoWidth && video.videoHeight) {
+      if (video && !video.srcObject && stream) {
+        try {
+          video.srcObject = stream;
+          if (stream) {
+            video.play();
+          }
+        } catch (err) {
+          console.error(`An error occurred: ${err}`);
+          setError(err + "");
+        }
+      }
+
+      if (canvas && video?.srcObject && video.videoWidth && video.videoHeight) {
         canvas.width = 500;
         canvas.height = video.videoHeight / (video.videoWidth / canvas.width);
         if (!canvasContext.current) {
@@ -103,16 +115,14 @@ export default function CameraScanner() {
 
     if (!result) {
       scanTimer.current = setTimeout(scanFunc, 100);
-      videoRef.current?.play();
     } else {
       clearTimeout(scanTimer.current);
-      videoRef.current?.pause();
     }
 
     return () => {
       clearTimeout(scanTimer.current);
     };
-  }, [result]);
+  }, [result, stream]);
 
   useEffect(() => {
     if (result && outputContentNode.current) {
