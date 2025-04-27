@@ -510,7 +510,7 @@ function Scanner({
                 width={inputImageSize?.width}
                 height={inputImageSize?.height}
                 result={result}
-                flashDelay="0.5s"
+                flashDelay="0.3s"
               >
                 <img class="captured" id="captured" src={inputImage} />
               </QRPositionMarker>
