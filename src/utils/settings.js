@@ -23,12 +23,27 @@ const settingsDefinition = {
   },
 };
 
+let globalSettings = null;
+
 export async function getSettings() {
   const settings = await storage("local").get(Object.keys(settingsDefinition));
   for (const key in settingsDefinition) {
     settings[key] = settingsDefinition[key].normalize(settings[key]);
   }
+  if (globalSettings === null) {
+    addListener((newValues) => {
+      globalSettings = { ...(globalSettings || {}), ...newValues };
+    });
+  }
+  globalSettings = settings;
   return settings;
+}
+
+export async function getSettingValue(key) {
+  if (!globalSettings) {
+    getSettings();
+  }
+  return globalSettings[key];
 }
 
 export async function saveSettings(settings) {

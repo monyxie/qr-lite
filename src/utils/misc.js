@@ -1,3 +1,5 @@
+import { getSettingValue } from "./settings";
+
 export function isUrl(str) {
   return /^https?:\/\//i.test(str);
 }
@@ -84,4 +86,21 @@ export function debouncer(delay) {
   };
 
   return { debounce, cancel };
+}
+
+export async function playScanSuccessAudio() {
+  if (getSettingValue("scanSuccessSoundEnabled")) {
+    return new Promise((resolve) => {
+      const audio = new Audio("/audio/success.mp3");
+      audio.addEventListener(
+        "ended",
+        () => {
+          resolve(true);
+        },
+        { once: true }
+      );
+      audio.play();
+    });
+  }
+  return false;
 }

@@ -4,9 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import { PropTypes } from "prop-types";
 
 import { T, TT } from "../../utils/i18n";
-import { useAudioPlayer } from "../../utils/hooks";
 import { scan } from "../../utils/qrcode";
-import { isUrl } from "../../utils/misc";
+import { isUrl, playScanSuccessAudio } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import PermissionPrompt from "./PermissionPrompt";
@@ -18,7 +17,6 @@ export default function ImageScanner(props) {
   const inputImgNode = useRef(null);
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
-  const audioPlayer = useAudioPlayer();
 
   useEffect(() => {
     if (needsUrlPermission) {
@@ -61,7 +59,7 @@ export default function ImageScanner(props) {
       }
 
       if (success) {
-        audioPlayer.scanSuccess();
+        playScanSuccessAudio();
       } else {
         setError(errMsg || T("unable_to_decode"));
       }

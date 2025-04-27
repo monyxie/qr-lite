@@ -65,33 +65,6 @@ export function SettingsContextProvider({ children }) {
   );
 }
 
-export function useAudioPlayer() {
-  const { settings } = useSettingsContext();
-  const makePlayFunc = useCallback(
-    (name) => {
-      return () => {
-        return new Promise((resolve) => {
-          if (settings.scanSuccessSoundEnabled) {
-            const audio = new Audio(name);
-            audio.addEventListener(
-              "ended",
-              () => {
-                resolve(true);
-              },
-              { once: true }
-            );
-            audio.play();
-          } else {
-            resolve(false);
-          }
-        });
-      };
-    },
-    [settings]
-  );
-  return { scanSuccess: makePlayFunc("/audio/success.mp3") };
-}
-
 export function useURLParams() {
   const [params, setParams] = useState(null);
   useEffect(() => {

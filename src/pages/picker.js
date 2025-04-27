@@ -3,17 +3,16 @@ import { T, TT } from "../utils/i18n";
 import {
   useKeyPress,
   useURLParams,
-  useAudioPlayer,
   useTimer,
   SettingsContextProvider,
   useMousePositionRef,
   useWindowSize,
 } from "../utils/hooks";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { apiNs, storage, tabs } from "../utils/compat";
+import { apiNs } from "../utils/compat";
 import { PropTypes } from "prop-types";
 import { useTemporaryState } from "../utils/hooks";
-import { isUrl } from "../utils/misc";
+import { isUrl, playScanSuccessAudio } from "../utils/misc";
 import QRPositionMarker from "./components/QRPositionMarker";
 
 const minScaleFactor = 0.2;
@@ -206,7 +205,6 @@ function Scanner({
   });
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const resultContentNode = useRef(null);
-  const audioPlayer = useAudioPlayer();
   const xMarkNode = useRef(null);
   const tipsNode = useRef(null);
   const [imagePosition, setImagePosition] = useState(null);
@@ -331,7 +329,7 @@ function Scanner({
       setInputImage(res.image);
       setInputImageSize(res.imageSize);
       if (res.result.length > 0) {
-        const playAudioPromise = audioPlayer.scanSuccess();
+        const playAudioPromise = playScanSuccessAudio();
         setResult(res.result[0]);
         const content = res.result[0].content;
         if (isUrl(content)) {
@@ -391,7 +389,6 @@ function Scanner({
       }
     }
   }, [
-    audioPlayer,
     close,
     options.openUrlMode,
     scroll,
