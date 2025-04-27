@@ -1,9 +1,10 @@
-const path = require("path");
-const webpack = require("webpack");
-const CopyPlugin = require("copy-webpack-plugin");
-const svgo = require("svgo");
+import path from "path";
+import webpack from "webpack";
+import CopyPlugin from "copy-webpack-plugin";
+import svgo from "svgo";
+import ScriptOutputPlugin from "./webpack/ScriptOutputPlugin.mjs";
 
-module.exports = (env) =>
+export default (env) =>
   (env.browser ? [env.browser] : ["firefox", "chrome"]).map(generateConfig);
 
 /**
@@ -15,9 +16,6 @@ function generateConfig(browser) {
   }
 
   console.log("browser: ", browser);
-
-  const manifestFile =
-    browser === "firefox" ? "manifest-firefox.json" : "manifest-chrome.json";
 
   const entries = [
     "./background.js",
@@ -32,7 +30,6 @@ function generateConfig(browser) {
   }, {});
 
   const copyPatterns = [
-    { from: "./" + manifestFile, to: "manifest.json" },
     "./_locales/**/*",
     {
       from: "./icons/*.*",
@@ -60,12 +57,12 @@ function generateConfig(browser) {
 
   return {
     devtool: false,
-    context: path.resolve(__dirname, "src"),
+    context: path.resolve(".", "src"),
     entry: entries,
     output: {
       filename: "[name]",
       path: path.resolve(
-        __dirname,
+        ".",
         browser === "chrome" ? "dist/chrome" : "dist/firefox"
       ),
       clean: true,
@@ -76,6 +73,11 @@ function generateConfig(browser) {
       }),
       new webpack.DefinePlugin({
         QRLITE_BROWSER: JSON.stringify(browser),
+      }),
+      new ScriptOutputPlugin({
+        scriptPath: "./src/manifest.js",
+        args: browser,
+        outputFilename: "manifest.json",
       }),
     ],
     module: {
