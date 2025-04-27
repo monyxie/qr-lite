@@ -102,7 +102,11 @@ export default function CameraScanner() {
     };
 
     if (!result) {
-      scanFunc();
+      scanTimer.current = setTimeout(scanFunc, 100);
+      videoRef.current?.play();
+    } else {
+      clearTimeout(scanTimer.current);
+      videoRef.current?.pause();
     }
 
     return () => {
@@ -145,11 +149,14 @@ export default function CameraScanner() {
       </div>
       <div class="necker-container">
         {!result && (
-          <div class="necker instructions">
-            <p class="" id="scanningText">
-              {TT("scanning")}
-            </p>
-          </div>
+          <>
+            <img src="/icons/spinner.svg"></img>
+            <div class="necker instructions">
+              <p class="" id="scanningText">
+                {TT("scanning")}
+              </p>
+            </div>
+          </>
         )}
       </div>
       <textarea

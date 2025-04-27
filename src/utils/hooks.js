@@ -1,11 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useRef,
-  createContext,
-  useContext,
-  useCallback,
-} from "react";
+import { useEffect, useState, useRef, createContext, useContext } from "react";
 import {
   addListener,
   getSettings,
