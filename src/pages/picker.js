@@ -188,7 +188,7 @@ Picker.propTypes = {
 
 function Scanner({
   port: propsPort,
-  scroll,
+  scroll: propsScroll,
   scaleLevel: propsScaleLevel,
   options: propsOptions,
 }) {
@@ -213,6 +213,7 @@ function Scanner({
   const [spotRect, setSpotRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [inputImageSize, setInputImageSize] = useState(null);
   const scaleLevel = useRef(propsScaleLevel);
+  const scroll = useRef(propsScroll);
 
   const collidesWithSpot = useCallback(
     function (el) {
@@ -223,6 +224,24 @@ function Scanner({
     },
     [spotRect]
   );
+
+  useEffect(() => {
+    const currentPort = port.current;
+    if (currentPort) {
+      currentPort.onmessage = (ev) => {
+        switch (ev.data?.action) {
+          case "PICKER_UPDATE_SCROLL":
+            scroll.current = ev.data.scroll;
+            break;
+        }
+      };
+    }
+    return () => {
+      if (currentPort) {
+        currentPort.onmessage = null;
+      }
+    };
+  }, []);
 
   // validate secret
   useEffect(() => {
@@ -322,7 +341,7 @@ function Scanner({
       const res = await apiNs.runtime.sendMessage({
         action: "BG_CAPTURE",
         rect,
-        scroll: scroll,
+        scroll: scroll.current,
         devicePixelRatio: window.devicePixelRatio,
       });
       setError(res.err);
@@ -391,7 +410,6 @@ function Scanner({
   }, [
     close,
     options.openUrlMode,
-    scroll,
     setTimer,
     spotRect.height,
     spotRect.width,

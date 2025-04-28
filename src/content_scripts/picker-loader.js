@@ -5,6 +5,17 @@ class PickerLoader {
   constructor() {
     this.identifier = null;
     this.pickerPort = null;
+    this.handleScroll = () => {
+      if (this.pickerPort) {
+        this.pickerPort.postMessage({
+          action: "PICKER_UPDATE_SCROLL",
+          scroll: {
+            left: document.documentElement.scrollLeft,
+            top: document.documentElement.scrollTop,
+          },
+        });
+      }
+    };
   }
 
   applyCss(isRemove) {
@@ -110,21 +121,31 @@ z-index: 2147483647
       // focus on the iframe otherwise the user won't be able to press <esc> to close the picker until they
       // manually focus on the iframe by clicking in it first
       iframe.contentWindow.focus();
+      document.addEventListener("scrollend", this.handleScroll);
     });
     iframe.contentWindow.location = url;
   }
 
   unload() {
+    document.removeEventListener("scrollend", this.handleScroll);
     document.querySelector(`iframe[${this.identifier}]`)?.remove();
     this.applyCss(true);
+    if (this.pickerPort) {
+      this.pickerPort.close();
+      this.pickerPort = null;
+    }
   }
 }
 
 window.loadPickerLoader = (options) => {
-  if (typeof window.picker === "undefined") {
-    window.picker = new PickerLoader();
-  } else {
-    window.picker.unload();
+  if (typeof window.picker !== "undefined") {
+    try {
+      window.picker.unload();
+      delete window.picker;
+    } catch (e) {
+      console.error(e);
+    }
   }
+  window.picker = new PickerLoader();
   window.picker.load(options);
 };
