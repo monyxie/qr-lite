@@ -12,7 +12,12 @@ import { useTemporaryState } from "../../utils/hooks";
 const MIN_SCAN_INTERVAL_MS = 1000 / 30;
 
 export default function CameraScanner() {
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
+  const [cameraStatus, setCameraStatus] = useState({
+    checked: false,
+    access: false,
+    errorMessage: null,
+    granted: false,
+  });
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
   const [result, setResult] = useState(null);
@@ -48,10 +53,41 @@ export default function CameraScanner() {
           })
           .then((r) => {
             setStream(r);
-            setHasCameraPermission(true);
+            setCameraStatus({
+              checked: true,
+              granted: true,
+              access: true,
+              errorMessage: null,
+            });
           })
-          .catch(() => {
-            setHasCameraPermission(false);
+          .catch((e) => {
+            switch (e.name) {
+              case "NotAllowedError":
+                setCameraStatus({
+                  checked: true,
+                  granted: false,
+                  access: false,
+                  errorMessage: null,
+                });
+                break;
+              case "AbortError":
+              case "NotReadableError":
+                setCameraStatus({
+                  checked: true,
+                  granted: true,
+                  access: false,
+                  errorMessage: T("unable_to_access_camera"),
+                });
+                break;
+              default:
+                setCameraStatus({
+                  checked: true,
+                  granted: true,
+                  access: false,
+                  errorMessage: T("unable_to_access_camera_unknown_error"),
+                });
+                break;
+            }
           });
       }
     } else {
@@ -144,11 +180,18 @@ export default function CameraScanner() {
     }
   }, [result]);
 
-  if (hasCameraPermission === null) {
+  if (!cameraStatus.checked) {
     return null;
   }
-  if (!hasCameraPermission) {
+  if (!cameraStatus.granted) {
     return <PermissionPrompt type="camera" />;
+  }
+  if (!cameraStatus.access) {
+    return (
+      <div class="instructions instruction-screen">
+        <p>{cameraStatus.errorMessage}</p>
+      </div>
+    );
   }
 
   return (

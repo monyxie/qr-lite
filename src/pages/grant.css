@@ -17,7 +17,8 @@ body {
 
 .box {
   padding: 2rem 2rem;
-  max-width: 40rem;
+  width: 40rem;
+  max-width: 100%;
   background-color: var(--bg-content);
   border-radius: var(--border-radius);
   color: var(--text-primary-color);
@@ -32,4 +33,32 @@ body {
   width: 4rem;
   height: 4rem;
   align-self: center;
+}
+
+details {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.5em 0.5em 0;
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+summary {
+  background: var(--bg);
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+  padding: 0.5em;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0.5em;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
