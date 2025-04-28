@@ -539,7 +539,9 @@ function Scanner({
           >
             <textarea
               id="result-content"
-              placeholder={T("unable_to_decode") + (error ? error.message : "")}
+              placeholder={
+                T("unable_to_decode") + (error ? ": " + error.message : "")
+              }
               title={T("content_title")}
               readOnly
               rows="6"
