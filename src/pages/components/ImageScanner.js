@@ -9,6 +9,7 @@ import { isUrl, playScanSuccessAudio } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import PermissionPrompt from "./PermissionPrompt";
+import { useTemporaryState } from "../../utils/hooks";
 
 export default function ImageScanner(props) {
   const needsUrlPermission = isUrl(props.url);
@@ -17,6 +18,7 @@ export default function ImageScanner(props) {
   const inputImgNode = useRef(null);
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
+  const [copied, setCopied] = useTemporaryState(false, 3000);
 
   useEffect(() => {
     if (needsUrlPermission) {
@@ -111,7 +113,6 @@ export default function ImageScanner(props) {
           {isUrl(result?.content) && (
             <span
               class="clickable"
-              id="openLinkBtn"
               title={T("open_url_btn_title")}
               onClick={() => {
                 window.open(result.content, "_blank");
@@ -122,7 +123,28 @@ export default function ImageScanner(props) {
             </span>
           )}
         </div>
-        <div class="footer actions2"></div>
+        <div class="footer actions2">
+          {" "}
+          {result?.content && !copied && (
+            <a
+              class=" clickable"
+              title={T("copy_btn_title")}
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(result.content)
+                  .then(() => {
+                    setCopied(true);
+                    return true;
+                  })
+                  .catch(() => false);
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/copy.svg" />
+              {TT("copy_btn")}
+            </a>
+          )}
+          {copied && <span class="clickable">{TT("copy_btn_copied")}</span>}
+        </div>
         <div class="footer actions3"></div>
       </div>
     </>

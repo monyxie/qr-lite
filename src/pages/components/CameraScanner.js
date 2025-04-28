@@ -6,6 +6,7 @@ import { isUrl, playScanSuccessAudio } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import PermissionPrompt from "./PermissionPrompt";
+import { useTemporaryState } from "../../utils/hooks";
 
 export default function CameraScanner() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -17,6 +18,7 @@ export default function CameraScanner() {
   const canvasRef = useRef(null);
   const canvasContext = useRef(null);
   const scanTimer = useRef(null);
+  const [copied, setCopied] = useTemporaryState(false, 3000);
 
   const closeStream = useCallback((stream) => {
     const tracks = stream.getTracks();
@@ -159,32 +161,32 @@ export default function CameraScanner() {
       </div>
       <div class="necker-container">
         {!result && (
-          <>
+          <div class="scanning-indicator">
             <img src="/icons/spinner.svg"></img>
             <div class="necker instructions">
               <p class="" id="scanningText">
                 {TT("scanning")}
               </p>
             </div>
-          </>
+          </div>
         )}
       </div>
-      <textarea
-        class="output "
-        id="scanOutput"
-        title={T("content_title")}
-        readOnly
-        placeholder={error}
-        value={result?.content}
-        spellCheck="false"
-        ref={outputContentNode}
-      ></textarea>
+      {result && (
+        <textarea
+          class="output"
+          title={T("content_title")}
+          readOnly
+          placeholder={error}
+          value={result?.content}
+          spellCheck="false"
+          ref={outputContentNode}
+        ></textarea>
+      )}
       <div class="footer-container">
         <div class="footer actions1">
           {isUrl(result?.content) && (
             <span
               class="clickable"
-              id="openLinkBtn"
               title={T("open_url_btn_title")}
               onClick={() => {
                 window.open(result.content, "_blank");
@@ -195,7 +197,27 @@ export default function CameraScanner() {
             </span>
           )}
         </div>
-        <div class="footer actions2"></div>
+        <div class="footer actions2">
+          {result?.content && !copied && (
+            <a
+              class=" clickable"
+              title={T("copy_btn_title")}
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(result.content)
+                  .then(() => {
+                    setCopied(true);
+                    return true;
+                  })
+                  .catch(() => false);
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/copy.svg" />
+              {TT("copy_btn")}
+            </a>
+          )}
+          {copied && <span class="clickable">{TT("copy_btn_copied")}</span>}
+        </div>
         <div class="footer actions3">
           {result && (
             <a

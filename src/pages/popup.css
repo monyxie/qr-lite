@@ -58,6 +58,20 @@ body {
   line-height: 22px;
   white-space: nowrap;
 }
+
+.footer {
+  flex: 1;
+}
+
+.footer-container .actions1 {
+  text-align: left;
+}
+.footer-container .actions2 {
+  text-align: center;
+}
+.footer-container .actions3 {
+  text-align: right;
+}
 /* main tab */
 
 .main {
@@ -283,6 +297,13 @@ body {
 .scan .necker-container {
   display: flex;
   justify-content: center;
+}
+
+.scan .scanning-indicator {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* tabs */
