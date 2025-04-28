@@ -71,27 +71,39 @@ export class OpenCvQrCodeDecoder {
    */
   decode(imageData, fast = false) {
     if (!this.cv) return [];
-
     const detector = fast ? this.fast_qrcode_detector : this.qrcode_detector;
-    const qrImage =
-      imageData instanceof ImageData
-        ? this.cv.matFromImageData(imageData)
-        : this.cv.imread(imageData);
-    const qrVec = new this.cv.MatVector();
-    const qrRes = detector.detectAndDecode(qrImage, qrVec);
-    const qrSize = qrRes.size();
-    const results = [];
+    let qrImage,
+      qrVec,
+      qrRes,
+      qrSize,
+      results = [];
 
-    for (let i = 0; i < qrSize; i++) {
-      const content = qrRes.get(i);
-      const points = qrVec.get(i);
-      const vertices = [];
-      const size = points.size();
-      for (let j = 0; j < size.height; j += 1) {
-        vertices.push([points.floatAt(j * 2), points.floatAt(j * 2 + 1)]);
+    try {
+      qrImage =
+        imageData instanceof ImageData
+          ? this.cv.matFromImageData(imageData)
+          : this.cv.imread(imageData);
+      qrVec = new this.cv.MatVector();
+      qrRes = detector.detectAndDecode(qrImage, qrVec);
+      qrSize = qrRes.size();
+      results = [];
+
+      for (let i = 0; i < qrSize; i++) {
+        const content = qrRes.get(i);
+        const points = qrVec.get(i);
+        const vertices = [];
+        const size = points.size();
+        for (let j = 0; j < size.height; j += 1) {
+          vertices.push([points.floatAt(j * 2), points.floatAt(j * 2 + 1)]);
+        }
+        results.push(new QrCodeInfo(content, vertices));
+        points.delete();
       }
-
-      results.push(new QrCodeInfo(content, vertices));
+    } finally {
+      // if (qrImage) qrImage.delete();
+      if (qrVec) qrVec.delete();
+      if (qrRes) qrRes.delete();
+      if (qrImage) qrImage.delete();
     }
 
     return results;
