@@ -53,6 +53,9 @@ z-index: 2147483647
 :root > [${this.identifier}-loaded] {
     visibility: visible !important;
 }
+:root {
+    overflow: hidden;
+}
 `;
 
     return apiNs.runtime.sendMessage({

@@ -250,7 +250,7 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
         if (request.remove?.length) {
           promises.push(
             apiNs.scripting.removeCSS({
-              css: request.add,
+              css: request.remove,
               origin: "USER",
               target: {
                 tabId: sender.tab.id,

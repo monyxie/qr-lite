@@ -320,13 +320,6 @@ function Scanner({
     });
   }, []);
 
-  const cancelWheel = useCallback((e) => {
-    if (e.target.tagName !== "TEXTAREA") {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }, []);
-
   const scan = useCallback(async () => {
     setStage("scanning");
     const x = Math.max(spotRect.x, 0);
@@ -515,11 +508,7 @@ function Scanner({
       </div>
       {stage === "result" && (
         <>
-          <div
-            class="input-image-container"
-            style={imagePosition}
-            onWheel={cancelWheel}
-          >
+          <div class="input-image-container" style={imagePosition}>
             {inputImage && (
               <QRPositionMarker
                 width={inputImageSize?.width}
@@ -535,7 +524,6 @@ function Scanner({
             class="result"
             id="result"
             style={{ opacity: resultVisible ? "1" : "0" }}
-            onWheel={cancelWheel}
           >
             <textarea
               id="result-content"
