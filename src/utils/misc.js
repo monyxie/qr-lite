@@ -104,3 +104,34 @@ export async function playScanSuccessAudio() {
   }
   return false;
 }
+
+export class FpsCounter {
+  constructor() {
+    this.lastFrameTime = performance.now();
+    this.frameCount = 0;
+    this.fpsValue = 0;
+  }
+
+  tick() {
+    const now = performance.now();
+    const delta = now - this.lastFrameTime;
+
+    if (delta > 1000) {
+      this.fpsValue = Math.round((this.frameCount / delta) * 10000) / 10;
+      this.frameCount = 0;
+      this.lastFrameTime = now;
+    } else {
+      this.frameCount++;
+    }
+  }
+
+  fps() {
+    return this.fpsValue;
+  }
+
+  reset() {
+    this.lastFrameTime = performance.now();
+    this.frameCount = 0;
+    this.fpsValue = 0;
+  }
+}

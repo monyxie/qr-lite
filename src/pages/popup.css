@@ -306,6 +306,15 @@ body {
   align-items: center;
 }
 
+.scan .fps-counter {
+  opacity: 0;
+  transition: opacity 100ms;
+}
+
+.scan .fps-counter:hover {
+  opacity: 1;
+}
+
 /* tabs */
 .tabs-container {
   width: 100%;

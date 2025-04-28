@@ -2,11 +2,14 @@ import { useEffect, useState, useRef, useCallback } from "react";
 
 import { T, TT } from "../../utils/i18n";
 import { scan } from "../../utils/qrcode";
-import { isUrl, playScanSuccessAudio } from "../../utils/misc";
+import { FpsCounter, isUrl, playScanSuccessAudio } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import PermissionPrompt from "./PermissionPrompt";
 import { useTemporaryState } from "../../utils/hooks";
+
+// max 30 fps
+const MIN_SCAN_INTERVAL_MS = 1000 / 30;
 
 export default function CameraScanner() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -19,6 +22,8 @@ export default function CameraScanner() {
   const canvasContext = useRef(null);
   const scanTimer = useRef(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
+  const fpsCounter = useRef(new FpsCounter());
+  const [fps, setFps] = useState(0);
 
   const closeStream = useCallback((stream) => {
     const tracks = stream.getTracks();
@@ -67,6 +72,7 @@ export default function CameraScanner() {
   // scanning
   useEffect(() => {
     const scanFunc = async () => {
+      const startTime = Date.now();
       const canvas = canvasRef.current;
       const video = videoRef.current;
 
@@ -101,7 +107,7 @@ export default function CameraScanner() {
         );
 
         try {
-          const results = await scan(canvas);
+          const results = await scan(canvas, true);
           if (results && results.length > 0) {
             setResult(results[0]);
             addHistory("decode", results[0].content);
@@ -112,12 +118,18 @@ export default function CameraScanner() {
         }
       }
 
-      scanTimer.current = setTimeout(scanFunc, 100);
+      scanTimer.current = setTimeout(
+        scanFunc,
+        Math.max(0, MIN_SCAN_INTERVAL_MS - (Date.now() - startTime))
+      );
+      fpsCounter.current?.tick();
+      setFps(fpsCounter.current?.fps());
     };
 
     if (!result) {
-      scanTimer.current = setTimeout(scanFunc, 100);
+      scanTimer.current = setTimeout(scanFunc, MIN_SCAN_INTERVAL_MS);
     } else {
+      fpsCounter.current?.reset();
       clearTimeout(scanTimer.current);
     }
 
@@ -166,6 +178,8 @@ export default function CameraScanner() {
             <div class="necker instructions">
               <p class="" id="scanningText">
                 {TT("scanning")}
+                <br />
+                <span class="fps-counter">FPS:{fps}</span>
               </p>
             </div>
           </div>

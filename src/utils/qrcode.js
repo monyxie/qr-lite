@@ -53,6 +53,12 @@ export class OpenCvQrCodeDecoder {
       this.qrcode_detector = new this.cv.wechat_qrcode_WeChatQRCode(
         ...files.map((a) => "/" + a)
       );
+      this.fast_qrcode_detector = new this.cv.wechat_qrcode_WeChatQRCode(
+        "",
+        "",
+        "",
+        ""
+      );
     } catch (e) {
       console.error(e);
     }
@@ -60,17 +66,19 @@ export class OpenCvQrCodeDecoder {
 
   /**
    * @param imageData canvas element/canvas Id/image element/ImageData
+   * @param fast bool
    * @return {QrCodeInfo[]}
    */
-  decode(imageData) {
+  decode(imageData, fast = false) {
     if (!this.cv) return [];
 
+    const detector = fast ? this.fast_qrcode_detector : this.qrcode_detector;
     const qrImage =
       imageData instanceof ImageData
         ? this.cv.matFromImageData(imageData)
         : this.cv.imread(imageData);
     const qrVec = new this.cv.MatVector();
-    const qrRes = this.qrcode_detector.detectAndDecode(qrImage, qrVec);
+    const qrRes = detector.detectAndDecode(qrImage, qrVec);
     const qrSize = qrRes.size();
     const results = [];
 
@@ -109,12 +117,13 @@ export function initDecoder() {
 
 /**
  * @param imageData canvas element/canvas Id/image element/ImageData
+ * @param fast bool
  * @return {Promise<QrCodeInfo[]>}
  */
-export async function scan(imageData) {
+export async function scan(imageData, fast) {
   if (!decoder) {
     initDecoder();
   }
   await decoder.ready;
-  return decoder.decode(imageData);
+  return decoder.decode(imageData, fast);
 }
