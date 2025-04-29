@@ -52,7 +52,17 @@ const manifest = {
   },
   content_security_policy: {
     extension_pages:
-      "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src 'self' data:; img-src * data: blob:; style-src 'self';",
+      [
+        "script-src 'self' 'wasm-unsafe-eval'",
+        "default-src 'self'",
+        // "connect-src http:" is for `fetch()`ing HTTP images in popup to avoid Mixed Content blocking
+        // chrome doesn't need it
+        browser === "firefox"
+          ? "connect-src 'self' data: http:"
+          : "connect-src 'self' data:",
+        "img-src * data: blob:",
+        "style-src 'self'",
+      ].join("; ") + ";",
   },
   background:
     browser === "firefox"

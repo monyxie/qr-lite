@@ -19,6 +19,21 @@ export default function ImageScanner(props) {
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
+  const [imgSrc, setImgSrc] = useState(null);
+
+  useEffect(() => {
+    if (QRLITE_BROWSER === "firefox" && props.url.startsWith("http://")) {
+      // load HTTP images via fetch() otherwise they'll be considered mixed content
+      // and be upgraded to HTTPS, which will cause HTTP-only images to fail
+      // need CSP: "connect-src http:"
+      fetch(props.url)
+        .then((r) => r.blob())
+        .then((b) => URL.createObjectURL(b))
+        .then(setImgSrc);
+    } else {
+      setImgSrc(props.url);
+    }
+  }, [props.url]);
 
   useEffect(() => {
     if (needsUrlPermission) {
@@ -46,14 +61,14 @@ export default function ImageScanner(props) {
         /**
          * Array<{content, vertices}>
          */
-        const result = await scan(inputImgNode.current);
-        if (result.length < 1) {
+        const results = await scan(inputImgNode.current);
+        if (results.length < 1) {
           errMsg = T("unable_to_decode_qr_code");
         } else {
           success = true;
-          setResult(result[0]);
+          setResult(results[0]);
           outputContentNode.current?.select();
-          await addHistory("decode", result[0].content);
+          await addHistory("decode", results[0].content);
         }
       } catch (e) {
         console.error(e);
@@ -66,7 +81,7 @@ export default function ImageScanner(props) {
         setError(errMsg || T("unable_to_decode"));
       }
     })();
-  }, [hasUrlPermission, needsUrlPermission, inputImgNode, props.url]);
+  }, [hasUrlPermission, needsUrlPermission, inputImgNode, imgSrc]);
 
   useEffect(() => {
     if (result && outputContentNode.current) {
@@ -87,20 +102,21 @@ export default function ImageScanner(props) {
             width={inputImgNode.current?.width || 0}
             height={inputImgNode.current?.height || 0}
           >
-            <img
-              class="scan-input-image"
-              id="scanInputImage"
-              crossOrigin="anonymous"
-              ref={inputImgNode}
-              src={props.url}
-            ></img>
+            {imgSrc && (
+              <img
+                class="scan-input-image"
+                id="scanInputImage"
+                crossOrigin="anonymous"
+                ref={inputImgNode}
+                src={imgSrc}
+              ></img>
+            )}
           </QRPositionMarker>
         </div>
       </div>
       <div class="necker-container"></div>
       <textarea
         class="output"
-        id="scanOutput"
         title={T("content_title")}
         readOnly
         placeholder={error}
