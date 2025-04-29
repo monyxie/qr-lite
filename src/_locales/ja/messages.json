@@ -62,8 +62,7 @@
     "message": "高、データバイトの30%を復元できます"
   },
   "error_correction_level_label": {
-    "message": "EC:",
-    "description": "[keep-original]"
+    "message": "訂正:"
   },
   "error_correction_level_label_title": {
     "message": "エラー訂正レベル"
@@ -215,13 +214,13 @@
     "message": "閉じる"
   },
   "disable_history_btn_title": {
-    "message": "履歴の記録を一時停止"
+    "message": "履歴記録を一時停止"
   },
   "disable_history_btn_label": {
     "message": "一時停止"
   },
   "enable_history_btn_title": {
-    "message": "履歴の記録を再開"
+    "message": "履歴記録を再開"
   },
   "enable_history_btn_label": {
     "message": "再開"
@@ -233,10 +232,10 @@
     "message": "スキャンする領域を選択してURLを開く"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "スキャンする領域を選択し、新しいバックグラウンドタブでURLを開く"
+    "message": "スキャンする領域を選択して、新しいバックグラウンドタブでURLを開く"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "スキャンする領域を選択し、新しいフォアグラウンドタブでURLを開く"
+    "message": "スキャンする領域を選択して、新しいフォアグラウンドタブでURLを開く"
   },
   "picker_url_mode_auto_open_no": {
     "message": "URLを自動的に開かない"
@@ -249,5 +248,50 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "新しいフォアグラウンドタブでURLを自動的に開く"
+  },
+  "copy_btn_title": {
+    "message": "クリップボードにコピー"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "エラーの詳細"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "カメラにアクセスできないようです。他にカメラを使用しているプログラムはありますか？<br><br>カメラを使用している可能性のある他のプログラムを閉じてから、このページを更新してください。"
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "カメラへのアクセスを取得しようとしたときに、不明なエラーが発生しました。<br><br>このページを更新して、もう一度お試しください。"
+  },
+  "unable_to_access_camera": {
+    "message": "カメラにアクセスできません。他にカメラを使用しているプログラムはありますか？"
+  },
+  "settings_window_title": {
+    "message": "QR Liteの設定"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "スキャン成功時に音を再生"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "QRコードが正常にスキャンされたときにビープ音を再生します。"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "ダークモードで黒い背景に白いQRコードを生成する"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "ダークモードでは、暗い背景に明るい前景色のQRコードを生成します。一部のスキャナでは、このようなQRコードのスキャンに問題が発生する可能性があります。「保存」ボタンと「コピー」ボタンを使用して保存またはコピーしたQRコードは、常に背景が白で、前景が黒になります。"
+  },
+  "settings_scanner_legend": {
+    "message": "QRコードスキャナー"
+  },
+  "settings_generator_legend": {
+    "message": "QRコードジェネレーター"
+  },
+  "tab_settings_title": {
+    "message": "QR Liteの設定を変更する"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "キーボードショートカットを設定する"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "カメラにアクセスできません。予期しないエラーが発生しました。"
   }
 }

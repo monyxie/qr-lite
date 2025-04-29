@@ -47,13 +47,13 @@
     "message": "기록 지우기"
   },
   "disable_history_btn_title": {
-    "message": "기록 기록 중지"
+    "message": "기록 일시 중지"
   },
   "disable_history_btn_label": {
     "message": "중지"
   },
   "enable_history_btn_title": {
-    "message": "기록 기록 재개"
+    "message": "기록 다시 시작"
   },
   "enable_history_btn_label": {
     "message": "재개"
@@ -77,7 +77,7 @@
     "message": "높음, 데이터 바이트의 30% 복구 가능"
   },
   "error_correction_level_label": {
-    "message": "오류 수정:"
+    "message": "수정:"
   },
   "error_correction_level_label_title": {
     "message": "오류 수정 수준"
@@ -249,5 +249,50 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "새 포그라운드 탭에서 URL 자동 열기"
+  },
+  "copy_btn_title": {
+    "message": "클립보드에 복사"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "오류 세부 정보"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "카메라에 접근할 수 없는 것 같습니다. 다른 프로그램에서 카메라를 사용 중인가요?<br><br>카메라를 사용 중일 수 있는 다른 프로그램을 닫고 이 페이지를 새로 고쳐주세요."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "카메라 접근 권한을 얻으려고 하는 중 알 수 없는 오류가 발생했습니다.<br><br>이 페이지를 새로 고치고 다시 시도해 보세요."
+  },
+  "unable_to_access_camera": {
+    "message": "카메라에 접근할 수 없습니다. 다른 프로그램에서 카메라를 사용 중인가요?"
+  },
+  "settings_window_title": {
+    "message": "QR Lite 설정"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "스캔 성공 시 소리 재생"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "QR 코드가 성공적으로 스캔되면 삐 소리를 재생합니다."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "다크 모드에서 검은색 배경에 흰색 QR 코드 생성"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "다크 모드에서는 어두운 배경에 밝은 전경색의 QR 코드를 생성합니다. 일부 스캐너는 이러한 QR 코드를 스캔하는 데 문제가 있을 수 있습니다. \"저장\" 및 \"복사\" 버튼을 통해 저장하거나 복사하는 QR 코드는 항상 흰색 배경과 검은색 전경을 갖습니다."
+  },
+  "settings_scanner_legend": {
+    "message": "QR 코드 스캐너"
+  },
+  "settings_generator_legend": {
+    "message": "QR 코드 생성기"
+  },
+  "tab_settings_title": {
+    "message": "QR Lite의 설정 변경"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "키보드 단축키 구성"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "카메라에 액세스할 수 없습니다. 예기치 않은 오류가 발생했습니다."
   }
 }

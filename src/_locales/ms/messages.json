@@ -47,7 +47,7 @@
     "message": "Kosongkan sejarah"
   },
   "disable_history_btn_title": {
-    "message": "Hentikan rakaman sejarah"
+    "message": "Jeda rakaman sejarah"
   },
   "disable_history_btn_label": {
     "message": "Hentikan"
@@ -77,7 +77,7 @@
     "message": "Tinggi, 30% daripada bait data boleh dipulihkan"
   },
   "error_correction_level_label": {
-    "message": "Pembetulan Ralat:"
+    "message": "Pembetulan:"
   },
   "error_correction_level_label_title": {
     "message": "Tahap pembetulan ralat"
@@ -230,13 +230,13 @@
     "message": "Tutup"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "Pilih kawasan untuk diimbas dan buka URL"
+    "message": "Pilih rantau untuk imbasan dan buka URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "Pilih kawasan untuk diimbas dan buka URL dalam tab latar belakang baharu"
+    "message": "Pilih rantau untuk imbasan dan buka URL dalam tab latar belakang baharu"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Pilih kawasan untuk diimbas dan buka URL dalam tab latar depan baharu"
+    "message": "Pilih rantau untuk imbasan dan buka URL dalam tab latar depan baharu"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Jangan buka URL secara automatik"
@@ -249,5 +249,50 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "Buka URL secara automatik dalam tab latar depan baharu"
+  },
+  "copy_btn_title": {
+    "message": "Salin ke papan klip"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Butiran ralat"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Nampaknya kamera tidak dapat diakses. Adakah program lain menggunakan kamera?<br><br>Sila tutup program lain yang mungkin menggunakan kamera, kemudian segarkan halaman ini."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Ralat tidak diketahui berlaku semasa cuba mendapatkan akses kamera.<br><br>Sila segarkan halaman ini dan cuba lagi."
+  },
+  "unable_to_access_camera": {
+    "message": "Tidak dapat mengakses kamera. Adakah program lain menggunakan kamera?"
+  },
+  "settings_window_title": {
+    "message": "Tetapan QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Mainkan bunyi apabila imbasan berjaya"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Mainkan bunyi bip apabila kod QR berjaya diimbas."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Jana Kod QR putih di latar belakang hitam dalam mod gelap"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "Dalam mod gelap, jana Kod QR dengan warna latar depan terang di latar belakang gelap. Sesetengah pengimbas mungkin menghadapi masalah mengimbas Kod QR tersebut. Kod QR yang anda simpan atau salin melalui butang \"Simpan\" dan \"Salin\" akan sentiasa mempunyai latar belakang putih dan latar depan hitam."
+  },
+  "settings_scanner_legend": {
+    "message": "Pengimbas Kod QR"
+  },
+  "settings_generator_legend": {
+    "message": "Penjana Kod QR"
+  },
+  "tab_settings_title": {
+    "message": "Ubah tetapan QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Konfigurasi Pintasan Papan Kekunci"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Tidak dapat mengakses kamera. Ralat yang tidak dijangka berlaku."
   }
 }

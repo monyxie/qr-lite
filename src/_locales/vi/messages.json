@@ -47,7 +47,7 @@
     "message": "Xóa lịch sử"
   },
   "disable_history_btn_title": {
-    "message": "Dừng ghi lại lịch sử"
+    "message": "Tạm dừng ghi lại lịch sử"
   },
   "disable_history_btn_label": {
     "message": "Dừng"
@@ -236,7 +236,7 @@
     "message": "Chọn vùng để quét và mở URL trong tab nền mới"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Chọn vùng để quét và mở URL trong tab trước nền mới"
+    "message": "Chọn vùng để quét và mở URL trong tab tiền cảnh mới"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Không tự động mở URL"
@@ -248,6 +248,51 @@
     "message": "Tự động mở URL trong tab nền mới"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "Tự động mở URL trong tab trước nền mới"
+    "message": "Tự động mở URL trong tab tiền cảnh mới"
+  },
+  "copy_btn_title": {
+    "message": "Sao chép vào clipboard"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Chi tiết lỗi"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Có vẻ như máy ảnh không thể truy cập được. Có chương trình nào khác đang sử dụng máy ảnh không?<br><br>Vui lòng đóng các chương trình khác có thể đang sử dụng máy ảnh, sau đó làm mới trang này."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Đã xảy ra lỗi không xác định khi cố gắng lấy quyền truy cập máy ảnh.<br><br>Vui lòng làm mới trang này và thử lại."
+  },
+  "unable_to_access_camera": {
+    "message": "Không thể truy cập máy ảnh. Có chương trình nào khác đang sử dụng máy ảnh không?"
+  },
+  "settings_window_title": {
+    "message": "Cài đặt QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Phát âm thanh khi quét thành công"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Phát âm thanh bíp khi quét mã QR thành công."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Tạo Mã QR màu trắng trên nền đen trong chế độ tối"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "Trong chế độ tối, tạo Mã QR với màu nền trước sáng trên nền tối. Một số máy quét có thể gặp khó khăn khi quét các Mã QR đó. Mã QR bạn lưu hoặc sao chép thông qua các nút \"Lưu\" và \"Sao chép\" sẽ luôn có nền trắng và nền trước màu đen."
+  },
+  "settings_scanner_legend": {
+    "message": "Máy quét Mã QR"
+  },
+  "settings_generator_legend": {
+    "message": "Trình tạo Mã QR"
+  },
+  "tab_settings_title": {
+    "message": "Thay đổi cài đặt của QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Cấu hình Phím tắt Bàn phím"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Không thể truy cập camera. Đã xảy ra lỗi không mong muốn."
   }
 }

@@ -47,7 +47,7 @@
     "message": "Limpiar historial"
   },
   "disable_history_btn_title": {
-    "message": "Detener la grabación del historial"
+    "message": "Pausar la grabación del historial"
   },
   "disable_history_btn_label": {
     "message": "Detener"
@@ -77,7 +77,7 @@
     "message": "Alto, se pueden restaurar el 30% de los bytes de datos"
   },
   "error_correction_level_label": {
-    "message": "Corrección de errores:"
+    "message": "Corrección:"
   },
   "error_correction_level_label_title": {
     "message": "Nivel de corrección de errores"
@@ -249,5 +249,50 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "Abrir URL automáticamente en una nueva pestaña en primer plano"
+  },
+  "copy_btn_title": {
+    "message": "Copiar al portapapeles"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Detalles del error"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Parece que la cámara no está accesible. ¿Hay otro programa usando la cámara?<br><br>Por favor, cierre otros programas que puedan estar usando la cámara y luego actualice esta página."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Ocurrió un error desconocido al intentar obtener acceso a la cámara.<br><br>Por favor, actualice esta página e inténtelo de nuevo."
+  },
+  "unable_to_access_camera": {
+    "message": "No se puede acceder a la cámara. ¿Hay otro programa usando la cámara?"
+  },
+  "settings_window_title": {
+    "message": "Configuración de QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Reproducir sonido al escanear con éxito"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Reproducir un pitido cuando un código QR se escanea con éxito."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Generar códigos QR blancos sobre fondo negro en modo oscuro"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "En modo oscuro, genera códigos QR con un color de primer plano claro sobre un fondo oscuro. Algunos escáneres pueden tener problemas para escanear dichos códigos QR. El código QR que guarde o copie mediante los botones \"Guardar\" y \"Copiar\" siempre tendrá un fondo blanco y un primer plano negro."
+  },
+  "settings_scanner_legend": {
+    "message": "Escáner de códigos QR"
+  },
+  "settings_generator_legend": {
+    "message": "Generador de códigos QR"
+  },
+  "tab_settings_title": {
+    "message": "Cambiar la configuración de QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Configurar atajos de teclado"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "No se pudo acceder a la cámara. Ocurrió un error inesperado."
   }
 }

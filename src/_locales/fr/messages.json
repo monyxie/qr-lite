@@ -47,7 +47,7 @@
     "message": "Effacer l'historique"
   },
   "disable_history_btn_title": {
-    "message": "Arrêter l'enregistrement de l'historique"
+    "message": "Mettre en pause l'enregistrement de l'historique"
   },
   "disable_history_btn_label": {
     "message": "Arrêter"
@@ -77,7 +77,7 @@
     "message": "Élevé, 30 % des octets de données peuvent être restaurés"
   },
   "error_correction_level_label": {
-    "message": "Correction d'erreur :"
+    "message": "Correction :"
   },
   "error_correction_level_label_title": {
     "message": "Niveau de correction d'erreur"
@@ -230,13 +230,13 @@
     "message": "Fermer"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "Sélectionner la région à scanner et ouvrir l'URL"
+    "message": "Sélectionner une région à scanner et ouvrir l'URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "Sélectionner la région à scanner et ouvrir l'URL dans un nouvel onglet en arrière-plan"
+    "message": "Sélectionner une région à scanner et ouvrir l'URL dans un nouvel onglet d'arrière-plan"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Sélectionner la région à scanner et ouvrir l'URL dans un nouvel onglet au premier plan"
+    "message": "Sélectionner une région à scanner et ouvrir l'URL dans un nouvel onglet de premier plan"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Ne pas ouvrir l'URL automatiquement"
@@ -245,9 +245,54 @@
     "message": "Ouvrir l'URL automatiquement dans l'onglet actuel"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "Ouvrir l'URL automatiquement dans un nouvel onglet en arrière-plan"
+    "message": "Ouvrir l'URL automatiquement dans un nouvel onglet d'arrière-plan"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "Ouvrir l'URL automatiquement dans un nouvel onglet au premier plan"
+    "message": "Ouvrir l'URL automatiquement dans un nouvel onglet de premier plan"
+  },
+  "copy_btn_title": {
+    "message": "Copier dans le presse-papiers"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Détails de l'erreur"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Il semble que la caméra soit inaccessible. Un autre programme utilise-t-il la caméra ?<br><br>Veuillez fermer les autres programmes qui pourraient utiliser la caméra, puis actualiser cette page."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Une erreur inconnue s'est produite lors de la tentative d'accès à la caméra.<br><br>Veuillez actualiser cette page et réessayer."
+  },
+  "unable_to_access_camera": {
+    "message": "Impossible d'accéder à la caméra. Un autre programme utilise-t-il la caméra ?"
+  },
+  "settings_window_title": {
+    "message": "Paramètres de QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Émettre un son en cas de succès de scan"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Émettre un bip sonore lorsqu'un code QR est scanné avec succès."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Générer des codes QR blancs sur fond noir en mode sombre"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "En mode sombre, générer des codes QR avec une couleur d'avant-plan claire sur un fond sombre. Certains scanners peuvent avoir du mal à scanner ces codes QR. Le code QR que vous enregistrez ou copiez via les boutons « Enregistrer » et « Copier » aura toujours un fond blanc et un avant-plan noir."
+  },
+  "settings_scanner_legend": {
+    "message": "Scanner de code QR"
+  },
+  "settings_generator_legend": {
+    "message": "Générateur de code QR"
+  },
+  "tab_settings_title": {
+    "message": "Modifier les paramètres de QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Configurer les raccourcis clavier"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Impossible d'accéder à la caméra. Une erreur inattendue s'est produite."
   }
 }

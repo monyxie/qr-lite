@@ -45,13 +45,13 @@
     "message": "Clear history"
   },
   "disable_history_btn_title": {
-    "message": "Pause recording history"
+    "message": "Pause history recording"
   },
   "disable_history_btn_label": {
     "message": "Pause"
   },
   "enable_history_btn_title": {
-    "message": "Resume recording history"
+    "message": "Resume history recording"
   },
   "enable_history_btn_label": {
     "message": "Resume"
@@ -75,7 +75,7 @@
     "message": "High, 30% of data bytes can be restored"
   },
   "error_correction_level_label": {
-    "message": "EC:"
+    "message": "Correction:"
   },
   "error_correction_level_label_title": {
     "message": "Error correction level"
@@ -84,7 +84,7 @@
     "message": "Length of the QR code content in characters"
   },
   "content_length_label": {
-    "message": "Len:"
+    "message": "Length:"
   },
   "content_title": {
     "message": "QR code content"
@@ -194,10 +194,10 @@
     "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page."
   },
   "grant_camera_unusable_instructions_html": {
-    "message": "It looks like the camera is inaccessable. Is there another program using the camera?<br><br>Please close other programs that might be using the camera, then refresh this page."
+    "message": "It looks like the camera is inaccessible. Is there another program using the camera?<br><br>Please close other programs that might be using the camera, then refresh this page."
   },
   "grant_camera_unknow_error_instructions_html": {
-    "message": "An unkown error occurred when trying to acquire camera access.<br><br>Please refresh this page and try again."
+    "message": "An unknown error occurred when trying to acquire camera access.<br><br>Please refresh this page and try again."
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite has been successfully granted permission to use the camera.<br><br>You may close this page now."
@@ -227,7 +227,10 @@
     "message": "Unable to decode QR code"
   },
   "unable_to_access_camera": {
-    "message": "Unable to acess the camera. Is there another program using the camera?"
+    "message": "Unable to access the camera. Is there another program using the camera?"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Unable to access the camera. An unexpected error occurred."
   },
   "browser_action_command_description": {
     "message": "Show popup"

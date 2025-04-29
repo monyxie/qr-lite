@@ -47,7 +47,7 @@
     "message": "Bersihkan riwayat"
   },
   "disable_history_btn_title": {
-    "message": "Hentikan perekaman riwayat"
+    "message": "Jeda perekaman riwayat"
   },
   "disable_history_btn_label": {
     "message": "Hentikan"
@@ -77,7 +77,7 @@
     "message": "Tinggi, 30% byte data dapat dipulihkan"
   },
   "error_correction_level_label": {
-    "message": "Koreksi Kesalahan:"
+    "message": "Koreksi:"
   },
   "error_correction_level_label_title": {
     "message": "Tingkat koreksi kesalahan"
@@ -230,24 +230,69 @@
     "message": "Tutup"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "Pilih area untuk dipindai dan buka URL"
+    "message": "Pilih wilayah untuk memindai dan membuka URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "Pilih area untuk dipindai dan buka URL di tab latar belakang baru"
+    "message": "Pilih wilayah untuk memindai dan membuka URL di tab latar belakang baru"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Pilih area untuk dipindai dan buka URL di tab latar depan baru"
+    "message": "Pilih wilayah untuk memindai dan membuka URL di tab latar depan baru"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Jangan buka URL secara otomatis"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "Buka URL secara otomatis di tab saat ini"
+    "message": "Buka URL otomatis di tab saat ini"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "Buka URL secara otomatis di tab latar belakang baru"
+    "message": "Buka URL otomatis di tab latar belakang baru"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "Buka URL secara otomatis di tab latar depan baru"
+    "message": "Buka URL otomatis di tab latar depan baru"
+  },
+  "copy_btn_title": {
+    "message": "Salin ke papan klip"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Detail kesalahan"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Sepertinya kamera tidak dapat diakses. Apakah ada program lain yang menggunakan kamera?<br><br>Harap tutup program lain yang mungkin menggunakan kamera, lalu segarkan halaman ini."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Terjadi kesalahan yang tidak diketahui saat mencoba mendapatkan akses kamera.<br><br>Harap segarkan halaman ini dan coba lagi."
+  },
+  "unable_to_access_camera": {
+    "message": "Tidak dapat mengakses kamera. Apakah ada program lain yang menggunakan kamera?"
+  },
+  "settings_window_title": {
+    "message": "Pengaturan QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Putar suara saat pemindaian berhasil"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Putar suara bip saat kode QR berhasil dipindai."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Hasilkan Kode QR putih di latar belakang hitam dalam mode gelap"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "Dalam mode gelap, hasilkan Kode QR dengan warna latar depan terang di latar belakang gelap. Beberapa pemindai mungkin mengalami kesulitan memindai Kode QR tersebut. Kode QR yang Anda simpan atau salin melalui tombol \"Simpan\" dan \"Salin\" akan selalu memiliki latar belakang putih dan latar depan hitam."
+  },
+  "settings_scanner_legend": {
+    "message": "Pemindai Kode QR"
+  },
+  "settings_generator_legend": {
+    "message": "Pembuat Kode QR"
+  },
+  "tab_settings_title": {
+    "message": "Ubah pengaturan QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Konfigurasi Pintasan Keyboard"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Tidak dapat mengakses kamera. Terjadi kesalahan yang tidak terduga."
   }
 }

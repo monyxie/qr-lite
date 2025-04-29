@@ -47,13 +47,13 @@
     "message": "Limpar histórico"
   },
   "disable_history_btn_title": {
-    "message": "Parar de registrar o histórico"
+    "message": "Pausar a gravação do histórico"
   },
   "disable_history_btn_label": {
     "message": "Parar"
   },
   "enable_history_btn_title": {
-    "message": "Retomar o registro do histórico"
+    "message": "Retomar a gravação do histórico"
   },
   "enable_history_btn_label": {
     "message": "Retomar"
@@ -77,7 +77,7 @@
     "message": "Alto, 30% dos bytes de dados podem ser restaurados"
   },
   "error_correction_level_label": {
-    "message": "Correção de erro:"
+    "message": "Correção:"
   },
   "error_correction_level_label_title": {
     "message": "Nível de correção de erro"
@@ -233,21 +233,66 @@
     "message": "Selecionar região para digitalizar e abrir URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "Selecionar região para digitalizar e abrir URL em uma nova aba em segundo plano"
+    "message": "Selecionar região para digitalizar e abrir URL em uma nova guia em segundo plano"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Selecionar região para digitalizar e abrir URL em uma nova aba em primeiro plano"
+    "message": "Selecionar região para digitalizar e abrir URL em uma nova guia em primeiro plano"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Não abrir URL automaticamente"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "Abrir URL automaticamente na aba atual"
+    "message": "Abrir URL automaticamente na guia atual"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "Abrir URL automaticamente em uma nova aba em segundo plano"
+    "message": "Abrir URL automaticamente em uma nova guia em segundo plano"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "Abrir URL automaticamente em uma nova aba em primeiro plano"
+    "message": "Abrir URL automaticamente em uma nova guia em primeiro plano"
+  },
+  "copy_btn_title": {
+    "message": "Copiar para a área de transferência"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Detalhes do erro"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Parece que a câmera está inacessível. Há outro programa usando a câmera?<br><br>Feche outros programas que possam estar usando a câmera e, em seguida, atualize esta página."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Ocorreu um erro desconhecido ao tentar obter acesso à câmera.<br><br>Atualize esta página e tente novamente."
+  },
+  "unable_to_access_camera": {
+    "message": "Não foi possível acessar a câmera. Há outro programa usando a câmera?"
+  },
+  "settings_window_title": {
+    "message": "Configurações do QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Reproduzir som ao digitalizar com sucesso"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Reproduzir um bipe quando um código QR for digitalizado com sucesso."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Gerar códigos QR brancos em fundo preto no modo escuro"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "No modo escuro, gere códigos QR com uma cor de primeiro plano clara em um fundo escuro. Alguns scanners podem ter problemas para digitalizar esses códigos QR. O código QR que você salvar ou copiar por meio dos botões \"Salvar\" e \"Copiar\" sempre terá um fundo branco e um primeiro plano preto."
+  },
+  "settings_scanner_legend": {
+    "message": "Scanner de Código QR"
+  },
+  "settings_generator_legend": {
+    "message": "Gerador de Código QR"
+  },
+  "tab_settings_title": {
+    "message": "Alterar as configurações do QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Configurar atalhos de teclado"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Não foi possível aceder à câmara. Ocorreu um erro inesperado."
   }
 }

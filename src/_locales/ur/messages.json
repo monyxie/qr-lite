@@ -47,13 +47,13 @@
     "message": "تاریخ صاف کریں"
   },
   "disable_history_btn_title": {
-    "message": "تاریخ کی ریکارڈنگ روکیں"
+    "message": "تاریخی ریکارڈنگ کو موقوف کریں"
   },
   "disable_history_btn_label": {
     "message": "روکیں"
   },
   "enable_history_btn_title": {
-    "message": "تاریخ کی ریکارڈنگ دوبارہ شروع کریں"
+    "message": "تاریخی ریکارڈنگ دوبارہ شروع کریں"
   },
   "enable_history_btn_label": {
     "message": "دوبارہ شروع کریں"
@@ -77,7 +77,7 @@
     "message": "زیادہ، 30% ڈیٹا بائٹس بحال کیے جا سکتے ہیں"
   },
   "error_correction_level_label": {
-    "message": "غلطی کی اصلاح:"
+    "message": "تصحیح:"
   },
   "error_correction_level_label_title": {
     "message": "غلطی کی اصلاح کی سطح"
@@ -230,24 +230,69 @@
     "message": "بند کریں"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور URL کھولیں"
+    "message": "اسکین کرنے اور URL کھولنے کے لیے خطہ منتخب کریں"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور نئے پس منظر ٹیب میں URL کھولیں"
+    "message": "اسکین کرنے اور نئے پس منظر والے ٹیب میں URL کھولنے کے لیے خطہ منتخب کریں"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "اسکین کرنے کے لیے علاقہ منتخب کریں اور نئے پیش منظر ٹیب میں URL کھولیں"
+    "message": "اسکین کرنے اور نئے پیش منظر والے ٹیب میں URL کھولنے کے لیے خطہ منتخب کریں"
   },
   "picker_url_mode_auto_open_no": {
-    "message": "خود بخود URL نہ کھولیں"
+    "message": "خودکار طور پر URL نہ کھولیں"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "موجودہ ٹیب میں خود بخود URL کھولیں"
+    "message": "موجودہ ٹیب میں خودکار طور پر URL کھولیں"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "نئے پس منظر ٹیب میں خود بخود URL کھولیں"
+    "message": "نئے پس منظر والے ٹیب میں خودکار طور پر URL کھولیں"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "نئے پیش منظر ٹیب میں خود بخود URL کھولیں"
+    "message": "نئے پیش منظر والے ٹیب میں خودکار طور پر URL کھولیں"
+  },
+  "copy_btn_title": {
+    "message": "کلپ بورڈ پر کاپی کریں"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "خرابی کی تفصیلات"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "ایسا لگتا ہے کہ کیمرہ ناقابل رسائی ہے۔ کیا کوئی اور پروگرام کیمرہ استعمال کر رہا ہے؟<br><br>براہ کرم دوسرے پروگرام بند کریں جو کیمرہ استعمال کر رہے ہوں، پھر اس صفحہ کو ریفریش کریں۔"
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "کیمرہ تک رسائی حاصل کرنے کی کوشش کرتے وقت ایک نامعلوم خرابی پیش آئی۔<br><br>براہ کرم اس صفحہ کو ریفریش کریں اور دوبارہ کوشش کریں۔"
+  },
+  "unable_to_access_camera": {
+    "message": "کیمرہ تک رسائی حاصل کرنے سے قاصر۔ کیا کوئی اور پروگرام کیمرہ استعمال کر رہا ہے؟"
+  },
+  "settings_window_title": {
+    "message": "QR Lite ترتیبات"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "کامیاب اسکین پر آواز چلائیں"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "جب QR کوڈ کامیابی سے اسکین ہو جائے تو ایک بیپ آواز چلائیں۔"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "تاریک موڈ میں سیاہ پس منظر پر سفید QR کوڈز تیار کریں"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "تاریک موڈ میں، گہرے پس منظر پر ہلکے پیش منظر کے رنگ کے ساتھ QR کوڈز تیار کریں۔ کچھ سکینرز کو ایسے QR کوڈز کو اسکین کرنے میں پریشانی ہو سکتی ہے۔ \"محفوظ کریں\" اور \"کاپی کریں\" بٹنوں کے ذریعے آپ جو QR کوڈ محفوظ کرتے ہیں یا کاپی کرتے ہیں اس میں ہمیشہ سفید پس منظر اور سیاہ پیش منظر ہوگا۔"
+  },
+  "settings_scanner_legend": {
+    "message": "QR کوڈ سکینر"
+  },
+  "settings_generator_legend": {
+    "message": "QR کوڈ جنریٹر"
+  },
+  "tab_settings_title": {
+    "message": "QR Lite کی ترتیبات تبدیل کریں"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "کی بورڈ شارٹ کٹس ترتیب دیں"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "کیمرہ تک رسائی حاصل کرنے سے قاصر۔ ایک غیر متوقع خرابی پیش آئی۔"
   }
 }

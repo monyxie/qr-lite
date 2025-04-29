@@ -47,13 +47,13 @@
     "message": "ইতিহাস পরিষ্কার করুন"
   },
   "disable_history_btn_title": {
-    "message": "ইতিহাস রেকর্ডিং বন্ধ করুন"
+    "message": "ইতিহাস রেকর্ডিং থামানো"
   },
   "disable_history_btn_label": {
     "message": "বন্ধ করুন"
   },
   "enable_history_btn_title": {
-    "message": "ইতিহাস রেকর্ডিং পুনরায় শুরু করুন"
+    "message": "ইতিহাস রেকর্ডিং পুনরায় শুরু করা"
   },
   "enable_history_btn_label": {
     "message": "পুনরায় শুরু করুন"
@@ -77,7 +77,7 @@
     "message": "উচ্চ, 30% ডেটা বাইট পুনরুদ্ধার করা যেতে পারে"
   },
   "error_correction_level_label": {
-    "message": "ত্রুটি সংশোধন:"
+    "message": "সংশোধন:"
   },
   "error_correction_level_label_title": {
     "message": "ত্রুটি সংশোধন স্তর"
@@ -236,18 +236,63 @@
     "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং নতুন ব্যাকগ্রাউন্ড ট্যাবে URL খুলুন"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং নতুন অগ্রভাগের ট্যাবে URL খুলুন"
+    "message": "স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন এবং নতুন ফোরগ্রাউন্ড ট্যাবে URL খুলুন"
   },
   "picker_url_mode_auto_open_no": {
-    "message": "স্বয়ংক্রিয়ভাবে URL খুলবেন না"
+    "message": "URL স্বয়ংক্রিয়ভাবে খুলবেন না"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "বর্তমান ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
+    "message": "বর্তমান ট্যাবে URL স্বয়ংক্রিয়ভাবে খুলুন"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "নতুন ব্যাকগ্রাউন্ড ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
+    "message": "নতুন ব্যাকগ্রাউন্ড ট্যাবে URL স্বয়ংক্রিয়ভাবে খুলুন"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "নতুন অগ্রভাগের ট্যাবে স্বয়ংক্রিয়ভাবে URL খুলুন"
+    "message": "নতুন ফোরগ্রাউন্ড ট্যাবে URL স্বয়ংক্রিয়ভাবে খুলুন"
+  },
+  "copy_btn_title": {
+    "message": "ক্লিপবোর্ডে অনুলিপি করুন"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "ভুলের বিবরণ"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "মনে হচ্ছে ক্যামেরাটি অ্যাক্সেস করা যাচ্ছে না। অন্য কোনো প্রোগ্রাম কি ক্যামেরা ব্যবহার করছে?<br><br>অনুগ্রহ করে অন্যান্য প্রোগ্রামগুলি বন্ধ করুন যা ক্যামেরা ব্যবহার করতে পারে, তারপর এই পৃষ্ঠাটি রিফ্রেশ করুন।"
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "ক্যামেরায় প্রবেশাধিকার অর্জনের চেষ্টা করার সময় একটি অজানা ত্রুটি ঘটেছে।<br><br>অনুগ্রহ করে এই পৃষ্ঠাটি রিফ্রেশ করুন এবং পুনরায় চেষ্টা করুন।"
+  },
+  "unable_to_access_camera": {
+    "message": "ক্যামেরা অ্যাক্সেস করতে অক্ষম। অন্য কোনো প্রোগ্রাম কি ক্যামেরা ব্যবহার করছে?"
+  },
+  "settings_window_title": {
+    "message": "QR Lite সেটিংস"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "সফল স্ক্যানে শব্দ চালান"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "যখন একটি QR কোড সফলভাবে স্ক্যান করা হবে তখন একটি বিপ শব্দ চালান।"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "ডার্ক মোডে কালো ব্যাকগ্রাউন্ডের উপর সাদা QR কোড তৈরি করুন"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "ডার্ক মোডে, গাঢ় ব্যাকগ্রাউন্ডের উপর হালকা রঙের QR কোড তৈরি করুন। কিছু স্ক্যানারের এই ধরনের QR কোড স্ক্যান করতে সমস্যা হতে পারে। \"সংরক্ষণ\" এবং \"কপি\" বোতামের মাধ্যমে আপনি যে QR কোড সংরক্ষণ বা কপি করবেন তাতে সর্বদা সাদা ব্যাকগ্রাউন্ড এবং কালো ফোরগ্রাউন্ড থাকবে।"
+  },
+  "settings_scanner_legend": {
+    "message": "QR কোড স্ক্যানার"
+  },
+  "settings_generator_legend": {
+    "message": "QR কোড জেনারেটর"
+  },
+  "tab_settings_title": {
+    "message": "QR Lite-এর সেটিংস পরিবর্তন করুন"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "কীবোর্ড শর্টকাট কনফিগার করুন"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "ক্যামেরা অ্যাক্সেস করতে অক্ষম। একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।"
   }
 }

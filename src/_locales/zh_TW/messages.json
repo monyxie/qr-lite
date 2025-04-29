@@ -214,13 +214,13 @@
     "message": "關閉"
   },
   "disable_history_btn_title": {
-    "message": "暫停記錄歷史"
+    "message": "暫停歷史記錄"
   },
   "disable_history_btn_label": {
     "message": "暫停"
   },
   "enable_history_btn_title": {
-    "message": "恢復記錄歷史"
+    "message": "恢復歷史記錄"
   },
   "enable_history_btn_label": {
     "message": "恢復"
@@ -229,24 +229,69 @@
     "message": "從歷史記錄中刪除此條目"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "選擇要掃描的區域並打開網址"
+    "message": "選擇區域進行掃描並開啟 URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "選擇要掃描的區域並在新的背景分頁中打開網址"
+    "message": "選擇區域進行掃描並在新的背景分頁中開啟 URL"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "選擇要掃描的區域並在新的前景分頁中打開網址"
+    "message": "選擇區域進行掃描並在新的前景分頁中開啟 URL"
   },
   "picker_url_mode_auto_open_no": {
-    "message": "不要自動打開網址"
+    "message": "不要自動開啟 URL"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "在目前分頁中自動打開網址"
+    "message": "在目前分頁中自動開啟 URL"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "在新的背景分頁中自動打開網址"
+    "message": "在新的背景分頁中自動開啟 URL"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "在新的前景分頁中自動打開網址"
+    "message": "在新的前景分頁中自動開啟 URL"
+  },
+  "copy_btn_title": {
+    "message": "複製到剪貼簿"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "錯誤詳情"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "攝影機似乎無法存取。是否有其他程式正在使用攝影機？<br><br>請關閉可能正在使用攝影機的其他程式，然後重新整理此頁面。"
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "嘗試取得攝影機存取權時發生不明錯誤。<br><br>請重新整理此頁面並重試。"
+  },
+  "unable_to_access_camera": {
+    "message": "無法存取攝影機。是否有其他程式正在使用攝影機？"
+  },
+  "settings_window_title": {
+    "message": "QR Lite 設定"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "掃描成功時播放聲音"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "成功掃描到 QR 碼時播放提示音。"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "在深色模式下產生黑色背景上的白色 QR 碼"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "在深色模式下，產生深色背景上的淺色前景色的 QR 碼。某些掃描器可能難以掃描此類 QR 碼。您透過「儲存」和「複製」按鈕儲存或複製的 QR 碼將始終具有白色背景和黑色前景色。"
+  },
+  "settings_scanner_legend": {
+    "message": "QR 碼掃描"
+  },
+  "settings_generator_legend": {
+    "message": "QR 碼產生"
+  },
+  "tab_settings_title": {
+    "message": "變更 QR Lite 的設定"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "設定鍵盤快速鍵"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "無法存取相機。發生了非預期的錯誤。"
   }
 }

@@ -47,7 +47,7 @@
     "message": "Очистить историю"
   },
   "disable_history_btn_title": {
-    "message": "Остановить запись истории"
+    "message": "Приостановить запись истории"
   },
   "disable_history_btn_label": {
     "message": "Остановить"
@@ -77,7 +77,7 @@
     "message": "Высокий, можно восстановить 30% байтов данных"
   },
   "error_correction_level_label": {
-    "message": "Коррекция ошибок:"
+    "message": "Коррекция:"
   },
   "error_correction_level_label_title": {
     "message": "Уровень коррекции ошибок"
@@ -230,24 +230,69 @@
     "message": "Закрыть"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "Выберите область для сканирования и откройте URL"
+    "message": "Выбрать область для сканирования и открыть URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "Выберите область для сканирования и откройте URL в новой фоновой вкладке"
+    "message": "Выбрать область для сканирования и открыть URL в новой фоновой вкладке"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "Выберите область для сканирования и откройте URL в новой активной вкладке"
+    "message": "Выбрать область для сканирования и открыть URL в новой активной вкладке"
   },
   "picker_url_mode_auto_open_no": {
     "message": "Не открывать URL автоматически"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "Автоматически открывать URL в текущей вкладке"
+    "message": "Автоматически открыть URL в текущей вкладке"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "Автоматически открывать URL в новой фоновой вкладке"
+    "message": "Автоматически открыть URL в новой фоновой вкладке"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "Автоматически открывать URL в новой активной вкладке"
+    "message": "Автоматически открыть URL в новой активной вкладке"
+  },
+  "copy_btn_title": {
+    "message": "Копировать в буфер обмена"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Детали ошибки"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Похоже, камера недоступна. Использует ли камеру другая программа?<br><br>Пожалуйста, закройте другие программы, которые могут использовать камеру, затем обновите эту страницу."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Произошла неизвестная ошибка при попытке получить доступ к камере.<br><br>Пожалуйста, обновите эту страницу и попробуйте снова."
+  },
+  "unable_to_access_camera": {
+    "message": "Невозможно получить доступ к камере. Использует ли камеру другая программа?"
+  },
+  "settings_window_title": {
+    "message": "Настройки QR Lite"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Воспроизводить звук при успешном сканировании"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Воспроизводить звуковой сигнал при успешном сканировании QR-кода."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Генерировать белые QR-коды на черном фоне в темном режиме"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "В темном режиме генерировать QR-коды со светлым цветом переднего плана на темном фоне. Некоторые сканеры могут иметь проблемы со сканированием таких QR-кодов. QR-код, который вы сохраняете или копируете с помощью кнопок «Сохранить» и «Копировать», всегда будет иметь белый фон и черный передний план."
+  },
+  "settings_scanner_legend": {
+    "message": "Сканер QR-кодов"
+  },
+  "settings_generator_legend": {
+    "message": "Генератор QR-кодов"
+  },
+  "tab_settings_title": {
+    "message": "Изменить настройки QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Настроить сочетания клавиш"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Не удалось получить доступ к камере. Произошла непредвиденная ошибка."
   }
 }

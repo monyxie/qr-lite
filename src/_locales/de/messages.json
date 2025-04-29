@@ -249,5 +249,50 @@
   },
   "picker_url_mode_auto_open_in_fg_tab": {
     "message": "URL automatisch in neuem Vordergrundtab öffnen"
+  },
+  "copy_btn_title": {
+    "message": "In die Zwischenablage kopieren"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "Fehlerdetails"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "Es scheint, dass die Kamera nicht zugänglich ist. Verwendet ein anderes Programm die Kamera?<br><br>Bitte schließen Sie andere Programme, die möglicherweise die Kamera verwenden, und aktualisieren Sie diese Seite dann."
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "Beim Versuch, Kamerazugriff zu erhalten, ist ein unbekannter Fehler aufgetreten.<br><br>Bitte aktualisieren Sie diese Seite und versuchen Sie es erneut."
+  },
+  "unable_to_access_camera": {
+    "message": "Kamera kann nicht zugegriffen werden. Verwendet ein anderes Programm die Kamera?"
+  },
+  "settings_window_title": {
+    "message": "QR Lite-Einstellungen"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "Ton bei erfolgreichem Scan abspielen"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "Spiele einen Piepton ab, wenn ein QR-Code erfolgreich gescannt wurde."
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "Weiße QR-Codes auf schwarzem Hintergrund im Dunkelmodus generieren"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "Im Dunkelmodus QR-Codes mit einer hellen Vordergrundfarbe auf einem dunklen Hintergrund generieren. Einige Scanner haben möglicherweise Probleme beim Scannen solcher QR-Codes. Der QR-Code, den Sie über die Schaltflächen \"Speichern\" und \"Kopieren\" speichern oder kopieren, hat immer einen weißen Hintergrund und einen schwarzen Vordergrund."
+  },
+  "settings_scanner_legend": {
+    "message": "QR-Code-Scanner"
+  },
+  "settings_generator_legend": {
+    "message": "QR-Code-Generator"
+  },
+  "tab_settings_title": {
+    "message": "Ändern Sie die Einstellungen von QR Lite"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "Tastaturkürzel konfigurieren"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "Kamera konnte nicht geöffnet werden. Ein unerwarteter Fehler ist aufgetreten."
   }
 }

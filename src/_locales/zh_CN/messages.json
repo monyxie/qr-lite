@@ -214,13 +214,13 @@
     "message": "关闭"
   },
   "disable_history_btn_title": {
-    "message": "暂停记录历史"
+    "message": "暂停历史记录"
   },
   "disable_history_btn_label": {
     "message": "暂停"
   },
   "enable_history_btn_title": {
-    "message": "恢复记录历史"
+    "message": "恢复历史记录"
   },
   "enable_history_btn_label": {
     "message": "恢复"
@@ -229,24 +229,69 @@
     "message": "从历史记录中删除此条目"
   },
   "select_region_to_scan_open_command_description": {
-    "message": "选择扫描区域并打开网址"
+    "message": "选择区域进行扫描并打开 URL"
   },
   "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "选择扫描区域并在新的后台标签页中打开网址"
+    "message": "选择区域进行扫描并在新的后台标签页中打开 URL"
   },
   "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "选择扫描区域并在新的前台标签页中打开网址"
+    "message": "选择区域进行扫描并在新的前台标签页中打开 URL"
   },
   "picker_url_mode_auto_open_no": {
-    "message": "不要自动打开网址"
+    "message": "不自动打开 URL"
   },
   "picker_url_mode_auto_open_in_current_tab": {
-    "message": "在当前标签页中自动打开网址"
+    "message": "在当前标签页中自动打开 URL"
   },
   "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "在新的后台标签页中自动打开网址"
+    "message": "在新的后台标签页中自动打开 URL"
   },
   "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "在新的前台标签页中自动打开网址"
+    "message": "在新的前台标签页中自动打开 URL"
+  },
+  "copy_btn_title": {
+    "message": "复制到剪贴板"
+  },
+  "grant_permissions_error_details_summary": {
+    "message": "错误详情"
+  },
+  "grant_camera_unusable_instructions_html": {
+    "message": "摄像头似乎无法访问。是否有其他程序正在使用摄像头？<br><br>请关闭可能正在使用摄像头的其他程序，然后刷新此页面。"
+  },
+  "grant_camera_unknow_error_instructions_html": {
+    "message": "尝试获取摄像头访问权限时发生未知错误。<br><br>请刷新此页面并重试。"
+  },
+  "unable_to_access_camera": {
+    "message": "无法访问摄像头。是否有其他程序正在使用摄像头？"
+  },
+  "settings_window_title": {
+    "message": "QR Lite 设置"
+  },
+  "settings_scan_success_sound_enabled_label": {
+    "message": "扫描成功时播放声音"
+  },
+  "settings_scan_success_sound_enabled_explainer": {
+    "message": "成功扫描到二维码时播放提示音。"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_label": {
+    "message": "在深色模式下生成黑色背景上的白色二维码"
+  },
+  "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
+    "message": "在深色模式下，生成深色背景上的浅色前景色的二维码。某些扫描仪可能难以扫描此类二维码。您通过“保存”和“复制”按钮保存或复制的二维码将始终具有白色背景和黑色前景色。"
+  },
+  "settings_scanner_legend": {
+    "message": "二维码扫描"
+  },
+  "settings_generator_legend": {
+    "message": "二维码生成"
+  },
+  "tab_settings_title": {
+    "message": "更改 QR Lite 的设置"
+  },
+  "settings_config_keyboard_shortcuts_btn_label": {
+    "message": "配置键盘快捷键"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "无法访问摄像头。发生了一个意外错误。"
   }
 }
