@@ -217,7 +217,11 @@ export default function CameraScanner() {
       <div class="necker-container">
         {!result && (
           <div class="scanning-indicator">
-            <img src="/icons/spinner.svg"></img>
+            <img
+              src="/icons/spinner.svg"
+              class="icon-invert"
+              style="opacity: 0.5"
+            ></img>
             <div class="necker instructions">
               <p class="" id="scanningText">
                 {TT("scanning")}
