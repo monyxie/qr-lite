@@ -89,9 +89,16 @@ export function debouncer(delay) {
 }
 
 export async function playScanSuccessAudio() {
-  if (getSettingValue("scanSuccessSoundEnabled")) {
+  if (await getSettingValue("scanSuccessSoundEnabled")) {
     return new Promise((resolve) => {
       const audio = new Audio("/audio/success.mp3");
+      audio.addEventListener(
+        "canplay",
+        () => {
+          audio.play();
+        },
+        { once: true }
+      );
       audio.addEventListener(
         "ended",
         () => {
@@ -99,7 +106,6 @@ export async function playScanSuccessAudio() {
         },
         { once: true }
       );
-      audio.play();
     });
   }
   return false;
