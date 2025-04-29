@@ -164,13 +164,13 @@ body {
   border-radius: 4px;
   margin: 0;
   padding: 0;
-  padding-top: 400px;
+  padding-top: 500px;
   word-break: break-all;
   position: fixed;
-  top: 66px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 25rem;
+  width: 500px;
   max-width: 90%;
   box-shadow: #80ff80 0 0 20px;
   outline: white solid 2px;
@@ -199,6 +199,19 @@ body {
   display: flex;
   gap: 0.5rem;
   margin: 6px;
+}
+
+.result-actions > * {
+  flex: 1;
+  text-align: center;
+}
+
+.result-actions > :first-child {
+  text-align: left;
+}
+
+.result-actions > :last-child {
+  text-align: right;
 }
 
 @media (prefers-color-scheme: dark) {

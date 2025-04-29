@@ -387,10 +387,10 @@ function Scanner({
           });
           setTimer(() => {
             setImagePosition({
-              top: "270px",
+              top: "350px",
               left: "50%",
-              width: "300px",
-              height: "300px",
+              width: "400px",
+              height: "400px",
             });
           }, 100);
           setTimer(() => {
@@ -537,46 +537,53 @@ function Scanner({
               ref={resultContentNode}
             ></textarea>
             <div class="result-actions">
-              {!copied ? (
+              <div>
+                {isUrl(result?.content) && (
+                  <a
+                    id="open-link-btn"
+                    class=" clickable"
+                    target="_blank"
+                    title={T("open_url_btn_title")}
+                    onClick={() => {
+                      window.open(result.content, "_blank");
+                    }}
+                  >
+                    <img class="icon icon-invert" src="../icons/open-url.svg" />
+                    {TT("open_url_btn")}
+                  </a>
+                )}
+              </div>
+              <div>
+                {result?.content &&
+                  (!copied ? (
+                    <a
+                      id="copy-btn"
+                      class=" clickable"
+                      title={T("copy_image_btn_title")}
+                      onClick={() => {
+                        copyResult();
+                      }}
+                    >
+                      <img class="icon icon-invert" src="../icons/copy.svg" />
+                      {TT("copy_btn")}
+                    </a>
+                  ) : (
+                    <span id="copied-message" class="clickable">
+                      {TT("copy_btn_copied")}
+                    </span>
+                  ))}
+              </div>
+              <div>
                 <a
-                  id="copy-btn"
-                  class=" clickable"
-                  title={T("copy_image_btn_title")}
-                  onClick={() => {
-                    copyResult();
-                  }}
+                  id="rescan-btn"
+                  class="clickable"
+                  title={T("rescan_btn_title")}
+                  onClick={newScan}
                 >
-                  <img class="icon icon-invert" src="../icons/copy.svg" />
-                  {TT("copy_btn")}
+                  <img class="icon icon-invert" src="../icons/refresh.svg" />
+                  {TT("rescan_btn_label")}
                 </a>
-              ) : (
-                <span id="copied-message" class="clickable">
-                  {TT("copy_btn_copied")}
-                </span>
-              )}
-              {isUrl(result?.content) && (
-                <a
-                  id="open-link-btn"
-                  class=" clickable"
-                  target="_blank"
-                  title={T("open_url_btn_title")}
-                  onClick={() => {
-                    window.open(result.content, "_blank");
-                  }}
-                >
-                  <img class="icon icon-invert" src="../icons/open-url.svg" />
-                  {TT("open_url_btn")}
-                </a>
-              )}
-              <a
-                id="rescan-btn"
-                class="clickable"
-                title={T("rescan_btn_title")}
-                onClick={newScan}
-              >
-                <img class="icon icon-invert" src="../icons/refresh.svg" />
-                {TT("rescan_btn_label")}
-              </a>
+              </div>
             </div>
           </div>
         </>
