@@ -75,13 +75,15 @@ function SettingsPage() {
           </fieldset>
           {showKeyboardShortcutsSetting && (
             <div class="form-entry">
-              <span
-                class="clickable"
-                id="configKeyboardShortcutsBtn"
-                onClick={openShortcutSettings}
-              >
-                {TT("settings_config_keyboard_shortcuts_btn_label")}
-              </span>
+              <div>
+                <span
+                  class="clickable"
+                  id="configKeyboardShortcutsBtn"
+                  onClick={openShortcutSettings}
+                >
+                  {TT("settings_config_keyboard_shortcuts_btn_label")}
+                </span>
+              </div>
             </div>
           )}
         </form>
