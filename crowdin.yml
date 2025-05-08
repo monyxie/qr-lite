@@ -1,3 +1,0 @@
-files:
-  - source: /src/_locales/en/*.json
-    translation: /src/_locales/%locale_with_underscore%/%original_file_name%
