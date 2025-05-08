@@ -297,5 +297,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "새로 스캔"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "스캔 결과의 URL 처리 방법을 선택하세요"
   }
 }

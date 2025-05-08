@@ -296,5 +296,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "新しいスキャン"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "スキャン結果のURLの処理方法を選択してください"
   }
 }

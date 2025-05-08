@@ -296,5 +296,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "重新扫描"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "选择如何在扫描结果中处理网址"
   }
 }

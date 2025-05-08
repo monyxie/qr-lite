@@ -297,5 +297,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "Neuer Scan"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "Wählen Sie, wie URLs in Scanergebnissen behandelt werden sollen"
   }
 }

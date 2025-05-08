@@ -297,5 +297,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "نیا اسکین"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "اسکین کے نتائج میں یو آر ایل کو کیسے ہینڈل کیا جائے منتخب کریں"
   }
 }

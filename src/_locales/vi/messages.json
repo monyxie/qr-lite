@@ -297,5 +297,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "Quét lại"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "Chọn cách xử lý URL trong kết quả quét"
   }
 }

@@ -479,7 +479,7 @@ function Scanner({
         {(stage === "picking" || stage === "result") && (
           <select
             id="select-open-url-mode"
-            title="Choose how to handle URLs in scan results"
+            title={T("scan_region_picker_tips_open_url_mode_title")}
             defaultValue={options.openUrlMode}
             onChange={(e) => {
               setOptions((old) => {

@@ -297,5 +297,8 @@
   },
   "scan_region_picker_tips_rescan": {
     "message": "مسح جديد"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "اختر كيفية التعامل مع عناوين URL في نتائج المسح"
   }
 }

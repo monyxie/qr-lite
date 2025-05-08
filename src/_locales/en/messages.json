@@ -128,6 +128,9 @@
   "scan_region_picker_tips_rescan": {
     "message": "New Scan"
   },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "Choose how to handle URLs in scan results"
+  },
   "copy_btn": {
     "message": "Copy"
   },
