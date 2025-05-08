@@ -103,10 +103,10 @@ function Popup() {
         case "POPUP_ENCODE":
           if (generatorRef.current) {
             if (options.text !== undefined) {
-              generatorRef.current.setContent(options.text);
-            }
-            if (options.title !== undefined) {
-              generatorRef.current.setTitle(options.title);
+              generatorRef.current.setContentAndTitle(
+                options.text,
+                options.title || ""
+              );
             }
           }
         // fallthrough

@@ -64,8 +64,13 @@ const createCanvasForQrCode = (content, size) => {
   });
 };
 
-const getFilenameFromTitle = (title) => {
-  return "QR Code - " + SanitizeFilename(title).slice(0, 100) + ".png";
+const getFilename = (content, title) => {
+  let filename = "QR Code for ";
+  filename += SanitizeFilename(title || content.replace(/^https?:\/\//, ""), {
+    replacement: "_",
+  }).slice(0, 100);
+
+  return filename + ".png";
 };
 
 const downloadImage = (content, title) => {
@@ -73,7 +78,7 @@ const downloadImage = (content, title) => {
     .then((canvas) => {
       const a = document.createElement("a");
       a.href = canvas.toDataURL("image/png");
-      a.download = title ? getFilenameFromTitle(title) : "qr-code.png";
+      a.download = getFilename(content, title);
       a.click();
     })
     .catch((error) => {
@@ -91,10 +96,10 @@ const Generator = forwardRef(function Generator(props, ref) {
   const isDarkMode = useMatchMedia("(prefers-color-scheme: dark)");
 
   useImperativeHandle(ref, () => ({
-    setContent: (content) => {
+    setContentAndTitle: (content, title) => {
       setContent(content || "");
+      setTitle(title || "");
     },
-    setTitle: (title) => setTitle(title || ""),
   }));
 
   useEffect(() => {
@@ -156,8 +161,14 @@ const Generator = forwardRef(function Generator(props, ref) {
         spellCheck="false"
         placeholder={T("content_placeholder")}
         value={content}
+        onBlur={() => {
+          //  skip debouncer and commit history immediately
+          addHistoryDebouncer.current.cancel();
+          addHistory("encode", content);
+        }}
         onChange={(e) => {
           setContent(e.target.value);
+          setTitle("");
         }}
         onPaste={(e) => {
           // avoid getting caught by global paste event listener
