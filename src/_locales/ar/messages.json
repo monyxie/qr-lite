@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "تعذر الوصول إلى الكاميرا. حدث خطأ غير متوقع."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "مسح جديد"
   }
 }

@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "کیمرہ تک رسائی حاصل کرنے سے قاصر۔ ایک غیر متوقع خرابی پیش آئی۔"
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "نیا اسکین"
   }
 }

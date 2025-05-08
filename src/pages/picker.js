@@ -321,6 +321,9 @@ function Scanner({
   }, []);
 
   const scan = useCallback(async () => {
+    if (!spotRect.width || !spotRect.height) {
+      return;
+    }
     setStage("scanning");
     const x = Math.max(spotRect.x, 0);
     const y = Math.max(spotRect.y, 0);
@@ -461,11 +464,19 @@ function Scanner({
             <span>{TT("scan_region_picker_tips_scan")}</span>
           </>
         )}
-        <>
-          <kbd>{TT("scan_region_picker_tips_esc")}</kbd>
-          <span>{TT("scan_region_picker_tips_exit")}</span>
-        </>
-        {stage === "picking" && (
+        {stage === "result" && (
+          <>
+            <kbd>R</kbd>
+            <span>{TT("scan_region_picker_tips_rescan")}</span>
+          </>
+        )}
+        {(stage === "picking" || stage === "result") && (
+          <>
+            <kbd>{TT("scan_region_picker_tips_esc")}</kbd>
+            <span>{TT("scan_region_picker_tips_exit")}</span>
+          </>
+        )}
+        {(stage === "picking" || stage === "result") && (
           <select
             id="select-open-url-mode"
             title="Choose how to handle URLs in scan results"

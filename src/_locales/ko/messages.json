@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "카메라에 액세스할 수 없습니다. 예기치 않은 오류가 발생했습니다."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "새로 스캔"
   }
 }

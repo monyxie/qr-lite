@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "ক্যামেরা অ্যাক্সেস করতে অক্ষম। একটি অপ্রত্যাশিত ত্রুটি ঘটেছে।"
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "নতুন স্ক্যান"
   }
 }

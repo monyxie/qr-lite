@@ -293,5 +293,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "無法存取相機。發生了非預期的錯誤。"
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "重新掃描"
   }
 }

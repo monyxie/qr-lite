@@ -125,6 +125,9 @@
   "scan_region_picker_tips_exit": {
     "message": "Exit"
   },
+  "scan_region_picker_tips_rescan": {
+    "message": "New Scan"
+  },
   "copy_btn": {
     "message": "Copy"
   },

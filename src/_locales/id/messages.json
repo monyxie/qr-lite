@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "Tidak dapat mengakses kamera. Terjadi kesalahan yang tidak terduga."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "Pindai ulang"
   }
 }

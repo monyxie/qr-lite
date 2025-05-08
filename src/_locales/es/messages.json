@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "No se pudo acceder a la cámara. Ocurrió un error inesperado."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "Nuevo escaneo"
   }
 }

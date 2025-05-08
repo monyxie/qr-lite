@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "Не удалось получить доступ к камере. Произошла непредвиденная ошибка."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "Новое сканирование"
   }
 }

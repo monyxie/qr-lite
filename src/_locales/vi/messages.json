@@ -294,5 +294,8 @@
   },
   "unable_to_access_camera_unknown_error": {
     "message": "Không thể truy cập camera. Đã xảy ra lỗi không mong muốn."
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "Quét lại"
   }
 }
