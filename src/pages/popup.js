@@ -13,15 +13,21 @@ function Popup() {
   const [options, setOptions] = useState(null);
   const [component, setComponent] = useState(null);
   const generatorRef = useRef(null);
+  const pastedImageUrl = useRef(null);
 
   const handlePaste = (e) => {
     if (e.clipboardData?.files?.length > 0) {
       const file = e.clipboardData.files[0];
 
       if (file?.type?.startsWith("image/")) {
+        if (pastedImageUrl.current) {
+          URL.revokeObjectURL(pastedImageUrl.current);
+          pastedImageUrl.current = null;
+        }
+        pastedImageUrl.current = URL.createObjectURL(file);
         setOptions({
           action: "POPUP_DECODE",
-          image: URL.createObjectURL(file),
+          image: pastedImageUrl.current,
         });
         return false;
       }
@@ -31,7 +37,7 @@ function Popup() {
 
     if (text) {
       generatorRef.current?.setContent(text);
-      setOptions({ action: "POPUP_ENCODE" });
+      setOptions({ action: "POPUP_ENCODE", text });
       return false;
     }
 
@@ -42,6 +48,10 @@ function Popup() {
     window.addEventListener("paste", handlePaste);
     return () => {
       window.removeEventListener("paste", handlePaste);
+      if (pastedImageUrl.current) {
+        URL.revokeObjectURL(pastedImageUrl.current);
+        pastedImageUrl.current = null;
+      }
     };
   }, []);
 
@@ -92,11 +102,11 @@ function Popup() {
           break;
         case "POPUP_ENCODE":
           if (generatorRef.current) {
-            if (options.text) {
+            if (options.text !== undefined) {
               generatorRef.current.setContent(options.text);
             }
-            if (options.title) {
-              generatorRef.current.setTitle(options.title || "");
+            if (options.title !== undefined) {
+              generatorRef.current.setTitle(options.title);
             }
           }
         // fallthrough

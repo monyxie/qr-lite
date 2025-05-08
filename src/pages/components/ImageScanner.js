@@ -20,19 +20,43 @@ export default function ImageScanner(props) {
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const [imgSrc, setImgSrc] = useState(null);
+  const objectUrlRef = useRef(null);
 
   useEffect(() => {
+    // Revoke the previous object URL if it exists
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+
     if (QRLITE_BROWSER === "firefox" && props.url.startsWith("http://")) {
       // load HTTP images via fetch() otherwise they'll be considered mixed content
       // and be upgraded to HTTPS, which will cause HTTP-only images to fail
       // need CSP: "connect-src http:"
       fetch(props.url)
         .then((r) => r.blob())
-        .then((b) => URL.createObjectURL(b))
-        .then(setImgSrc);
+        .then((b) => {
+          const newObjectUrl = URL.createObjectURL(b);
+          objectUrlRef.current = newObjectUrl;
+          setImgSrc(newObjectUrl);
+        })
+        .catch((fetchError) => {
+          console.error("ImageScanner: Error fetching image:", fetchError);
+          setError(
+            T("image_load_failed", fetchError.message || String(fetchError))
+          );
+          setImgSrc(null); // Or props.url as a fallback if appropriate
+        });
     } else {
       setImgSrc(props.url);
     }
+    return () => {
+      // Cleanup on component unmount or if props.url changes again
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
+    };
   }, [props.url]);
 
   useEffect(() => {
@@ -44,7 +68,7 @@ export default function ImageScanner(props) {
   }, [needsUrlPermission]);
 
   useEffect(() => {
-    if (needsUrlPermission && !hasUrlPermission) {
+    if ((needsUrlPermission && !hasUrlPermission) || !imgSrc) {
       return;
     }
     if (!inputImgNode.current) {

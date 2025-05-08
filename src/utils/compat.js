@@ -17,14 +17,14 @@ export const tabs =
       }
     : {
         query: (options) => {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             apiNs.tabs.query(options, (data) => {
               resolve(data);
             });
           });
         },
         create: (options) => {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             apiNs.tabs.create(options, (data) => {
               resolve(data);
             });
@@ -46,14 +46,14 @@ export const storage =
       })
     : (area) => ({
         get: (keys) => {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             apiNs.storage[area].get(keys, (data) => {
               resolve(data);
             });
           });
         },
         set: (keys) => {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             apiNs.storage[area].set(keys, (data) => {
               resolve(data);
             });
@@ -66,7 +66,7 @@ export const openPopup = (options) => {
   // https://developer.chrome.com/docs/extensions/reference/api/action#method-openPopup
   try {
     return apiNs.action.openPopup(options);
-  } catch (e) {
+  } catch {
     return apiNs.tabs.create({
       url: apiNs.runtime.getURL("/pages/popup.html"),
     });
@@ -112,7 +112,7 @@ export const clipboard =
     ? {
         copyPng: (canvas) => {
           // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/clipboard/setImageData
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             canvas.toBlob((blob) => {
               blob
                 .arrayBuffer()
@@ -125,7 +125,7 @@ export const clipboard =
     : {
         copyPng: (canvas) => {
           // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             canvas.toBlob((blob) => {
               navigator.clipboard
                 .write([new ClipboardItem({ "image/png": blob })])

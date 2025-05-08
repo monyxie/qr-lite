@@ -10,15 +10,6 @@ export async function sleep(ms) {
   });
 }
 
-export function escapeHtml(unsafe) {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
 // https://stackoverflow.com/questions/12168909/blob-from-dataurl
 export async function convertDataUriToBlob(dataURI) {
   // requires csp: connect-src data:

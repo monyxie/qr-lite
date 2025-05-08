@@ -28,7 +28,6 @@ export default function QRPositionMarker({
       >
         <polygon
           fill="none"
-          fillOpacity="0.3"
           stroke="#88FF00"
           strokeWidth="2%"
           strokeLinejoin="round"

@@ -105,24 +105,28 @@ export default function CameraScanner() {
     };
   }, [stream, result, closeStream]);
 
+  // Effect for handling video stream setup
+  useEffect(() => {
+    if (videoRef.current && stream && !videoRef.current.srcObject) {
+      try {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play().catch((err) => {
+          console.error("Error playing video:", err);
+          setError(err.message || "Failed to play video.");
+        });
+      } catch (err) {
+        console.error(`An error occurred while setting up video: ${err}`);
+        setError(err.message || "Error setting up video.");
+      }
+    }
+  }, [stream]); // Runs when stream changes or videoRef is available
+
   // scanning
   useEffect(() => {
     const scanFunc = async () => {
       const startTime = Date.now();
       const canvas = canvasRef.current;
       const video = videoRef.current;
-
-      if (video && !video.srcObject && stream) {
-        try {
-          video.srcObject = stream;
-          if (stream) {
-            video.play();
-          }
-        } catch (err) {
-          console.error(`An error occurred: ${err}`);
-          setError(err + "");
-        }
-      }
 
       if (canvas && video?.srcObject && video.videoWidth && video.videoHeight) {
         canvas.width = 500;
@@ -151,6 +155,7 @@ export default function CameraScanner() {
           }
         } catch (e) {
           console.error(e);
+          setError(e.message || "Error during QR code scan.");
         }
       }
 
@@ -172,7 +177,7 @@ export default function CameraScanner() {
     return () => {
       clearTimeout(scanTimer.current);
     };
-  }, [result, stream]);
+  }, [result, stream]); // Removed videoRef.current from dependencies as it's stable
 
   useEffect(() => {
     if (result && outputContentNode.current) {

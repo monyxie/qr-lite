@@ -33,7 +33,7 @@ QR Lite requires the following permissions:
 
 ## Development
 
-Prerequisites: yarn, pnpm(qr-scanner-wechat)
+Prerequisites: yarn
 
 1. Clone this repo and sync the submodules.
 1. Run `yarn` to install dependencies.

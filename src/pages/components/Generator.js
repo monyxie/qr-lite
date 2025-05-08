@@ -8,6 +8,7 @@ import {
   useRef,
   useImperativeHandle,
   forwardRef,
+  useCallback,
 } from "react";
 import { PropTypes } from "prop-types";
 
@@ -20,6 +21,65 @@ import {
 import { debouncer } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRCodeSVG from "./QRCodeSVG";
+
+/**
+ * @returns {Promise<HTMLCanvasElement>}
+ */
+const createCanvasForQrCode = (content, size) => {
+  size = size || 500;
+  return new Promise((resolve, reject) => {
+    const el = document.createElement("div");
+    render(
+      <QRCodeSVG
+        width={size}
+        height={size}
+        content={content}
+        backgroundColor="white"
+        foregroundColor="black"
+      ></QRCodeSVG>,
+      el
+    );
+    const svg = el.querySelector("svg");
+    const img = document.createElement("img");
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    const xml = new XMLSerializer().serializeToString(svg);
+    const svg64 = btoa(xml);
+    const context = canvas.getContext("2d");
+    context.fillStyle = "#FFFFFF";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    img.onload = function () {
+      context.drawImage(img, 0, 0);
+      img.onload = null; // clean up
+      img.onerror = null; // clean up
+      resolve(canvas);
+    };
+    img.onerror = (error) => {
+      img.onload = null; // clean up
+      img.onerror = null; // clean up
+      reject(error);
+    };
+    img.src = "data:image/svg+xml;base64," + svg64;
+  });
+};
+
+const getFilenameFromTitle = (title) => {
+  return "QR Code - " + SanitizeFilename(title).slice(0, 100) + ".png";
+};
+
+const downloadImage = (content, title) => {
+  createCanvasForQrCode(content)
+    .then((canvas) => {
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = title ? getFilenameFromTitle(title) : "qr-code.png";
+      a.click();
+    })
+    .catch((error) => {
+      console.error("Failed to download QR code image:", error);
+    });
+};
 
 const Generator = forwardRef(function Generator(props, ref) {
   const { settings, saveSettings } = useSettingsContext();
@@ -45,71 +105,24 @@ const Generator = forwardRef(function Generator(props, ref) {
       addHistory("encode", content);
       return;
     }
-    addHistoryDebouncer.current.debounce(() => {
+    const debouncer = addHistoryDebouncer.current;
+    debouncer.debounce(() => {
       addHistory("encode", content);
     });
+
+    return () => {
+      if (debouncer) debouncer.cancel();
+    };
   }, [content, props.content]);
 
-  /**
-   * @returns {Promise<HTMLCanvasElement>}
-   */
-  const createCanvasForQrCode = (size) => {
-    size = size || 500;
-    return new Promise((resolve, reject) => {
-      const el = document.createElement("div");
-      render(
-        <QRCodeSVG
-          width={size}
-          height={size}
-          content={content}
-          backgroundColor="white"
-          foregroundColor="black"
-        ></QRCodeSVG>,
-        el
-      );
-      const svg = el.querySelector("svg");
-      const img = document.createElement("img");
-      const canvas = document.createElement("canvas");
-      canvas.width = canvas.height = size;
-      const xml = new XMLSerializer().serializeToString(svg);
-      const svg64 = btoa(xml);
-      const context = canvas.getContext("2d");
-      context.fillStyle = "#FFFFFF";
-      context.fillRect(0, 0, canvas.width, canvas.height);
-
-      img.onload = function () {
-        context.drawImage(img, 0, 0);
-        img.onload = null; // clean up
-        img.onerror = null; // clean up
-        resolve(canvas);
-      };
-      img.onerror = (error) => {
-        img.onload = null; // clean up
-        img.onerror = null; // clean up
-        reject(error);
-      };
-      img.src = "data:image/svg+xml;base64," + svg64;
-    });
-  };
-
-  const getFilenameFromTitle = (title) => {
-    return SanitizeFilename(title).substr(0, 100) + ".png";
-  };
-
-  const downloadImage = () => {
-    createCanvasForQrCode().then((canvas) => {
-      const a = document.createElement("a");
-      a.href = canvas.toDataURL("image/png");
-      a.download = title ? getFilenameFromTitle(title) : "qr-code.png";
-      a.click();
-    });
-  };
-
-  const copyImage = () => {
-    createCanvasForQrCode()
+  const copyImage = useCallback(() => {
+    createCanvasForQrCode(content)
       .then((canvas) => clipboard.copyPng(canvas))
-      .then(() => setCopied(true));
-  };
+      .then(() => setCopied(true))
+      .catch((error) => {
+        console.error("Failed to copy QR code image:", error);
+      });
+  }, [content, setCopied]);
 
   const ecLevels = [
     ["L", T("error_correction_level_btn_low_title")],
@@ -197,7 +210,7 @@ const Generator = forwardRef(function Generator(props, ref) {
               class="clickable"
               id="save"
               title={T("save_image_btn_title")}
-              onClick={() => downloadImage()}
+              onClick={() => downloadImage(content, title)}
             >
               <img class="icon icon-invert" src="../icons/save.svg" />
               {TT("save_image_btn")}

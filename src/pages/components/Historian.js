@@ -9,11 +9,14 @@ export default function Historian(props) {
   const [history, setHistory] = useState([]);
   const { settings, saveSettings } = useSettingsContext();
 
-  const getData = () =>
-    getHistory().then(function (history) {
-      history.reverse();
-      setHistory(history);
-    });
+  const getData = () => {
+    getHistory()
+      .then(function (fetchedHistory) {
+        fetchedHistory.reverse();
+        setHistory(fetchedHistory);
+      })
+      .catch((error) => console.error("Failed to fetch history:", error));
+  };
 
   useEffect(() => {
     getData();
@@ -45,7 +48,16 @@ export default function Historian(props) {
           title={T("remove_history_btn_title")}
           onClick={(e) => {
             e.stopPropagation();
-            removeHistory(item.text).then(getData);
+            removeHistory(item.text)
+              .then(() => {
+                // Optimistically update the local state
+                setHistory((prevHistory) =>
+                  prevHistory.filter((h) => h.text !== item.text)
+                );
+              })
+              .catch((error) =>
+                console.error("Failed to remove history item:", error)
+              );
           }}
         >
           <img class="icon icon-invert" src="../icons/trash.svg" />
@@ -66,7 +78,14 @@ export default function Historian(props) {
             id="clear-history-btn"
             title={T("clear_history_btn_title")}
             onClick={() => {
-              clearHistory().then(getData);
+              clearHistory()
+                .then(() => {
+                  // Optimistically update the local state
+                  setHistory([]);
+                })
+                .catch((error) =>
+                  console.error("Failed to clear history:", error)
+                );
             }}
           >
             <img class="icon icon-invert" src="../icons/swipe.svg" />

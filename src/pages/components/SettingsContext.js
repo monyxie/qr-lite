@@ -1,6 +1,7 @@
 import { createContext } from "preact";
 import { useSettings } from "../../utils/hooks";
 import { useContext } from "react";
+import { PropTypes } from "prop-types";
 
 const SettingsContext = createContext(null);
 
@@ -17,3 +18,7 @@ export function SettingsProvider({ children }) {
     </SettingsContext.Provider>
   );
 }
+
+SettingsProvider.propTypes = {
+  children: PropTypes.node,
+};

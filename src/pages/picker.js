@@ -110,12 +110,12 @@ function Picker({ stage, onScan, onSpotChange, scaleLevel: propsScaleLevel }) {
             }
           }
 
-          animationFrameRef.current = requestAnimationFrame(
-            updateSpotlight,
-            1000
-          );
+          animationFrameRef.current = requestAnimationFrame(updateSpotlight);
         }
       }
+      return () => {
+        cancelAnimationFrame(animationFrameRef.current);
+      };
     };
     updateSpotlight();
   }, [
@@ -300,13 +300,13 @@ function Scanner({
     })();
   }, [result, setCopied]);
 
-  const newScan = () => {
+  const newScan = useCallback(() => {
     setStage("picking");
     setInputImage(null);
     setResult(null);
     setError(null);
     setResultVisible(false);
-  };
+  }, []);
 
   useKeyPress({ key: "Escape", event: "keyup", callback: close });
   useKeyPress({ key: "r", event: "keyup", callback: newScan });
@@ -314,10 +314,12 @@ function Scanner({
   const handleSpotChange = useCallback((spot, newScaleLevel) => {
     setSpotRect(spot);
     scaleLevel.current = newScaleLevel;
-    port.current.postMessage({
-      action: "PICKER_SAVE_SCALE_LEVEL",
-      scaleLevel: newScaleLevel,
-    });
+    if (port.current) {
+      port.current.postMessage({
+        action: "PICKER_SAVE_SCALE_LEVEL",
+        scaleLevel: newScaleLevel,
+      });
+    }
   }, []);
 
   const scan = useCallback(async () => {
@@ -340,10 +342,10 @@ function Scanner({
         scroll: scroll.current,
         devicePixelRatio: window.devicePixelRatio,
       });
-      setError(res.err);
-      setInputImage(res.image);
-      setInputImageSize(res.imageSize);
-      if (res.result.length > 0) {
+      setError(res.err || null);
+      setInputImage(res.image || null);
+      setInputImageSize(res.imageSize || null);
+      if (res.result?.length > 0) {
         const playAudioPromise = playScanSuccessAudio();
         setResult(res.result[0]);
         const content = res.result[0].content;
@@ -354,7 +356,7 @@ function Scanner({
               playAudioPromise.then(() => {
                 window.open(content, "_top");
                 close();
-              }, 0);
+              });
               break;
             case "OPEN_NEW_BG_TAB":
               nextStage = null;
@@ -405,6 +407,7 @@ function Scanner({
     }
   }, [
     close,
+    newScan,
     options.openUrlMode,
     setTimer,
     spotRect.height,
@@ -626,6 +629,9 @@ window.onmessage = (event) => {
         </SettingsContextProvider>,
         document.body
       );
+      break;
+    default:
+      console.error("Invalid init message", event.data);
       break;
   }
 };

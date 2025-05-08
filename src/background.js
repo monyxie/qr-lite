@@ -30,17 +30,26 @@ function openPickerWithOptions(options) {
 }
 
 async function captureScan(request) {
-  const canvas = await capturePartialScreen(
-    request.rect,
-    request.scroll,
-    request.devicePixelRatio
-  );
-  const ctx = canvas.getContext("2d");
+  let canvas = null;
+  try {
+    canvas = await capturePartialScreen(
+      request.rect,
+      request.scroll,
+      request.devicePixelRatio
+    );
+  } catch (err) {
+    console.error("err", err);
+    return {
+      err,
+    };
+  }
+
   const dataUri = canvas
     .convertToBlob({ type: "image/png" })
     .then(convertBlobToDataUri);
 
   try {
+    const ctx = canvas.getContext("2d");
     const result = await scan(
       ctx.getImageData(0, 0, canvas.width, canvas.height)
     );
@@ -71,7 +80,14 @@ async function injectPickerLoader(tab, options) {
   });
   await apiNs.scripting.executeScript({
     func: (options) => {
-      window.loadPickerLoader(options);
+      // Ensure the function exists before calling
+      if (typeof window.loadPickerLoader === "function") {
+        window.loadPickerLoader(options);
+      } else {
+        console.error(
+          "loadPickerLoader function not found after injecting script."
+        );
+      }
     },
     args: [options || {}],
     target: {
@@ -80,76 +96,89 @@ async function injectPickerLoader(tab, options) {
   });
 }
 
-function getMenuItems() {
-  const items = {
-    context_menu_pick_region_to_scan: {
-      title: apiNs.i18n.getMessage("context_menu_pick_region_to_scan"),
-      contexts: ["page", "action", "image", "video", "audio"],
-      onclick: async function (info, tab) {
-        await injectPickerLoader(tab);
-      },
+const menuItems = {
+  context_menu_pick_region_to_scan: {
+    title: apiNs.i18n.getMessage("context_menu_pick_region_to_scan"),
+    contexts: ["page", "action", "image", "video", "audio"],
+    onclick: async function (info, tab) {
+      await injectPickerLoader(tab);
     },
-    context_menu_make_qr_code_for_selected_text: {
-      title: apiNs.i18n.getMessage(
-        "context_menu_make_qr_code_for_selected_text"
-      ),
-      contexts: ["selection"],
-      onclick: function (info, tab) {
-        openPopupWithOptions({
-          action: "POPUP_ENCODE",
-          text: info.selectionText,
-          title: info.selectionText,
-        });
-      },
+  },
+  context_menu_make_qr_code_for_selected_text: {
+    title: apiNs.i18n.getMessage("context_menu_make_qr_code_for_selected_text"),
+    contexts: ["selection"],
+    onclick: function (info) {
+      openPopupWithOptions({
+        action: "POPUP_ENCODE",
+        text: info.selectionText,
+        title: info.selectionText,
+      });
     },
-    context_menu_make_qr_code_for_link: {
-      title: apiNs.i18n.getMessage("context_menu_make_qr_code_for_link"),
-      contexts: ["link"],
-      onclick: function (info, tab) {
-        openPopupWithOptions({
-          action: "POPUP_ENCODE",
-          text: info.linkUrl,
-          title: info.linkText,
-        });
-      },
+  },
+  context_menu_make_qr_code_for_link: {
+    title: apiNs.i18n.getMessage("context_menu_make_qr_code_for_link"),
+    contexts: ["link"],
+    onclick: function (info) {
+      openPopupWithOptions({
+        action: "POPUP_ENCODE",
+        text: info.linkUrl,
+        title: info.linkText,
+      });
     },
-    context_menu_scan_qr_code_in_image: {
-      title: apiNs.i18n.getMessage("context_menu_scan_qr_code_in_image"),
-      contexts: ["image"],
-      onclick: (info, tab) => {
-        openPopupWithOptions({ action: "POPUP_DECODE", image: info.srcUrl });
-      },
+  },
+  context_menu_scan_qr_code_in_image: {
+    title: apiNs.i18n.getMessage("context_menu_scan_qr_code_in_image"),
+    contexts: ["image"],
+    onclick: (info) => {
+      openPopupWithOptions({ action: "POPUP_DECODE", image: info.srcUrl });
     },
-    context_menu_scan_with_camera: {
-      title: apiNs.i18n.getMessage("context_menu_scan_with_camera"),
-      contexts: ["action"],
-      onclick: function (info, tab) {
-        openPopupWithOptions({ action: "POPUP_DECODE_CAMERA" });
-      },
+  },
+  context_menu_scan_with_camera: {
+    title: apiNs.i18n.getMessage("context_menu_scan_with_camera"),
+    contexts: ["action"],
+    onclick: function () {
+      openPopupWithOptions({ action: "POPUP_DECODE_CAMERA" });
     },
-  };
-  return items;
-}
+  },
+};
 
-let menuItems = null;
 apiNs.runtime.onInstalled.addListener(() => {
-  if (!menuItems) menuItems = getMenuItems();
-  for (const id in menuItems) {
-    if (Object.hasOwnProperty.call(menuItems, id)) {
-      const createProperties = Object.assign({}, menuItems[id]);
-      createProperties.id = id;
-      delete createProperties.onclick;
-      apiNs.contextMenus.create(createProperties);
+  // Remove all existing context menus for this extension first to ensure a clean state
+  apiNs.contextMenus.removeAll(() => {
+    if (apiNs.runtime.lastError) {
+      // Log error but continue, as this is not always critical
+      console.warn(
+        "Error removing context menus:",
+        apiNs.runtime.lastError.message
+      );
     }
+  });
+
+  for (const [id, menuItem] of Object.entries(menuItems)) {
+    const createProperties = { ...menuItem, id };
+    delete createProperties.onclick;
+    apiNs.contextMenus.create(createProperties, () => {
+      if (apiNs.runtime.lastError) {
+        console.error(
+          `Error creating context menu item ${id}:`,
+          apiNs.runtime.lastError.message
+        );
+      }
+    });
   }
 });
 
 apiNs.contextMenus.onClicked.addListener((info, tab) => {
   // info: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/OnClickData
   // tab: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab
-  if (!menuItems) menuItems = getMenuItems();
-  if (info.menuItemId && menuItems[info.menuItemId]) {
-    menuItems[info.menuItemId].onclick.call(this, info, tab);
+  const menuItem = menuItems[info.menuItemId];
+  if (menuItem && typeof menuItem.onclick === "function") {
+    menuItem.onclick(info, tab);
+  } else {
+    console.warn(
+      "No onclick handler or menu item definition found for:",
+      info.menuItemId
+    );
   }
 });
 
@@ -200,15 +229,7 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break;
     // image capturing
     case "BG_CAPTURE":
-      captureScan(request).then((res) => {
-        // beep on success if requested
-        // useful when the picker page need to navigate away right when scanning is done
-        // and can't finish playing the audio in time
-        // if (request.playAudio && res.result?.length > 0) {
-        // new Audio("/audio/success.mp3").play();
-        // }
-        sendResponse(res);
-      });
+      captureScan(request).then(sendResponse);
       return true;
     case "BG_CREATE_TAB":
       tabs
@@ -258,7 +279,14 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
             })
           );
         }
-        Promise.all(promises).then(() => sendResponse());
+        Promise.all(promises)
+          .then(() => sendResponse({ success: true }))
+          .catch((error) =>
+            sendResponse({ success: false, error: error.message })
+          );
+      } else {
+        console.warn("BG_APPLY_CSS: No sender.tab.id available.");
+        sendResponse({ success: false, error: "No tab ID" }); // Explicitly respond on failure path
       }
       return true;
   }

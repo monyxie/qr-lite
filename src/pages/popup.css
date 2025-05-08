@@ -308,14 +308,12 @@ body {
 
 .scan .fps-counter {
   opacity: 0;
-  transition-delay: 2s;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s 2s;
   cursor: default;
 }
 
 .scan .fps-counter:hover {
   opacity: 1;
-  transition-delay: 2s;
 }
 
 /* tabs */

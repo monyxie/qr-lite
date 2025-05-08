@@ -5,6 +5,7 @@ import {
   removeListener,
   saveSettings as saveSettingsOnStorage,
 } from "./settings";
+import { PropTypes } from "prop-types";
 
 export function useSettings() {
   const [settings, setSettings] = useState(null);
@@ -57,6 +58,10 @@ export function SettingsContextProvider({ children }) {
     </SettingsContext.Provider>
   );
 }
+
+SettingsContextProvider.propTypes = {
+  children: PropTypes.node,
+};
 
 export function useURLParams() {
   const [params, setParams] = useState(null);
@@ -163,7 +168,7 @@ export function useKeyPress({
     return () => {
       el.removeEventListener(event, handleEvent);
     };
-  });
+  }, [callback, el, event, key, preventDefault, stopPropagation]);
 }
 
 export function useWindowMessage(callback) {
@@ -173,7 +178,7 @@ export function useWindowMessage(callback) {
     };
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
-  });
+  }, [callback]);
 }
 
 export function useTemporaryState(value, timeout) {
