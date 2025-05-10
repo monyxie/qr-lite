@@ -36,7 +36,7 @@ function Popup() {
     const text = e.clipboardData?.getData("text/plain");
 
     if (text) {
-      generatorRef.current?.setContent(text);
+      generatorRef.current?.setContentAndTitle(text);
       setOptions({ action: "POPUP_ENCODE", text });
       return false;
     }
@@ -94,7 +94,7 @@ function Popup() {
           setComponent(
             <Historian
               onClickItem={(item) => {
-                generatorRef.current?.setContent(item.text);
+                generatorRef.current?.setContentAndTitle(item.text);
                 setOptions({ action: "POPUP_ENCODE" });
               }}
             ></Historian>
