@@ -62,6 +62,8 @@ const manifest = {
           : "connect-src 'self' data:",
         "img-src * data: blob:",
         "style-src 'self'",
+        // "data:" for loading audio via dataURL to workaround https://bugzilla.mozilla.org/show_bug.cgi?id=1965971
+        "media-src 'self' data:",
       ].join("; ") + ";",
   },
   background:

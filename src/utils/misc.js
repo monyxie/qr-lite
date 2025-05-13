@@ -1,4 +1,5 @@
 import { getSettingValue } from "./settings";
+import successAudio from "../audio/success.mp3";
 
 export function isUrl(str) {
   return /^https?:\/\//i.test(str);
@@ -82,7 +83,7 @@ export function debouncer(delay) {
 export async function playScanSuccessAudio() {
   if (await getSettingValue("scanSuccessSoundEnabled")) {
     return new Promise((resolve) => {
-      const audio = new Audio("/audio/success.mp3");
+      const audio = new Audio(successAudio);
       audio.addEventListener(
         "canplay",
         () => {

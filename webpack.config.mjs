@@ -52,7 +52,7 @@ function generateConfig(browser) {
     { from: "./opencv/opencv_js.wasm", to: "opencv_js.wasm" },
     // './opencv/opencv.js', // has to be placed in extension's root to make both `import('...')` and `importScripts('...')` work
     "./opencv/models/*",
-    "./audio/*.mp3",
+    // "./audio/*.mp3", // unnecessary because loaded via import
   ];
 
   return {
@@ -82,6 +82,11 @@ function generateConfig(browser) {
     ],
     module: {
       rules: [
+        {
+          // load mp3 via dataURL to workaround https://bugzilla.mozilla.org/show_bug.cgi?id=1965971
+          test: /\.(mp3)$/i,
+          type: "asset/inline",
+        },
         {
           test: /\.svg$/,
           loader: "svg-inline-loader",
