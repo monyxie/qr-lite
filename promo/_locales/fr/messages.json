@@ -3,7 +3,7 @@
     "message": "QR Lite"
   },
   "amo_summary": {
-    "message": "👌 Facile, 🛡️ générateur et scanner de codes QR respectueux de la vie privée."
+    "message": "👌Générateur et scanneur de codes QR facile à utiliser et 🛡️respectueux de la vie privée."
   },
   "amo_description": {
     "message": "QR Lite génère et scanne des codes QR sans dépendre de services tiers.\n\n\n=== Fonctionnalités ===\n\n✅ Générer des codes QR pour :\n-  Onglet actif \n-  Liens \n-  Texte sélectionné \n-  Saisie utilisateur \n\n✅ Scanner le code QR à partir de :\n-  Images \n-  Presse-papiers \n-  N'importe quelle partie de la page Web \n-  Webcam \n\n✅ Se souvenir de ce que vous avez généré ou scanné.\n✅ Tout fonctionne complètement hors ligne, rien n'est envoyé sur le réseau.\n\n\nQR Lite est un logiciel open source distribué sous la licence MIT.\nSi vous appréciez cette extension, veuillez nous donner une évaluation 5 étoiles, merci :)"

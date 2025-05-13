@@ -1,7 +1,6 @@
 {
   "extension_name": {
-    "message": "QR Lite",
-    "description": "[keep-original]"
+    "message": "QR Lite - QR 코드 생성기 및 스캐너"
   },
   "extension_short_name": {
     "message": "QR Lite",

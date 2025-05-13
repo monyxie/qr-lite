@@ -1,7 +1,6 @@
 {
   "extension_name": {
-    "message": "QR Lite",
-    "description": "[keep-original]"
+    "message": "QR Lite - কিউআর কোড জেনারেটর এবং স্ক্যানার"
   },
   "extension_short_name": {
     "message": "QR Lite",

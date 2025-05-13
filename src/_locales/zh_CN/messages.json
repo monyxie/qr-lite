@@ -1,7 +1,6 @@
 {
   "extension_name": {
-    "message": "QR Lite",
-    "description": "[keep-original]"
+    "message": "QR Lite - 二维码生成器和扫描器"
   },
   "extension_short_name": {
     "message": "QR Lite",

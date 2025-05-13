@@ -1,7 +1,6 @@
 {
   "extension_name": {
-    "message": "QR Lite",
-    "description": "[keep-original]"
+    "message": "QR Lite - Générateur et Scanner de Codes QR"
   },
   "extension_short_name": {
     "message": "QR Lite",

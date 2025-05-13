@@ -43,9 +43,9 @@ export default function ImageScanner(props) {
         .catch((fetchError) => {
           console.error("ImageScanner: Error fetching image:", fetchError);
           setError(
-            T("image_load_failed", fetchError.message || String(fetchError))
+            T("decoding_failed", fetchError.message || String(fetchError))
           );
-          setImgSrc(null); // Or props.url as a fallback if appropriate
+          setImgSrc(null);
         });
     } else {
       setImgSrc(props.url);
