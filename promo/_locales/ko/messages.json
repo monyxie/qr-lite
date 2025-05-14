@@ -1,5 +1,5 @@
 {
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
   },
   "amo_summary": {
@@ -31,5 +31,8 @@
   },
   "promo_screenshot_history_description_html": {
     "message": "최근 생성 및 스캔한 항목"
+  },
+  "extension_name": {
+    "message": "QR Lite - QR 코드 생성기 및 스캐너"
   }
 }

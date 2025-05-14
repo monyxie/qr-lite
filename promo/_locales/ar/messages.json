@@ -1,5 +1,5 @@
 {
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
   },
   "amo_summary": {
@@ -31,5 +31,8 @@
   },
   "promo_screenshot_history_description_html": {
     "message": "للعناصر التي تم إنشاؤها أو مسحها ضوئيًا مؤخرًا"
+  },
+  "extension_name": {
+    "message": "QR Lite - مولد وماسح رمز الاستجابة السريعة"
   }
 }

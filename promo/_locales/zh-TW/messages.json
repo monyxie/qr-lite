@@ -29,7 +29,10 @@
   "promo_screenshot_history_description_html": {
     "message": "隨時查看最近產生和掃描的內容"
   },
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
+  },
+  "extension_name": {
+    "message": "QR Lite - QR Code 產生器與掃描器"
   }
 }

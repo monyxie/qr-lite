@@ -1,5 +1,5 @@
 {
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
   },
   "amo_summary": {
@@ -31,5 +31,8 @@
   },
   "promo_screenshot_history_description_html": {
     "message": "हाल ही में जनरेट और स्कैन किए गए आइटमों का"
+  },
+  "extension_name": {
+    "message": "QR Lite - क्यूआर कोड जेनरेटर और स्कैनर"
   }
 }

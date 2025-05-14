@@ -29,7 +29,10 @@
   "promo_screenshot_history_description_html": {
     "message": "最近生成およびスキャンしたアイテムの"
   },
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
+  },
+  "extension_name": {
+    "message": "QR Lite - QRコードジェネレーター＆スキャナー"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "extension_name": {
+  "extension_short_name": {
     "message": "QR Lite"
   },
   "amo_summary": {
@@ -31,5 +31,8 @@
   },
   "promo_screenshot_history_description_html": {
     "message": "недавно сгенерированных и отсканированных элементов"
+  },
+  "extension_name": {
+    "message": "QR Lite - Генератор и сканер QR-кодов"
   }
 }
