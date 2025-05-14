@@ -163,7 +163,10 @@ function Popup() {
           class="tabs-item"
           id="tab-settings"
           title={T("tab_settings_title")}
-          onClick={() => apiNs.runtime.openOptionsPage()}
+          onClick={() => {
+            apiNs.runtime.openOptionsPage();
+            window.close();
+          }}
         >
           <div class="tabs-item-label">
             <img class="icon icon-invert" src="../icons/gear.svg" />
