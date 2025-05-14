@@ -1,6 +1,9 @@
 import { storage } from "./compat";
 import { getSettings } from "./settings";
 
+/**
+ * @returns {Promise<{type:'encode'|'decode', text: string}[]>}
+ */
 export async function getHistory() {
   try {
     const results = await storage("local").get("history");
