@@ -158,7 +158,13 @@ export function useKeyPress({
   }
   useEffect(() => {
     const handleEvent = (e) => {
-      if (e.key === key) {
+      if (
+        e.key === key &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        !e.shiftKey &&
+        !e.metaKey
+      ) {
         if (preventDefault) e.preventDefault();
         if (stopPropagation) e.stopPropagation();
         callback();
