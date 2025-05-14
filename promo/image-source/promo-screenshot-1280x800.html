@@ -1,122 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            width: 1280px;
-            height: 800px;
-            outline: 1px solid gray;
-            font-family: 'Roboto', sans-serif;
-        }
+      body {
+        width: 1280px;
+        height: 800px;
+        outline: 1px solid gray;
+        font-family: "Roboto", sans-serif;
+      }
 
-        .container {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding-left: 20px;
-            gap: 20px;
-        }
+      .container {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 20px;
+        gap: 80px;
+      }
 
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 500px;
-        }
+      .logo-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 500px;
+      }
 
-        .logo {
-            width: 100%;
-            display: block;
-            outline: none;
-            box-shadow: none;
-            margin: 0;
-            object-fit: contain;
-        }
+      .logo {
+        width: 100%;
+        display: block;
+        outline: none;
+        box-shadow: 5px 5px 5px gray;
+        margin: 0;
+        object-fit: contain;
+      }
 
-        .right {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            height: 100%;
-            gap: 10px;
-            padding: 0 20px;
-        }
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: 100%;
+        gap: 40px;
+        padding: 0 20px;
+      }
 
-        .title-text {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-size: 64px;
-            font-weight: 700;
-            color: #333333;
-            text-shadow: #fff 2px 2px 1px;
-            line-height: 1.1;
-        }
+      .title-text {
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 64px;
+        font-weight: 700;
+        color: #333333;
+        text-shadow: #fff 2px 2px 1px;
+        line-height: 1.1;
+      }
 
-        .title-text strong {
-            font-weight: 700;
-        }
+      .title-text strong {
+        font-weight: 700;
+      }
 
-        .autoscale {
-            white-space: nowrap;
-            overflow: hidden;
-        }
+      .autoscale {
+        white-space: nowrap;
+        overflow: hidden;
+      }
 
-        .line2 {
-            font-size: 28px;
-            font-weight: 700;
-            text-shadow: #fff 1px 1px 1px;
-            opacity: 0.8;
-        }
+      .line2 {
+        font-size: 28px;
+        font-weight: 700;
+        text-shadow: #fff 1px 1px 1px;
+        opacity: 0.8;
+      }
 
-        .line2 strong {
-            color: #1b7c00;
-        }
+      .line2 strong {
+        color: #1b7c00;
+      }
 
-        ul {
-            list-style-type: circle;
-        }
+      ul {
+        list-style-type: circle;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <template id="template">
-        <div class="container">
-            <div class="logo-container">
-                <img class="logo" data-variant="generator" src="../screenshots/generate-1.5x.png">
-                <img class="logo" data-variant="scanner" src="../screenshots/scan-result-1.5x.png">
-                <img class="logo" data-variant="history" src="../screenshots/history-1.5x.png">
-            </div>
-            <div class="right">
-                <div class="title">
-                    <span class="title-text"
-                        data-variant="generator">{{__MSG_promo_screenshot_generator_title_html__}}</span>
-                    <span class="title-text"
-                        data-variant="scanner">{{__MSG_promo_screenshot_scanner_title_html__}}</span>
-                    <span class="title-text"
-                        data-variant="history">{{__MSG_promo_screenshot_history_title_html__}}</span>
-                </div>
-                <div class="line2 autoscale">
-                    <span data-variant="generator">{{__MSG_promo_screenshot_generator_description_html__}}</span>
-                    <span data-variant="scanner">{{__MSG_promo_screenshot_scanner_description_html__}}</span>
-                    <span data-variant="history">{{__MSG_promo_screenshot_history_description_html__}}</span>
-                </div>
-            </div>
+      <div class="container">
+        <div class="logo-container">
+          <img
+            class="logo"
+            data-variant="generator"
+            src="../screenshots/generate-1.5x.png"
+          />
+          <img
+            class="logo"
+            data-variant="scanner"
+            src="../screenshots/scan-result-1.5x.png"
+          />
+          <img
+            class="logo"
+            data-variant="history"
+            src="../screenshots/history-1.5x.png"
+          />
         </div>
+        <div class="right">
+          <div class="title">
+            <span class="title-text" data-variant="generator"
+              >{{__MSG_promo_screenshot_generator_title_html__}}</span
+            >
+            <span class="title-text" data-variant="scanner"
+              >{{__MSG_promo_screenshot_scanner_title_html__}}</span
+            >
+            <span class="title-text" data-variant="history"
+              >{{__MSG_promo_screenshot_history_title_html__}}</span
+            >
+          </div>
+          <div class="line2 autoscale">
+            <span data-variant="generator"
+              >{{__MSG_promo_screenshot_generator_description_html__}}</span
+            >
+            <span data-variant="scanner"
+              >{{__MSG_promo_screenshot_scanner_description_html__}}</span
+            >
+            <span data-variant="history"
+              >{{__MSG_promo_screenshot_history_description_html__}}</span
+            >
+          </div>
+        </div>
+      </div>
     </template>
-</body>
-<script src="script.js"></script>
-
+  </body>
+  <script src="script.js"></script>
 </html>

@@ -1,97 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            width: 440px;
-            height: 280px;
-            outline: 1px solid gray;
-            font-family: 'Roboto', sans-serif;
-        }
+      body {
+        width: 440px;
+        height: 280px;
+        outline: 1px solid gray;
+        font-family: "Roboto", sans-serif;
+      }
 
-        .container {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
+      .container {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(200deg, #01ffa2, #30c0ff 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
 
-        .title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 0 10px;
-        }
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 10px;
+      }
 
-        .title-logo {
-            width: 50px;
-            height: 50px;
-        }
+      .title-logo {
+        width: 50px;
+        height: 50px;
+        box-shadow: 2px 2px 4px gray;
+      }
 
-        .title-text {
-            font-size: 36px;
-            font-weight: bold;
-            color: #333333;
-            text-shadow: #fff 2px 2px 1px;
-        }
+      .title-text {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333333;
+        text-shadow: #fff 2px 2px 1px;
+      }
 
-        .autoscale {
-            white-space: nowrap;
-            overflow: hidden;
-            text-align: center;
-            padding: 0 1em;
-        }
+      .autoscale {
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
+        padding: 0 1em;
+      }
 
-        .line1 {
-            font-family: 'Roboto', monospace;
-            font-size: 18px;
-            text-shadow: #fff 1px 1px 1px;
-            font-weight: 400;
-        }
+      .line1 {
+        font-family: "Roboto", monospace;
+        font-size: 18px;
+        text-shadow: #fff 1px 1px 1px;
+        font-weight: 400;
+      }
 
-        .line2 {
-            font-size: 22px;
-            font-weight: 400;
-            text-shadow: #fff 1px 1px 1px;
-            opacity: 0.8;
-        }
+      .line2 {
+        font-size: 22px;
+        font-weight: 400;
+        text-shadow: #fff 1px 1px 1px;
+        opacity: 0.8;
+      }
 
-        .line2 strong {
-            color: #1b7c00;
-            font-weight: 700;
-        }
+      .line2 strong {
+        color: #1b7c00;
+        font-weight: 700;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <template id="template">
-        <div class="container">
-            <div class="title">
-                <img class="title-logo" src="../../src/icons/qrlite.svg">
-                <span class="title-text">{{__MSG_extension_name__}}</span>
-            </div>
-            <div class="autoscale line2">
-                <span>{{__MSG_promo_banner_defining_html__}}<span>
-            </div>
-            <div class="autoscale line1">
-                <span>{{__MSG_promo_banner_modifying_html__}}<span>
-            </div>
+      <div class="container">
+        <div class="title">
+          <img class="title-logo" src="../../src/icons/qrlite.svg" />
+          <span class="title-text">{{__MSG_extension_name__}}</span>
         </div>
+        <div class="autoscale line2">
+          <span>{{__MSG_promo_banner_defining_html__}}</span>
+        </div>
+        <div class="autoscale line1">
+          <span>{{__MSG_promo_banner_modifying_html__}}</span>
+        </div>
+      </div>
     </template>
-</body>
-<script src="script.js"></script>
-
+  </body>
+  <script src="script.js"></script>
 </html>
