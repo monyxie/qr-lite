@@ -1,0 +1,24 @@
+## [v3.2.0] - 2025-5-14
+
+### Added
+
+- A settings page has been added to customize your experience.
+- Added setting: Option to generate white QR Codes on a black background in dark mode.
+- Added feature to play a sound on a successful scan, with a corresponding setting to enable/disable it.
+- It's now possible to press "R" to start a new scan in "Select region to scan" mode.
+
+### Changed
+
+- QR Lite's UI has been rewritten and is now powered by Preact.
+- In "Select region to scan" mode, it's now possible to select how the scanned URL is handled, or assign each handling mode its own shortcut key.
+- Optimized "Scan with camera" mode for improved speed and stability.
+- Improved error handling and user feedback for invalid QR codes or scan failures.
+
+### Fixed
+
+- Fixed a memory leak issue in "Scan with camera" mode.
+- Fixed "Select region to scan" mode not using the dark theme.
+
+### Other
+
+- Various other tweaks and minor fixes.
