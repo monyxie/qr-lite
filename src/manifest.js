@@ -32,7 +32,10 @@ const manifest = {
   },
   permissions: [
     "activeTab",
-    "contextMenus",
+    // MDN states that "contextMenus"  is an alias for "menus"
+    // but in order to get OnClickData.targetElementId and use menus.getTargetElement()
+    // we *have to* use "menus" here and use browser.menus to call the API
+    browser === "firefox" ? "menus" : "contextMenus",
     "storage",
     "clipboardWrite",
     "scripting",

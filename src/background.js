@@ -3,6 +3,8 @@ import { addHistory } from "./utils/history";
 import { initDecoder, scan } from "./utils/qrcode";
 import { convertBlobToDataUri, randomStr } from "./utils/misc";
 
+const menusApi = apiNs.menus || apiNs.contextMenus;
+
 /**
  * @type {{action:string}}
  */
@@ -136,7 +138,7 @@ const menuItems = {
         tabId: tab.id,
         frameId: info.frameId,
         // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/OnClickData#targetelementid
-        targetElementId: info.targetElementId, // why do I always get undefined??
+        targetElementId: info.targetElementId,
       });
     },
   },
@@ -151,7 +153,7 @@ const menuItems = {
 
 apiNs.runtime.onInstalled.addListener(() => {
   // Remove all existing context menus for this extension first to ensure a clean state
-  apiNs.contextMenus.removeAll(() => {
+  menusApi.removeAll(() => {
     if (apiNs.runtime.lastError) {
       // Log error but continue, as this is not always critical
       console.warn(
@@ -164,7 +166,7 @@ apiNs.runtime.onInstalled.addListener(() => {
   for (const [id, menuItem] of Object.entries(menuItems)) {
     const createProperties = { ...menuItem, id };
     delete createProperties.onclick;
-    apiNs.contextMenus.create(createProperties, () => {
+    menusApi.create(createProperties, () => {
       if (apiNs.runtime.lastError) {
         console.error(
           `Error creating context menu item ${id}:`,
@@ -175,7 +177,7 @@ apiNs.runtime.onInstalled.addListener(() => {
   }
 });
 
-apiNs.contextMenus.onClicked.addListener((info, tab) => {
+menusApi.onClicked.addListener((info, tab) => {
   // info: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/OnClickData
   // tab: https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/Tab
   const menuItem = menuItems[info.menuItemId];
