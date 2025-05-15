@@ -129,8 +129,15 @@ const menuItems = {
   context_menu_scan_qr_code_in_image: {
     title: apiNs.i18n.getMessage("context_menu_scan_qr_code_in_image"),
     contexts: ["image"],
-    onclick: (info) => {
-      openPopupWithOptions({ action: "POPUP_DECODE", image: info.srcUrl });
+    onclick: (info, tab) => {
+      openPopupWithOptions({
+        action: "POPUP_DECODE",
+        image: info.srcUrl,
+        tabId: tab.id,
+        frameId: info.frameId,
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/OnClickData#targetelementid
+        targetElementId: info.targetElementId, // why do I always get undefined??
+      });
     },
   },
   context_menu_scan_with_camera: {

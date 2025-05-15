@@ -14,8 +14,15 @@ export default function Scanner(props) {
   useEffect(() => {
     if (mode === "camera") {
       setComponent(<CameraScanner />);
-    } else if (props.url) {
-      setComponent(<ImageScanner url={props.url} />);
+    } else if (props.url !== undefined && props.url !== null) {
+      setComponent(
+        <ImageScanner
+          url={props.url}
+          tabId={props.tabId}
+          frameId={props.frameId}
+          targetElementId={props.targetElementId}
+        />
+      );
     } else {
       setComponent(
         <ScanInstructions
@@ -30,7 +37,7 @@ export default function Scanner(props) {
         />
       );
     }
-  }, [props.url, mode]);
+  }, [props.url, mode, props.tabId, props.frameId, props.targetElementId]);
   return (
     <div class="scan" id="scan">
       {component}
@@ -40,5 +47,8 @@ export default function Scanner(props) {
 
 Scanner.propTypes = {
   url: PropTypes.string,
+  tabId: PropTypes.any,
+  frameId: PropTypes.any,
+  targetElementId: PropTypes.any,
   mode: PropTypes.string,
 };

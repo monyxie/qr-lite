@@ -48,6 +48,10 @@ function Popup() {
     window.addEventListener("paste", handlePaste);
     return () => {
       window.removeEventListener("paste", handlePaste);
+
+      // the url should already be revoked when the scanner is done with it
+      // and this is the top-most component on the page so when this unmounts it means the page is closing
+      // so this shouldn't be necessary but just in case
       if (pastedImageUrl.current) {
         URL.revokeObjectURL(pastedImageUrl.current);
         pastedImageUrl.current = null;
@@ -85,7 +89,14 @@ function Popup() {
     if (options) {
       switch (options.action) {
         case "POPUP_DECODE":
-          setComponent(<Scanner url={options?.image} />);
+          setComponent(
+            <Scanner
+              url={options?.image}
+              tabId={options?.tabId}
+              frameId={options?.frameId}
+              targetElementId={options?.targetElementId}
+            />
+          );
           break;
         case "POPUP_DECODE_CAMERA":
           setComponent(<Scanner mode={"camera"} />);

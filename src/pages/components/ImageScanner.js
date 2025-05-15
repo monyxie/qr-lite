@@ -5,70 +5,166 @@ import { PropTypes } from "prop-types";
 
 import { T, TT } from "../../utils/i18n";
 import { scan } from "../../utils/qrcode";
-import { isUrl, playScanSuccessAudio } from "../../utils/misc";
+import { isUrl, playScanSuccessAudio, randomStr } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
-import PermissionPrompt from "./PermissionPrompt";
 import { useTemporaryState } from "../../utils/hooks";
 
+const imageRetriever = (options) => {
+  (async () => {
+    let dataUri = null;
+
+    try {
+      let imgEl = null;
+
+      // firefox-only api
+      if (
+        globalThis.browser?.menus?.getTargetElement &&
+        options.targetElementId
+      ) {
+        imgEl = globalThis.browser.menus.getTargetElement(
+          options.targetElementId
+        );
+      }
+
+      if (!imgEl && options.url) {
+        const imageElements = document.querySelectorAll("img");
+        for (const img of imageElements) {
+          if (img.currentSrc === options.url) {
+            imgEl = img;
+            break;
+          }
+        }
+      }
+
+      if (imgEl) {
+        const imgToDataUri = (img) => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          const maxSize = 2000;
+          const ratio = Math.min(maxSize / img.width, maxSize / img.height, 1);
+          canvas.width = img.width * ratio;
+          canvas.height = img.height * ratio;
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          return canvas.toDataURL();
+        };
+
+        if (imgEl.complete) {
+          dataUri = imgToDataUri(imgEl);
+        } else {
+          dataUri = await new Promise((resolve, reject) => {
+            imgEl.addEventListener(
+              "load",
+              () => {
+                resolve(imgToDataUri(imgEl));
+              },
+              { once: true }
+            );
+            imgEl.addEventListener("error", (e) => reject(e), {
+              once: true,
+            });
+          });
+        }
+      }
+
+      if (!dataUri && options.url) {
+        // fallback: fetch the url to get image data
+        dataUri = await fetch(options.url)
+          .then((r) => r.blob())
+          .then((blob) => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+          });
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      (globalThis.browser || globalThis.chrome).runtime.sendMessage({
+        action: "POPUP_RECEIVE_IMAGE",
+        url: options.url,
+        id: options.id,
+        image: dataUri,
+      });
+    }
+  })();
+  1;
+};
+
+/**
+ *
+ * @param {{id:string,tabId:any,frameId:any,targetElementId:any}} options
+ * @returns
+ */
+async function injectImageRetriever(options) {
+  return apiNs.scripting.executeScript({
+    func: imageRetriever,
+    args: [options || {}],
+    target: {
+      tabId: options.tabId,
+      frameIds: [options.frameId],
+    },
+  });
+}
+
+function shouldUseImageRetriever(url) {
+  return /^(https?:\/\/|blob:)/i.test(url);
+}
+
 export default function ImageScanner(props) {
-  const needsUrlPermission = isUrl(props.url);
-  const [hasUrlPermission, setHasUrlPermission] = useState(false);
   const [error, setError] = useState(null);
   const inputImgNode = useRef(null);
   const outputContentNode = useRef(null);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const [imgSrc, setImgSrc] = useState(null);
-  const objectUrlRef = useRef(null);
+  const receiveImageId = useRef(null);
 
   useEffect(() => {
-    // Revoke the previous object URL if it exists
-    if (objectUrlRef.current) {
-      URL.revokeObjectURL(objectUrlRef.current);
-      objectUrlRef.current = null;
-    }
+    if (shouldUseImageRetriever(props.url)) {
+      receiveImageId.current = randomStr(10);
+      const listener = (request) => {
+        if (request.action === "POPUP_RECEIVE_IMAGE") {
+          if (
+            request.url === props.url &&
+            request.id === receiveImageId.current
+          ) {
+            if (request.image) {
+              setImgSrc(request.image);
+            } else {
+              setError(T("unable_to_load_image"));
+            }
+            apiNs.runtime.onMessage.removeListener(listener);
+          }
+        }
+      };
 
-    if (QRLITE_BROWSER === "firefox" && props.url.startsWith("http://")) {
-      // load HTTP images via fetch() otherwise they'll be considered mixed content
-      // and be upgraded to HTTPS, which will cause HTTP-only images to fail
-      // need CSP: "connect-src http:"
-      fetch(props.url)
-        .then((r) => r.blob())
-        .then((b) => {
-          const newObjectUrl = URL.createObjectURL(b);
-          objectUrlRef.current = newObjectUrl;
-          setImgSrc(newObjectUrl);
-        })
-        .catch((fetchError) => {
-          console.error("ImageScanner: Error fetching image:", fetchError);
-          setError(
-            T("decoding_failed", fetchError.message || String(fetchError))
-          );
-          setImgSrc(null);
-        });
+      apiNs.runtime.onMessage.addListener(listener);
+      injectImageRetriever({
+        url: props.url,
+        tabId: props.tabId,
+        frameId: props.frameId,
+        targetElementId: props.targetElementId,
+        id: receiveImageId.current,
+      });
+      return () => {
+        apiNs.runtime.onMessage.removeListener(listener);
+      };
     } else {
-      setImgSrc(props.url);
-    }
-    return () => {
-      // Cleanup on component unmount or if props.url changes again
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-        objectUrlRef.current = null;
+      if (props.url) {
+        setImgSrc(props.url);
+      } else {
+        setError(T("unable_to_load_image"));
       }
-    };
-  }, [props.url]);
-
-  useEffect(() => {
-    if (needsUrlPermission) {
-      apiNs.permissions
-        .contains({ origins: ["<all_urls>"] })
-        .then(setHasUrlPermission);
     }
-  }, [needsUrlPermission]);
+  }, [props.frameId, props.tabId, props.targetElementId, props.url]);
 
   useEffect(() => {
-    if ((needsUrlPermission && !hasUrlPermission) || !imgSrc) {
+    if (!imgSrc) {
       return;
     }
     if (!inputImgNode.current) {
@@ -97,6 +193,11 @@ export default function ImageScanner(props) {
       } catch (e) {
         console.error(e);
         errMsg = T("decoding_failed", e);
+      } finally {
+        // release blob: url
+        if (imgSrc.startsWith("blob:")) {
+          URL.revokeObjectURL(imgSrc);
+        }
       }
 
       if (success) {
@@ -105,17 +206,13 @@ export default function ImageScanner(props) {
         setError(errMsg || T("unable_to_decode"));
       }
     })();
-  }, [hasUrlPermission, needsUrlPermission, inputImgNode, imgSrc]);
+  }, [inputImgNode, imgSrc]);
 
   useEffect(() => {
     if (result && outputContentNode.current) {
       outputContentNode.current.select();
     }
   }, [result]);
-
-  if (needsUrlPermission && !hasUrlPermission) {
-    return <PermissionPrompt type="all-urls" />;
-  }
 
   return (
     <>
@@ -193,4 +290,7 @@ export default function ImageScanner(props) {
 
 ImageScanner.propTypes = {
   url: PropTypes.string,
+  tabId: PropTypes.any,
+  frameId: PropTypes.any,
+  targetElementId: PropTypes.any,
 };

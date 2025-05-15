@@ -28,7 +28,6 @@ QR Lite requires the following permissions:
 - Scripting (`scripting`): mandatory, enables script injection for the following scenarios:
   - When _Select region to scan.._ is chosen, a script need to be injected to the active page to load the "scan region picker" UI
   - When _Scan QR code in Image_ is chosen, a script need to be injected to the active page to retrieve the image data
-- Access to all websites (`<all_urls>`): optional, required to read image data from websites when you click "Scan QR code in image" in the context menu. Also in older Firefox versions, this permission is also needed to capture image of the web page.
 - Camera access: optional, enables QR code scanning with camera
 
 ## Development

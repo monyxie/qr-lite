@@ -37,7 +37,6 @@ const manifest = {
     "clipboardWrite",
     "scripting",
   ],
-  host_permissions: ["<all_urls>"],
   action: {
     default_icon:
       browser === "firefox"

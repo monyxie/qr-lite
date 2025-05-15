@@ -4,11 +4,7 @@ import { T, TT } from "../../utils/i18n";
 
 export default function PermissionPrompt({ type }) {
   const permissionName =
-    type === "camera"
-      ? T("grant_camera_permission_name")
-      : type === "all-urls"
-      ? T("grant_all_urls_permission_name")
-      : null;
+    type === "camera" ? T("grant_camera_permission_name") : null;
   return (
     <div class="instructions instruction-screen" id="permissionInstructions">
       <p>

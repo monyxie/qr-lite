@@ -152,6 +152,9 @@
   "unable_to_decode": {
     "message": "Unable to decode QR code"
   },
+  "unable_to_load_image": {
+    "message": "Unable to load image"
+  },
   "scan_instructions_html": {
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },

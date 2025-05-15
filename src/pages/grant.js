@@ -4,65 +4,6 @@ import { usePageTitle, useURLParams } from "../utils/hooks";
 import { render } from "preact";
 import { useState } from "react";
 
-function GrantAllUrls() {
-  usePageTitle(apiNs.i18n.getMessage("grant_permissions_window_title"));
-
-  const [state, setState] = useState("initial");
-  const requestFunction = async () => {
-    let ok = false;
-    try {
-      ok = await apiNs.permissions.request({ origins: ["<all_urls>"] });
-    } catch {
-      ok = false;
-    }
-    setState(ok ? "granted" : "blocked");
-  };
-
-  return (
-    <>
-      {state === "initial" && (
-        <p>
-          <span class="grant-all-urls ">
-            {TT("grant_all_urls_initial_instructions_html")}
-          </span>
-          <br />
-          <br />
-          <a class="clickable" onClick={() => requestFunction()}>
-            <img class="icon icon-invert" src="../icons/key.svg" />
-            {TT("grant_permissions_btn")}
-          </a>
-        </p>
-      )}
-      {state === "blocked" && (
-        <p class="">
-          <span class="grant-all-urls ">
-            {TT("grant_all_urls_blocked_instructions_html")}
-          </span>
-          <br />
-          <br />
-          <a class="clickable" onClick={() => window.location.reload()}>
-            <img class="icon icon-invert" src="../icons/refresh.svg" />
-            {TT("grant_page_refresh_btn")}
-          </a>
-        </p>
-      )}
-      {state === "granted" && (
-        <p class="">
-          <span class="grant-all-urls ">
-            {TT("grant_all_urls_granted_instructions_html")}
-          </span>
-          <br />
-          <br />
-          <a class="clickable" onClick={() => window.close()}>
-            <img class="icon icon-invert" src="../icons/close.svg" />
-            {TT("grant_page_close_btn")}
-          </a>
-        </p>
-      )}
-    </>
-  );
-}
-
 function GrantCamera() {
   usePageTitle(apiNs.i18n.getMessage("grant_permissions_window_title"));
 
@@ -154,12 +95,7 @@ function GrantCamera() {
 function GrantPage() {
   const permission = useURLParams()?.get("permission");
 
-  const grantComponent =
-    permission === "camera" ? (
-      <GrantCamera />
-    ) : permission === "all-urls" ? (
-      <GrantAllUrls />
-    ) : null;
+  const grantComponent = permission === "camera" ? <GrantCamera /> : null;
 
   return (
     <div class="container">
