@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "카메라에 대한 접근"
   },
-  "grant_all_urls_permission_name": {
-    "message": "모든 웹사이트에 대한 데이터 접근"
-  },
   "grant_permissions_window_title": {
     "message": "권한 부여"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite가 카메라에 대한 접근을 성공적으로 받았습니다.<br><br>이제 이 페이지를 닫을 수 있습니다."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "QR Lite에 모든 웹사이트에 대한 데이터 접근을 허용하려고 합니다.<br><br>시작하려면 아래 버튼을 클릭하세요."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "권한이 거부되었습니다. 이 페이지를 새로고침하고 다시 시도하십시오."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite가 모든 웹사이트에 대한 데이터 접근을 성공적으로 받았습니다.<br><br>이제 이 페이지를 닫을 수 있습니다."
   },
   "grant_page_refresh_btn": {
     "message": "새로고침"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "스캔 결과의 URL 처리 방법을 선택하세요"
+  },
+  "unable_to_load_image": {
+    "message": "이미지를 로드할 수 없습니다"
   }
 }

@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "آپ کے کیمرے تک رسائی"
   },
-  "grant_all_urls_permission_name": {
-    "message": "تمام ویب سائٹس کے لیے آپ کے ڈیٹا تک رسائی"
-  },
   "grant_permissions_window_title": {
     "message": "اجازت دیں"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite کو کیمرہ استعمال کرنے کی اجازت کامیابی سے دی گئی ہے۔<br><br>اب آپ اس صفحہ کو بند کر سکتے ہیں۔"
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "آپ QR Lite کو تمام ویب سائٹس کے لیے اپنے ڈیٹا تک رسائی کی اجازت دینے والے ہیں۔<br><br>شروع کرنے کے لیے نیچے دیئے گئے بٹن پر کلک کریں۔"
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "اجازت نہیں دی گئی۔ براہ کرم اس صفحہ کو ریفریش کریں اور دوبارہ کوشش کریں۔"
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite کو تمام ویب سائٹس کے لیے آپ کے ڈیٹا تک رسائی کامیابی سے دی گئی ہے۔<br><br>اب آپ اس صفحہ کو بند کر سکتے ہیں۔"
   },
   "grant_page_refresh_btn": {
     "message": "ریفریش کریں"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "اسکین کے نتائج میں یو آر ایل کو کیسے ہینڈل کیا جائے منتخب کریں"
+  },
+  "unable_to_load_image": {
+    "message": "تصویر لوڈ کرنے سے قاصر"
   }
 }

@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "Zugriff auf Ihre Kamera"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Zugriff auf Ihre Daten für alle Websites"
-  },
   "grant_permissions_window_title": {
     "message": "Berechtigung erteilen"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite hat erfolgreich Zugriff auf die Kamera erhalten.<br><br>Sie können diese Seite nun schließen."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "Sie sind dabei, QR Lite den Zugriff auf Ihre Daten für alle Websites zu gewähren.<br><br>Klicken Sie auf die Schaltfläche unten, um zu beginnen."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Berechtigung verweigert. Bitte aktualisieren Sie diese Seite und versuchen Sie es erneut."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite hat erfolgreich Zugriff auf Ihre Daten für alle Websites erhalten.<br><br>Sie können diese Seite nun schließen."
   },
   "grant_page_refresh_btn": {
     "message": "Aktualisieren"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "Wählen Sie, wie URLs in Scanergebnissen behandelt werden sollen"
+  },
+  "unable_to_load_image": {
+    "message": "Bild konnte nicht geladen werden"
   }
 }

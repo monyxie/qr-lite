@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "Acesso à sua câmera"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Acesso aos seus dados para todos os sites"
-  },
   "grant_permissions_window_title": {
     "message": "Conceder permissão"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "O QR Lite recebeu acesso à câmera com sucesso.<br><br>Agora você pode fechar esta página."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "Você está prestes a conceder ao QR Lite acesso aos seus dados para todos os sites.<br><br>Clique no botão abaixo para começar."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Permissão negada. Atualize esta página e tente novamente."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "O QR Lite recebeu acesso aos seus dados para todos os sites com sucesso.<br><br>Agora você pode fechar esta página."
   },
   "grant_page_refresh_btn": {
     "message": "Atualizar"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "Escolha como lidar com URLs nos resultados da digitalização"
+  },
+  "unable_to_load_image": {
+    "message": "Não foi possível carregar a imagem"
   }
 }

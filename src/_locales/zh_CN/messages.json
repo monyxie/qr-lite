@@ -150,9 +150,6 @@
   "grant_camera_permission_name": {
     "message": "使用摄像头"
   },
-  "grant_all_urls_permission_name": {
-    "message": "访问所有网站的数据"
-  },
   "grant_permissions_window_title": {
     "message": "授予权限"
   },
@@ -164,15 +161,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "您即将授予 QR Lite 访问所有网站数据的权限。<br><br>点击下方按钮开始。"
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "权限未授予，请刷新本页面后重试。"
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "您已授予 QR Lite 访问所有网站数据的权限。<br><br>您现在可以关闭本页面了。"
   },
   "grant_page_refresh_btn": {
     "message": "刷新"
@@ -298,5 +286,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "选择如何在扫描结果中处理网址"
+  },
+  "unable_to_load_image": {
+    "message": "无法加载图片"
   }
 }

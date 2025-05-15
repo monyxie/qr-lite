@@ -33,6 +33,17 @@ function readJSONFile(filePath) {
   });
 }
 
+async function ensureCommited(files) {
+  const gitStatus = await util.promisify(exec)(
+    `git status --porcelain ${files.join(" ")}`
+  );
+  if (gitStatus.stdout.trim().length > 0) {
+    throw new Error(
+      `The following file(s) has uncommitted changes. Please commit or stash before applying changes.\n${gitStatus.stdout}`
+    );
+  }
+}
+
 async function extractKeysFromSource() {
   // check "rg" availability
   await util.promisify(exec)("which rg");
@@ -83,6 +94,50 @@ async function extractKeysFromSource() {
   });
 }
 
+async function checkSourceLocale(keysInCode) {
+  const srcLocale = "en";
+  const srcMessages = await readJSONFile(
+    `./src/_locales/${srcLocale}/messages.json`
+  );
+
+  let unused = [];
+  let missing = [];
+  for (const key in srcMessages) {
+    if (keysInCode.indexOf(key) === -1) {
+      unused.push(key);
+      console.log("\x1b[33m%s\x1b[0m", `SRC(${srcLocale}): "${key}" is unused`);
+    }
+  }
+
+  // predefined messages. amongst these "version" is defined by this project.
+  const predefined = [
+    "extension_id",
+    "ui_locale",
+    "bidi_dir",
+    "bidi_reversed_dir",
+    "bidi_start_edge",
+    "bidi_end_edge",
+    "version",
+  ];
+  for (const key of keysInCode) {
+    if (!(key in srcMessages) && predefined.indexOf(key) === -1) {
+      missing.push(key);
+      console.log(
+        "\x1b[33m%s\x1b[0m",
+        `SRC(${srcLocale}): "${key}" is missing`
+      );
+    }
+  }
+  console.log(
+    unused.length + missing.length === 0
+      ? "\x1b[32m%s\x1b[0m"
+      : "\x1b[31m%s\x1b[0m",
+    `SRC(${srcLocale}): ${missing.length} missing, ${unused.length} unused`
+  );
+
+  return { locale: srcLocale, missing, unused, messages: srcMessages };
+}
+
 async function check() {
   // eslint-disable-next-line no-undef
   process.chdir(path.dirname(import.meta.dirname));
@@ -98,44 +153,10 @@ async function check() {
     );
     return;
   }
-  // ================= check canonical  === (source) locale =================
+  // ================= check canonical (source) locale =======================
 
-  const srcLocale = "en";
-  const srcMessages = await readJSONFile(
-    `./src/_locales/${srcLocale}/messages.json`
-  );
-
-  let unused = 0;
-  let missing = 0;
-  for (const key in srcMessages) {
-    if (keysInSource.indexOf(key) === -1) {
-      unused++;
-      console.log("\x1b[33m%s\x1b[0m", `SRC(${srcLocale}): "${key}" is unused`);
-    }
-  }
-
-  // predefined messages. amongst these "version" is defined by this project.
-  const predefined = [
-    "extension_id",
-    "ui_locale",
-    "bidi_dir",
-    "bidi_reversed_dir",
-    "bidi_start_edge",
-    "bidi_end_edge",
-    "version",
-  ];
-  for (const key of keysInSource) {
-    if (!(key in srcMessages) && predefined.indexOf(key) === -1) {
-      missing++;
-      console.log(
-        "\x1b[33m%s\x1b[0m",
-        `SRC(${srcLocale}): "${key}" is missing`
-      );
-    }
-  }
-  console.log(
-    unused + missing === 0 ? "\x1b[32m%s\x1b[0m" : "\x1b[31m%s\x1b[0m",
-    `SRC(${srcLocale}): ${missing} missing, ${unused} unused`
+  const { messages: srcMessages, locale: srcLocale } = await checkSourceLocale(
+    keysInSource
   );
 
   // ================= check other locales =================
@@ -368,14 +389,7 @@ async function applyBatchChanges(dir) {
   }
 
   // Check for uncommitted changes
-  const gitStatus = await util.promisify(exec)(
-    `git status --porcelain ${files.join(" ")}`
-  );
-  if (gitStatus.stdout.trim().length > 0) {
-    throw new Error(
-      `The following file(s) has uncommitted changes. Please commit or stash before applying changes.\n${gitStatus.stdout}`
-    );
-  }
+  await ensureCommited(files);
 
   for (const locale in changes) {
     try {
@@ -388,6 +402,41 @@ async function applyBatchChanges(dir) {
       const newFileContent = { ...currentFileContent };
       for (const key in changes[locale]) {
         newFileContent[key] = changes[locale][key];
+      }
+
+      // Write back to file
+      await fs.promises.writeFile(
+        currentFilePath,
+        JSON.stringify(newFileContent, null, 2) + "\n"
+      );
+
+      console.log(`Successfully applied changes to ${file}`);
+    } catch (error) {
+      console.error("Error applying changes:", error);
+    }
+  }
+}
+
+async function removeUnused() {
+  const { unused } = await checkSourceLocale(await extractKeysFromSource());
+  const dir = "./src/_locales/";
+  const locales = await readDirectory(dir);
+  const files = locales.map((locale) =>
+    path.join(dir, locale, "messages.json")
+  );
+
+  await ensureCommited(files);
+
+  for (const file of files) {
+    try {
+      const currentFilePath = path.resolve(".", file);
+      // Read current file content
+      const currentFileContent = await readJSONFile(currentFilePath);
+
+      // Apply changes
+      const newFileContent = { ...currentFileContent };
+      for (const key of unused) {
+        delete newFileContent[key];
       }
 
       // Write back to file
@@ -424,6 +473,10 @@ async function applyBatchChanges(dir) {
     case "apply-batch-changes": {
       const dir = argv[3];
       await applyBatchChanges(dir);
+      break;
+    }
+    case "remove-unused": {
+      await removeUnused();
       break;
     }
     default:

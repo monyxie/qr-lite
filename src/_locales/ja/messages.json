@@ -161,9 +161,6 @@
   "grant_camera_permission_name": {
     "message": "カメラへのアクセス"
   },
-  "grant_all_urls_permission_name": {
-    "message": "全てのサイトに対するアクセス"
-  },
   "grant_permissions_window_title": {
     "message": "権限を許可"
   },
@@ -175,15 +172,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Liteはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "QR Liteに全てのサイトに対するアクセスを許可しようとしています。<br><br>開始するには、下のボタンをクリックしてください。"
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "権限が付与されていません。このページを更新してもう一度お試しください。"
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Liteは全てのサイトに対するアクセスを付与されました。<br><br>このページは今閉じても構いません。"
   },
   "grant_page_refresh_btn": {
     "message": "再読み込み"
@@ -298,5 +286,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "スキャン結果のURLの処理方法を選択してください"
+  },
+  "unable_to_load_image": {
+    "message": "画像を読み込めません"
   }
 }

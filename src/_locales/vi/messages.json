@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "Truy cập vào camera của bạn"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Truy cập vào dữ liệu của bạn cho tất cả các trang web"
-  },
   "grant_permissions_window_title": {
     "message": "Cấp quyền"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite đã nhận được quyền truy cập vào camera thành công.<br><br>Bây giờ bạn có thể đóng trang này."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào dữ liệu của bạn cho tất cả các trang web.<br><br>Nhấp vào nút bên dưới để bắt đầu."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Quyền bị từ chối. Vui lòng tải lại trang này và thử lại."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite đã nhận được quyền truy cập vào dữ liệu của bạn cho tất cả các trang web thành công.<br><br>Bây giờ bạn có thể đóng trang này."
   },
   "grant_page_refresh_btn": {
     "message": "Tải lại"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "Chọn cách xử lý URL trong kết quả quét"
+  },
+  "unable_to_load_image": {
+    "message": "Không thể tải hình ảnh"
   }
 }

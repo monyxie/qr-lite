@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "Akses ke kamera anda"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Akses ke data anda untuk semua tapak web"
-  },
   "grant_permissions_window_title": {
     "message": "Berikan kebenaran"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite telah berjaya mendapat akses ke kamera.<br><br>Anda kini boleh menutup halaman ini."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "Anda akan memberi QR Lite akses ke data anda untuk semua tapak web.<br><br>Klik butang di bawah untuk bermula."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Kebenaran ditolak. Sila muat semula halaman ini dan cuba lagi."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite telah berjaya mendapat akses ke data anda untuk semua tapak web.<br><br>Anda kini boleh menutup halaman ini."
   },
   "grant_page_refresh_btn": {
     "message": "Muat semula"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "Pilih cara mengendalikan URL dalam hasil imbasan"
+  },
+  "unable_to_load_image": {
+    "message": "Tidak dapat memuatkan imej"
   }
 }

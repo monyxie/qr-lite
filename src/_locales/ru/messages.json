@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "Доступ к вашей камере"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Доступ к вашим данным для всех веб-сайтов"
-  },
   "grant_permissions_window_title": {
     "message": "Предоставить разрешение"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite успешно получил доступ к камере.<br><br>Теперь вы можете закрыть эту страницу."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "Вы собираетесь предоставить QR Lite доступ к вашим данным для всех веб-сайтов.<br><br>Нажмите кнопку ниже, чтобы начать."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Разрешение отклонено. Обновите эту страницу и попробуйте еще раз."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite успешно получил доступ к вашим данным для всех веб-сайтов.<br><br>Теперь вы можете закрыть эту страницу."
   },
   "grant_page_refresh_btn": {
     "message": "Обновить"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "Выберите, как обрабатывать URL-адреса в результатах сканирования"
+  },
+  "unable_to_load_image": {
+    "message": "Не удалось загрузить изображение"
   }
 }

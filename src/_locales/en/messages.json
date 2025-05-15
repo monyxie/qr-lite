@@ -187,9 +187,6 @@
   "grant_camera_permission_name": {
     "message": "Access to your camera"
   },
-  "grant_all_urls_permission_name": {
-    "message": "Access to your data for all websites"
-  },
   "grant_permissions_window_title": {
     "message": "Grant permission"
   },
@@ -210,15 +207,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite has been successfully granted permission to use the camera.<br><br>You may close this page now."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "You're about to grant QR Lite access to your data for all websites.<br><br>Click the button below to start."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "Permission not granted. Please refresh this page and try again."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite has been successfully granted access to your data for all websites.<br><br>You may close this page now."
   },
   "grant_page_refresh_btn": {
     "message": "Refresh"

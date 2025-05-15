@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "الوصول إلى الكاميرا"
   },
-  "grant_all_urls_permission_name": {
-    "message": "الوصول إلى بياناتك لجميع مواقع الويب"
-  },
   "grant_permissions_window_title": {
     "message": "منح الإذن"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "تم منح QR Lite إمكانية الوصول إلى الكاميرا بنجاح.<br><br>يمكنك الآن إغلاق هذه الصفحة."
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى بياناتك لجميع مواقع الويب.<br><br>انقر فوق الزر أدناه للبدء."
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "تم رفض الإذن. يرجى تحديث هذه الصفحة وإعادة المحاولة."
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "تم منح QR Lite إمكانية الوصول إلى بياناتك لجميع مواقع الويب بنجاح.<br><br>يمكنك الآن إغلاق هذه الصفحة."
   },
   "grant_page_refresh_btn": {
     "message": "تحديث"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "اختر كيفية التعامل مع عناوين URL في نتائج المسح"
+  },
+  "unable_to_load_image": {
+    "message": "تعذر تحميل الصورة"
   }
 }

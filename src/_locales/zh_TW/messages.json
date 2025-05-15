@@ -150,9 +150,6 @@
   "grant_camera_permission_name": {
     "message": "使用攝影機"
   },
-  "grant_all_urls_permission_name": {
-    "message": "存取所有網站中的資料"
-  },
   "grant_permissions_window_title": {
     "message": "授予權限"
   },
@@ -164,15 +161,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite 已经成功获得攝影機權限。<br><br>現在您可以關閉本頁了。"
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "您即將授予 QR Lite 存取您所有網站中的資料的權限。<br><br>單擊下方按鈕開始。"
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "權限未授予，請重新載入本頁面後重試。"
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "您已授予 QR Lite 存取您所有網站中的資料的權限。<br><br>您現在可以關閉本頁面了。"
   },
   "grant_permissions_instructions_html": {
     "message": "此功能需要以下附加權限<br><br><strong>$PERMISSION$</strong><br>",
@@ -298,5 +286,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "選擇如何在掃描結果中處理網址"
+  },
+  "unable_to_load_image": {
+    "message": "無法載入圖片"
   }
 }

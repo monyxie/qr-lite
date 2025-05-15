@@ -177,9 +177,6 @@
   "grant_camera_permission_name": {
     "message": "आपके कैमरे तक पहुंच"
   },
-  "grant_all_urls_permission_name": {
-    "message": "सभी वेबसाइटों के लिए आपके डेटा तक पहुंच"
-  },
   "grant_permissions_window_title": {
     "message": "अनुमति दें"
   },
@@ -191,15 +188,6 @@
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite को कैमरा उपयोग करने की अनुमति सफलतापूर्वक दी गई है।<br><br>अब आप इस पेज को बंद कर सकते हैं।"
-  },
-  "grant_all_urls_initial_instructions_html": {
-    "message": "आप QR Lite को सभी वेबसाइटों के लिए अपने डेटा तक पहुंच की अनुमति देने वाले हैं।<br><br>शुरू करने के लिए नीचे दिए बटन पर क्लिक करें।"
-  },
-  "grant_all_urls_blocked_instructions_html": {
-    "message": "अनुमति नहीं दी गई। कृपया इस पेज को रिफ्रेश करें और फिर से प्रयास करें।"
-  },
-  "grant_all_urls_granted_instructions_html": {
-    "message": "QR Lite को सभी वेबसाइटों के लिए आपके डेटा तक पहुंच सफलतापूर्वक दी गई है।<br><br>अब आप इस पेज को बंद कर सकते हैं।"
   },
   "grant_page_refresh_btn": {
     "message": "रिफ्रेश करें"
@@ -299,5 +287,8 @@
   },
   "scan_region_picker_tips_open_url_mode_title": {
     "message": "स्कैन परिणामों में URL को कैसे संभालना है चुनें"
+  },
+  "unable_to_load_image": {
+    "message": "छवि लोड करने में असमर्थ"
   }
 }
