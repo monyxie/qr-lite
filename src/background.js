@@ -134,7 +134,7 @@ const menuItems = {
     onclick: (info, tab) => {
       openPopupWithOptions({
         action: "POPUP_DECODE",
-        image: info.srcUrl,
+        url: info.srcUrl,
         tabId: tab.id,
         frameId: info.frameId,
         // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/OnClickData#targetelementid

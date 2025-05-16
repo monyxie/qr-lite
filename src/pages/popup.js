@@ -27,7 +27,7 @@ function Popup() {
         pastedImageUrl.current = URL.createObjectURL(file);
         setOptions({
           action: "POPUP_DECODE",
-          image: pastedImageUrl.current,
+          url: pastedImageUrl.current,
         });
         return false;
       }
@@ -91,7 +91,7 @@ function Popup() {
         case "POPUP_DECODE":
           setComponent(
             <Scanner
-              url={options?.image}
+              url={options?.url}
               tabId={options?.tabId}
               frameId={options?.frameId}
               targetElementId={options?.targetElementId}

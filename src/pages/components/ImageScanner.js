@@ -116,12 +116,15 @@ async function injectImageRetriever(options) {
 }
 
 function shouldUseImageRetriever(url, tabId, targetElementId) {
-  return (
+  if (/^data:/i.test(url)) {
+    return false;
+  }
+  const hasTarget =
     tabId !== undefined &&
     tabId !== null &&
-    (/^(https?:\/\/|blob:)/i.test(url) ||
-      (url === "" && targetElementId !== undefined && targetElementId !== null))
-  );
+    (url || (targetElementId !== undefined && targetElementId !== null));
+  console.log("hastarget", hasTarget);
+  return hasTarget;
 }
 
 export default function ImageScanner(props) {
@@ -218,8 +221,13 @@ export default function ImageScanner(props) {
   }, [inputImgNode, imgSrc]);
 
   useEffect(() => {
-    if (result && outputContentNode.current) {
-      outputContentNode.current.select();
+    if (result) {
+      const timer = setTimeout(() => {
+        if (outputContentNode.current) {
+          outputContentNode.current?.select();
+        }
+      });
+      return () => clearTimeout(timer);
     }
   }, [result]);
 

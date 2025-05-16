@@ -417,8 +417,13 @@ function Scanner({
   ]);
 
   useEffect(() => {
-    if (result && resultContentNode.current) {
-      resultContentNode.current.select();
+    if (result) {
+      const timer = setTimeout(() => {
+        if (resultContentNode.current) {
+          resultContentNode.current?.select();
+        }
+      });
+      return () => clearTimeout(timer);
     }
   }, [result]);
 

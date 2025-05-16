@@ -184,8 +184,13 @@ export default function CameraScanner() {
   }, [result, stream]); // Removed videoRef.current from dependencies as it's stable
 
   useEffect(() => {
-    if (result && outputContentNode.current) {
-      outputContentNode.current.select();
+    if (result) {
+      const timer = setTimeout(() => {
+        if (outputContentNode.current) {
+          outputContentNode.current?.select();
+        }
+      });
+      return () => clearTimeout(timer);
     }
   }, [result]);
 
