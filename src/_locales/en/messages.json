@@ -271,6 +271,12 @@
   "settings_scan_success_sound_enabled_explainer": {
     "message": "Play a beep sound when a QR code is successfully scanned."
   },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Pause all videos during \"Select region to scan\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "This pauses videos while you're selecting a scan region, so you don't miss any QR codes."
+  },
   "settings_white_on_black_qr_ccode_in_dark_mode_label": {
     "message": "Generate white QR Codes on black background in dark mode"
   },

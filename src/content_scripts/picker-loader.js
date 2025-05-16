@@ -5,6 +5,10 @@ class PickerLoader {
   constructor() {
     this.identifier = null;
     this.pickerPort = null;
+    /**
+     * @var {WeakRef<HTMLMediaElement>[]}
+     */
+    this.pausedMedia = [];
     this.handleScroll = () => {
       if (this.pickerPort) {
         this.pickerPort.postMessage({
@@ -82,6 +86,15 @@ z-index: 2147483647
   }
 
   async load(options) {
+    if (options.pauseVideos) {
+      document.querySelectorAll("video").forEach((v) => {
+        if (v.paused) {
+          return;
+        }
+        v.pause();
+        this.pausedMedia.push(new WeakRef(v));
+      });
+    }
     this.identifier = randomStr(10);
     const cssPromise = this.applyCss();
     const url = await apiNs.runtime.sendMessage({
@@ -130,6 +143,14 @@ z-index: 2147483647
   }
 
   unload() {
+    this.pausedMedia.forEach((ref) => {
+      const v = ref.deref();
+      if (!v) {
+        return;
+      }
+      v.play();
+    });
+    this.pausedMedia = [];
     document.removeEventListener("scrollend", this.handleScroll);
     document.querySelector(`iframe[${this.identifier}]`)?.remove();
     this.applyCss(true);

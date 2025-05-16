@@ -72,6 +72,28 @@ function SettingsPage() {
                 {TT("settings_scan_success_sound_enabled_explainer")}
               </p>
             </div>
+            <div class="form-entry">
+              <div class="form-entry-line">
+                <input
+                  disabled={!settings}
+                  id="pickerPauseVideosOnloadEnabledCheckbox"
+                  name="pickerPauseVideosOnloadEnabled"
+                  type="checkbox"
+                  checked={settings?.pickerPauseVideosOnloadEnabled}
+                  onChange={(e) => {
+                    saveSettings({
+                      pickerPauseVideosOnloadEnabled: e.target.checked,
+                    });
+                  }}
+                />
+                <label htmlFor="pickerPauseVideosOnloadEnabledCheckbox">
+                  {TT("settings_picker_pause_videos_onload_enabled_label")}
+                </label>
+              </div>
+              <p class="form-entry-explainer">
+                {TT("settings_picker_pause_videos_onload_enabled_explainer")}
+              </p>
+            </div>
           </fieldset>
           {showKeyboardShortcutsSetting && (
             <div class="form-entry">

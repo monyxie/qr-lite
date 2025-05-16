@@ -21,6 +21,11 @@ const settingsDefinition = {
       return typeof value === "undefined" ? false : value === true;
     },
   },
+  pickerPauseVideosOnloadEnabled: {
+    normalize(value) {
+      return typeof value === "undefined" ? true : value === true;
+    },
+  },
 };
 
 let globalSettings = null;
@@ -44,6 +49,22 @@ export async function getSettingValue(key) {
     getSettings();
   }
   return globalSettings[key];
+}
+
+/**
+ * Get a single setting value from storage
+ * This is for use in the background script where the `globalSettings` variable
+ * became `null` after the background script is suspended
+ * (even though we have safe guarding in `getSettingsValue()`, why?)
+ * @param {string} key
+ * @returns
+ */
+export async function getSettingValueFromStorage(key) {
+  if (!(key in settingsDefinition)) {
+    throw new Error("Unknown settings key: " + key);
+  }
+  const settings = await storage("local").get(key);
+  return settingsDefinition[key].normalize(settings[key]);
 }
 
 export async function saveSettings(settings) {

@@ -2,6 +2,7 @@ import { apiNs, capturePartialScreen, openPopup, tabs } from "./utils/compat";
 import { addHistory } from "./utils/history";
 import { initDecoder, scan } from "./utils/qrcode";
 import { convertBlobToDataUri, randomStr } from "./utils/misc";
+import { getSettingValueFromStorage } from "./utils/settings";
 
 const menusApi = apiNs.menus || apiNs.contextMenus;
 
@@ -80,6 +81,12 @@ async function injectPickerLoader(tab, options) {
       tabId: tab.id,
     },
   });
+  if (!options) {
+    options = {};
+  }
+  options.pauseVideos = await getSettingValueFromStorage(
+    "pickerPauseVideosOnloadEnabled"
+  );
   await apiNs.scripting.executeScript({
     func: (options) => {
       // Ensure the function exists before calling
@@ -91,7 +98,7 @@ async function injectPickerLoader(tab, options) {
         );
       }
     },
-    args: [options || {}],
+    args: [options],
     target: {
       tabId: tab.id,
     },
