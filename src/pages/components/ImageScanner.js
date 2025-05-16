@@ -115,10 +115,12 @@ async function injectImageRetriever(options) {
   });
 }
 
-function shouldUseImageRetriever(url, targetElementId) {
+function shouldUseImageRetriever(url, tabId, targetElementId) {
   return (
-    /^(https?:\/\/|blob:)/i.test(url) ||
-    (url === "" && targetElementId !== undefined && targetElementId !== null)
+    tabId !== undefined &&
+    tabId !== null &&
+    (/^(https?:\/\/|blob:)/i.test(url) ||
+      (url === "" && targetElementId !== undefined && targetElementId !== null))
   );
 }
 
@@ -131,7 +133,9 @@ export default function ImageScanner(props) {
   const [imgSrc, setImgSrc] = useState(null);
   const receiveImageId = useRef(null);
   useEffect(() => {
-    if (shouldUseImageRetriever(props.url, props.targetElementId)) {
+    if (
+      shouldUseImageRetriever(props.url, props.tabId, props.targetElementId)
+    ) {
       receiveImageId.current = randomStr(10);
       const listener = (request) => {
         if (request.action === "POPUP_RECEIVE_IMAGE") {
