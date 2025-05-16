@@ -12,7 +12,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { apiNs } from "../utils/compat";
 import { PropTypes } from "prop-types";
 import { useTemporaryState } from "../utils/hooks";
-import { isUrl, playScanSuccessAudio } from "../utils/misc";
+import { isQrCodeContentLink, playScanSuccessAudio } from "../utils/misc";
 import QRPositionMarker from "./components/QRPositionMarker";
 
 const minScaleFactor = 0.2;
@@ -349,7 +349,7 @@ function Scanner({
         const playAudioPromise = playScanSuccessAudio();
         setResult(res.result[0]);
         const content = res.result[0].content;
-        if (isUrl(content)) {
+        if (isQrCodeContentLink(content)) {
           switch (options.openUrlMode) {
             case "OPEN":
               nextStage = null;
@@ -415,6 +415,12 @@ function Scanner({
     spotRect.x,
     spotRect.y,
   ]);
+
+  useEffect(() => {
+    if (result && resultContentNode.current) {
+      resultContentNode.current.select();
+    }
+  }, [result]);
 
   const tipsStyles = {
     opacity:
@@ -541,6 +547,7 @@ function Scanner({
           >
             <textarea
               id="result-content"
+              class={result?.content ? "" : "error"}
               placeholder={
                 T("unable_to_decode") + (error ? ": " + error.message : "")
               }
@@ -552,7 +559,7 @@ function Scanner({
             ></textarea>
             <div class="result-actions">
               <div>
-                {isUrl(result?.content) && (
+                {isQrCodeContentLink(result?.content) && (
                   <a
                     id="open-link-btn"
                     class=" clickable"

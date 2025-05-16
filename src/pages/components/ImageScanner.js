@@ -5,7 +5,11 @@ import { PropTypes } from "prop-types";
 
 import { T, TT } from "../../utils/i18n";
 import { scan } from "../../utils/qrcode";
-import { isUrl, playScanSuccessAudio, randomStr } from "../../utils/misc";
+import {
+  isQrCodeContentLink,
+  playScanSuccessAudio,
+  randomStr,
+} from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import { useTemporaryState } from "../../utils/hooks";
@@ -189,7 +193,6 @@ export default function ImageScanner(props) {
         } else {
           success = true;
           setResult(results[0]);
-          outputContentNode.current?.select();
           await addHistory("decode", results[0].content);
         }
       } catch (e) {
@@ -239,7 +242,7 @@ export default function ImageScanner(props) {
       </div>
       <div class="necker-container"></div>
       <textarea
-        class="output"
+        class={"output " + (result?.content ? "" : "error")}
         title={T("content_title")}
         readOnly
         placeholder={error}
@@ -249,7 +252,7 @@ export default function ImageScanner(props) {
       ></textarea>
       <div class="footer-container">
         <div class="footer actions1">
-          {isUrl(result?.content) && (
+          {isQrCodeContentLink(result?.content) && (
             <span
               class="clickable"
               title={T("open_url_btn_title")}

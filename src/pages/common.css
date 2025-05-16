@@ -112,6 +112,7 @@ html {
 
 textarea[readonly] {
   outline: none;
+  caret-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {

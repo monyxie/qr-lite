@@ -276,6 +276,13 @@ body {
   resize: none;
   background-color: var(--input-bg-color);
   box-sizing: border-box;
+  &.error {
+    border-color: #f33;
+    font-family: monospace;
+    &::placeholder {
+      color: #f33;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -283,6 +290,14 @@ body {
     position: relative;
     max-height: 400px;
     box-shadow: rgb(0, 0, 0) 2px 2px 8px;
+  }
+  .scan .output {
+    &.error {
+      border-color: #f66;
+      &::placeholder {
+        color: #f66;
+      }
+    }
   }
 }
 

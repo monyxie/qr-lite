@@ -1,8 +1,13 @@
 import { getSettingValue } from "./settings";
 import successAudio from "../audio/success.mp3";
 
-export function isUrl(str) {
-  return /^https?:\/\//i.test(str);
+/**
+ * Determine if the scanned QR code content is URL
+ * @param {string} content
+ * @returns boolean
+ */
+export function isQrCodeContentLink(content) {
+  return /^(https?:\/\/|ftp:\/\/|mailto:)/i.test(content);
 }
 
 export async function sleep(ms) {

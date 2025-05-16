@@ -2,7 +2,11 @@ import { useEffect, useState, useRef, useCallback } from "react";
 
 import { T, TT } from "../../utils/i18n";
 import { scan } from "../../utils/qrcode";
-import { FpsCounter, isUrl, playScanSuccessAudio } from "../../utils/misc";
+import {
+  FpsCounter,
+  isQrCodeContentLink,
+  playScanSuccessAudio,
+} from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import PermissionPrompt from "./PermissionPrompt";
@@ -239,7 +243,7 @@ export default function CameraScanner() {
       </div>
       {result && (
         <textarea
-          class="output"
+          class={"output " + (result?.content ? "" : "error")}
           title={T("content_title")}
           readOnly
           placeholder={error}
@@ -250,7 +254,7 @@ export default function CameraScanner() {
       )}
       <div class="footer-container">
         <div class="footer actions1">
-          {isUrl(result?.content) && (
+          {isQrCodeContentLink(result?.content) && (
             <span
               class="clickable"
               title={T("open_url_btn_title")}

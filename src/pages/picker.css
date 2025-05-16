@@ -193,6 +193,13 @@ body {
   color: #333;
   background-color: rgba(255, 255, 255, 0.7);
   box-sizing: border-box;
+  &.error {
+    border-color: #f33;
+    font-family: monospace;
+    &::placeholder {
+      color: #f33;
+    }
+  }
 }
 
 .result-actions {
@@ -225,5 +232,11 @@ body {
     color: #ccc;
     border-color: #333;
     background-color: rgba(0, 0, 0, 0.7);
+    &.error {
+      border-color: #f66;
+      &::placeholder {
+        color: #f66;
+      }
+    }
   }
 }
