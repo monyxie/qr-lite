@@ -13,7 +13,12 @@ import PermissionPrompt from "./PermissionPrompt";
 import { useTemporaryState } from "../../utils/hooks";
 
 // max 30 fps
-const MIN_SCAN_INTERVAL_MS = 1000 / 30;
+const SCAN_FPS = 30;
+const SCAN_INTERVAL_MS = 1000 / SCAN_FPS;
+
+// optimal image size for balanced fps & detection rate
+// see `opencv/opencv_contrib/modules/wechat_qrcode/src/wechat_qrcode.cpp:WeChatQRCode::Impl::getScaleList()`
+const OPTIMAL_IMAGE_SIZE = 640;
 
 export default function CameraScanner() {
   const [cameraStatus, setCameraStatus] = useState({
@@ -52,7 +57,13 @@ export default function CameraScanner() {
       if (!stream) {
         navigator.mediaDevices
           .getUserMedia({
-            video: true,
+            video: {
+              frameRate: SCAN_FPS,
+              width: { ideal: OPTIMAL_IMAGE_SIZE },
+              height: { ideal: OPTIMAL_IMAGE_SIZE },
+              // // firefox doesn't support this
+              resizeMode: "crop-and-scale",
+            },
             audio: false,
           })
           .then((r) => {
@@ -133,8 +144,19 @@ export default function CameraScanner() {
       const video = videoRef.current;
 
       if (canvas && video?.srcObject && video.videoWidth && video.videoHeight) {
-        canvas.width = 500;
-        canvas.height = video.videoHeight / (video.videoWidth / canvas.width);
+        if (
+          video.videoWidth > OPTIMAL_IMAGE_SIZE &&
+          video.videoHeight > OPTIMAL_IMAGE_SIZE
+        ) {
+          const f =
+            OPTIMAL_IMAGE_SIZE / Math.min(video.videoWidth, video.videoHeight);
+          canvas.width = Math.ceil(video.videoWidth * f);
+          canvas.height = Math.ceil(video.videoHeight * f);
+        } else {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+        }
+
         if (!canvasContext.current) {
           // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true
           // This will affect all subsequent operations on the same canvas
@@ -151,7 +173,15 @@ export default function CameraScanner() {
         );
 
         try {
-          const results = await scan(canvas, true);
+          const results = await scan(
+            canvasContext.current.getImageData(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            ),
+            true
+          );
           if (results && results.length > 0) {
             setResult(results[0]);
             addHistory("decode", results[0].content);
@@ -165,14 +195,14 @@ export default function CameraScanner() {
 
       scanTimer.current = setTimeout(
         scanFunc,
-        Math.max(0, MIN_SCAN_INTERVAL_MS - (Date.now() - startTime))
+        Math.max(0, SCAN_INTERVAL_MS - (Date.now() - startTime))
       );
       fpsCounter.current?.tick();
       setFps(fpsCounter.current?.fps());
     };
 
     if (!result) {
-      scanTimer.current = setTimeout(scanFunc, MIN_SCAN_INTERVAL_MS);
+      scanTimer.current = setTimeout(scanFunc, SCAN_INTERVAL_MS);
     } else {
       fpsCounter.current?.reset();
       clearTimeout(scanTimer.current);

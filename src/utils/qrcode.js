@@ -1,5 +1,3 @@
-let decoder;
-
 export class QrCodeInfo {
   /**
    * @param content {string}
@@ -114,6 +112,11 @@ export class OpenCvQrCodeDecoder {
     return new Uint8Array(data);
   }
 }
+
+/**
+ * @type {OpenCvQrCodeDecoder|null}
+ */
+let decoder;
 
 export function initDecoder() {
   if (typeof importScripts === "function") {
