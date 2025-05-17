@@ -69,12 +69,16 @@ form {
 fieldset {
   border: 1px solid var(--border-color);
   border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .form-entry {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 2px;
   color: var(--text-primary-color);
 }
 
@@ -86,8 +90,8 @@ fieldset {
 
 .form-entry-explainer {
   margin: 0;
-  margin-left: 1.3rem;
-  padding: 0.2rem;
-  font-size: 0.8rem;
+  margin-left: 16px;
+  padding: 0.2em;
+  font-size: 0.8em;
   opacity: 0.8;
 }

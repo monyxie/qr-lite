@@ -30,6 +30,12 @@
   }
 }
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   margin: 0;
   padding: 0;
@@ -89,6 +95,7 @@ html {
   white-space: nowrap;
   gap: 0.5rem;
   color: #888;
+  margin: 1rem;
 }
 
 .divider::before,
@@ -113,6 +120,10 @@ html {
 textarea[readonly] {
   outline: none;
   caret-color: transparent;
+}
+
+select {
+  padding: 0.1em 0.3em;
 }
 
 @media (prefers-color-scheme: dark) {

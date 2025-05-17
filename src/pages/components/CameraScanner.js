@@ -33,6 +33,9 @@ export default function CameraScanner() {
   const [error, setError] = useState(null);
   const outputContentNode = useRef(null);
   const canvasRef = useRef(null);
+  /**
+   * @type {React.RefObject<CanvasRenderingContext2D|null>}
+   */
   const canvasContext = useRef(null);
   const scanTimer = useRef(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
@@ -59,10 +62,10 @@ export default function CameraScanner() {
           .getUserMedia({
             video: {
               frameRate: SCAN_FPS,
-              width: { ideal: OPTIMAL_IMAGE_SIZE },
-              height: { ideal: OPTIMAL_IMAGE_SIZE },
+              // width: { ideal: OPTIMAL_IMAGE_SIZE },
+              // height: { ideal: OPTIMAL_IMAGE_SIZE },
               // // firefox doesn't support this
-              resizeMode: "crop-and-scale",
+              // resizeMode: "crop-and-scale",
             },
             audio: false,
           })
@@ -134,7 +137,7 @@ export default function CameraScanner() {
         setError(err.message || "Error setting up video.");
       }
     }
-  }, [stream]); // Runs when stream changes or videoRef is available
+  }, [stream]);
 
   // scanning
   useEffect(() => {
@@ -144,17 +147,28 @@ export default function CameraScanner() {
       const video = videoRef.current;
 
       if (canvas && video?.srcObject && video.videoWidth && video.videoHeight) {
+        // calculate video's visible rect because we crop the video to 1:1 via CSS
+        // 1:1 cropping is a performance optimization because QR codes are square
+        // and so non 1:1 images will always contain irrelevant parts
+        const visibleVideoSize = Math.min(video.videoWidth, video.videoHeight);
+        const visibleVideoRect = {
+          x: (video.videoWidth - visibleVideoSize) / 2,
+          y: (video.videoHeight - visibleVideoSize) / 2,
+          width: visibleVideoSize,
+          height: visibleVideoSize,
+        };
         if (
-          video.videoWidth > OPTIMAL_IMAGE_SIZE &&
-          video.videoHeight > OPTIMAL_IMAGE_SIZE
+          visibleVideoRect.width > OPTIMAL_IMAGE_SIZE &&
+          visibleVideoRect.height > OPTIMAL_IMAGE_SIZE
         ) {
           const f =
-            OPTIMAL_IMAGE_SIZE / Math.min(video.videoWidth, video.videoHeight);
-          canvas.width = Math.ceil(video.videoWidth * f);
-          canvas.height = Math.ceil(video.videoHeight * f);
+            OPTIMAL_IMAGE_SIZE /
+            Math.min(visibleVideoRect.width, visibleVideoRect.height);
+          canvas.width = Math.ceil(visibleVideoRect.width * f);
+          canvas.height = Math.ceil(visibleVideoRect.height * f);
         } else {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
+          canvas.width = visibleVideoRect.width;
+          canvas.height = visibleVideoRect.height;
         }
 
         if (!canvasContext.current) {
@@ -166,6 +180,10 @@ export default function CameraScanner() {
         }
         canvasContext.current.drawImage(
           video,
+          visibleVideoRect.x,
+          visibleVideoRect.y,
+          visibleVideoRect.width,
+          visibleVideoRect.height,
           0,
           0,
           canvas.width,
