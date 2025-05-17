@@ -177,6 +177,9 @@ export default function ImageScanner(props) {
   }, [props.frameId, props.tabId, props.targetElementId, props.url]);
 
   useEffect(() => {
+    setResult(null);
+    setError(null);
+
     if (!imgSrc) {
       return;
     }

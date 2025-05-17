@@ -13,11 +13,12 @@ function GrantCamera() {
   const requestFunction = async () => {
     setErr(null);
     try {
-      await navigator.mediaDevices.getUserMedia({
+      const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false,
       });
       setState("granted");
+      stream.getTracks().forEach((track) => track.stop());
     } catch (e) {
       console.log(e.name, e.message);
       setErr(e);
