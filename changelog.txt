@@ -1,3 +1,23 @@
+## [v3.3.0] - 2025-5-18
+
+### Added
+- Pause active videos on the current page when initiating "Select region to scan" to prevent interference. (fe58ad7)
+- Display an "Open URL" button for `ftp://` and `mailto:` links found in QR codes. (f5e6fff)
+
+### Changed
+- **Camera Scanner Enhancements:**
+  - Utilizes higher resolution images for improved detection of complex or high-density QR codes. (2a9c3bb)
+  - Crops the camera feed to a 1:1 aspect ratio for a more focused scanning area and better UI. (94e8260)
+- Improved the reliability of scanning QR codes from images (e.g., via right-click "Scan QR code in image") by using a content script for image data retrieval. (e016d98)
+  - This change also made the "Access data for all websites" (`<all_urls>`) permission unnecessary, so it's officially gone now.
+- Optimized the auto-selection logic for results after a successful scan. (45744f5)
+- Updated translations. (6ba2f73, 6f9aac7)
+- Various minor UI improvements and tweaks. (94e8260, 0ee9efb, f5e6fff)
+
+### Fixed
+- Resolved an issue where the "Scan QR code from image" context menu option could fail. (6a6d29c)
+
+
 ## [v3.2.0] - 2025-5-14
 
 ### Added
