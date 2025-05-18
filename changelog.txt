@@ -1,3 +1,9 @@
+## [v3.3.1] - 2025-5-18
+
+### Fixed
+- Fix input image in popup scanner not properly centered. (332df35)
+
+
 ## [v3.3.0] - 2025-5-18
 
 ### Added
