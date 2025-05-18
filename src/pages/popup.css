@@ -293,9 +293,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  .scan .input-box {
-    position: relative;
-    max-height: 400px;
+  .scan .input-wrapper {
     box-shadow: rgb(0, 0, 0) 2px 2px 8px;
   }
   .scan .output {
