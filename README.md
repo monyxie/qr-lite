@@ -22,7 +22,7 @@ QR Lite is a browser extension for generating and scanning QR codes offline.
 QR Lite requires the following permissions:
 
 - Access to the active tab (`activeTab`): mandatory, enables capturing image of the active page for scanning
-- Context menus (`contextMenus`): mandatory, enables the context menu items
+- Context menus (`menus`/`contextMenus`): mandatory, enables the context menu items
 - Storage (`storage`): mandatory, enables preferences and history persistence on disk
 - Clipboard write (`clipboardWrite`): mandatory, enables copying QR code images or text to clipboard
 - Scripting (`scripting`): mandatory, enables script injection for the following scenarios:
@@ -48,8 +48,8 @@ Build steps on Linux:
 
 1. Make sure you have `node`, `yarn`, and the `zip` command installed.
 1. Open terminal and cd to project root.
-1. Run `./scripts/release.sh`. After this you'll get two zip files in the `release` directory: `qr-lite-release-xxxxxxxx.zip`
-   is the installable extension, while `qr-lite-source-xxxxxxxx.zip` is the source code zip.
+1. Run `node scripts/release.sh {firefox,chrome}`, which will generate 2 files in the `release` directory: `<browser>-<version>-<hash>-release.zip`
+   is the installable extension, and `<browser>-<version>-<hash>-source.zip` is the zipped source code.
 
 ## Localization
 

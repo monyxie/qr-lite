@@ -34,11 +34,11 @@ fi
 PROJECT_ROOT="$(pwd)"
 DIST_DIR="$PROJECT_ROOT/dist/$BROWSER"
 RELEASE_DIR="$PROJECT_ROOT/release"
-
+VERSION=$(node src/manifest.js "$BROWSER" | node -e "process.stdin.setEncoding('utf8');let data='';process.stdin.on('data',chunk=>data+=chunk);process.stdin.on('end',()=>console.log(JSON.parse(data).version));")
 HASH="$(git rev-parse HEAD | cut -c1-8)"
 
-RELEASE_FILE="$RELEASE_DIR/qr-lite-release-$BROWSER-$HASH.zip"
-SOURCE_FILE="$RELEASE_DIR/qr-lite-source-$BROWSER-$HASH.zip"
+RELEASE_FILE="$RELEASE_DIR/$BROWSER-$VERSION-$HASH-release.zip"
+SOURCE_FILE="$RELEASE_DIR/$BROWSER-$VERSION-$HASH-source.zip"
 
 yarn install && yarn run eslint src && yarn run webpack --mode production --env browser="$BROWSER"
 
