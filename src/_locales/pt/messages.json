@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "Não foi possível carregar a imagem"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Pausar todos os vídeos durante \"Selecionar região para digitalizar\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "Isso pausa os vídeos enquanto você seleciona uma região de digitalização, para que você não perca nenhum código QR."
   }
 }

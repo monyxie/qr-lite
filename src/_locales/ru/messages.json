@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "Не удалось загрузить изображение"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Приостановить все видео во время \"Выберите область для сканирования\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "Это приостанавливает видео, пока вы выбираете область сканирования, чтобы не пропустить QR-коды."
   }
 }

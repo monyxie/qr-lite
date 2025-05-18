@@ -289,5 +289,11 @@
   },
   "unable_to_load_image": {
     "message": "画像を読み込めません"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "「スキャンする領域を選択」中にすべての動画を一時停止"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "スキャン領域を選択している間、動画を一時停止してQRコードを見逃さないようにします。"
   }
 }

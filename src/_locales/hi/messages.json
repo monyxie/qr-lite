@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "छवि लोड करने में असमर्थ"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "\"स्कैन करने के लिए क्षेत्र चुनें\" के दौरान सभी वीडियो रोकें"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "यह स्कैन क्षेत्र का चयन करते समय वीडियो को रोकता है, ताकि आप कोई भी QR कोड न चूकें।"
   }
 }

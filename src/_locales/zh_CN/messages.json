@@ -289,5 +289,11 @@
   },
   "unable_to_load_image": {
     "message": "无法加载图片"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "在“选择要扫描的区域”期间暂停所有视频"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "在选择扫描区域时暂停视频，以免您错过任何二维码。"
   }
 }

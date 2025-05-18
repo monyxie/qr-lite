@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "Tidak dapat memuat gambar"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Jeda semua video selama \"Pilih wilayah untuk dipindai\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "Ini menjeda video saat Anda memilih wilayah pindai, sehingga Anda tidak melewatkan kode QR apa pun."
   }
 }

@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "이미지를 로드할 수 없습니다"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "\"스캔할 영역 선택\" 중 모든 동영상 일시 중지"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "스캔 영역을 선택하는 동안 동영상을 일시 중지하여 QR 코드를 놓치지 않도록 합니다."
   }
 }

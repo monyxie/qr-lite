@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "ছবি লোড করা যাচ্ছে না"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "\"স্ক্যান করার জন্য অঞ্চল নির্বাচন করুন\" এর সময় সমস্ত ভিডিও পজ করুন"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "এটি স্ক্যান করার অঞ্চল নির্বাচন করার সময় ভিডিওগুলি পজ করে, যাতে আপনি কোনও QR কোড মিস না করেন।"
   }
 }

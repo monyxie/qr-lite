@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "Tidak dapat memuatkan imej"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Jeda semua video semasa \"Pilih rantau untuk diimbas\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "Ini menjedakan video semasa anda memilih rantau imbasan, jadi anda tidak terlepas sebarang kod QR."
   }
 }

@@ -289,5 +289,11 @@
   },
   "unable_to_load_image": {
     "message": "無法載入圖片"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "在「選取要掃描的區域」期間暫停所有影片"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "在您選取掃描區域時暫停影片，以免您錯過任何 QR 圖碼。"
   }
 }

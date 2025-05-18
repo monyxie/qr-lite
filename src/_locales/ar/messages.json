@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "تعذر تحميل الصورة"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "إيقاف مؤقت لجميع مقاطع الفيديو أثناء \"تحديد المنطقة المراد مسحها\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "يؤدي هذا إلى إيقاف مقاطع الفيديو مؤقتًا أثناء تحديد منطقة المسح، حتى لا تفوتك أي رموز QR."
   }
 }

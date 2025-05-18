@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "No se pudo cargar la imagen"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "Pausar todos los vídeos durante \"Seleccionar región para escanear\""
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "Esto pausa los vídeos mientras seleccionas una región de escaneo, para que no te pierdas ningún código QR."
   }
 }

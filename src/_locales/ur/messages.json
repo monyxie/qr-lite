@@ -290,5 +290,11 @@
   },
   "unable_to_load_image": {
     "message": "تصویر لوڈ کرنے سے قاصر"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "\"اسکین کرنے کے لیے علاقہ منتخب کریں\" کے دوران تمام ویڈیوز کو روک دیں"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "یہ اسکین کا علاقہ منتخب کرتے وقت ویڈیوز کو روک دیتا ہے، تاکہ آپ کوئی QR کوڈز چھوٹ نہ جائیں۔"
   }
 }
