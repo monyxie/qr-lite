@@ -245,7 +245,7 @@ export default function ImageScanner(props) {
           >
             {imgSrc && (
               <img
-                class="scan-input-image"
+                class="input-wrapper scan-input-image"
                 id="scanInputImage"
                 crossOrigin="anonymous"
                 ref={inputImgNode}

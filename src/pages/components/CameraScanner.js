@@ -263,7 +263,7 @@ export default function CameraScanner() {
           <video
             id="scanVideo"
             ref={videoRef}
-            class={"camera " + (result ? "hidden" : "")}
+            class={"input-wrapper camera " + (result ? "hidden" : "")}
           ></video>
           <QRPositionMarker
             width={canvasRef.current?.width || 0}
@@ -272,7 +272,11 @@ export default function CameraScanner() {
             mirror={true}
             hidden={!result}
           >
-            <canvas style="width: 100%;" ref={canvasRef}></canvas>
+            <canvas
+              class="input-wrapper"
+              style="width: 100%;"
+              ref={canvasRef}
+            ></canvas>
           </QRPositionMarker>
         </div>
       </div>

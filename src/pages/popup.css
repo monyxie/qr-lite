@@ -246,10 +246,14 @@ body {
 
 .scan .input-box {
   position: relative;
-  max-height: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scan .input-wrapper {
   box-shadow: gray 2px 2px 8px;
-  width: 100%;
-  height: 100%;
 }
 
 .scan .scan-input-image {
