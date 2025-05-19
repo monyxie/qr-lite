@@ -25,7 +25,7 @@ import QRCodeSVG from "./QRCodeSVG";
 /**
  * @returns {Promise<HTMLCanvasElement>}
  */
-const createCanvasForQrCode = (content, size) => {
+const createCanvasForQrCode = (content, size, qrCodeStyle) => {
   size = size || 500;
   return new Promise((resolve, reject) => {
     const el = document.createElement("div");
@@ -34,6 +34,7 @@ const createCanvasForQrCode = (content, size) => {
         width={size}
         height={size}
         content={content}
+        qrCodeStyle={qrCodeStyle}
         backgroundColor="white"
         foregroundColor="black"
       ></QRCodeSVG>,
@@ -73,8 +74,8 @@ const getFilename = (content, title) => {
   return filename + ".png";
 };
 
-const downloadImage = (content, title) => {
-  createCanvasForQrCode(content)
+const downloadImage = (content, title, qrCodeStyle) => {
+  createCanvasForQrCode(content, null, qrCodeStyle)
     .then((canvas) => {
       const a = document.createElement("a");
       a.href = canvas.toDataURL("image/png");
@@ -85,6 +86,8 @@ const downloadImage = (content, title) => {
       console.error("Failed to download QR code image:", error);
     });
 };
+
+const qrCodeStyles = ["tiles", "tiles_r", "dots_s", "dots_xs_rf"];
 
 const Generator = forwardRef(function Generator(props, ref) {
   const { settings, saveSettings } = useSettingsContext();
@@ -121,13 +124,13 @@ const Generator = forwardRef(function Generator(props, ref) {
   }, [content, props.content]);
 
   const copyImage = useCallback(() => {
-    createCanvasForQrCode(content)
+    createCanvasForQrCode(content, null, settings?.qrCodeStyle)
       .then((canvas) => clipboard.copyPng(canvas))
       .then(() => setCopied(true))
       .catch((error) => {
         console.error("Failed to copy QR code image:", error);
       });
-  }, [content, setCopied]);
+  }, [content, setCopied, settings?.qrCodeStyle]);
 
   const ecLevels = [
     ["L", T("error_correction_level_btn_low_title")],
@@ -146,6 +149,7 @@ const Generator = forwardRef(function Generator(props, ref) {
       isDarkMode && !settings?.whiteOnBlackQRCodeInDarkMode
         ? "0 0 10px rgb(0, 84, 0) inset"
         : "none",
+    cursor: "pointer",
   };
   const svgProps =
     isDarkMode && settings?.whiteOnBlackQRCodeInDarkMode
@@ -207,6 +211,17 @@ const Generator = forwardRef(function Generator(props, ref) {
       </div>
       <div class="result" id="result" ref={resultNode} style={resultBoxStyles}>
         <QRCodeSVG
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const newVal =
+              qrCodeStyles[qrCodeStyles.indexOf(settings?.qrCodeStyle) + 1] ||
+              qrCodeStyles[0];
+            saveSettings({
+              qrCodeStyle: newVal,
+            });
+          }}
+          qrCodeStyle={settings?.qrCodeStyle || qrCodeStyles[0]}
           content={content}
           width={300}
           height={300}
@@ -221,7 +236,9 @@ const Generator = forwardRef(function Generator(props, ref) {
               class="clickable"
               id="save"
               title={T("save_image_btn_title")}
-              onClick={() => downloadImage(content, title)}
+              onClick={() =>
+                downloadImage(content, title, settings?.qrCodeStyle)
+              }
             >
               <img class="icon icon-invert" src="../icons/save.svg" />
               {TT("save_image_btn")}
