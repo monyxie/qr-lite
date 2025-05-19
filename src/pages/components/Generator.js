@@ -21,11 +21,12 @@ import {
 import { debouncer } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRCodeSVG from "./QRCodeSVG";
+import { finderStyleNames, moduleStyleNames } from "../../utils/qrcode-gen";
 
 /**
  * @returns {Promise<HTMLCanvasElement>}
  */
-const createCanvasForQrCode = (content, size, qrCodeStyle) => {
+const createCanvasForQrCode = (content, size, moduleStyle, finderStyle) => {
   size = size || 500;
   return new Promise((resolve, reject) => {
     const el = document.createElement("div");
@@ -34,7 +35,8 @@ const createCanvasForQrCode = (content, size, qrCodeStyle) => {
         width={size}
         height={size}
         content={content}
-        qrCodeStyle={qrCodeStyle}
+        moduleStyle={moduleStyle}
+        finderStyle={finderStyle}
         backgroundColor="white"
         foregroundColor="black"
       ></QRCodeSVG>,
@@ -74,8 +76,8 @@ const getFilename = (content, title) => {
   return filename + ".png";
 };
 
-const downloadImage = (content, title, qrCodeStyle) => {
-  createCanvasForQrCode(content, null, qrCodeStyle)
+const downloadImage = (content, title, moduleStyle, finderStyle) => {
+  createCanvasForQrCode(content, null, moduleStyle, finderStyle)
     .then((canvas) => {
       const a = document.createElement("a");
       a.href = canvas.toDataURL("image/png");
@@ -86,8 +88,6 @@ const downloadImage = (content, title, qrCodeStyle) => {
       console.error("Failed to download QR code image:", error);
     });
 };
-
-const qrCodeStyles = ["tiles", "tiles_r", "dots_s", "dots_xs_rf"];
 
 const Generator = forwardRef(function Generator(props, ref) {
   const { settings, saveSettings } = useSettingsContext();
@@ -124,13 +124,70 @@ const Generator = forwardRef(function Generator(props, ref) {
   }, [content, props.content]);
 
   const copyImage = useCallback(() => {
-    createCanvasForQrCode(content, null, settings?.qrCodeStyle)
+    createCanvasForQrCode(
+      content,
+      null,
+      settings?.qrCodeModuleStyle,
+      settings?.qrCodeFinderStyle
+    )
       .then((canvas) => clipboard.copyPng(canvas))
       .then(() => setCopied(true))
       .catch((error) => {
         console.error("Failed to copy QR code image:", error);
       });
-  }, [content, setCopied, settings?.qrCodeStyle]);
+  }, [
+    content,
+    setCopied,
+    settings?.qrCodeFinderStyle,
+    settings?.qrCodeModuleStyle,
+  ]);
+
+  const handleClickFinders = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const currentIndex = finderStyleNames.indexOf(
+        settings?.qrCodeFinderStyle
+      );
+      const nextIndex = (currentIndex + 1) % finderStyleNames.length;
+      const newStyleName = finderStyleNames[nextIndex];
+
+      saveSettings({
+        qrCodeFinderStyle: newStyleName,
+      });
+    },
+    [saveSettings, settings?.qrCodeFinderStyle]
+  );
+
+  const handleClickModules = useCallback(
+    (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      const currentIndex = moduleStyleNames.indexOf(
+        settings?.qrCodeModuleStyle
+      );
+      const nextIndex = (currentIndex + 1) % moduleStyleNames.length;
+      const newStyleName = moduleStyleNames[nextIndex];
+      saveSettings({
+        qrCodeModuleStyle: newStyleName,
+      });
+    },
+    [saveSettings, settings?.qrCodeModuleStyle]
+  );
+
+  const handleClickDownload = useCallback(() => {
+    downloadImage(
+      content,
+      title,
+      settings?.qrCodeModuleStyle || moduleStyleNames[0],
+      settings?.qrCodeFinderStyle || finderStyleNames[0]
+    );
+  }, [
+    content,
+    settings?.qrCodeFinderStyle,
+    settings?.qrCodeModuleStyle,
+    title,
+  ]);
 
   const ecLevels = [
     ["L", T("error_correction_level_btn_low_title")],
@@ -211,17 +268,10 @@ const Generator = forwardRef(function Generator(props, ref) {
       </div>
       <div class="result" id="result" ref={resultNode} style={resultBoxStyles}>
         <QRCodeSVG
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            const newVal =
-              qrCodeStyles[qrCodeStyles.indexOf(settings?.qrCodeStyle) + 1] ||
-              qrCodeStyles[0];
-            saveSettings({
-              qrCodeStyle: newVal,
-            });
-          }}
-          qrCodeStyle={settings?.qrCodeStyle || qrCodeStyles[0]}
+          onClickFinders={handleClickFinders}
+          onClick={handleClickModules}
+          finderStyle={settings?.qrCodeFinderStyle || finderStyleNames[0]}
+          moduleStyle={settings?.qrCodeModuleStyle || moduleStyleNames[0]}
           content={content}
           width={300}
           height={300}
@@ -236,9 +286,7 @@ const Generator = forwardRef(function Generator(props, ref) {
               class="clickable"
               id="save"
               title={T("save_image_btn_title")}
-              onClick={() =>
-                downloadImage(content, title, settings?.qrCodeStyle)
-              }
+              onClick={handleClickDownload}
             >
               <img class="icon icon-invert" src="../icons/save.svg" />
               {TT("save_image_btn")}

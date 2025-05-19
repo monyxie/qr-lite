@@ -1,4 +1,5 @@
 import { apiNs, storage } from "./compat";
+import { finderStyleNames, moduleStyleNames } from "./qrcode-gen";
 
 const settingsDefinition = {
   historyEnabled: {
@@ -16,10 +17,17 @@ const settingsDefinition = {
       return ["L", "M", "Q", "H"].indexOf(value) === -1 ? "L" : value;
     },
   },
-  qrCodeStyle: {
+  qrCodeFinderStyle: {
     normalize(value) {
-      return ["tiles", "tiles_r", "dots_s", "dots_xs_rf"].indexOf(value) === -1
-        ? "tiles"
+      return finderStyleNames.indexOf(value) === -1
+        ? finderStyleNames[0]
+        : value;
+    },
+  },
+  qrCodeModuleStyle: {
+    normalize(value) {
+      return moduleStyleNames.indexOf(value) === -1
+        ? moduleStyleNames[0]
         : value;
     },
   },
