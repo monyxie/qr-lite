@@ -8,6 +8,33 @@ import {
 import { finderStyles, moduleStyles } from "../../utils/qrcode-gen";
 
 /**
+ *
+ * @param {number} x
+ * @param {number} y
+ * @param {number} boxSize
+ * @param {number} drawSize
+ * @param {number[]} r
+ * @param {number[]} sweep
+ * @returns
+ */
+function generateShapeD(x, y, boxSize, drawSize, r, sweep) {
+  const m = (boxSize - drawSize) / 2;
+  // Below, the arc segments aren't always necessary for R=0
+  // but we keep them so the CSS transition works smoothly when R changes.
+  return (
+    `M ${x + m} ${y + m + r[0]}` +
+    `a ${r[0]} ${r[0]} 0 0 ${sweep[0]} ${r[0]} ${-r[0]}` +
+    `l ${drawSize - r[0] - r[1]} 0` +
+    `a ${r[1]} ${r[1]} 0 0 ${sweep[1]} ${r[1]} ${r[1]}` +
+    `l 0 ${drawSize - r[1] - r[2]}` +
+    `a ${r[2]} ${r[2]} 0 0 ${sweep[2]} ${-r[2]} ${r[2]}` +
+    `l ${-(drawSize - r[2] - r[3])} 0` +
+    `a ${r[3]} ${r[3]} 0 0 ${sweep[3]} ${-r[3]} ${-r[3]}` +
+    `Z`
+  );
+}
+
+/**
  * Generates SVG elements for the finder patterns.
  * @param {object} matrix - The QRCode matrix.
  * @param {number} quietZone - The quiet zone margin.
@@ -22,23 +49,79 @@ function generateFinderElements(
   matrix,
   quietZone,
   foregroundColor,
-  finderOpts,
-  moduleS,
-  moduleR,
+  opts,
   onClickFinders
 ) {
-  const { outerRadiusFactor, innerRadiusFactor, outerWidthAbs, innerWidthAbs } =
-    finderOpts;
+  // everything in opts is porpotional
+  for (const i of ["r1", "r2", "r3"]) {
+    if (opts[i] === undefined) {
+      opts[i] = [0, 0, 0, 0];
+    } else if (typeof opts[i] === "number") {
+      opts[i] = [0, 0, 0, 0].map(() => opts[i]);
+    } else if (opts[i] instanceof Array && opts[i].length === 4) {
+      // noop
+    } else if (
+      typeof opts[i] === "object" &&
+      opts[i].tl &&
+      opts[i].tr &&
+      opts[i].bl &&
+      opts[i].tl.length === 4 &&
+      opts[i].tr.length === 4 &&
+      opts[i].bl.length === 4
+    ) {
+      // noop
+    } else {
+      throw new Error("Invalid opts");
+    }
+  }
+
+  for (const i of ["w1", "w2"]) {
+    if (opts[i] === undefined) {
+      opts[i] = 1;
+    } else if (typeof opts[i] !== "number") {
+      throw new Error("Invalid opts");
+    }
+  }
+
+  // calculated, absolute measurements
+  const A = {};
+  for (const p of ["tl", "tr", "bl"]) {
+    A[p] = {};
+    //
+    A[p].m1 = (1 - opts.w1) / 2;
+    A[p].m2 = A[p].m1 + opts.w1;
+    A[p].m3 = (7 - 3 * opts.w2) / 2;
+
+    //
+    A[p].r1 = (opts.r1[p] || opts.r1).map((r) => (7 - A[p].m1 * 2) * r);
+    A[p].r2 = (opts.r2[p] || opts.r2).map((r) => (7 - A[p].m2 * 2) * r);
+    A[p].r3 = (opts.r3[p] || opts.r3).map((r) => (7 - A[p].m3 * 2) * r);
+
+    //
+    A[p].sweep1 =
+      "sweep1" in opts
+        ? p in opts.sweep1
+          ? opts.sweep1[p]
+          : opts.sweep1
+        : [1, 1, 1, 1];
+    A[p].sweep2 =
+      "sweep2" in opts
+        ? p in opts.sweep2
+          ? opts.sweep2[p]
+          : opts.sweep2
+        : [1, 1, 1, 1];
+    A[p].sweep3 =
+      "sweep3" in opts
+        ? p in opts.sweep3
+          ? opts.sweep3[p]
+          : opts.sweep3
+        : [1, 1, 1, 1];
+  }
 
   const matrixWidth = matrix.getWidth();
   const matrixHeight = matrix.getHeight();
 
   const elements = [];
-  const findersCoordinates = [
-    { x: 0, y: 0, id: "tl" }, // Top-left
-    { x: 0, y: matrixHeight - 7, id: "bl" }, // Bottom-left
-    { x: matrixWidth - 7, y: 0, id: "tr" }, // Top-right
-  ];
 
   const handleFinderClick = (event) => {
     if (onClickFinders) {
@@ -47,71 +130,51 @@ function generateFinderElements(
     event.stopPropagation();
   };
 
-  const lineCap = moduleR > 0 ? "round" : "square";
-  let or, ir, ow, iw;
+  const findersCoordinates = [
+    { x: quietZone + 0, y: quietZone + 0, key: "tl" },
+    { x: quietZone + 0, y: matrixHeight + quietZone - 7, key: "bl" },
+    { x: matrixWidth + quietZone - 7, y: quietZone, key: "tr" },
+  ];
 
-  // Outer Radius (or) for the 7x7 box
-  if (typeof outerRadiusFactor !== "undefined") {
-    or = 7 * outerRadiusFactor;
-  } else {
-    or = moduleR * 4; // Default based on module radius
-  }
-
-  // Inner Radius (ir) for the 3x3 solid center
-  if (typeof innerRadiusFactor !== "undefined") {
-    ir = 3 * innerRadiusFactor;
-  } else {
-    ir = moduleR * 2; // Default based on module radius
-  }
-
-  // Outer Width (ow) - stroke width of the 7x7 box
-  if (typeof outerWidthAbs !== "undefined") {
-    ow = outerWidthAbs;
-  } else {
-    ow = moduleS; // Default based on module fill size
-  }
-
-  // Inner Width (iw) - size of the 3x3 solid center
-  if (typeof innerWidthAbs !== "undefined") {
-    iw = innerWidthAbs;
-  } else {
-    // Original default was 3 - M * 2. Since moduleS = 1 - M * 2, then M*2 = 1 - moduleS.
-    // So, iw = 3 - (1 - moduleS) = 2 + moduleS.
-    iw = 2 + moduleS;
-  }
-
-  findersCoordinates.forEach((finder) => {
-    const { x: fX, y: fY } = finder;
-
+  findersCoordinates.forEach((f) => {
     elements.push(
       <g
-        key={`fg-${fX}-${fY}-${matrixWidth}`}
+        key={`fg-${f.x}-${f.y}-${matrixWidth}`}
         onClick={onClickFinders ? handleFinderClick : undefined}
         style={{ cursor: onClickFinders ? "pointer" : "default" }}
       >
-        <rect
-          // key is now on <g>
-          x={quietZone + fX + 0.5}
-          y={quietZone + fY + 0.5}
-          width={6}
-          height={6}
-          stroke={foregroundColor}
-          strokeWidth={ow}
-          strokeLinecap={lineCap}
-          rx={or}
-          fill="transparent"
-          style={{ transition: "all 0.2s" }}
-        ></rect>
-        <rect
-          // key is now on <g>
-          x={quietZone + fX + 2 + (3 - iw) / 2}
-          y={quietZone + fY + 2 + (3 - iw) / 2}
-          width={iw}
-          height={iw}
-          rx={ir}
+        <rect x={f.x} y={f.y} width={7} height={7} fill="transparent"></rect>
+        <path
+          d={
+            generateShapeD(
+              f.x + 0,
+              f.y + 0,
+              7,
+              7 - 2 * A[f.key].m1,
+              A[f.key].r1,
+              A[f.key].sweep1
+            ) +
+            generateShapeD(
+              f.x + 1,
+              f.y + 1,
+              5,
+              7 - 2 * A[f.key].m2,
+              A[f.key].r2,
+              A[f.key].sweep2
+            ) +
+            generateShapeD(
+              f.x + 2,
+              f.y + 2,
+              3,
+              7 - 2 * A[f.key].m3,
+              A[f.key].r3,
+              A[f.key].sweep3
+            )
+          }
           fill={foregroundColor}
+          fillRule="evenodd"
           style={{ transition: "all 0.2s" }}
-        ></rect>
+        ></path>
       </g>
     );
   });
@@ -122,12 +185,37 @@ function generateFinderElements(
  * Generates the SVG path string for the QR code modules.
  * @param {object} matrix - The QRCode matrix.
  * @param {number} quietZone - The quiet zone margin.
- * @param {object} moduleOpts - Options for module style {radius, margin}.
+ * @param {object} opts - Options for module style {radius, margin}.
  * @returns {{d: string, S: number, R: number}} - Path data, module fill size, and module radius.
  */
-function generateModulePath(matrix, quietZone, moduleOpts) {
-  const { radius: R, margin: M } = moduleOpts;
-  const S = 1 - M * 2; // module fill size
+function generateModulePath(matrix, quietZone, opts) {
+  let { radius, margin, sweep } = opts;
+  if (margin === undefined) {
+    margin = 0;
+  } else if (typeof margin !== "number") {
+    throw new Error("Invalid opts");
+  }
+
+  // validate and convert radius to absolute measures
+  if (radius === undefined) {
+    radius = [0, 0, 0, 0];
+  } else if (typeof radius === "number") {
+    radius = [0, 0, 0, 0].map(() => radius * (1 - 2 * margin));
+  } else if (radius instanceof Array) {
+    radius = radius.map((x) => x * (1 - 2 * margin));
+  } else {
+    throw new Error("Invalid opts");
+  }
+
+  if (sweep === undefined) {
+    sweep = [1, 1, 1, 1];
+  } else if (typeof sweep === "number") {
+    sweep = [0, 0, 0, 0].map(() => sweep);
+  } else if (sweep instanceof Array) {
+    // noop
+  } else {
+    throw new Error("Invalid opts");
+  }
 
   const matrixWidth = matrix.getWidth();
   const matrixHeight = matrix.getHeight();
@@ -152,25 +240,11 @@ function generateModulePath(matrix, quietZone, moduleOpts) {
       }
 
       if (matrix.get(inputX, inputY) === 1) {
-        const x = outputX + M;
-        const y = outputY + M;
-
-        // Below, the arc segments aren't always necessary for R=0
-        // but we keep them so the CSS transition works smoothly when R changes.
-        d += `M${x + R} ${y} `; // Move to top-left rounded corner start
-        d += `L${x + S - R} ${y} `; // Line to top-right rounded corner start
-        d += `A${R} ${R} 0 0 1 ${x + S} ${y + R} `; // Arc for top-right corner
-        d += `L${x + S} ${y + S - R} `; // Line to bottom-right rounded corner start
-        d += `A${R} ${R} 0 0 1 ${x + S - R} ${y + S} `; // Arc for bottom-right corner
-        d += `L${x + R} ${y + S} `; // Line to bottom-left rounded corner start
-        d += `A${R} ${R} 0 0 1 ${x} ${y + S - R} `; // Arc for bottom-left corner
-        d += `L${x} ${y + R} `; // Line to top-left rounded corner end
-        d += `A${R} ${R} 0 0 1 ${x + R} ${y} `; // Arc for top-left corner
-        d += "Z";
+        d += generateShapeD(outputX, outputY, 1, 1 - margin * 2, radius, sweep);
       }
     }
   }
-  return { d, S, R };
+  return d;
 }
 
 /**
@@ -228,19 +302,17 @@ const QRCodeSVG = forwardRef(function QRCodeSVG(
         finderStyles[finderStyleName] ||
         finderStyles[Object.keys(finderStyles)[0]];
 
-      const {
-        d: modulePath,
-        S: moduleS,
-        R: moduleR,
-      } = generateModulePath(matrix, quietZone, currentModuleOpts);
+      const modulePath = generateModulePath(
+        matrix,
+        quietZone,
+        currentModuleOpts
+      );
 
       const finderElements = generateFinderElements(
         matrix,
         quietZone,
         foregroundColor,
         currentFinderOpts,
-        moduleS,
-        moduleR,
         onClickFinders
       );
 
