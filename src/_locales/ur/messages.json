@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "یہ اسکین کا علاقہ منتخب کرتے وقت ویڈیوز کو روک دیتا ہے، تاکہ آپ کوئی QR کوڈز چھوٹ نہ جائیں۔"
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "تصویر لوڈ کرنے میں ناکام ہوگئی۔ آپ اس کے بجائے اسکرین کے کسی حصے کو اسکین کرنے کی کوشش کر سکتے ہیں۔"
   }
 }

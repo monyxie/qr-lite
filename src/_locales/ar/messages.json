@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "يؤدي هذا إلى إيقاف مقاطع الفيديو مؤقتًا أثناء تحديد منطقة المسح، حتى لا تفوتك أي رموز QR."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "فشل تحميل الصورة. يمكنك محاولة مسح منطقة من الشاشة بدلاً من ذلك."
   }
 }

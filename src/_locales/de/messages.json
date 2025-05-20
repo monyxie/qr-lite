@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "Dies pausiert Videos, während Sie einen Scanbereich auswählen, damit Sie keine QR-Codes verpassen."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "Das Bild konnte nicht geladen werden. Sie können stattdessen versuchen, einen Bereich des Bildschirms zu scannen."
   }
 }

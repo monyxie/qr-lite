@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "এটি স্ক্যান করার অঞ্চল নির্বাচন করার সময় ভিডিওগুলি পজ করে, যাতে আপনি কোনও QR কোড মিস না করেন।"
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "ছবিটি লোড হতে ব্যর্থ হয়েছে। আপনি পরিবর্তে স্ক্রীনের একটি অংশ স্ক্যান করার চেষ্টা করতে পারেন।"
   }
 }

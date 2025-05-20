@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "यह स्कैन क्षेत्र का चयन करते समय वीडियो को रोकता है, ताकि आप कोई भी QR कोड न चूकें।"
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "छवि लोड करने में विफल रही। आप इसके बजाय स्क्रीन के किसी क्षेत्र को स्कैन करने का प्रयास कर सकते हैं।"
   }
 }

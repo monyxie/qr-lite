@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "Thao tác này sẽ tạm dừng video trong khi bạn chọn vùng quét để không bỏ lỡ bất kỳ mã QR nào."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "Không tải được hình ảnh. Bạn có thể thử quét một vùng trên màn hình."
   }
 }

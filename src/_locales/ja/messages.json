@@ -295,5 +295,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "スキャン領域を選択している間、動画を一時停止してQRコードを見逃さないようにします。"
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "画像の読み込みに失敗しました。代わりに画面の領域をスキャンしてみてください。"
   }
 }

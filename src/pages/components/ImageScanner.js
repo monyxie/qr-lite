@@ -188,7 +188,7 @@ const imageRetriever = (options) => {
  * @returns
  */
 async function injectImageRetriever(options) {
-  return apiNs.scripting.executeScript({
+  return await apiNs.scripting.executeScript({
     func: imageRetriever,
     args: [options || {}],
     target: {
@@ -216,6 +216,8 @@ export default function ImageScanner(props) {
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const [imgSrc, setImgSrc] = useState(null);
+  const [loadingFailed, setLoadingFailed] = useState(false);
+
   const receiveImageId = useRef(null);
   useEffect(() => {
     if (
@@ -238,9 +240,11 @@ export default function ImageScanner(props) {
                 })
                 .catch(() => {
                   setError(T("unable_to_load_image"));
+                  setLoadingFailed(true);
                 });
             } else {
               setError(T("unable_to_load_image"));
+              setLoadingFailed(true);
             }
             apiNs.runtime.onMessage.removeListener(listener);
           }
@@ -254,6 +258,9 @@ export default function ImageScanner(props) {
         frameId: props.frameId,
         targetElementId: props.targetElementId,
         id: receiveImageId.current,
+      }).catch((e) => {
+        console.error(e);
+        setLoadingFailed(true);
       });
       return () => {
         apiNs.runtime.onMessage.removeListener(listener);
@@ -263,6 +270,7 @@ export default function ImageScanner(props) {
         setImgSrc(props.url);
       } else {
         setError(T("unable_to_load_image"));
+        setLoadingFailed(true);
       }
     }
   }, [props.frameId, props.tabId, props.targetElementId, props.url]);
@@ -329,6 +337,27 @@ export default function ImageScanner(props) {
     <>
       <div class="input " id="scanInput">
         <div class="input-box">
+          {loadingFailed && (
+            <p class="instructions">
+              <span>{TT("image_scanner_failed_to_load_image")}</span>
+              <br />
+              <br />
+              <a
+                class="clickable"
+                id="scanRegion"
+                onClick={() => {
+                  apiNs.runtime.sendMessage({
+                    action: "BG_INJECT_PICKER_LOADER",
+                  });
+                  // close self (popup)
+                  window.close();
+                }}
+              >
+                <img class="icon icon-invert" src="../icons/scan-region.svg" />
+                {TT("pick_region_to_scan_btn")}
+              </a>
+            </p>
+          )}
           <QRPositionMarker
             result={result}
             width={inputImgNode.current?.width || 0}
@@ -347,15 +376,17 @@ export default function ImageScanner(props) {
         </div>
       </div>
       <div class="necker-container"></div>
-      <textarea
-        class={"output " + (result?.content ? "" : "error")}
-        title={T("content_title")}
-        readOnly
-        placeholder={error}
-        value={result?.content}
-        spellCheck="false"
-        ref={outputContentNode}
-      ></textarea>
+      {(result?.content || error) && (
+        <textarea
+          class={"output " + (result?.content ? "" : "error")}
+          title={T("content_title")}
+          readOnly
+          placeholder={error}
+          value={result?.content}
+          spellCheck="false"
+          ref={outputContentNode}
+        ></textarea>
+      )}
       <div class="footer-container">
         <div class="footer actions1">
           {isQrCodeContentLink(result?.content) && (

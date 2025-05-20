@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "Ini menjeda video saat Anda memilih wilayah pindai, sehingga Anda tidak melewatkan kode QR apa pun."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "Gambar gagal dimuat. Anda dapat mencoba memindai area layar sebagai gantinya."
   }
 }

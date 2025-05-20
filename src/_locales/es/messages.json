@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "Esto pausa los vídeos mientras seleccionas una región de escaneo, para que no te pierdas ningún código QR."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "No se pudo cargar la imagen. Puede intentar escanear una región de la pantalla en su lugar."
   }
 }

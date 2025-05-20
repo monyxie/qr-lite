@@ -296,5 +296,8 @@
   },
   "settings_picker_pause_videos_onload_enabled_explainer": {
     "message": "Ini menjedakan video semasa anda memilih rantau imbasan, jadi anda tidak terlepas sebarang kod QR."
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "Imej gagal dimuatkan. Anda boleh cuba mengimbas kawasan skrin sebaliknya."
   }
 }

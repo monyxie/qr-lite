@@ -155,6 +155,9 @@
   "unable_to_load_image": {
     "message": "Unable to load image"
   },
+  "image_scanner_failed_to_load_image": {
+    "message": "The image failed to load. You can try scanning a region of the screen instead."
+  },
   "scan_instructions_html": {
     "message": "Right-click on any image and choose<br>\"<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> Scan QR Code in This Image\""
   },
