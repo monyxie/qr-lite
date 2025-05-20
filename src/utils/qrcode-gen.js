@@ -8,25 +8,48 @@ function rotate270(arr) {
 
 export const moduleStyles = {
   tiles: { radius: 0, margin: 0 },
-  tiles_r: { radius: 0.2, margin: 0.1 },
-  dots_s: { radius: 0.4, margin: 0.1 },
-  dots_xs: { radius: 0.25, margin: 0.2 },
-  dots_l: { radius: 0.5, margin: -0.1 },
+  tiles_s: { radius: 0, margin: 0.1 },
+  tiles_xs: { radius: 0, margin: 0.2 },
+  rtiles_xs: { radius: 0.25, margin: 0.2 },
+  rtiles_s: { radius: 0.25, margin: 0.1 },
+  rtiles: { radius: 0.25, margin: 0 },
+  dots: { radius: 0.5, margin: 0 },
+  dots_s: { radius: 0.5, margin: 0.1 },
+  dots_xs: { radius: 0.5, margin: 0.2 },
   eyes_0: { radius: [0.5, 0, 0.5, 0], margin: 0.1 },
   eyes_90: { radius: [0, 0.5, 0, 0.5], margin: 0.1 },
   drops_0: { radius: [0.5, 0.5, 0.5, 0], margin: 0.1 },
   drops_90: { radius: [0, 0.5, 0.5, 0.5], margin: 0.1 },
   drops_180: { radius: [0.5, 0, 0.5, 0.5], margin: 0.1 },
   drops_270: { radius: [0.5, 0.5, 0, 0.5], margin: 0.1 },
-  crosses: {
+  crosses_a: {
     radius: [0.25, 0.25, 0.25, 0.25],
     sweep: 0,
     margin: 0,
   },
-  stars: {
+  stars_a: {
     radius: [0.5, 0.5, 0.5, 0.5],
+    arc: 4,
+    sweep: 0,
+    margin: 0,
+  },
+  stars_b: {
+    radius: [0.5, 0.5, 0.5, 0.5],
+    arc: 1,
     sweep: 0,
     margin: -0.3 /* bigger for easier scanning */,
+  },
+  quatrefoils_a: {
+    radius: [0.5, 0.5, 0.5, 0.5],
+    arc: 0.1,
+    sweep: 1,
+    margin: 0.1,
+  },
+  hearts_a: {
+    radius: [0.5, 0.5, 0.5, 0.5],
+    arc: [0.5, 0.5, 1000, 1000],
+    sweep: [1, 1, 0, 0],
+    margin: 0.1,
   },
 };
 
@@ -95,7 +118,7 @@ function generateFinderStyles() {
     r2: [0.5, 0.5, 0.5, 0.5],
     r3: [0.1, 0.1, 0.1, 0.1],
     w1: 1,
-    w2: 1,
+    w2: 0.8,
   };
   finderStyles.tongqian_b = {
     r1: [0.5, 0.5, 0.5, 0.5],
