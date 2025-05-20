@@ -10,7 +10,7 @@ const manifest = {
   name: "__MSG_extension_name__",
   short_name: "__MSG_extension_short_name__",
   description: "__MSG_extension_description__",
-  version: "3.3.1",
+  version: "3.4.0",
   default_locale: "en",
   icons:
     browser === "firefox"
