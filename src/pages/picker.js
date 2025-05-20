@@ -337,7 +337,7 @@ function Scanner({
     let nextStage = "result";
     try {
       const res = await apiNs.runtime.sendMessage({
-        action: "BG_CAPTURE",
+        action: "BG_CAPTURE_SCAN",
         rect,
         scroll: scroll.current,
         devicePixelRatio: window.devicePixelRatio,

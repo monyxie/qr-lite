@@ -17,11 +17,12 @@ import { useTemporaryState } from "../../utils/hooks";
 const imageRetriever = (options) => {
   (async () => {
     let dataUri = null;
+    let captureParams = null;
 
     try {
       let imgEl = null;
 
-      // firefox-only api
+      // try to get the img element using the firefox-only api getTargetElement
       if (
         globalThis.browser?.menus?.getTargetElement &&
         options.targetElementId
@@ -31,6 +32,7 @@ const imageRetriever = (options) => {
         );
       }
 
+      // try to get the img element with src url matching
       if (!imgEl && options.url) {
         const imageElements = document.querySelectorAll("img");
         for (const img of imageElements) {
@@ -41,6 +43,7 @@ const imageRetriever = (options) => {
         }
       }
 
+      // convert image to data URI
       if (imgEl) {
         const imgToDataUri = (img) => {
           const canvas = document.createElement("canvas");
@@ -54,36 +57,115 @@ const imageRetriever = (options) => {
           return canvas.toDataURL();
         };
 
-        if (imgEl.complete) {
-          dataUri = imgToDataUri(imgEl);
-        } else {
-          dataUri = await new Promise((resolve, reject) => {
-            imgEl.addEventListener(
-              "load",
-              () => {
-                resolve(imgToDataUri(imgEl));
-              },
-              { once: true }
-            );
-            imgEl.addEventListener("error", (e) => reject(e), {
-              once: true,
+        try {
+          if (imgEl.complete) {
+            dataUri = imgToDataUri(imgEl);
+          } else {
+            dataUri = await new Promise((resolve, reject) => {
+              imgEl.addEventListener(
+                "load",
+                () => {
+                  resolve(imgToDataUri(imgEl));
+                },
+                { once: true }
+              );
+              imgEl.addEventListener("error", (e) => reject(e), {
+                once: true,
+              });
             });
-          });
+          }
+        } catch (e) {
+          console.error(e);
         }
       }
 
+      // fallback: fetch the url to get image data
       if (!dataUri && options.url) {
-        // fallback: fetch the url to get image data
-        dataUri = await fetch(options.url)
-          .then((r) => r.blob())
-          .then((blob) => {
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onloadend = () => resolve(reader.result);
-              reader.onerror = reject;
-              reader.readAsDataURL(blob);
+        try {
+          dataUri = await fetch(options.url, { mode: "cors" })
+            .then((r) => r.blob())
+            .then((blob) => {
+              return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+              });
             });
-          });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // finally, if none of the above methods work, try to screenshot
+      // the image via webextension api
+      // we only construct the parameters needed for capturing the images here
+      // the actual capturing is done elsewhere
+      if (!dataUri) {
+        const getNumber = (a) => parseFloat(a) || 0;
+        const getContentRect = (el) => {
+          const boundingClientRect = el.getBoundingClientRect();
+          const style = getComputedStyle(el);
+          return {
+            x:
+              boundingClientRect.x +
+              getNumber(style.borderLeftWidth) +
+              getNumber(style.paddingLeft),
+            y:
+              boundingClientRect.y +
+              getNumber(style.borderTopWidth) +
+              getNumber(style.paddingTop),
+            width:
+              boundingClientRect.width -
+              getNumber(style.borderLeftWidth) -
+              getNumber(style.borderRightWidth) -
+              getNumber(style.paddingLeft) -
+              getNumber(style.paddingRight),
+            height:
+              boundingClientRect.height -
+              getNumber(style.borderTopWidth) -
+              getNumber(style.borderBottomWidth) -
+              getNumber(style.paddingTop) -
+              getNumber(style.paddingBottom),
+          };
+        };
+
+        let canCapture = true;
+        let rect = null;
+        let scroll = null;
+
+        try {
+          rect = getContentRect(imgEl);
+
+          let currWindow = window;
+          while (currWindow !== currWindow.parent) {
+            const frameRect = getContentRect(currWindow.frameElement);
+            rect.x += frameRect.x;
+            rect.y += frameRect.y;
+            currWindow = currWindow.parent;
+          }
+
+          scroll = {
+            left: currWindow.scrollX,
+            top: currWindow.scrollY,
+          };
+        } catch (e) {
+          console.error(e);
+          canCapture === false;
+        }
+
+        if (canCapture && scroll && rect) {
+          rect.x = Math.ceil(rect.x);
+          rect.y = Math.ceil(rect.y);
+          rect.width = Math.floor(rect.width);
+          rect.height = Math.floor(rect.height);
+
+          captureParams = {
+            scroll,
+            rect,
+            devicePixelRatio: window.devicePixelRatio,
+          };
+        }
       }
     } catch (e) {
       console.error(e);
@@ -93,6 +175,7 @@ const imageRetriever = (options) => {
         url: options.url,
         id: options.id,
         image: dataUri,
+        captureParams,
       });
     }
   })();
@@ -123,7 +206,6 @@ function shouldUseImageRetriever(url, tabId, targetElementId) {
     tabId !== undefined &&
     tabId !== null &&
     (url || (targetElementId !== undefined && targetElementId !== null));
-  console.log("hastarget", hasTarget);
   return hasTarget;
 }
 
@@ -148,6 +230,15 @@ export default function ImageScanner(props) {
           ) {
             if (request.image) {
               setImgSrc(request.image);
+            } else if (request.captureParams) {
+              apiNs.runtime
+                .sendMessage({ action: "BG_CAPTURE", ...request.captureParams })
+                .then((r) => {
+                  setImgSrc(r.image);
+                })
+                .catch(() => {
+                  setError(T("unable_to_load_image"));
+                });
             } else {
               setError(T("unable_to_load_image"));
             }

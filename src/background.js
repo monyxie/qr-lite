@@ -32,6 +32,27 @@ function openPickerWithOptions(options) {
     .then((tab) => injectPickerLoader(tab, options));
 }
 
+async function capture(request) {
+  let canvas = null;
+  try {
+    canvas = await capturePartialScreen(
+      request.rect,
+      request.scroll,
+      request.devicePixelRatio
+    );
+  } catch (err) {
+    console.error("err", err);
+    return {
+      err,
+    };
+  }
+
+  const dataUri = canvas
+    .convertToBlob({ type: "image/png" })
+    .then(convertBlobToDataUri);
+  return dataUri;
+}
+
 async function captureScan(request) {
   let canvas = null;
   try {
@@ -243,8 +264,12 @@ apiNs.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case "BG_INJECT_PICKER_LOADER":
       openPickerWithOptions({ openUrlMode: "NO_OPEN" });
       break;
-    // image capturing
+    // capture image
     case "BG_CAPTURE":
+      capture(request).then((image) => sendResponse({ image }));
+      return true;
+    // capture image and scan
+    case "BG_CAPTURE_SCAN":
       captureScan(request).then(sendResponse);
       return true;
     case "BG_CREATE_TAB":
