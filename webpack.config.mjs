@@ -4,10 +4,11 @@ import CopyPlugin from "copy-webpack-plugin";
 import svgo from "svgo";
 import ScriptOutputPlugin from "./webpack/ScriptOutputPlugin.mjs";
 
-export default (env) =>
-  (env.browser ? [env.browser] : ["firefox", "chrome"]).map((browser) =>
-    generateConfig(browser, !env.production)
+export default (env, { mode }) => {
+  return (env.browser ? [env.browser] : ["firefox", "chrome"]).map((browser) =>
+    generateConfig(browser, mode === "development")
   );
+};
 
 /**
  * @param browser {string}
