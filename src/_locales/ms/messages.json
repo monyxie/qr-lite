@@ -298,6 +298,9 @@
     "message": "Ini menjedakan video semasa anda memilih rantau imbasan, jadi anda tidak terlepas sebarang kod QR."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "Imej gagal dimuatkan. Anda boleh cuba mengimbas kawasan skrin sebaliknya."
+    "message": "Imej gagal dimuatkan. Sumbernya mungkin tidak boleh diakses atau dihadkan. Cuba imbas sebahagian skrin."
+  },
+  "loading_image": {
+    "message": "Memuatkan imej..."
   }
 }

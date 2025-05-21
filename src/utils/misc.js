@@ -138,3 +138,10 @@ export class FpsCounter {
     this.fpsValue = 0;
   }
 }
+
+export function debugLog(...args) {
+  // eslint-disable-next-line no-undef
+  if (QRLITE_DEBUG) {
+    console.log(...args);
+  }
+}

@@ -298,6 +298,9 @@
     "message": "Ini menjeda video saat Anda memilih wilayah pindai, sehingga Anda tidak melewatkan kode QR apa pun."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "Gambar gagal dimuat. Anda dapat mencoba memindai area layar sebagai gantinya."
+    "message": "Gambar gagal dimuat. Sumbernya mungkin tidak dapat diakses atau dibatasi. Coba pindai wilayah layar sebagai gantinya."
+  },
+  "loading_image": {
+    "message": "Memuat gambar..."
   }
 }

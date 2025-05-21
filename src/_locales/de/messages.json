@@ -298,6 +298,9 @@
     "message": "Dies pausiert Videos, während Sie einen Scanbereich auswählen, damit Sie keine QR-Codes verpassen."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "Das Bild konnte nicht geladen werden. Sie können stattdessen versuchen, einen Bereich des Bildschirms zu scannen."
+    "message": "Das Bild konnte nicht geladen werden. Die Quelle ist möglicherweise unzugänglich oder eingeschränkt. Versuchen Sie stattdessen, einen Bereich des Bildschirms zu scannen."
+  },
+  "loading_image": {
+    "message": "Bild wird geladen..."
   }
 }

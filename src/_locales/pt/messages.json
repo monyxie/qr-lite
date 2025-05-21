@@ -298,6 +298,9 @@
     "message": "Isso pausa os vídeos enquanto você seleciona uma região de digitalização, para que você não perca nenhum código QR."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "A imagem falhou ao carregar. Você pode tentar escanear uma região da tela."
+    "message": "A imagem falhou ao carregar. Sua fonte pode estar inacessível ou restrita. Tente digitalizar uma região da tela."
+  },
+  "loading_image": {
+    "message": "Carregando imagem..."
   }
 }

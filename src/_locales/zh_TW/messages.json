@@ -297,6 +297,9 @@
     "message": "在您選取掃描區域時暫停影片，以免您錯過任何 QR 圖碼。"
   },
   "image_scanner_failed_to_load_image": {
-    "message": "圖片載入失敗。您可以嘗試掃描螢幕上的某個區域。"
+    "message": "圖片載入失敗。其來源可能無法存取或受到限制。請嘗試掃描螢幕區域。"
+  },
+  "loading_image": {
+    "message": "正在載入圖片..."
   }
 }

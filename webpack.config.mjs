@@ -5,17 +5,19 @@ import svgo from "svgo";
 import ScriptOutputPlugin from "./webpack/ScriptOutputPlugin.mjs";
 
 export default (env) =>
-  (env.browser ? [env.browser] : ["firefox", "chrome"]).map(generateConfig);
+  (env.browser ? [env.browser] : ["firefox", "chrome"]).map((browser) =>
+    generateConfig(browser, !env.production)
+  );
 
 /**
  * @param browser {string}
  */
-function generateConfig(browser) {
+function generateConfig(browser, debug) {
   if (["firefox", "chrome"].indexOf(browser) === -1) {
     throw new Error("Unsupported browser: " + browser);
   }
 
-  console.log("browser: ", browser);
+  console.log(`browser: ${browser} debug: ${debug}`);
 
   const entries = [
     "./background.js",
@@ -73,6 +75,7 @@ function generateConfig(browser) {
       }),
       new webpack.DefinePlugin({
         QRLITE_BROWSER: JSON.stringify(browser),
+        QRLITE_DEBUG: JSON.stringify(debug),
       }),
       new ScriptOutputPlugin({
         scriptPath: "./src/manifest.js",

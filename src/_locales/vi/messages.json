@@ -298,6 +298,9 @@
     "message": "Thao tác này sẽ tạm dừng video trong khi bạn chọn vùng quét để không bỏ lỡ bất kỳ mã QR nào."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "Không tải được hình ảnh. Bạn có thể thử quét một vùng trên màn hình."
+    "message": "Không thể tải hình ảnh. Nguồn của nó có thể không thể truy cập hoặc bị hạn chế. Hãy thử quét một vùng của màn hình thay thế."
+  },
+  "loading_image": {
+    "message": "Đang tải hình ảnh..."
   }
 }

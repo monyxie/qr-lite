@@ -298,6 +298,9 @@
     "message": "Cela met les vidéos en pause pendant que vous sélectionnez une zone de numérisation, afin de ne manquer aucun code QR."
   },
   "image_scanner_failed_to_load_image": {
-    "message": "Le chargement de l'image a échoué. Vous pouvez essayer de numériser une zone de l'écran à la place."
+    "message": "Le chargement de l'image a échoué. Sa source est peut-être inaccessible ou restreinte. Essayez plutôt de numériser une zone de l'écran."
+  },
+  "loading_image": {
+    "message": "Chargement de l'image..."
   }
 }

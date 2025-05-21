@@ -297,6 +297,9 @@
     "message": "在选择扫描区域时暂停视频，以免您错过任何二维码。"
   },
   "image_scanner_failed_to_load_image": {
-    "message": "图片加载失败。您可以尝试扫描屏幕上的某个区域。"
+    "message": "图片加载失败。其来源可能无法访问或受到限制。请尝试扫描屏幕区域。"
+  },
+  "loading_image": {
+    "message": "正在加载图片..."
   }
 }

@@ -14,157 +14,188 @@ import { addHistory } from "../../utils/history";
 import QRPositionMarker from "./QRPositionMarker";
 import { useTemporaryState } from "../../utils/hooks";
 
-const imageRetriever = (options) => {
+const imageRetriever = (options, debug) => {
   (async () => {
     let dataUri = null;
     let captureParams = null;
+    const debugLog = (...args) => {
+      if (debug) console.log(...args);
+    };
+
+    const imgToDataUri = (img) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const maxSize = 2000;
+      const ratio = Math.min(maxSize / img.width, maxSize / img.height, 1);
+      canvas.width = img.width * ratio;
+      canvas.height = img.height * ratio;
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL();
+    };
+
+    const waitForImgToLoad = async (img) => {
+      if (img.complete) {
+        return;
+      } else {
+        dataUri = await new Promise((resolve, reject) => {
+          img.addEventListener(
+            "load",
+            () => {
+              resolve();
+            },
+            { once: true }
+          );
+          img.addEventListener("error", (e) => reject(e), {
+            once: true,
+          });
+        });
+      }
+    };
+
+    const getCaptureParams = (originalImg) => {
+      // try to screenshot
+      // the image via webextension api
+      // we only construct the parameters needed for capturing the images here
+      // the actual capturing is done elsewhere
+      const getNumber = (a) => parseFloat(a) || 0;
+      const getContentRect = (el) => {
+        const boundingClientRect = el.getBoundingClientRect();
+        const style = getComputedStyle(el);
+        return {
+          x:
+            boundingClientRect.x +
+            getNumber(style.borderLeftWidth) +
+            getNumber(style.paddingLeft),
+          y:
+            boundingClientRect.y +
+            getNumber(style.borderTopWidth) +
+            getNumber(style.paddingTop),
+          width:
+            boundingClientRect.width -
+            getNumber(style.borderLeftWidth) -
+            getNumber(style.borderRightWidth) -
+            getNumber(style.paddingLeft) -
+            getNumber(style.paddingRight),
+          height:
+            boundingClientRect.height -
+            getNumber(style.borderTopWidth) -
+            getNumber(style.borderBottomWidth) -
+            getNumber(style.paddingTop) -
+            getNumber(style.paddingBottom),
+        };
+      };
+
+      let canCapture = true;
+      let rect = null;
+      let scroll = null;
+
+      try {
+        rect = getContentRect(originalImg);
+        let currWindow = window;
+        while (currWindow !== currWindow.parent) {
+          const frameRect = getContentRect(currWindow.frameElement);
+          rect.x += frameRect.x;
+          rect.y += frameRect.y;
+          currWindow = currWindow.parent;
+        }
+
+        scroll = {
+          left: currWindow.scrollX,
+          top: currWindow.scrollY,
+        };
+      } catch (e) {
+        console.error(e);
+        canCapture === false;
+      }
+
+      if (canCapture && scroll && rect) {
+        rect.x = Math.ceil(rect.x);
+        rect.y = Math.ceil(rect.y);
+        rect.width = Math.floor(rect.width);
+        rect.height = Math.floor(rect.height);
+
+        if (rect.width > 0 && rect.height > 0) {
+          const params = {
+            scroll,
+            rect,
+            devicePixelRatio: window.devicePixelRatio,
+          };
+          return params;
+        }
+      }
+      return null;
+    };
 
     try {
-      let imgEl = null;
+      let originalImg = null;
 
-      // try to get the img element using the firefox-only api getTargetElement
+      // 1. try to get the img element using the firefox-only api getTargetElement
       if (
         globalThis.browser?.menus?.getTargetElement &&
         options.targetElementId
       ) {
-        imgEl = globalThis.browser.menus.getTargetElement(
+        originalImg = globalThis.browser.menus.getTargetElement(
           options.targetElementId
         );
+        if (originalImg) {
+          debugLog("Got <img> element via getTargetElement");
+        }
       }
 
-      // try to get the img element with src url matching
-      if (!imgEl && options.url) {
+      // 2. try to get the img element with src url matching
+      if (!originalImg && options.url) {
         const imageElements = document.querySelectorAll("img");
         for (const img of imageElements) {
           if (img.currentSrc === options.url) {
-            imgEl = img;
+            originalImg = img;
+            debugLog("Got <img> element via url matching");
             break;
           }
         }
       }
 
-      // convert image to data URI
-      if (imgEl) {
-        const imgToDataUri = (img) => {
-          const canvas = document.createElement("canvas");
-          const ctx = canvas.getContext("2d");
-          const maxSize = 2000;
-          const ratio = Math.min(maxSize / img.width, maxSize / img.height, 1);
-          canvas.width = img.width * ratio;
-          canvas.height = img.height * ratio;
-
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          return canvas.toDataURL();
-        };
-
+      // 3. try to convert image to data URI
+      if (originalImg) {
         try {
-          if (imgEl.complete) {
-            dataUri = imgToDataUri(imgEl);
-          } else {
-            dataUri = await new Promise((resolve, reject) => {
-              imgEl.addEventListener(
-                "load",
-                () => {
-                  resolve(imgToDataUri(imgEl));
-                },
-                { once: true }
-              );
-              imgEl.addEventListener("error", (e) => reject(e), {
-                once: true,
-              });
-            });
+          await waitForImgToLoad(originalImg);
+          dataUri = imgToDataUri(originalImg);
+          if (dataUri) {
+            debugLog("Converted <img> to data URI via <canvas>");
           }
         } catch (e) {
           console.error(e);
         }
       }
 
-      // fallback: fetch the url to get image data
-      if (!dataUri && options.url) {
-        try {
-          dataUri = await fetch(options.url, { mode: "cors" })
-            .then((r) => r.blob())
-            .then((blob) => {
-              return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-              });
-            });
-        } catch (e) {
-          console.error(e);
+      // 4. get capture params
+      if (!dataUri && originalImg) {
+        captureParams = getCaptureParams(originalImg);
+        if (captureParams) {
+          debugLog("Got params for screen capture", captureParams);
         }
       }
 
-      // finally, if none of the above methods work, try to screenshot
-      // the image via webextension api
-      // we only construct the parameters needed for capturing the images here
-      // the actual capturing is done elsewhere
-      if (!dataUri) {
-        const getNumber = (a) => parseFloat(a) || 0;
-        const getContentRect = (el) => {
-          const boundingClientRect = el.getBoundingClientRect();
-          const style = getComputedStyle(el);
-          return {
-            x:
-              boundingClientRect.x +
-              getNumber(style.borderLeftWidth) +
-              getNumber(style.paddingLeft),
-            y:
-              boundingClientRect.y +
-              getNumber(style.borderTopWidth) +
-              getNumber(style.paddingTop),
-            width:
-              boundingClientRect.width -
-              getNumber(style.borderLeftWidth) -
-              getNumber(style.borderRightWidth) -
-              getNumber(style.paddingLeft) -
-              getNumber(style.paddingRight),
-            height:
-              boundingClientRect.height -
-              getNumber(style.borderTopWidth) -
-              getNumber(style.borderBottomWidth) -
-              getNumber(style.paddingTop) -
-              getNumber(style.paddingBottom),
-          };
-        };
+      // 5. last resort, if the image is on a different origin and the crossOrigin attribute is not set
+      // create a new <img> with crossOrigin="anonyous"
+      if (!dataUri && !captureParams && options.url) {
+        const isSameOrigin =
+          window.location.origin === new URL(options.url).origin;
+        const isLoadedViaCors = originalImg.crossOrigin !== null;
 
-        let canCapture = true;
-        let rect = null;
-        let scroll = null;
+        if (!originalImg || (!isSameOrigin && !isLoadedViaCors)) {
+          const newImg = new Image();
+          newImg.crossOrigin = "anonymous";
+          newImg.src = options.url;
 
-        try {
-          rect = getContentRect(imgEl);
+          debugLog("Created new cross-origin <img> element");
 
-          let currWindow = window;
-          while (currWindow !== currWindow.parent) {
-            const frameRect = getContentRect(currWindow.frameElement);
-            rect.x += frameRect.x;
-            rect.y += frameRect.y;
-            currWindow = currWindow.parent;
+          try {
+            await waitForImgToLoad(newImg);
+            dataUri = imgToDataUri(newImg);
+          } catch (e) {
+            console.error(e);
           }
-
-          scroll = {
-            left: currWindow.scrollX,
-            top: currWindow.scrollY,
-          };
-        } catch (e) {
-          console.error(e);
-          canCapture === false;
-        }
-
-        if (canCapture && scroll && rect) {
-          rect.x = Math.ceil(rect.x);
-          rect.y = Math.ceil(rect.y);
-          rect.width = Math.floor(rect.width);
-          rect.height = Math.floor(rect.height);
-
-          captureParams = {
-            scroll,
-            rect,
-            devicePixelRatio: window.devicePixelRatio,
-          };
         }
       }
     } catch (e) {
@@ -190,7 +221,12 @@ const imageRetriever = (options) => {
 async function injectImageRetriever(options) {
   return await apiNs.scripting.executeScript({
     func: imageRetriever,
-    args: [options || {}],
+
+    args: [
+      options || {},
+      // eslint-disable-next-line no-undef
+      QRLITE_DEBUG,
+    ],
     target: {
       tabId: options.tabId,
       frameIds: [options.frameId],
@@ -209,6 +245,13 @@ function shouldUseImageRetriever(url, tabId, targetElementId) {
   return hasTarget;
 }
 
+const STATUS = {
+  UNINITIATED: 0,
+  LOADING: 1,
+  SUCCESS: 2,
+  FAILURE: 3,
+};
+
 export default function ImageScanner(props) {
   const [error, setError] = useState(null);
   const inputImgNode = useRef(null);
@@ -216,13 +259,14 @@ export default function ImageScanner(props) {
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useTemporaryState(false, 3000);
   const [imgSrc, setImgSrc] = useState(null);
-  const [loadingFailed, setLoadingFailed] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(STATUS.UNINITIATED);
 
   const receiveImageId = useRef(null);
   useEffect(() => {
     if (
       shouldUseImageRetriever(props.url, props.tabId, props.targetElementId)
     ) {
+      setLoadingStatus(STATUS.LOADING);
       receiveImageId.current = randomStr(10);
       const listener = (request) => {
         if (request.action === "POPUP_RECEIVE_IMAGE") {
@@ -232,19 +276,21 @@ export default function ImageScanner(props) {
           ) {
             if (request.image) {
               setImgSrc(request.image);
+              setLoadingStatus(STATUS.SUCCESS);
             } else if (request.captureParams) {
               apiNs.runtime
                 .sendMessage({ action: "BG_CAPTURE", ...request.captureParams })
                 .then((r) => {
                   setImgSrc(r.image);
+                  setLoadingStatus(STATUS.SUCCESS);
                 })
                 .catch(() => {
                   setError(T("unable_to_load_image"));
-                  setLoadingFailed(true);
+                  setLoadingStatus(STATUS.FAILURE);
                 });
             } else {
               setError(T("unable_to_load_image"));
-              setLoadingFailed(true);
+              setLoadingStatus(STATUS.FAILURE);
             }
             apiNs.runtime.onMessage.removeListener(listener);
           }
@@ -260,7 +306,7 @@ export default function ImageScanner(props) {
         id: receiveImageId.current,
       }).catch((e) => {
         console.error(e);
-        setLoadingFailed(true);
+        setLoadingStatus(STATUS.FAILURE);
       });
       return () => {
         apiNs.runtime.onMessage.removeListener(listener);
@@ -268,9 +314,10 @@ export default function ImageScanner(props) {
     } else {
       if (props.url) {
         setImgSrc(props.url);
+        setLoadingStatus(STATUS.SUCCESS);
       } else {
         setError(T("unable_to_load_image"));
-        setLoadingFailed(true);
+        setLoadingStatus(STATUS.FAILURE);
       }
     }
   }, [props.frameId, props.tabId, props.targetElementId, props.url]);
@@ -333,31 +380,51 @@ export default function ImageScanner(props) {
     }
   }, [result]);
 
+  if (
+    loadingStatus === STATUS.FAILURE ||
+    loadingStatus === STATUS.LOADING ||
+    loadingStatus === STATUS.UNINITIATED // show nothing
+  ) {
+    return (
+      <div
+        class="instructions instruction-screen"
+        style="width: 80%"
+        id="scanInstructions"
+      >
+        {loadingStatus === STATUS.LOADING && (
+          <p>
+            <span>{TT("loading_image")}</span>
+          </p>
+        )}
+        {loadingStatus === STATUS.FAILURE && (
+          <p>
+            <span>{TT("image_scanner_failed_to_load_image")}</span>
+            <br />
+            <br />
+            <a
+              class="clickable"
+              id="scanRegion"
+              onClick={() => {
+                apiNs.runtime.sendMessage({
+                  action: "BG_INJECT_PICKER_LOADER",
+                });
+                // close self (popup)
+                window.close();
+              }}
+            >
+              <img class="icon icon-invert" src="../icons/scan-region.svg" />
+              {TT("pick_region_to_scan_btn")}
+            </a>
+          </p>
+        )}
+      </div>
+    );
+  }
+
   return (
     <>
       <div class="input " id="scanInput">
         <div class="input-box">
-          {loadingFailed && (
-            <p class="instructions">
-              <span>{TT("image_scanner_failed_to_load_image")}</span>
-              <br />
-              <br />
-              <a
-                class="clickable"
-                id="scanRegion"
-                onClick={() => {
-                  apiNs.runtime.sendMessage({
-                    action: "BG_INJECT_PICKER_LOADER",
-                  });
-                  // close self (popup)
-                  window.close();
-                }}
-              >
-                <img class="icon icon-invert" src="../icons/scan-region.svg" />
-                {TT("pick_region_to_scan_btn")}
-              </a>
-            </p>
-          )}
           <QRPositionMarker
             result={result}
             width={inputImgNode.current?.width || 0}
