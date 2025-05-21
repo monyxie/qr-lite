@@ -1,7 +1,10 @@
-## [v3.4.0] - 2025-5-20
+## [v3.4.0] - 2025-5-21
 
 ### Added
 - Added the ability to click the QR code to change its style. 
+
+### Changed
+- Improved image loading logic. Now it can deal with more situations and handle errors more gracefully.
 
 ### Fixed
 - Minor UI fix. (580aa08)
