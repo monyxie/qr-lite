@@ -6,6 +6,62 @@ function rotate270(arr) {
   return [arr[1], arr[2], arr[3], arr[0]];
 }
 
+function liquid(context, x, y, boxSize) {
+  // context
+  // 0 1 2
+  // 3 4 5
+  // 6 7 8
+  if (context[4]) {
+    // center is set
+    const sr = 0.5;
+    const sweep = 1, arc = 1;
+    const r = [
+      context[0] || context[1] || context[3] ? 0 : sr,
+      context[1] || context[2] || context[5] ? 0 : sr,
+      context[5] || context[7] || context[8] ? 0 : sr,
+      context[3] || context[6] || context[7] ? 0 : sr,
+    ];
+    return (
+      `M ${x} ${y + r[0]}` +
+      `a ${arc * r[0]} ${arc * r[0]} 0 0 ${sweep} ${r[0]} ${-r[0]}` +
+      `l ${boxSize - r[0] - r[1]} 0` +
+      `a ${arc * r[1]} ${arc * r[1]} 0 0 ${sweep} ${r[1]} ${r[1]}` +
+      `l 0 ${boxSize - r[1] - r[2]}` +
+      `a ${arc * r[2]} ${arc * r[2]} 0 0 ${sweep} ${-r[2]} ${r[2]}` +
+      `l ${-(boxSize - r[2] - r[3])} 0` +
+      `a ${arc * r[3]} ${arc * r[3]} 0 0 ${sweep} ${-r[3]} ${-r[3]}` +
+      `Z`
+    );
+  } else {
+    let p = '';
+    const sr = 0.5;
+    const arc = 0.9;
+    const sweep = 1;
+    if (context[3] && context[1]) {
+      p += `M ${x} ${y + sr}` +
+        `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${sr} ${-sr}` +
+        `l ${-sr} 0 Z`
+    }
+    if (context[5] && context[1]) {
+      p += `M ${x + boxSize - sr} ${y}` +
+        `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${sr} ${sr}` +
+        `l 0 ${-sr} Z`
+    }
+    if (context[5] && context[7]) {
+      p += `M ${x + boxSize} ${y + boxSize - sr}` +
+        `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${-sr} ${sr}` +
+        `l ${sr} 0 Z`
+    }
+    if (context[3] && context[7]) {
+      p += `M ${x + sr} ${y + boxSize}` +
+        `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${-sr} ${-sr}` +
+        `l 0 ${sr} Z`
+    }
+
+    return p;
+  }
+}
+
 export const moduleStyles = {
   tiles: { radius: 0, margin: 0 },
   tiles_s: { radius: 0, margin: 0.1 },
@@ -13,6 +69,7 @@ export const moduleStyles = {
   rtiles_xs: { radius: 0.25, margin: 0.2 },
   rtiles_s: { radius: 0.25, margin: 0.1 },
   rtiles: { radius: 0.25, margin: 0 },
+  liquid,
   dots: { radius: 0.5, margin: 0 },
   dots_s: { radius: 0.5, margin: 0.1 },
   dots_xs: { radius: 0.5, margin: 0.2 },

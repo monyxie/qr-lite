@@ -6,6 +6,7 @@ import {
   QRCodeEncoder,
 } from "@zxing/library";
 import { finderStyles, moduleStyles } from "../../utils/qrcode-gen";
+import ByteMatrix from "@zxing/library/esm/core/qrcode/encoder/ByteMatrix";
 
 const arrayPlz = (a) => (a instanceof Array ? a : [a, a, a, a]);
 
@@ -21,7 +22,7 @@ const arrayPlz = (a) => (a instanceof Array ? a : [a, a, a, a]);
  * @returns
  */
 function generateShapeD(x, y, boxSize, drawSize, r, sweep, arc) {
-  console.log(arc.join(","));
+  // console.log(arc.join(","));
   const m = (boxSize - drawSize) / 2;
   // Below, the arc segments aren't always necessary for R=0
   // but we keep them so the CSS transition works smoothly when R changes.
@@ -204,52 +205,60 @@ function generateFinderElements(
 
 /**
  * Generates the SVG path string for the QR code modules.
- * @param {object} matrix - The QRCode matrix.
+ * @param {ByteMatrix} matrix - The QRCode matrix.
  * @param {number} quietZone - The quiet zone margin.
- * @param {object} opts - Options for module style {radius, margin}.
+ * @param {{radius: number|[number], margin: number, arc: number|[number], sweep: number|[number]}} opts - Options for module style
  * @returns {{d: string, S: number, R: number}} - Path data, module fill size, and module radius.
  */
 function generateModulePath(matrix, quietZone, opts) {
-  let { radius, margin, sweep, arc } = opts;
-  if (margin === undefined) {
-    margin = 0;
-  } else if (typeof margin !== "number") {
-    throw new Error("Invalid opts");
+  const normalizeOpts = (opts) => {
+    let { radius, margin, sweep, arc } = opts;
+    if (margin === undefined) {
+      margin = 0;
+    } else if (typeof margin !== "number") {
+      throw new Error("Invalid opts");
+    }
+
+    // validate and convert radius to absolute measures
+    if (radius === undefined) {
+      radius = arrayPlz(0);
+    } else if (typeof radius === "number") {
+      radius = arrayPlz(radius * (1 - 2 * margin));
+    } else if (radius instanceof Array) {
+      radius = radius.map((x) => x * (1 - 2 * margin));
+    } else {
+      throw new Error("Invalid opts");
+    }
+
+    if (sweep === undefined) {
+      sweep = arrayPlz(1);
+    } else if (typeof sweep === "number") {
+      sweep = arrayPlz(sweep);
+    } else if (sweep instanceof Array) {
+      // noop
+    } else {
+      throw new Error("Invalid opts");
+    }
+
+    if (arc === undefined) {
+      arc = arrayPlz(1);
+    } else if (typeof arc === "number") {
+      arc = arrayPlz(arc);
+    } else if (arc instanceof Array) {
+      // noop
+    } else {
+      throw new Error("Invalid opts");
+    }
+    return { radius, margin, sweep, arc };
   }
 
-  // validate and convert radius to absolute measures
-  if (radius === undefined) {
-    radius = arrayPlz(0);
-  } else if (typeof radius === "number") {
-    radius = arrayPlz(radius * (1 - 2 * margin));
-  } else if (radius instanceof Array) {
-    radius = radius.map((x) => x * (1 - 2 * margin));
-  } else {
-    throw new Error("Invalid opts");
-  }
-
-  if (sweep === undefined) {
-    sweep = arrayPlz(1);
-  } else if (typeof sweep === "number") {
-    sweep = arrayPlz(sweep);
-  } else if (sweep instanceof Array) {
-    // noop
-  } else {
-    throw new Error("Invalid opts");
-  }
-
-  if (arc === undefined) {
-    arc = arrayPlz(1);
-  } else if (typeof arc === "number") {
-    arc = arrayPlz(arc);
-  } else if (arc instanceof Array) {
-    // noop
-  } else {
-    throw new Error("Invalid opts");
+  if (typeof opts !== "function") {
+    opts = normalizeOpts(opts);
   }
 
   const matrixWidth = matrix.getWidth();
   const matrixHeight = matrix.getHeight();
+  const matrixArr = matrix.getArray();
 
   const shouldSkip = (x, y) =>
     (x < 7 && (y < 7 || y >= matrixHeight - 7)) ||
@@ -270,17 +279,37 @@ function generateModulePath(matrix, quietZone, opts) {
         continue;
       }
 
-      if (matrix.get(inputX, inputY) === 1) {
-        d += generateShapeD(
+      if (typeof opts === "function") {
+        d += opts(
+          [
+            matrixArr[inputY - 1]?.[inputX - 1] ?? 0,
+            matrixArr[inputY - 1]?.[inputX + 0] ?? 0,
+            matrixArr[inputY - 1]?.[inputX + 1] ?? 0,
+            matrixArr[inputY + 0]?.[inputX - 1] ?? 0,
+            matrixArr[inputY + 0]?.[inputX + 0] ?? 0,
+            matrixArr[inputY + 0]?.[inputX + 1] ?? 0,
+            matrixArr[inputY + 1]?.[inputX - 1] ?? 0,
+            matrixArr[inputY + 1]?.[inputX + 0] ?? 0,
+            matrixArr[inputY + 1]?.[inputX + 1] ?? 0,
+          ],
           outputX,
           outputY,
-          1,
-          1 - margin * 2,
-          radius,
-          sweep,
-          arc
+          1
         );
+      } else {
+        if (matrixArr[inputY][inputX] === 1) {
+          d += generateShapeD(
+            outputX,
+            outputY,
+            1,
+            1 - opts.margin * 2,
+            opts.radius,
+            opts.sweep,
+            opts.arc
+          );
+        }
       }
+
     }
   }
   return d;
@@ -334,12 +363,13 @@ const QRCodeSVG = forwardRef(function QRCodeSVG(
         throw new Error("Error generating QR Code matrix.");
       }
 
-      const currentModuleOpts =
-        moduleStyles[moduleStyleName] ||
-        moduleStyles[Object.keys(moduleStyles)[0]];
-      const currentFinderOpts =
-        finderStyles[finderStyleName] ||
-        finderStyles[Object.keys(finderStyles)[0]];
+      const moduleStyle = (moduleStyleName && moduleStyles[moduleStyleName]) ? moduleStyleName : Object.keys(moduleStyles)[0];
+      const finderStyle = (finderStyleName && finderStyles[finderStyleName]) ? finderStyleName : Object.keys(finderStyles)[0];
+
+      console.log(`Using module style "${moduleStyle}" finder style "${finderStyle}"`);
+
+      const currentModuleOpts = moduleStyles[moduleStyleName]
+      const currentFinderOpts = finderStyles[finderStyleName]
 
       const modulePath = generateModulePath(
         matrix,
