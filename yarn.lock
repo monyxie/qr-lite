@@ -3735,10 +3735,10 @@ postcss@^8.4.33:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-preact@^10.26.5:
-  version "10.26.5"
-  resolved "https://registry.npmmirror.com/preact/-/preact-10.26.5.tgz#7e1e998af178f139e4c7cb53f441bf2179f44ad2"
-  integrity sha512-fmpDkgfGU6JYux9teDWLhj9mKN55tyepwYbxHgQuIxbWQzgFg5vk7Mrrtfx7xRxq798ynkY4DDDxZr235Kk+4w==
+preact@^10.26.10:
+  version "10.26.10"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.26.10.tgz#9d26a980514c97f196b218a164b522d2d5a4d1f8"
+  integrity sha512-sqdfdSa8AZeJ+wfMYjFImIRTnhfyPSLCH+LEb1+BoRUDKLnE6AnvZeClx3Bkj2Q9nn44GFAefOKIx5oc54q93A==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
