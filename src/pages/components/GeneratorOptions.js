@@ -16,9 +16,9 @@ function GeneratorOptions() {
 
   return (
     <div class="generator-options">
-      <span title={T("error_correction_level_label_title")}>
+      <label title={T("error_correction_level_label_title")}>
         {TT("error_correction_level_label")}
-      </span>
+      </label>
       <span id="ecLevels" class="ec-levels-container">
         {ecLevels.map(([level, title]) => (
           <span
@@ -34,9 +34,9 @@ function GeneratorOptions() {
           </span>
         ))}
       </span>
-      <span title={T("finder_style_label_title")}>
+      <label title={T("finder_style_label_title")}>
         {TT("finder_style_label")}
-      </span>
+      </label>
       <select value={settings?.qrCodeFinderStyle || "default"} onChange={(e) => saveSettings({
         qrCodeFinderStyle: e.target.value,
       })}>
@@ -44,9 +44,9 @@ function GeneratorOptions() {
           <option key={name} value={name}>{name}</option>
         ))}
       </select>
-      <span title={T("module_style_label_title")}>
+      <label title={T("module_style_label_title")}>
         {TT("module_style_label")}
-      </span>
+      </label>
       <select value={settings?.qrCodeModuleStyle || "default"} onChange={(e) => saveSettings({
         qrCodeModuleStyle: e.target.value,
       })}>

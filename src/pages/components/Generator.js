@@ -208,7 +208,7 @@ const Generator = forwardRef(function Generator(props, ref) {
         </div>
         <div class="necker">
           <span class="clickable" onClick={() => { setShowGeneratorOptions(!showGeneratorOptions) }}>
-            <img class="icon icon-invert" src="../icons/wrench.svg" />
+            <img class="icon icon-invert" src={showGeneratorOptions ? "../icons/close.svg" : "../icons/wrench.svg"} />
             {showGeneratorOptions ? T("hide_generator_options_btn_label") : T("show_generator_options_btn_label")}
           </span>
         </div>

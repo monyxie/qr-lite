@@ -81,6 +81,7 @@ body {
   justify-content: start;
   align-items: center;
   flex: 1 1 auto;
+  max-height: 538px;
 }
 
 .main .source {
@@ -150,11 +151,17 @@ body {
   gap: var(--gap);
   grid-template-columns: 1fr 1fr;
   color: var(--text-primary-color);
+  font-size: 12px;
+}
+
+.main .generator-options label {
+  text-align: right;
 }
 
 .main .generator-options select {
   color: var(--text-primary-color);
   background-color: var(--input-bg-color);
+  border: 1px solid var(--input-border-color);
 }
 
 .main .generator-options select:focus {
