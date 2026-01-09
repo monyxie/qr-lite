@@ -61,7 +61,13 @@
     "message": "Diesen Eintrag aus dem Verlauf entfernen"
   },
   "github_link_title": {
-    "message": "Die QR Lite-Projektseite auf Github anzeigen"
+    "message": "QR Lite-Projektseite auf Github besuchen"
+  },
+  "show_generator_options_btn_label": {
+    "message": "Optionen anzeigen"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Optionen ausblenden"
   },
   "error_correction_level_btn_low_title": {
     "message": "Niedrig, 7 % der Datenbytes können wiederhergestellt werden"
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "Länge des QR-Code-Inhalts in Zeichen"
+  },
+  "finder_style_label": {
+    "message": "Finder-Stil:"
+  },
+  "finder_style_label_title": {
+    "message": "Einen Stil für die Finder-Muster (die drei Eckmarkierungen) auswählen"
+  },
+  "module_style_label": {
+    "message": "Modul-Stil:"
+  },
+  "module_style_label_title": {
+    "message": "Einen Stil für die Datenmodule auswählen"
   },
   "content_length_label": {
     "message": "Länge:"

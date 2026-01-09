@@ -62,6 +62,12 @@
   "github_link_title": {
     "message": "Visit QR Lite's project page on Github"
   },
+  "show_generator_options_btn_label": {
+    "message": "Show options"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Hide options"
+  },
   "error_correction_level_btn_low_title": {
     "message": "Low, 7% of data bytes can be restored"
   },
@@ -79,6 +85,18 @@
   },
   "error_correction_level_label_title": {
     "message": "Error correction level"
+  },
+  "finder_style_label": {
+    "message": "Finder style:"
+  },
+  "finder_style_label_title": {
+    "message": "Select a style for the finder patterns (the three corner markers)"
+  },
+  "module_style_label": {
+    "message": "Module style:"
+  },
+  "module_style_label_title": {
+    "message": "Select a style for the data modules"
   },
   "content_length_label_title": {
     "message": "Length of the QR code content in characters"

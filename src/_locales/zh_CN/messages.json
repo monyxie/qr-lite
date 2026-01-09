@@ -48,6 +48,12 @@
   "github_link_title": {
     "message": "访问 QR Lite 在 Github 上的项目主页"
   },
+  "show_generator_options_btn_label": {
+    "message": "显示选项"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "隐藏选项"
+  },
   "error_correction_level_btn_low_title": {
     "message": "低，可以恢复 7% 左右的数据"
   },
@@ -68,6 +74,18 @@
   },
   "content_length_label_title": {
     "message": "二维码内容长度，以字符数计"
+  },
+  "finder_style_label": {
+    "message": "查找器样式:"
+  },
+  "finder_style_label_title": {
+    "message": "为查找器图案（三个角标记）选择样式"
+  },
+  "module_style_label": {
+    "message": "模块样式:"
+  },
+  "module_style_label_title": {
+    "message": "为数据模块选择样式"
   },
   "content_length_label": {
     "message": "长度:"

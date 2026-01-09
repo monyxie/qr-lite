@@ -48,6 +48,12 @@
   "github_link_title": {
     "message": "QR LiteのGithub上のプロジェクトページを訪問する"
   },
+  "show_generator_options_btn_label": {
+    "message": "オプションを表示"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "オプションを非表示"
+  },
   "error_correction_level_btn_low_title": {
     "message": "低、データバイトの7%を復元できます"
   },
@@ -67,7 +73,19 @@
     "message": "エラー訂正レベル"
   },
   "content_length_label_title": {
-    "message": "QRコードのコンテンツの文字数"
+    "message": "QRコードのコンテンツ長（文字数）"
+  },
+  "finder_style_label": {
+    "message": "ファインダースタイル:"
+  },
+  "finder_style_label_title": {
+    "message": "ファインダーパターン（3つの隅のマーカー）のスタイルを選択"
+  },
+  "module_style_label": {
+    "message": "モジュールスタイル:"
+  },
+  "module_style_label_title": {
+    "message": "データモジュールのスタイルを選択"
   },
   "content_length_label": {
     "message": "長さ:"

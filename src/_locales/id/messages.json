@@ -61,7 +61,13 @@
     "message": "Hapus entri ini dari riwayat"
   },
   "github_link_title": {
-    "message": "Lihat halaman proyek QR Lite di Github"
+    "message": "Kunjungi halaman proyek QR Lite di Github"
+  },
+  "show_generator_options_btn_label": {
+    "message": "Tampilkan opsi"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Sembunyikan opsi"
   },
   "error_correction_level_btn_low_title": {
     "message": "Rendah, 7% byte data dapat dipulihkan"
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "Panjang konten kode QR dalam karakter"
+  },
+  "finder_style_label": {
+    "message": "Gaya finder:"
+  },
+  "finder_style_label_title": {
+    "message": "Pilih gaya untuk pola finder (tiga penanda sudut)"
+  },
+  "module_style_label": {
+    "message": "Gaya modul:"
+  },
+  "module_style_label_title": {
+    "message": "Pilih gaya untuk modul data"
   },
   "content_length_label": {
     "message": "Panjang:"

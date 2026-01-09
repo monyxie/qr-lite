@@ -48,6 +48,12 @@
   "github_link_title": {
     "message": "造訪 QR Lite 在 Github 上的專案主頁"
   },
+  "show_generator_options_btn_label": {
+    "message": "顯示選項"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "隱藏選項"
+  },
   "error_correction_level_btn_low_title": {
     "message": "低，可以恢復 7% 左右的資料"
   },
@@ -67,7 +73,19 @@
     "message": "糾錯級別"
   },
   "content_length_label_title": {
-    "message": "二維碼內容的長度（以字元為單位）"
+    "message": "二維碼內容長度，以字元數計"
+  },
+  "finder_style_label": {
+    "message": "尋找器樣式:"
+  },
+  "finder_style_label_title": {
+    "message": "為尋找器圖案（三個角標記）選擇樣式"
+  },
+  "module_style_label": {
+    "message": "模組樣式:"
+  },
+  "module_style_label_title": {
+    "message": "為資料模組選擇樣式"
   },
   "content_length_label": {
     "message": "長度:"

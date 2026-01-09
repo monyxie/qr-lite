@@ -63,6 +63,12 @@
   "github_link_title": {
     "message": "عرض صفحة مشروع QR Lite على Github"
   },
+  "show_generator_options_btn_label": {
+    "message": "عرض الخيارات"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "إخفاء الخيارات"
+  },
   "error_correction_level_btn_low_title": {
     "message": "منخفض، يمكن استعادة 7٪ من بايتات البيانات"
   },
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "طول محتوى رمز QR بالأحرف"
+  },
+  "finder_style_label": {
+    "message": "نمط الباحث:"
+  },
+  "finder_style_label_title": {
+    "message": "اختر نمطًا لأنماط الباحث (العلامات الثلاث في الزوايا)"
+  },
+  "module_style_label": {
+    "message": "نمط الوحدة:"
+  },
+  "module_style_label_title": {
+    "message": "اختر نمطًا لوحدات البيانات"
   },
   "content_length_label": {
     "message": "الطول:"

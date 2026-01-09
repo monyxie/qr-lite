@@ -61,7 +61,13 @@
     "message": "Xóa mục này khỏi lịch sử"
   },
   "github_link_title": {
-    "message": "Xem trang dự án QR Lite trên Github"
+    "message": "Truy cập trang dự án QR Lite trên Github"
+  },
+  "show_generator_options_btn_label": {
+    "message": "Hiển thị tùy chọn"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Ẩn tùy chọn"
   },
   "error_correction_level_btn_low_title": {
     "message": "Thấp, có thể khôi phục 7% byte dữ liệu"
@@ -82,7 +88,19 @@
     "message": "Mức độ sửa lỗi"
   },
   "content_length_label_title": {
-    "message": "Độ dài nội dung mã QR tính bằng ký tự"
+    "message": "Độ dài nội dung mã QR theo ký tự"
+  },
+  "finder_style_label": {
+    "message": "Kiểu dò tìm:"
+  },
+  "finder_style_label_title": {
+    "message": "Chọn kiểu cho các mẫu dò tìm (ba dấu góc)"
+  },
+  "module_style_label": {
+    "message": "Kiểu mô-đun:"
+  },
+  "module_style_label_title": {
+    "message": "Chọn kiểu cho các mô-đun dữ liệu"
   },
   "content_length_label": {
     "message": "Độ dài:"
@@ -274,10 +292,10 @@
     "message": "Trình tạo Mã QR"
   },
   "tab_settings_title": {
-    "message": "Thay đổi cài đặt của QR Lite"
+    "message": "Thay đổi cài đặt QR Lite"
   },
   "settings_config_keyboard_shortcuts_btn_label": {
-    "message": "Cấu hình Phím tắt Bàn phím"
+    "message": "Cấu hình Phím tắt"
   },
   "unable_to_access_camera_unknown_error": {
     "message": "Không thể truy cập camera. Đã xảy ra lỗi không mong muốn."
@@ -301,6 +319,6 @@
     "message": "Không thể tải hình ảnh. Nguồn của nó có thể không thể truy cập hoặc bị hạn chế. Hãy thử quét một vùng của màn hình thay thế."
   },
   "loading_image": {
-    "message": "Đang tải hình ảnh..."
+    "message": "Đang tải ảnh..."
   }
 }

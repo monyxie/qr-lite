@@ -63,6 +63,12 @@
   "github_link_title": {
     "message": "Ver la página del proyecto QR Lite en Github"
   },
+  "show_generator_options_btn_label": {
+    "message": "Mostrar opciones"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Ocultar opciones"
+  },
   "error_correction_level_btn_low_title": {
     "message": "Bajo, se pueden restaurar el 7% de los bytes de datos"
   },
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "Longitud del contenido del código QR en caracteres"
+  },
+  "finder_style_label": {
+    "message": "Estilo de buscador:"
+  },
+  "finder_style_label_title": {
+    "message": "Seleccionar un estilo para los patrones de buscador (los tres marcadores de esquina)"
+  },
+  "module_style_label": {
+    "message": "Estilo de módulo:"
+  },
+  "module_style_label_title": {
+    "message": "Seleccionar un estilo para los módulos de datos"
   },
   "content_length_label": {
     "message": "Longitud:"

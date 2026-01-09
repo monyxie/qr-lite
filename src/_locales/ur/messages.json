@@ -61,7 +61,13 @@
     "message": "اس اندراج کو تاریخ سے ہٹائیں"
   },
   "github_link_title": {
-    "message": "Github پر QR Lite کا پروجیکٹ پیج دیکھیں"
+    "message": "QR Lite کی Github پروجیکٹ پیج ملاحظہ کریں"
+  },
+  "show_generator_options_btn_label": {
+    "message": "آپشن دکھائیں"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "آپشن چھپائیں"
   },
   "error_correction_level_btn_low_title": {
     "message": "کم، 7% ڈیٹا بائٹس بحال کیے جا سکتے ہیں"
@@ -82,7 +88,19 @@
     "message": "غلطی کی اصلاح کی سطح"
   },
   "content_length_label_title": {
-    "message": "QR کوڈ مواد کی حروف میں لمبائی"
+    "message": "QR کوڈ کے مواد کی لمبائی حروف میں"
+  },
+  "finder_style_label": {
+    "message": "فائنڈر اسٹائل:"
+  },
+  "finder_style_label_title": {
+    "message": "فائنڈر پیٹرنز (تین کونے کے نشان) کے لیے اسٹائل منتخب کریں"
+  },
+  "module_style_label": {
+    "message": "ماڈیول اسٹائل:"
+  },
+  "module_style_label_title": {
+    "message": "ڈیٹا ماڈیولز کے لیے اسٹائل منتخب کریں"
   },
   "content_length_label": {
     "message": "لمبائی:"
@@ -277,7 +295,7 @@
     "message": "QR Lite کی ترتیبات تبدیل کریں"
   },
   "settings_config_keyboard_shortcuts_btn_label": {
-    "message": "کی بورڈ شارٹ کٹس ترتیب دیں"
+    "message": "کی بورڈ شارٹ کٹس تشکیل دیں"
   },
   "unable_to_access_camera_unknown_error": {
     "message": "کیمرہ تک رسائی حاصل کرنے سے قاصر۔ ایک غیر متوقع خرابی پیش آئی۔"
@@ -301,6 +319,6 @@
     "message": "تصویر لوڈ کرنے میں ناکام۔ اس کا ماخذ ناقابل رسائی یا محدود ہو سکتا ہے۔ اس کے بجائے اسکرین کے کسی حصے کو اسکین کرنے کی کوشش کریں۔"
   },
   "loading_image": {
-    "message": "تصویر لوڈ ہو رہی ہے۔۔۔"
+    "message": "امیج لوڈ ہو رہی ہے..."
   }
 }

@@ -61,7 +61,13 @@
     "message": "इस प्रविष्टि को इतिहास से हटाएं"
   },
   "github_link_title": {
-    "message": "Github पर QR Lite का प्रोजेक्ट पेज देखें"
+    "message": "QR Lite की Github प्रोजेक्ट पृष्ठ पर जाएं"
+  },
+  "show_generator_options_btn_label": {
+    "message": "विकल्प दिखाएं"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "विकल्प छिपाएं"
   },
   "error_correction_level_btn_low_title": {
     "message": "कम, 7% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
@@ -82,7 +88,19 @@
     "message": "त्रुटि सुधार स्तर"
   },
   "content_length_label_title": {
-    "message": "QR कोड सामग्री की अक्षरों में लंबाई"
+    "message": "क्यूआर कोड सामग्री की लंबाई अक्षरों में"
+  },
+  "finder_style_label": {
+    "message": "फाइंडर शैली:"
+  },
+  "finder_style_label_title": {
+    "message": "फाइंडर पैटर्न के लिए एक शैली चुनें (तीन कोने के मार्कर)"
+  },
+  "module_style_label": {
+    "message": "मॉड्यूल शैली:"
+  },
+  "module_style_label_title": {
+    "message": "डेटा मॉड्यूल के लिए एक शैली चुनें"
   },
   "content_length_label": {
     "message": "लंबाई:"

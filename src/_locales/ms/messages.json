@@ -61,7 +61,13 @@
     "message": "Buang entri ini daripada sejarah"
   },
   "github_link_title": {
-    "message": "Lihat halaman projek QR Lite di Github"
+    "message": "Lawati halaman projek QR Lite di Github"
+  },
+  "show_generator_options_btn_label": {
+    "message": "Tunjuk pilihan"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Sembunyikan pilihan"
   },
   "error_correction_level_btn_low_title": {
     "message": "Rendah, 7% daripada bait data boleh dipulihkan"
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "Panjang kandungan kod QR dalam aksara"
+  },
+  "finder_style_label": {
+    "message": "Gaya pencari:"
+  },
+  "finder_style_label_title": {
+    "message": "Pilih gaya untuk corak pencari (tiga penanda sudut)"
+  },
+  "module_style_label": {
+    "message": "Gaya modul:"
+  },
+  "module_style_label_title": {
+    "message": "Pilih gaya untuk modul data"
   },
   "content_length_label": {
     "message": "Panjang:"

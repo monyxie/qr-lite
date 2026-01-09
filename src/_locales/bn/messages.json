@@ -61,7 +61,13 @@
     "message": "ইতিহাস থেকে এই এন্ট্রিটি সরান"
   },
   "github_link_title": {
-    "message": "Github-এ QR Lite-এর প্রকল্প পৃষ্ঠা দেখুন"
+    "message": "QR Lite-এর Github প্রকল্প পৃষ্ঠায় ভিজিট করুন"
+  },
+  "show_generator_options_btn_label": {
+    "message": "বিকল্প দেখান"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "বিকল্প লুকান"
   },
   "error_correction_level_btn_low_title": {
     "message": "নিম্ন, 7% ডেটা বাইট পুনরুদ্ধার করা যেতে পারে"
@@ -82,7 +88,19 @@
     "message": "ত্রুটি সংশোধন স্তর"
   },
   "content_length_label_title": {
-    "message": "অক্ষরে QR কোড সামগ্রীর দৈর্ঘ্য"
+    "message": "কিউআর কোডের বিষয়বস্তুর দৈর্ঘ্য অক্ষরে"
+  },
+  "finder_style_label": {
+    "message": "ফাইন্ডার স্টাইল:"
+  },
+  "finder_style_label_title": {
+    "message": "ফাইন্ডার প্যাটার্নের জন্য একটি স্টাইল নির্বাচন করুন (তিনটি কোণার মার্কার)"
+  },
+  "module_style_label": {
+    "message": "মডিউল স্টাইল:"
+  },
+  "module_style_label_title": {
+    "message": "ডেটা মডিউলের জন্য একটি স্টাইল নির্বাচন করুন"
   },
   "content_length_label": {
     "message": "দৈর্ঘ্য:"

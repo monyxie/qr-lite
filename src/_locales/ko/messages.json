@@ -61,7 +61,13 @@
     "message": "기록에서 이 항목 삭제"
   },
   "github_link_title": {
-    "message": "Github에서 QR Lite 프로젝트 페이지 보기"
+    "message": "QR Lite의 Github 프로젝트 페이지 방문"
+  },
+  "show_generator_options_btn_label": {
+    "message": "옵션 표시"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "옵션 숨기기"
   },
   "error_correction_level_btn_low_title": {
     "message": "낮음, 데이터 바이트의 7% 복구 가능"
@@ -82,7 +88,19 @@
     "message": "오류 수정 수준"
   },
   "content_length_label_title": {
-    "message": "문자 단위 QR 코드 콘텐츠 길이"
+    "message": "QR 코드 콘텐츠 길이(문자 수)"
+  },
+  "finder_style_label": {
+    "message": "파인더 스타일:"
+  },
+  "finder_style_label_title": {
+    "message": "파인더 패턴(세 모서리 마커)의 스타일 선택"
+  },
+  "module_style_label": {
+    "message": "모듈 스타일:"
+  },
+  "module_style_label_title": {
+    "message": "데이터 모듈의 스타일 선택"
   },
   "content_length_label": {
     "message": "길이:"
@@ -274,7 +292,7 @@
     "message": "QR 코드 생성기"
   },
   "tab_settings_title": {
-    "message": "QR Lite의 설정 변경"
+    "message": "QR Lite 설정 변경"
   },
   "settings_config_keyboard_shortcuts_btn_label": {
     "message": "키보드 단축키 구성"
@@ -301,6 +319,6 @@
     "message": "이미지를 로드하지 못했습니다. 소스에 액세스할 수 없거나 제한되었을 수 있습니다. 대신 화면 영역을 스캔해 보십시오."
   },
   "loading_image": {
-    "message": "이미지 로드 중..."
+    "message": "이미지 로딩 중..."
   }
 }

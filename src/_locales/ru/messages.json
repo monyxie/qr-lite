@@ -61,7 +61,13 @@
     "message": "Удалить эту запись из истории"
   },
   "github_link_title": {
-    "message": "Посмотреть страницу проекта QR Lite на Github"
+    "message": "Посетить страницу проекта QR Lite на Github"
+  },
+  "show_generator_options_btn_label": {
+    "message": "Показать опции"
+  },
+  "hide_generator_options_btn_label": {
+    "message": "Скрыть опции"
   },
   "error_correction_level_btn_low_title": {
     "message": "Низкий, можно восстановить 7% байтов данных"
@@ -83,6 +89,18 @@
   },
   "content_length_label_title": {
     "message": "Длина содержимого QR-кода в символах"
+  },
+  "finder_style_label": {
+    "message": "Стиль искателя:"
+  },
+  "finder_style_label_title": {
+    "message": "Выбрать стиль для паттернов искателя (три угловых маркера)"
+  },
+  "module_style_label": {
+    "message": "Стиль модуля:"
+  },
+  "module_style_label_title": {
+    "message": "Выбрать стиль для модулей данных"
   },
   "content_length_label": {
     "message": "Длина:"
