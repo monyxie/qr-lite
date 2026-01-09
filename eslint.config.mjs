@@ -15,7 +15,7 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([
-  globalIgnores(["src/opencv/"]),
+  globalIgnores(["src/opencv/", "release/", "promo/", "scripts/", "opencv/", "dist/"]),
   {
     extends: fixupConfigRules(
       compat.extends(

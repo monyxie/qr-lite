@@ -111,6 +111,7 @@ html {
   .divider {
     color: #777;
   }
+
   .divider::before,
   .divider::after {
     background-color: rgb(45, 45, 45);
@@ -140,6 +141,7 @@ canvas {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

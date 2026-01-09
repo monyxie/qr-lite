@@ -33,37 +33,37 @@ function liquid(context, x, y, boxSize) {
       `Z`
     );
   } else {
-    let p = '';
+    let d = '';
     const sr = 0.5;
     const arc = 0.9;
     const sweep = 1;
     if (context[3] && context[1]) {
-      p += `M ${x} ${y + sr}` +
+      d += `M ${x} ${y + sr}` +
         `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${sr} ${-sr}` +
         `l ${-sr} 0 Z`
     }
     if (context[5] && context[1]) {
-      p += `M ${x + boxSize - sr} ${y}` +
+      d += `M ${x + boxSize - sr} ${y}` +
         `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${sr} ${sr}` +
         `l 0 ${-sr} Z`
     }
     if (context[5] && context[7]) {
-      p += `M ${x + boxSize} ${y + boxSize - sr}` +
+      d += `M ${x + boxSize} ${y + boxSize - sr}` +
         `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${-sr} ${sr}` +
         `l ${sr} 0 Z`
     }
     if (context[3] && context[7]) {
-      p += `M ${x + sr} ${y + boxSize}` +
+      d += `M ${x + sr} ${y + boxSize}` +
         `a ${arc * sr} ${arc * sr} 0 0 ${sweep} ${-sr} ${-sr}` +
         `l 0 ${sr} Z`
     }
 
-    return p;
+    return d;
   }
 }
 
 export const moduleStyles = {
-  tiles: { radius: 0, margin: 0 },
+  default: { radius: 0, margin: 0 },
   tiles_s: { radius: 0, margin: 0.1 },
   tiles_xs: { radius: 0, margin: 0.2 },
   rtiles_xs: { radius: 0.25, margin: 0.2 },

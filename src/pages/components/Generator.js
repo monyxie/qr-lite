@@ -22,6 +22,7 @@ import { debouncer } from "../../utils/misc";
 import { addHistory } from "../../utils/history";
 import QRCodeSVG from "./QRCodeSVG";
 import { finderStyleNames, moduleStyleNames } from "../../utils/qrcode-gen";
+import GeneratorOptions from "./GeneratorOptions";
 
 /**
  * @returns {Promise<HTMLCanvasElement>}
@@ -97,6 +98,7 @@ const Generator = forwardRef(function Generator(props, ref) {
   const resultNode = useRef(null);
   const addHistoryDebouncer = useRef(debouncer(1000));
   const isDarkMode = useMatchMedia("(prefers-color-scheme: dark)");
+  const [showGeneratorOptions, setShowGeneratorOptions] = useState(false);
 
   useImperativeHandle(ref, () => ({
     setContentAndTitle: (content, title) => {
@@ -142,39 +144,6 @@ const Generator = forwardRef(function Generator(props, ref) {
     settings?.qrCodeModuleStyle,
   ]);
 
-  const handleClickFinders = useCallback(
-    (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const currentIndex = finderStyleNames.indexOf(
-        settings?.qrCodeFinderStyle
-      );
-      const nextIndex = (currentIndex + 1) % finderStyleNames.length;
-      const newStyleName = finderStyleNames[nextIndex];
-
-      saveSettings({
-        qrCodeFinderStyle: newStyleName,
-      });
-    },
-    [saveSettings, settings?.qrCodeFinderStyle]
-  );
-
-  const handleClickModules = useCallback(
-    (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      const currentIndex = moduleStyleNames.indexOf(
-        settings?.qrCodeModuleStyle
-      );
-      const nextIndex = (currentIndex + 1) % moduleStyleNames.length;
-      const newStyleName = moduleStyleNames[nextIndex];
-      saveSettings({
-        qrCodeModuleStyle: newStyleName,
-      });
-    },
-    [saveSettings, settings?.qrCodeModuleStyle]
-  );
-
   const handleClickDownload = useCallback(() => {
     downloadImage(
       content,
@@ -189,13 +158,6 @@ const Generator = forwardRef(function Generator(props, ref) {
     title,
   ]);
 
-  const ecLevels = [
-    ["L", T("error_correction_level_btn_low_title")],
-    ["M", T("error_correction_level_btn_medium_title")],
-    ["Q", T("error_correction_level_btn_quartile_title")],
-    ["H", T("error_correction_level_btn_high_title")],
-  ];
-
   // handle dark mode & related settings
   const resultBoxStyles = {
     backgroundColor:
@@ -206,7 +168,6 @@ const Generator = forwardRef(function Generator(props, ref) {
       isDarkMode && !settings?.whiteOnBlackQRCodeInDarkMode
         ? "0 0 10px rgb(0, 84, 0) inset"
         : "none",
-    cursor: "pointer",
   };
   const svgProps =
     isDarkMode && settings?.whiteOnBlackQRCodeInDarkMode
@@ -245,31 +206,16 @@ const Generator = forwardRef(function Generator(props, ref) {
             </span>
           </span>
         </div>
-        <div class="necker ec-view">
-          <span title={T("error_correction_level_label_title")}>
-            {TT("error_correction_level_label")}
-          </span>
-          <span id="ecLevels" class="ec-levels-container">
-            {ecLevels.map(([level, title]) => (
-              <span
-                key={level}
-                class={
-                  "clickable ec-level " +
-                  (settings?.ecLevel === level ? "ec-level-active" : "")
-                }
-                title={title}
-                onClick={() => saveSettings({ ecLevel: level })}
-              >
-                {level}
-              </span>
-            ))}
+        <div class="necker">
+          <span class="clickable" onClick={() => { setShowGeneratorOptions(!showGeneratorOptions) }}>
+            <img class="icon icon-invert" src="../icons/wrench.svg" />
+            {showGeneratorOptions ? T("hide_generator_options_btn_label") : T("show_generator_options_btn_label")}
           </span>
         </div>
       </div>
+      {showGeneratorOptions && <GeneratorOptions onClose={() => { setShowGeneratorOptions(false) }} />}
       <div class="result" id="result" ref={resultNode} style={resultBoxStyles}>
         <QRCodeSVG
-          onClickFinders={handleClickFinders}
-          onClick={handleClickModules}
           finderStyle={settings?.qrCodeFinderStyle || finderStyleNames[0]}
           moduleStyle={settings?.qrCodeModuleStyle || moduleStyleNames[0]}
           content={content}

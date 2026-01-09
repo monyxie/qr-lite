@@ -5,12 +5,9 @@
 }
 
 body {
-  background: linear-gradient(
-      var(--bg-gradient) 0%,
+  background: linear-gradient(var(--bg-gradient) 0%,
       var(--bg) 33%,
-      var(--bg-gradient-end) 100%
-    )
-    no-repeat;
+      var(--bg-gradient-end) 100%) no-repeat;
   margin: 0;
   padding: 0;
   width: 400px;
@@ -49,8 +46,8 @@ body {
   justify-content: space-between;
 }
 
-.necker-container > *,
-.footer-container > * {
+.necker-container>*,
+.footer-container>* {
   font-size: 14px;
   font-family: sans-serif;
   padding: 2px 0;
@@ -66,12 +63,15 @@ body {
 .footer-container .actions1 {
   text-align: left;
 }
+
 .footer-container .actions2 {
   text-align: center;
 }
+
 .footer-container .actions3 {
   text-align: right;
 }
+
 /* main tab */
 
 .main {
@@ -113,10 +113,11 @@ body {
   width: 100%;
 }
 
-.main .result > svg {
+.main .result>svg {
   height: 100%;
   width: auto;
 }
+
 @media (prefers-color-scheme: dark) {
   .main .result {
     background: rgba(255, 255, 255, 1);
@@ -142,6 +143,22 @@ body {
   cursor: default;
   font-weight: bolder;
   text-decoration: none;
+}
+
+.main .generator-options {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr 1fr;
+  color: var(--text-primary-color);
+}
+
+.main .generator-options select {
+  color: var(--text-primary-color);
+  background-color: var(--input-bg-color);
+}
+
+.main .generator-options select:focus {
+  outline: var(--input-focus-border-color) 2px solid;
 }
 
 /* history tab */
@@ -190,7 +207,7 @@ body {
   white-space: nowrap;
 }
 
-.history .history-items li > img {
+.history .history-items li>img {
   height: 1rem;
   width: 1rem;
   vertical-align: middle;
@@ -283,9 +300,11 @@ body {
   resize: none;
   background-color: var(--input-bg-color);
   box-sizing: border-box;
+
   &.error {
     border-color: #f33;
     font-family: monospace;
+
     &::placeholder {
       color: #f33;
     }
@@ -296,9 +315,11 @@ body {
   .scan .input-wrapper {
     box-shadow: rgb(0, 0, 0) 2px 2px 8px;
   }
+
   .scan .output {
     &.error {
       border-color: #f66;
+
       &::placeholder {
         color: #f66;
       }
@@ -410,9 +431,11 @@ body {
     border-color: #333;
     color: #888;
   }
+
   .tabs-item:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }
+
   .tabs-item.active {
     background-color: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.5);
