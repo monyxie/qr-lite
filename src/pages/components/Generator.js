@@ -91,7 +91,7 @@ const downloadImage = (content, title, moduleStyle, finderStyle) => {
 };
 
 const Generator = forwardRef(function Generator(props, ref) {
-  const { settings, saveSettings } = useSettingsContext();
+  const { settings } = useSettingsContext();
   const [content, setContent] = useState(props.content || "");
   const [title, setTitle] = useState(props.title || "");
   const [copied, setCopied] = useTemporaryState(false, 3000);

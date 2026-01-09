@@ -6,7 +6,6 @@ import {
   QRCodeEncoder,
 } from "@zxing/library";
 import { finderStyles, moduleStyles } from "../../utils/qrcode-gen";
-import ByteMatrix from "@zxing/library/esm/core/qrcode/encoder/ByteMatrix";
 
 const arrayPlz = (a) => (a instanceof Array ? a : [a, a, a, a]);
 
@@ -205,7 +204,7 @@ function generateFinderElements(
 
 /**
  * Generates the SVG path string for the QR code modules.
- * @param {ByteMatrix} matrix - The QRCode matrix.
+ * @param {import("@zxing/library").ByteMatrix} matrix - The QRCode matrix.
  * @param {number} quietZone - The quiet zone margin.
  * @param {{radius: number|[number], margin: number, arc: number|[number], sweep: number|[number]}} opts - Options for module style
  * @returns {{d: string, S: number, R: number}} - Path data, module fill size, and module radius.
