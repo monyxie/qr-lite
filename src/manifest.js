@@ -10,20 +10,20 @@ const manifest = {
   name: "__MSG_extension_name__",
   short_name: "__MSG_extension_short_name__",
   description: "__MSG_extension_description__",
-  version: "3.4.0",
+  version: "3.5.0",
   default_locale: "en",
   icons:
     browser === "firefox"
       ? {
-          16: "icons/qrlite.svg",
-          48: "icons/qrlite.svg",
-        }
+        16: "icons/qrlite.svg",
+        48: "icons/qrlite.svg",
+      }
       : {
-          16: "icons/qrlite-16.png",
-          32: "icons/qrlite-32.png",
-          48: "icons/qrlite-48.png",
-          128: "icons/qrlite-128.png",
-        },
+        16: "icons/qrlite-16.png",
+        32: "icons/qrlite-32.png",
+        48: "icons/qrlite-48.png",
+        128: "icons/qrlite-128.png",
+      },
   browser_specific_settings: {
     gecko: {
       id: "@qrlite",
@@ -45,11 +45,11 @@ const manifest = {
       browser === "firefox"
         ? "icons/qrlite.svg"
         : {
-            16: "icons/qrlite-16.png",
-            32: "icons/qrlite-32.png",
-            48: "icons/qrlite-48.png",
-            128: "icons/qrlite-128.png",
-          },
+          16: "icons/qrlite-16.png",
+          32: "icons/qrlite-32.png",
+          48: "icons/qrlite-48.png",
+          128: "icons/qrlite-128.png",
+        },
     default_popup: "pages/popup.html",
   },
   content_security_policy: {
@@ -71,11 +71,11 @@ const manifest = {
   background:
     browser === "firefox"
       ? {
-          scripts: ["background.js"],
-        }
+        scripts: ["background.js"],
+      }
       : {
-          service_worker: "background.js",
-        },
+        service_worker: "background.js",
+      },
   commands: {
     _execute_action: {
       description: "__MSG_browser_action_command_description__",
