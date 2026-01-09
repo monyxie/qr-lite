@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "ডেটা মডিউলের জন্য একটি স্টাইল নির্বাচন করুন"
   },
+  "image_size_label": {
+    "message": "ছবির আকার:"
+  },
+  "image_size_label_title": {
+    "message": "QR কোডের জন্য ছবির আকার সেট করুন"
+  },
   "content_length_label": {
     "message": "দৈর্ঘ্য:"
   },

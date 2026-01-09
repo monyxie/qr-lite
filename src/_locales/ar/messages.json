@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "اختر نمطًا لوحدات البيانات"
   },
+  "image_size_label": {
+    "message": "حجم الصورة:"
+  },
+  "image_size_label_title": {
+    "message": "تعيين حجم الصورة لرمز الاستجابة السريعة"
+  },
   "content_length_label": {
     "message": "الطول:"
   },

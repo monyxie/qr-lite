@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "ڈیٹا ماڈیولز کے لیے اسٹائل منتخب کریں"
   },
+  "image_size_label": {
+    "message": "امیج سائز:"
+  },
+  "image_size_label_title": {
+    "message": "QR کوڈ کے لیے امیج سائز سیٹ کریں"
+  },
   "content_length_label": {
     "message": "لمبائی:"
   },

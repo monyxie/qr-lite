@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "Chọn kiểu cho các mô-đun dữ liệu"
   },
+  "image_size_label": {
+    "message": "Kích thước ảnh:"
+  },
+  "image_size_label_title": {
+    "message": "Thiết lập kích thước ảnh cho mã QR"
+  },
   "content_length_label": {
     "message": "Độ dài:"
   },

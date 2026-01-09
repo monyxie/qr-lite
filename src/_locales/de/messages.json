@@ -100,7 +100,13 @@
     "message": "Modul-Stil:"
   },
   "module_style_label_title": {
-    "message": "Einen Stil für die Datenmodule auswählen"
+    "message": "Wählen Sie einen Stil für die Datenmodule"
+  },
+  "image_size_label": {
+    "message": "Bildgröße:"
+  },
+  "image_size_label_title": {
+    "message": "Bildgröße für den QR-Code festlegen"
   },
   "content_length_label": {
     "message": "Länge:"

@@ -31,6 +31,12 @@ const settingsDefinition = {
         : value;
     },
   },
+  qrCodeImageSize: {
+    normalize(value) {
+      value = parseInt(value)
+      return [500, 1000, 1500, 2000].includes(value) ? value : 500;
+    },
+  },
   whiteOnBlackQRCodeInDarkMode: {
     normalize(value) {
       return typeof value === "undefined" ? false : value === true;
@@ -85,7 +91,7 @@ export async function getSettingValueFromStorage(key) {
 export async function saveSettings(settings) {
   for (const key in settings) {
     if (!settingsDefinition[key]) {
-      throw new Error("Assertion failed");
+      throw new Error("Assertion failed: Unknown settings key: " + key);
     } else {
       settings[key] = settingsDefinition[key].normalize(settings[key]);
     }

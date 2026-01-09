@@ -87,6 +87,12 @@
   "module_style_label_title": {
     "message": "データモジュールのスタイルを選択"
   },
+  "image_size_label": {
+    "message": "画像サイズ:"
+  },
+  "image_size_label_title": {
+    "message": "QRコードの画像サイズを設定"
+  },
   "content_length_label": {
     "message": "長さ:"
   },

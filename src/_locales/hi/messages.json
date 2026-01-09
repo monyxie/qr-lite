@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "डेटा मॉड्यूल के लिए एक शैली चुनें"
   },
+  "image_size_label": {
+    "message": "छवि आकार:"
+  },
+  "image_size_label_title": {
+    "message": "QR कोड के लिए छवि आकार सेट करें"
+  },
   "content_length_label": {
     "message": "लंबाई:"
   },

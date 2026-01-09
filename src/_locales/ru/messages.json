@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "Выбрать стиль для модулей данных"
   },
+  "image_size_label": {
+    "message": "Размер изображения:"
+  },
+  "image_size_label_title": {
+    "message": "Установить размер изображения для QR-кода"
+  },
   "content_length_label": {
     "message": "Длина:"
   },

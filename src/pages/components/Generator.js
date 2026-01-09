@@ -28,7 +28,6 @@ import GeneratorOptions from "./GeneratorOptions";
  * @returns {Promise<HTMLCanvasElement>}
  */
 const createCanvasForQrCode = (content, size, moduleStyle, finderStyle) => {
-  size = size || 500;
   return new Promise((resolve, reject) => {
     const el = document.createElement("div");
     render(
@@ -77,8 +76,8 @@ const getFilename = (content, title) => {
   return filename + ".png";
 };
 
-const downloadImage = (content, title, moduleStyle, finderStyle) => {
-  createCanvasForQrCode(content, null, moduleStyle, finderStyle)
+const downloadImage = (content, size, title, moduleStyle, finderStyle) => {
+  createCanvasForQrCode(content, size, moduleStyle, finderStyle)
     .then((canvas) => {
       const a = document.createElement("a");
       a.href = canvas.toDataURL("image/png");
@@ -128,7 +127,7 @@ const Generator = forwardRef(function Generator(props, ref) {
   const copyImage = useCallback(() => {
     createCanvasForQrCode(
       content,
-      null,
+      settings?.qrCodeImageSize,
       settings?.qrCodeModuleStyle,
       settings?.qrCodeFinderStyle
     )
@@ -137,26 +136,17 @@ const Generator = forwardRef(function Generator(props, ref) {
       .catch((error) => {
         console.error("Failed to copy QR code image:", error);
       });
-  }, [
-    content,
-    setCopied,
-    settings?.qrCodeFinderStyle,
-    settings?.qrCodeModuleStyle,
-  ]);
+  }, [content, setCopied, settings?.qrCodeFinderStyle, settings?.qrCodeImageSize, settings?.qrCodeModuleStyle]);
 
   const handleClickDownload = useCallback(() => {
     downloadImage(
       content,
+      settings?.qrCodeImageSize,
       title,
       settings?.qrCodeModuleStyle || moduleStyleNames[0],
       settings?.qrCodeFinderStyle || finderStyleNames[0]
     );
-  }, [
-    content,
-    settings?.qrCodeFinderStyle,
-    settings?.qrCodeModuleStyle,
-    title,
-  ]);
+  }, [content, settings?.qrCodeFinderStyle, settings?.qrCodeImageSize, settings?.qrCodeModuleStyle, title]);
 
   // handle dark mode & related settings
   const resultBoxStyles = {

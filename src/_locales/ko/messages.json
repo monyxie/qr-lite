@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "데이터 모듈의 스타일 선택"
   },
+  "image_size_label": {
+    "message": "이미지 크기:"
+  },
+  "image_size_label_title": {
+    "message": "QR 코드의 이미지 크기 설정"
+  },
   "content_length_label": {
     "message": "길이:"
   },

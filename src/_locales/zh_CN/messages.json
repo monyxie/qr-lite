@@ -87,6 +87,12 @@
   "module_style_label_title": {
     "message": "为数据模块选择样式"
   },
+  "image_size_label": {
+    "message": "图像尺寸:"
+  },
+  "image_size_label_title": {
+    "message": "设置二维码的图像尺寸"
+  },
   "content_length_label": {
     "message": "长度:"
   },

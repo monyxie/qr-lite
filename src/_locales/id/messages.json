@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "Pilih gaya untuk modul data"
   },
+  "image_size_label": {
+    "message": "Ukuran gambar:"
+  },
+  "image_size_label_title": {
+    "message": "Atur ukuran gambar untuk kode QR"
+  },
   "content_length_label": {
     "message": "Panjang:"
   },

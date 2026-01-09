@@ -87,6 +87,12 @@
   "module_style_label_title": {
     "message": "為資料模組選擇樣式"
   },
+  "image_size_label": {
+    "message": "圖片尺寸:"
+  },
+  "image_size_label_title": {
+    "message": "設定二維碼的圖片尺寸"
+  },
   "content_length_label": {
     "message": "長度:"
   },

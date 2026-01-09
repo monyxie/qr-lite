@@ -98,6 +98,12 @@
   "module_style_label_title": {
     "message": "Select a style for the data modules"
   },
+  "image_size_label": {
+    "message": "Image size:"
+  },
+  "image_size_label_title": {
+    "message": "Set the image size for the QR code"
+  },
   "content_length_label_title": {
     "message": "Length of the QR code content in characters"
   },

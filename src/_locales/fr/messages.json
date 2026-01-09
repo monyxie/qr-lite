@@ -102,6 +102,12 @@
   "module_style_label_title": {
     "message": "Sélectionner un style pour les modules de données"
   },
+  "image_size_label": {
+    "message": "Taille de l'image:"
+  },
+  "image_size_label_title": {
+    "message": "Définir la taille de l'image pour le code QR"
+  },
   "content_length_label": {
     "message": "Longueur:"
   },
