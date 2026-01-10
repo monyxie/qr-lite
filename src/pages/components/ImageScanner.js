@@ -425,21 +425,23 @@ export default function ImageScanner(props) {
     <>
       <div class="input " id="scanInput">
         <div class="input-box">
-          <QRPositionMarker
+          {(imgSrc && !result) && (
+            <img
+              class="input-wrapper scan-input-image"
+              id="scanInputImage"
+              crossOrigin="anonymous"
+              ref={inputImgNode}
+              src={imgSrc}
+            ></img>
+          )}
+          {imgSrc && result && inputImgNode.current && <QRPositionMarker
+            image={imgSrc}
             result={result}
             width={inputImgNode.current?.width || 0}
             height={inputImgNode.current?.height || 0}
+            className="input-wrapper scan-input-image"
           >
-            {imgSrc && (
-              <img
-                class="input-wrapper scan-input-image"
-                id="scanInputImage"
-                crossOrigin="anonymous"
-                ref={inputImgNode}
-                src={imgSrc}
-              ></img>
-            )}
-          </QRPositionMarker>
+          </QRPositionMarker>}
         </div>
       </div>
       <div class="necker-container"></div>

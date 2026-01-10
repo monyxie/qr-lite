@@ -35,12 +35,11 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.captured {
-  background-color: transparent;
-  display: block;
-  cursor: auto;
+.qr-position-marker {
   max-width: 100%;
   max-height: 100%;
+  padding: 0;
+  margin: 0;
   outline: 1px solid #777;
 }
 
@@ -76,13 +75,11 @@ body {
   padding: 0.25rem;
   vertical-align: middle;
   background: rgba(0, 0, 0, 0.5);
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.5) 50%,
-    rgba(0, 0, 0, 0.1) 60%,
-    rgba(0, 0, 0, 0) 80%
-  );
+  background: radial-gradient(circle,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(0, 0, 0, 0) 80%);
 }
 
 .tips select {
@@ -193,9 +190,11 @@ body {
   color: #333;
   background-color: rgba(255, 255, 255, 0.7);
   box-sizing: border-box;
+
   &.error {
     border-color: #f33;
     font-family: monospace;
+
     &::placeholder {
       color: #f33;
     }
@@ -208,16 +207,16 @@ body {
   margin: 6px;
 }
 
-.result-actions > * {
+.result-actions>* {
   flex: 1;
   text-align: center;
 }
 
-.result-actions > :first-child {
+.result-actions> :first-child {
   text-align: left;
 }
 
-.result-actions > :last-child {
+.result-actions> :last-child {
   text-align: right;
 }
 
@@ -232,8 +231,10 @@ body {
     color: #ccc;
     border-color: #333;
     background-color: rgba(0, 0, 0, 0.7);
+
     &.error {
       border-color: #f66;
+
       &::placeholder {
         color: #f66;
       }

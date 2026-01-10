@@ -30,9 +30,10 @@ export default function CameraScanner() {
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
   const [result, setResult] = useState(null);
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const outputContentNode = useRef(null);
-  const canvasRef = useRef(null);
+  const canvasRef = useRef(new OffscreenCanvas(0, 0));
   /**
    * @type {React.RefObject<CanvasRenderingContext2D|null>}
    */
@@ -201,6 +202,7 @@ export default function CameraScanner() {
             true
           );
           if (results && results.length > 0) {
+            canvas.convertToBlob({ type: "image/png" }).then(b => setImage(URL.createObjectURL(b)))
             setResult(results[0]);
             addHistory("decode", results[0].content);
             playScanSuccessAudio();
@@ -228,8 +230,16 @@ export default function CameraScanner() {
 
     return () => {
       clearTimeout(scanTimer.current);
-    };
-  }, [result, stream]); // Removed videoRef.current from dependencies as it's stable
+    }
+  }, [result, stream]);
+
+  useEffect(() => {
+    return () => {
+      if (image) {
+        URL.revokeObjectURL(image);
+      }
+    }
+  }, [image]);
 
   useEffect(() => {
     if (result) {
@@ -265,19 +275,17 @@ export default function CameraScanner() {
             ref={videoRef}
             class={"input-wrapper camera " + (result ? "hidden" : "")}
           ></video>
-          <QRPositionMarker
-            width={canvasRef.current?.width || 0}
-            height={canvasRef.current?.height || 0}
-            result={result}
-            mirror={true}
-            hidden={!result}
-          >
-            <canvas
-              class="input-wrapper"
-              style="width: 100%;"
-              ref={canvasRef}
-            ></canvas>
-          </QRPositionMarker>
+          {image && result && (
+            <QRPositionMarker
+              image={image}
+              width={canvasRef.current?.width || 0}
+              height={canvasRef.current?.height || 0}
+              result={result}
+              mirror={true}
+              className="input-wrapper"
+            >
+            </QRPositionMarker>
+          )}
         </div>
       </div>
       <div class="necker-container">

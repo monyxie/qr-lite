@@ -92,9 +92,8 @@ function Picker({ stage, onScan, onSpotChange, scaleLevel: propsScaleLevel }) {
         }
 
         if (rect) {
-          pathDef += `M ${rect.x - 1} ${rect.y - 1} l 0 ${rect.height + 2} l ${
-            rect.width + 2
-          } 0 l 0 -${rect.height + 2} Z`;
+          pathDef += `M ${rect.x - 1} ${rect.y - 1} l 0 ${rect.height + 2} l ${rect.width + 2
+            } 0 l 0 -${rect.height + 2} Z`;
         }
         pathRef.current.setAttribute("d", pathDef);
 
@@ -165,8 +164,8 @@ function Picker({ stage, onScan, onSpotChange, scaleLevel: propsScaleLevel }) {
           stage === "scanning"
             ? "wait"
             : stage === "picking"
-            ? "crosshair"
-            : "auto",
+              ? "crosshair"
+              : "auto",
       }}
     >
       <path
@@ -536,12 +535,13 @@ function Scanner({
           <div class="input-image-container" style={imagePosition}>
             {inputImage && (
               <QRPositionMarker
+                image={inputImage}
                 width={inputImageSize?.width}
                 height={inputImageSize?.height}
                 result={result}
                 flashDelay="0.3s"
+                className="qr-position-marker"
               >
-                <img class="captured" id="captured" src={inputImage} />
               </QRPositionMarker>
             )}
           </div>

@@ -1,73 +1,51 @@
 import { PropTypes } from "prop-types";
 
 export default function QRPositionMarker({
-  children,
+  image,
   width,
   height,
   result,
   mirror,
   flash = true,
   flashDelay = "0s",
-  hidden = false,
+  className = "",
 }) {
-  let marker = null;
-
+  let points = "";
   if (width && height && result?.vertices) {
-    const points = result.vertices.map((v) => v.join(",")).join(" ");
-    marker = (
-      <svg
-        aria-hidden="true"
-        // fill="lightgreen"
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns="http://www.w3.org/2000/svg"
+    points = result.vertices.map((v) => v.join(",")).join(" ");
+  }
+
+  const styles = {
+    transform: mirror ? "scaleX(-1)" : "none",
+  };
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox={`0 0 ${width} ${height}`}
+      xmlns="http://www.w3.org/2000/svg"
+      className={className} style={styles}
+    >
+      <image href={image} x="0" y="0" width={width} height={height} />
+      {points && <polygon
         style={{
           animation: flash
             ? `0.2s steps(3, jump-start) ${flashDelay} 3 flash`
             : "none",
         }}
-      >
-        <polygon
-          fill="none"
-          stroke="#88FF00"
-          strokeWidth="2%"
-          strokeLinejoin="round"
-          strokeOpacity="0.9"
-          points={`${points.trim()}`}
-        ></polygon>
-      </svg>
-    );
-  }
-
-  const styles = {
-    position: "relative",
-    padding: 0,
-    margin: 0,
-    display: hidden ? "none" : "block",
-    transform: mirror ? "scaleX(-1)" : "none",
-  };
-
-  return (
-    <div style={styles}>
-      {children}
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          margin: 0,
-          padding: 0,
-          top: 0,
-          left: 0,
-        }}
-      >
-        {marker}
-      </div>
-    </div>
+        fill="none"
+        stroke="#88FF00"
+        strokeWidth="2%"
+        strokeLinejoin="round"
+        strokeOpacity="0.9"
+        points={`${points.trim()}`}
+      />}
+    </svg>
   );
 }
 
 QRPositionMarker.propTypes = {
-  children: PropTypes.node,
+  image: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
   result: PropTypes.object,
@@ -75,4 +53,5 @@ QRPositionMarker.propTypes = {
   flash: PropTypes.bool,
   flashDelay: PropTypes.string,
   hidden: PropTypes.bool,
+  className: PropTypes.string,
 };
