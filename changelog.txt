@@ -7,6 +7,9 @@
 ### Changed
 - Put generator options behind a "show options" button for cleaner UI. (59dc5c4)
 
+### Fixed
+- Fixed #45:Captured image not properly scaled down to fit the container in "select region to scan" mode
+
 ### Other
 - Updated dependencies.
 
