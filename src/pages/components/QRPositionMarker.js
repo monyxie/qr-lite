@@ -26,7 +26,7 @@ export default function QRPositionMarker({
       xmlns="http://www.w3.org/2000/svg"
       className={className} style={styles}
     >
-      <image href={image} x="0" y="0" width={width} height={height} />
+      {image && <image href={image} x="0" y="0" width={width} height={height} />}
       {points && <polygon
         style={{
           animation: flash
