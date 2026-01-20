@@ -149,7 +149,7 @@ body {
 .main .generator-options {
   display: grid;
   gap: var(--gap);
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto;
   color: var(--text-primary-color);
   font-size: 12px;
 }
