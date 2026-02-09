@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*" # Trigger on pushes to tags starting with 'v'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: corepack yarn install --frozen-lockfile
+      - run: scripts/release.sh firefox
+      - run: scripts/release.sh chrome
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firefox-release
+          path: release/firefox-*.zip # Upload the generated Firefox zip files
+      - uses: actions/upload-artifact@v4
+        with:
+          name: chrome-release
+          path: release/chrome-*.zip # Upload the generated Chrome zip files
+
+      # Create a GitHub Release
+
+      - name: Create GitHub Release
+        run: |
+          gh release create ${{ github.ref_name }} \
+            --title "Release ${{ github.ref_name }}" \
+            --draft=false \
+            --prerelease=false \
+            release/firefox-*.zip \
+            release/chrome-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
