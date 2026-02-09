@@ -223,11 +223,17 @@
   "grant_permissions_error_details_summary": {
     "message": "Error details"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, make sure the <strong>\"Remember for all cameras\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>.<br><br>Click the button below to start."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, please make sure the <strong>\"Remember for all cameras\"</strong> checkbox is checked, then click <strong>\"Allow\"</strong>.<br><br>Click the button below to start."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> permissions icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "You're about to grant QR Lite access to your camera.<br><br>When asked whether to allow QR Lite to use your camera, please choose <strong>\"Allow while visiting the site\"</strong>.<br><br>Click the button below to start."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> icon on the left of the address bar, and <strong>remove</strong> the \"Blocked\" status on the \"Use the camera\" row.<br><br>After you've done that, refresh this page."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "It looks like QR Lite is <strong>blocked</strong> from using the camera.<br><br>To change this setting, click the <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> icon on the address bar, and choose <strong>Always allow QR Lite - QR Code Generator and Scanner to access your camera</strong>.<br><br>After you've done that, refresh this page."
   },
   "grant_camera_unusable_instructions_html": {
     "message": "It looks like the camera is inaccessible. Is there another program using the camera?<br><br>Please close other programs that might be using the camera, then refresh this page."
@@ -240,6 +246,15 @@
   },
   "grant_page_refresh_btn": {
     "message": "Refresh"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "I can't find the <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> icon!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "Some browsers hide the icon afte a few seconds. Please click the button below to show it."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "Show icon"
   },
   "grant_page_close_btn": {
     "message": "Close"

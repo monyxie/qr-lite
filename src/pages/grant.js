@@ -30,7 +30,7 @@ function GrantCamera() {
   if (err) {
     switch (err?.name) {
       case "NotAllowedError":
-        errorText = TT("grant_camera_blocked_instructions_html");
+        errorText = QRLITE_BROWSER === 'firefox' ? TT("grant_camera_blocked_instructions_firefox_html") : TT("grant_camera_blocked_instructions_chrome_html");
         break;
       case "AbortError":
       case "NotReadableError":
@@ -47,7 +47,7 @@ function GrantCamera() {
       {state === "initial" && (
         <p>
           <span class="grant-camera ">
-            {TT("grant_camera_initial_instructions_html")}
+            {QRLITE_BROWSER === 'firefox' ? TT("grant_camera_initial_instructions_firefox_html") : TT("grant_camera_initial_instructions_chrome_html")}
           </span>
           <br />
           <br />
@@ -69,11 +69,21 @@ function GrantCamera() {
             </code>
           </details>
           <br />
+          <details class="error-details-container">
+            <summary>{TT("grant_page_dont_see_icon_btn_html")}</summary>
+            {TT("grant_page_dont_see_icon_instructions_html")}
+            <br />
+            <a class="clickable" onClick={requestFunction}>
+              {TT("grant_page_dont_see_icon_instructions_reveal_icon_btn_label")}
+            </a>
+          </details>
+          <br />
           <br />
           <a class="clickable" onClick={() => window.location.reload()}>
             <img class="icon icon-invert" src="../icons/refresh.svg" />
             {TT("grant_page_refresh_btn")}
           </a>
+          <br />
         </p>
       )}
       {state === "granted" && (
