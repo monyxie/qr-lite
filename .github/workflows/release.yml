@@ -20,11 +20,11 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: firefox-release
-          path: release/firefox-*.zip # Upload the generated Firefox zip files
+          path: release/qr-lite-*-firefox-*.zip # Upload the generated Firefox zip files
       - uses: actions/upload-artifact@v4
         with:
           name: chrome-release
-          path: release/chrome-*.zip # Upload the generated Chrome zip files
+          path: release/qr-lite-*-chrome-*.zip # Upload the generated Chrome zip files
 
       # Create a GitHub Release
 
@@ -43,15 +43,15 @@ jobs:
             echo "Release for $TAG already exists; uploading assets instead."
             gh release upload "$TAG" \
               --clobber \
-              release/firefox-*.zip \
-              release/chrome-*.zip
+              release/qr-lite-*-firefox-*.zip \
+              release/qr-lite-*-chrome-*.zip
           else
             gh release create "$TAG" \
               --title "$TAG" \
               --draft=false \
               --prerelease="$PRERELEASE" \
-              release/firefox-*.zip \
-              release/chrome-*.zip
+              release/qr-lite-*-firefox-*.zip \
+              release/qr-lite-*-chrome-*.zip
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
