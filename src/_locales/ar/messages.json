@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "منح الإذن"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى الكاميرا.<br><br>عند مطالبتك بالسماح لـ QR Lite باستخدام الكاميرا، تأكد من تحديد خانة الاختيار <strong>\"تذكر هذا القرار\"</strong>، ثم انقر فوق <strong>\"السماح\"</strong>.<br><br>انقر فوق الزر أدناه للبدء."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى الكاميرا.<br><br>عند سؤالك عمّا إذا كنت تريد السماح لـ QR Lite باستخدام الكاميرا، يرجى التأكد من تحديد خانة الاختيار <strong>\"تذكر لجميع الكاميرات\"</strong>، ثم انقر فوق <strong>\"السماح\"</strong>.<br><br>انقر فوق الزر أدناه للبدء."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "يبدو أن استخدام الكاميرا <strong>محظور</strong> لـ QR Lite.<br><br>لتغيير هذا الإعداد، انقر فوق رمز الأذونات <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> على يسار شريط العناوين، و<strong>أزل</strong> حالة \"محظور\" في صف \"استخدام الكاميرا\".<br><br>بعد القيام بذلك، قم بتحديث هذه الصفحة."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "أنت على وشك منح QR Lite إمكانية الوصول إلى الكاميرا.<br><br>عند سؤالك عمّا إذا كنت تريد السماح لـ QR Lite باستخدام الكاميرا، يرجى اختيار <strong>\"السماح أثناء زيارة الموقع\"</strong>.<br><br>انقر فوق الزر أدناه للبدء."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "يبدو أن QR Lite <strong>محظور</strong> من استخدام الكاميرا.<br><br>لتغيير هذا الإعداد، انقر فوق رمز <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> على يسار شريط العناوين، و<strong>أزل</strong> حالة \"محظور\" في صف \"استخدام الكاميرا\".<br><br>بعد القيام بذلك، قم بتحديث هذه الصفحة."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "يبدو أن QR Lite <strong>محظور</strong> من استخدام الكاميرا.<br><br>لتغيير هذا الإعداد، انقر فوق رمز <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> في شريط العناوين، واختر <strong>السماح دائمًا لـ QR Lite - مولد وماسح رمز الاستجابة السريعة بالوصول إلى الكاميرا</strong>.<br><br>بعد القيام بذلك، قم بتحديث هذه الصفحة."
   },
   "grant_camera_granted_instructions_html": {
     "message": "تم منح QR Lite إمكانية الوصول إلى الكاميرا بنجاح.<br><br>يمكنك الآن إغلاق هذه الصفحة."
   },
   "grant_page_refresh_btn": {
     "message": "تحديث"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "لا يمكنني العثور على رمز <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img>!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "تقوم بعض المتصفحات بإخفاء الرمز بعد بضع ثوانٍ. يرجى النقر على الزر أدناه لإظهاره."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "إظهار الرمز"
   },
   "grant_page_close_btn": {
     "message": "إغلاق"

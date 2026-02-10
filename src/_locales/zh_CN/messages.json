@@ -177,17 +177,32 @@
   "grant_permissions_window_title": {
     "message": "授予权限"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请确保<strong>“记住此决定”</strong>复选框已勾选，然后点击<strong>“允许”</strong>。<br><br>点击下方按钮开始。"
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请确保 <strong>\"对所有摄像头记住此设置\"</strong> 复选框已勾选，然后点击 <strong>\"允许\"</strong>。<br><br>点击下方按钮开始。"
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> 权限小图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请选择 <strong>\"允许在访问网站期间\"</strong>。<br><br>点击下方按钮开始。"
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏上的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，并选择 <strong>始终允许 QR Lite - 二维码生成器和扫描器 访问您的摄像头</strong>。<br><br>完成该操作后，请刷新本页面。"
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
   },
   "grant_page_refresh_btn": {
     "message": "刷新"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "我找不到 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标！"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "有些浏览器会在几秒后隐藏该图标。请点击下面的按钮将其显示出来。"
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "显示图标"
   },
   "grant_page_close_btn": {
     "message": "关闭"

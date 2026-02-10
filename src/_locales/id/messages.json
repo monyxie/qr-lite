@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "Berikan izin"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "Anda akan memberikan QR Lite akses ke kamera Anda.<br><br>Ketika Anda diminta untuk mengizinkan QR Lite menggunakan kamera Anda, pastikan kotak centang <strong>\"Ingat keputusan ini\"</strong> dicentang, lalu klik <strong>\"Izinkan\"</strong>.<br><br>Klik tombol di bawah untuk memulai."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "Anda akan memberikan QR Lite akses ke kamera Anda.<br><br>Saat ditanya apakah Anda ingin mengizinkan QR Lite menggunakan kamera Anda, pastikan kotak centang <strong>\"Ingat untuk semua kamera\"</strong> dicentang, lalu klik <strong>\"Izinkan\"</strong>.<br><br>Klik tombol di bawah untuk memulai."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "Sepertinya penggunaan kamera <strong>diblokir</strong> untuk QR Lite.<br><br>Untuk mengubah pengaturan ini, klik ikon izin <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> di sebelah kiri bilah alamat, dan <strong>hapus</strong> status \"Diblokir\" di baris \"Gunakan kamera\".<br><br>Setelah melakukan ini, segarkan halaman ini."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "Anda akan memberikan QR Lite akses ke kamera Anda.<br><br>Saat ditanya apakah Anda ingin mengizinkan QR Lite menggunakan kamera Anda, pilih <strong>\"Izinkan saat mengunjungi situs\"</strong>.<br><br>Klik tombol di bawah untuk memulai."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "Sepertinya QR Lite <strong>diblokir</strong> dari menggunakan kamera.<br><br>Untuk mengubah pengaturan ini, klik ikon <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> di sebelah kiri bilah alamat, dan <strong>hapus</strong> status \"Diblokir\" di baris \"Gunakan kamera\".<br><br>Setelah melakukan ini, segarkan halaman ini."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "Sepertinya QR Lite <strong>diblokir</strong> dari menggunakan kamera.<br><br>Untuk mengubah pengaturan ini, klik ikon <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> di bilah alamat, lalu pilih <strong>Selalu izinkan QR Lite - Pembuat dan Pemindai Kode QR untuk mengakses kamera Anda</strong>.<br><br>Setelah melakukan ini, segarkan halaman ini."
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite telah berhasil mendapatkan akses ke kamera.<br><br>Sekarang Anda dapat menutup halaman ini."
   },
   "grant_page_refresh_btn": {
     "message": "Segarkan"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "Saya tidak dapat menemukan ikon <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img>!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "Beberapa browser menyembunyikan ikon setelah beberapa detik. Silakan klik tombol di bawah untuk menampilkannya."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "Tampilkan ikon"
   },
   "grant_page_close_btn": {
     "message": "Tutup"

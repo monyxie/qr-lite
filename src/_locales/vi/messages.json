@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "Cấp quyền"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào camera của mình.<br><br>Khi bạn được nhắc cho phép QR Lite sử dụng camera của bạn, hãy đảm bảo rằng hộp kiểm <strong>\"Ghi nhớ quyết định này\"</strong> đã được chọn, sau đó nhấp vào <strong>\"Cho phép\"</strong>.<br><br>Nhấp vào nút bên dưới để bắt đầu."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào camera của mình.<br><br>Khi bạn được hỏi có cho phép QR Lite sử dụng camera hay không, vui lòng đảm bảo ô chọn <strong>\"Ghi nhớ cho tất cả camera\"</strong> đã được bật, sau đó nhấp <strong>\"Cho phép\"</strong>.<br><br>Nhấp vào nút bên dưới để bắt đầu."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "Có vẻ như việc sử dụng camera đã bị <strong>chặn</strong> đối với QR Lite.<br><br>Để thay đổi cài đặt này, hãy nhấp vào biểu tượng quyền <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> ở bên trái thanh địa chỉ và <strong>xóa</strong> trạng thái \"Bị chặn\" trong dòng \"Sử dụng camera\".<br><br>Sau khi thực hiện việc này, hãy tải lại trang này."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "Bạn sắp cấp cho QR Lite quyền truy cập vào camera của mình.<br><br>Khi bạn được hỏi có cho phép QR Lite sử dụng camera hay không, vui lòng chọn <strong>\"Cho phép khi truy cập trang web\"</strong>.<br><br>Nhấp vào nút bên dưới để bắt đầu."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "Có vẻ như QR Lite đang bị <strong>chặn</strong> sử dụng camera.<br><br>Để thay đổi cài đặt này, hãy nhấp vào biểu tượng <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> ở bên trái thanh địa chỉ và <strong>xóa</strong> trạng thái \"Bị chặn\" trong dòng \"Sử dụng camera\".<br><br>Sau khi thực hiện việc này, hãy làm mới trang này."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "Có vẻ như QR Lite đang bị <strong>chặn</strong> sử dụng camera.<br><br>Để thay đổi cài đặt này, hãy nhấp vào biểu tượng <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> trên thanh địa chỉ và chọn <strong>Luôn cho phép QR Lite - Trình tạo và quét mã QR truy cập vào camera của bạn</strong>.<br><br>Sau khi thực hiện việc này, hãy làm mới trang này."
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite đã nhận được quyền truy cập vào camera thành công.<br><br>Bây giờ bạn có thể đóng trang này."
   },
   "grant_page_refresh_btn": {
     "message": "Tải lại"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "Tôi không tìm thấy biểu tượng <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img>!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "Một số trình duyệt ẩn biểu tượng sau vài giây. Vui lòng nhấp vào nút bên dưới để hiển thị nó."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "Hiện biểu tượng"
   },
   "grant_page_close_btn": {
     "message": "Đóng"

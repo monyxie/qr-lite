@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "اجازت دیں"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "آپ QR Lite کو اپنے کیمرے تک رسائی کی اجازت دینے والے ہیں۔<br><br>جب QR Lite کو آپ کا کیمرہ استعمال کرنے کی اجازت کے لیے پوچھا جائے، تو یقینی بنائیں کہ <strong>\"اس فیصلے کو یاد رکھیں\"</strong> چیک باکس چیک کیا گیا ہے، پھر <strong>\"اجازت دیں\"</strong> پر کلک کریں۔<br><br>شروع کرنے کے لیے نیچے دیئے گئے بٹن پر کلک کریں۔"
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "آپ QR Lite کو اپنے کیمرے تک رسائی کی اجازت دینے والے ہیں۔<br><br>جب آپ سے پوچھا جائے کہ کیا QR Lite کو آپ کا کیمرہ استعمال کرنے کی اجازت دینی ہے، تو براہ کرم یقینی بنائیں کہ <strong>\"تمام کیمروں کے لیے یاد رکھیں\"</strong> چیک باکس منتخب ہے، پھر <strong>\"اجازت دیں\"</strong> پر کلک کریں۔<br><br>شروع کرنے کے لیے نیچے دیئے گئے بٹن پر کلک کریں۔"
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "ایسا لگتا ہے کہ QR Lite کو کیمرہ استعمال کرنے سے <strong>بلاک</strong> کر دیا گیا ہے۔<br><br>اس سیٹنگ کو تبدیل کرنے کے لیے، ایڈریس بار کے بائیں طرف <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> اجازتیں آئیکن پر کلک کریں، اور \"کیمرہ استعمال کریں\" قطار پر \"بلاک کیا گیا\" حالت کو <strong>ہٹائیں</strong>۔<br><br>ایسا کرنے کے بعد، اس صفحہ کو ریفریش کریں۔"
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "آپ QR Lite کو اپنے کیمرے تک رسائی کی اجازت دینے والے ہیں۔<br><br>جب آپ سے پوچھا جائے کہ کیا QR Lite کو آپ کا کیمرہ استعمال کرنے کی اجازت دینی ہے، تو براہ کرم <strong>\"سائٹ پر رہتے ہوئے اجازت دیں\"</strong> منتخب کریں۔<br><br>شروع کرنے کے لیے نیچے دیئے گئے بٹن پر کلک کریں۔"
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "ایسا لگتا ہے کہ QR Lite <strong>بلاک</strong> ہے اور کیمرہ استعمال نہیں کر سکتا۔<br><br>اس سیٹنگ کو تبدیل کرنے کے لیے، ایڈریس بار کے بائیں طرف <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> آئیکن پر کلک کریں اور \"کیمرہ استعمال کریں\" قطار پر \"بلاک کیا گیا\" حالت کو <strong>ہٹائیں</strong>۔<br><br>ایسا کرنے کے بعد، اس صفحہ کو ریفریش کریں۔"
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "ایسا لگتا ہے کہ QR Lite <strong>بلاک</strong> ہے اور کیمرہ استعمال نہیں کر سکتا۔<br><br>اس سیٹنگ کو تبدیل کرنے کے لیے، ایڈریس بار پر <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> آئیکن پر کلک کریں اور <strong>QR Lite - کیو آر کوڈ جنریٹر اور اسکینر کو کیمرہ تک رسائی کی ہمیشہ اجازت دیں</strong> منتخب کریں۔<br><br>ایسا کرنے کے بعد، اس صفحہ کو ریفریش کریں۔"
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite کو کیمرہ استعمال کرنے کی اجازت کامیابی سے دی گئی ہے۔<br><br>اب آپ اس صفحہ کو بند کر سکتے ہیں۔"
   },
   "grant_page_refresh_btn": {
     "message": "ریفریش کریں"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "مجھے <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> آئیکن نہیں مل رہا!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "کچھ براؤزر چند سیکنڈ بعد آئیکن چھپا دیتے ہیں۔ براہ کرم اسے دکھانے کے لیے نیچے والے بٹن پر کلک کریں۔"
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "آئیکن دکھائیں"
   },
   "grant_page_close_btn": {
     "message": "بند کریں"

@@ -186,19 +186,34 @@
     "message": "カメラへのアクセス"
   },
   "grant_permissions_window_title": {
-    "message": "権限を許可"
+    "message": "許可を付与"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "QR Liteにカメラへのアクセスを許可しようとしています。<br><br>QR Liteにカメラの使用を許可するかどうかを尋ねられたら、<strong>「今後も同様に処理する」</strong>チェックボックスがオンになっていることを確認してから、<strong>「許可する」</strong>をクリックしてください。<br><br>開始するには、下のボタンをクリックしてください。"
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "これから QR Lite にカメラへのアクセスを許可します。<br><br>QR Lite にカメラの使用を許可するか尋ねられたら、<strong>\"すべてのカメラでこの設定を記憶する\"</strong> のチェックボックスがオンになっていることを確認してから、<strong>\"許可\"</strong> をクリックしてください。<br><br>下のボタンをクリックして開始します。"
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "QR Liteがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> 許可設定アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "これから QR Lite にカメラへのアクセスを許可します。<br><br>QR Lite にカメラの使用を許可するか尋ねられたら、<strong>\"サイトの閲覧中は許可\"</strong> を選択してください。<br><br>下のボタンをクリックして開始します。"
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "QR Liteがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの左側にある <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> アイコンをクリックし、「カメラの使用」行の「ブロック」のステータスを<strong>削除</strong>してください。<br><br>その後、このページを再読み込みしてください。"
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "QR Liteがカメラを使用することが<strong>ブロック</strong>されているようです。<br><br>これを変更するには、アドレスバーの <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> アイコンをクリックし、<strong>QR Lite - QRコードジェネレーター＆スキャナー がカメラにアクセスすることを常に許可</strong> を選択してください。<br><br>その後、このページを再読み込みしてください。"
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Liteはカメラを使用する権限を付与されました。<br><br>このページは今閉じても構いません。"
   },
   "grant_page_refresh_btn": {
     "message": "再読み込み"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "<img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> アイコンが見つかりません！"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "一部のブラウザーでは数秒後にアイコンが非表示になります。下のボタンをクリックして表示してください。"
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "アイコンを表示"
   },
   "grant_page_close_btn": {
     "message": "閉じる"

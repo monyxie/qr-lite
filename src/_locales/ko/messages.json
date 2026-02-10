@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "권한 부여"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "QR Lite에 카메라 접근을 허용하려고 합니다.<br><br>QR Lite가 카메라를 사용하도록 허용하라는 메시지가 표시되면 <strong>\"이 결정 기억\"</strong> 확인란이 선택되었는지 확인한 다음 <strong>\"허용\"</strong>을 클릭하십시오.<br><br>시작하려면 아래 버튼을 클릭하세요."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "QR Lite가 카메라에 접근하도록 허용하려고 합니다.<br><br>QR Lite가 카메라를 사용하도록 허용할지 묻는 경우 <strong>\"모든 카메라에 대해 기억\"</strong> 확인란이 선택되어 있는지 확인한 다음 <strong>\"허용\"</strong>을 클릭하세요.<br><br>아래 버튼을 클릭하여 시작하세요."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "QR Lite에 대한 카메라 사용이 <strong>차단</strong>된 것 같습니다.<br><br>이 설정을 변경하려면 주소 표시줄 왼쪽에 있는 권한 아이콘 <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img>을 클릭하고 \"카메라 사용\" 행에서 \"차단됨\" 상태를 <strong>제거</strong>하십시오.<br><br>그런 다음 이 페이지를 새로 고치십시오."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "QR Lite가 카메라에 접근하도록 허용하려고 합니다.<br><br>QR Lite가 카메라를 사용하도록 허용할지 묻는 경우 <strong>\"사이트를 방문하는 동안 허용\"</strong>을 선택하세요.<br><br>아래 버튼을 클릭하여 시작하세요."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "QR Lite에 대한 카메라 사용이 <strong>차단</strong>된 것 같습니다.<br><br>이 설정을 변경하려면 주소 표시줄 왼쪽에 있는 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 아이콘을 클릭하고 \"카메라 사용\" 행에서 \"차단됨\" 상태를 <strong>제거</strong>하십시오.<br><br>그런 다음 이 페이지를 새로 고치십시오."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "QR Lite에 대한 카메라 사용이 <strong>차단</strong>된 것 같습니다.<br><br>이 설정을 변경하려면 주소 표시줄의 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 아이콘을 클릭하고, <strong>QR Lite - QR 코드 생성기 및 스캐너가 카메라에 액세스하도록 항상 허용</strong>을 선택하세요.<br><br>그런 다음 이 페이지를 새로 고치십시오."
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite가 카메라에 대한 접근을 성공적으로 받았습니다.<br><br>이제 이 페이지를 닫을 수 있습니다."
   },
   "grant_page_refresh_btn": {
     "message": "새로고침"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "<img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 아이콘을 찾을 수 없어요!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "일부 브라우저는 몇 초 후 아이콘을 숨깁니다. 아래 버튼을 클릭해 아이콘을 표시해 주세요."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "아이콘 표시"
   },
   "grant_page_close_btn": {
     "message": "닫기"

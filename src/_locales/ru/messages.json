@@ -204,17 +204,32 @@
   "grant_permissions_window_title": {
     "message": "Предоставить разрешение"
   },
-  "grant_camera_initial_instructions_html": {
-    "message": "Вы собираетесь предоставить QR Lite доступ к вашей камере.<br><br>Когда вам будет предложено разрешить QR Lite использовать вашу камеру, убедитесь, что установлен флажок <strong>\"Запомнить это решение\"</strong>, затем нажмите <strong>\"Разрешить\"</strong>.<br><br>Нажмите кнопку ниже, чтобы начать."
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "Вы собираетесь предоставить QR Lite доступ к вашей камере.<br><br>Когда вас спросят, разрешить ли QR Lite использовать вашу камеру, пожалуйста, убедитесь, что установлен флажок <strong>\"Запомнить для всех камер\"</strong>, затем нажмите <strong>\"Разрешить\"</strong>.<br><br>Нажмите кнопку ниже, чтобы начать."
   },
-  "grant_camera_blocked_instructions_html": {
-    "message": "Похоже, что использование камеры <strong>заблокировано</strong> для QR Lite.<br><br>Чтобы изменить этот параметр, щелкните значок разрешений <img class=\"icon icon-invert\" src=\"../icons/ff-permission-setting.svg\"></img> слева от адресной строки и <strong>удалите</strong> статус \"Заблокировано\" в строке \"Использовать камеру\".<br><br>После этого обновите эту страницу."
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "Вы собираетесь предоставить QR Lite доступ к вашей камере.<br><br>Когда вас спросят, разрешить ли QR Lite использовать вашу камеру, пожалуйста, выберите <strong>\"Разрешить при посещении сайта\"</strong>.<br><br>Нажмите кнопку ниже, чтобы начать."
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "Похоже, что QR Lite <strong>заблокирован</strong> для использования камеры.<br><br>Чтобы изменить этот параметр, нажмите на значок <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> слева от адресной строки и <strong>удалите</strong> статус \"Заблокировано\" в строке \"Использовать камеру\".<br><br>После этого обновите эту страницу."
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "Похоже, что QR Lite <strong>заблокирован</strong> для использования камеры.<br><br>Чтобы изменить этот параметр, нажмите на значок <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> в адресной строке и выберите <strong>Всегда разрешать QR Lite - Генератор и сканер QR-кодов доступ к вашей камере</strong>.<br><br>После этого обновите эту страницу."
   },
   "grant_camera_granted_instructions_html": {
     "message": "QR Lite успешно получил доступ к камере.<br><br>Теперь вы можете закрыть эту страницу."
   },
   "grant_page_refresh_btn": {
     "message": "Обновить"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "Я не могу найти значок <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img>!"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "Некоторые браузеры скрывают значок через несколько секунд. Пожалуйста, нажмите кнопку ниже, чтобы показать его."
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "Показать значок"
   },
   "grant_page_close_btn": {
     "message": "Закрыть"
