@@ -32,6 +32,13 @@ jobs:
         run: |
           TAG="${{ github.ref_name }}"
 
+          PRERELEASE=false
+          shopt -s nocasematch
+          if [[ "$TAG" == *"rc"* || "$TAG" == *"beta"* || "$TAG" == *"alpha"* ]]; then
+            PRERELEASE=true
+          fi
+          shopt -u nocasematch
+
           if gh release view "$TAG" >/dev/null 2>&1; then
             echo "Release for $TAG already exists; uploading assets instead."
             gh release upload "$TAG" \
@@ -42,7 +49,7 @@ jobs:
             gh release create "$TAG" \
               --title "Release $TAG" \
               --draft=false \
-              --prerelease=false \
+              --prerelease="$PRERELEASE" \
               release/firefox-*.zip \
               release/chrome-*.zip
           fi
