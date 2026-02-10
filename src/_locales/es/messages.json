@@ -91,10 +91,10 @@
     "message": "Longitud del contenido del código QR en caracteres"
   },
   "finder_style_label": {
-    "message": "Estilo de buscador:"
+    "message": "Estilo de posicionamiento:"
   },
   "finder_style_label_title": {
-    "message": "Seleccionar un estilo para los patrones de buscador (los tres marcadores de esquina)"
+    "message": "Seleccionar un estilo para los patrones de posicionamiento (los tres marcadores de esquina)"
   },
   "module_style_label": {
     "message": "Estilo de módulo:"

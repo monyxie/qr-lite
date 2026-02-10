@@ -91,10 +91,10 @@
     "message": "طول محتوى رمز QR بالأحرف"
   },
   "finder_style_label": {
-    "message": "نمط الباحث:"
+    "message": "نمط علامات التموضع:"
   },
   "finder_style_label_title": {
-    "message": "اختر نمطًا لأنماط الباحث (العلامات الثلاث في الزوايا)"
+    "message": "اختر نمطًا لعلامات التموضع (العلامات الثلاث في الزوايا)"
   },
   "module_style_label": {
     "message": "نمط الوحدة:"

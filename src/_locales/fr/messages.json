@@ -91,10 +91,10 @@
     "message": "Longueur du contenu du code QR en caractères"
   },
   "finder_style_label": {
-    "message": "Style de chercheur:"
+    "message": "Style de repérage:"
   },
   "finder_style_label_title": {
-    "message": "Sélectionner un style pour les motifs de chercheur (les trois marqueurs d'angle)"
+    "message": "Sélectionner un style pour les motifs de repérage (les trois marqueurs d’angle)"
   },
   "module_style_label": {
     "message": "Style de module:"

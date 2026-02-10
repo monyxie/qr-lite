@@ -76,10 +76,10 @@
     "message": "二维码内容长度，以字符数计"
   },
   "finder_style_label": {
-    "message": "查找器样式:"
+    "message": "定位标记样式:"
   },
   "finder_style_label_title": {
-    "message": "为查找器图案（三个角标记）选择样式"
+    "message": "为定位标记图案（三个角标记）选择样式"
   },
   "module_style_label": {
     "message": "模块样式:"
