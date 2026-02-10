@@ -44,8 +44,8 @@ if [ -z "$TAG" ]; then
   TAG="v$VERSION"
 fi
 
-RELEASE_FILE="$RELEASE_DIR/$BROWSER-$TAG-release.zip"
-SOURCE_FILE="$RELEASE_DIR/$BROWSER-$TAG-source.zip"
+RELEASE_FILE="$RELEASE_DIR/qr-lite-$TAG-$BROWSER-release.zip"
+SOURCE_FILE="$RELEASE_DIR/qr-lite-$TAG-$BROWSER-source.zip"
 
 yarn install && yarn run eslint src && yarn run webpack --mode production --env browser="$BROWSER"
 

@@ -48,8 +48,8 @@ Build steps on Linux:
 
 1. Make sure you have `node`, `yarn`, and the `zip` command installed.
 1. Open terminal and cd to project root.
-1. Run `node scripts/release.sh {firefox,chrome}`, which will generate 2 files in the `release` directory: `<browser>-<version>-<hash>-release.zip`
-   is the installable extension, and `<browser>-<version>-<hash>-source.zip` is the zipped source code.
+1. Run `node scripts/release.sh {firefox,chrome}`, which will generate 2 files in the `release` directory: `qr-lite-<version>-<browser>-release.zip`
+   is the installable extension, and `qr-lite-<version>-<browser>-source.zip` is the zipped source code.
 
 ## Localization
 
