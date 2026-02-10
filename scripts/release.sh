@@ -35,10 +35,17 @@ PROJECT_ROOT="$(pwd)"
 DIST_DIR="$PROJECT_ROOT/dist/$BROWSER"
 RELEASE_DIR="$PROJECT_ROOT/release"
 VERSION=$(node src/manifest.js "$BROWSER" | node -e "process.stdin.setEncoding('utf8');let data='';process.stdin.on('data',chunk=>data+=chunk);process.stdin.on('end',()=>console.log(JSON.parse(data).version));")
-HASH="$(git rev-parse HEAD | cut -c1-8)"
 
-RELEASE_FILE="$RELEASE_DIR/$BROWSER-$VERSION-$HASH-release.zip"
-SOURCE_FILE="$RELEASE_DIR/$BROWSER-$VERSION-$HASH-source.zip"
+TAG="${GITHUB_REF_NAME}"
+if [ -z "$TAG" ]; then
+  TAG="$(git describe --tags --exact-match 2>/dev/null)"
+fi
+if [ -z "$TAG" ]; then
+  TAG="v$VERSION"
+fi
+
+RELEASE_FILE="$RELEASE_DIR/$BROWSER-$TAG-release.zip"
+SOURCE_FILE="$RELEASE_DIR/$BROWSER-$TAG-source.zip"
 
 yarn install && yarn run eslint src && yarn run webpack --mode production --env browser="$BROWSER"
 

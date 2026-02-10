@@ -30,11 +30,21 @@ jobs:
 
       - name: Create GitHub Release
         run: |
-          gh release create ${{ github.ref_name }} \
-            --title "Release ${{ github.ref_name }}" \
-            --draft=false \
-            --prerelease=false \
-            release/firefox-*.zip \
-            release/chrome-*.zip
+          TAG="${{ github.ref_name }}"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release for $TAG already exists; uploading assets instead."
+            gh release upload "$TAG" \
+              --clobber \
+              release/firefox-*.zip \
+              release/chrome-*.zip
+          else
+            gh release create "$TAG" \
+              --title "Release $TAG" \
+              --draft=false \
+              --prerelease=false \
+              release/firefox-*.zip \
+              release/chrome-*.zip
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
