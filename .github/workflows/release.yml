@@ -47,7 +47,7 @@ jobs:
               release/chrome-*.zip
           else
             gh release create "$TAG" \
-              --title "Release $TAG" \
+              --title "$TAG" \
               --draft=false \
               --prerelease="$PRERELEASE" \
               release/firefox-*.zip \
