@@ -34,6 +34,17 @@ function GeneratorOptions() {
           </span>
         ))}
       </span>
+      <label title={T("image_size_label_title")}>
+        {TT("image_size_label")}
+      </label>
+      <select value={settings?.qrCodeImageSize} onChange={(e) => saveSettings({
+        qrCodeImageSize: e.target.value,
+      })}>
+        <option value="500">500x500</option>
+        <option value="1000">1000x1000</option>
+        <option value="1500">1500x1500</option>
+        <option value="2000">2000x2000</option>
+      </select>
       <label title={T("finder_style_label_title")}>
         {TT("finder_style_label")}
       </label>
@@ -53,17 +64,6 @@ function GeneratorOptions() {
         {moduleStyleNames.map((name) => (
           <option key={name} value={name}>{name}</option>
         ))}
-      </select>
-      <label title={T("image_size_label_title")}>
-        {TT("image_size_label")}
-      </label>
-      <select value={settings?.qrCodeImageSize} onChange={(e) => saveSettings({
-        qrCodeImageSize: e.target.value,
-      })}>
-        <option value="500">500x500</option>
-        <option value="1000">1000x1000</option>
-        <option value="1500">1500x1500</option>
-        <option value="2000">2000x2000</option>
       </select>
     </div>
   );

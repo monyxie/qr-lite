@@ -203,7 +203,9 @@ const Generator = forwardRef(function Generator(props, ref) {
           </span>
         </div>
       </div>
-      {showGeneratorOptions && <GeneratorOptions onClose={() => { setShowGeneratorOptions(false) }} />}
+      <div class="necker-container">
+        {showGeneratorOptions && <GeneratorOptions />}
+      </div>
       <div class="result" id="result" ref={resultNode} style={resultBoxStyles}>
         <QRCodeSVG
           finderStyle={settings?.qrCodeFinderStyle || finderStyleNames[0]}
