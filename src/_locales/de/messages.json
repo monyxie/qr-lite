@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "QR Lite-Projektseite auf Github besuchen"
   },
-  "show_generator_options_btn_label": {
-    "message": "Optionen anzeigen"
+  "toggle_generator_options_btn_label": {
+    "message": "Optionen"
   },
-  "hide_generator_options_btn_label": {
-    "message": "Optionen ausblenden"
+  "toggle_generator_options_btn_title": {
+    "message": "QR-Code-Generatoroptionen ein-/ausblenden"
   },
   "error_correction_level_btn_low_title": {
     "message": "Niedrig, 7 % der Datenbytes können wiederhergestellt werden"

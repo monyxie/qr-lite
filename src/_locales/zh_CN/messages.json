@@ -48,11 +48,11 @@
   "github_link_title": {
     "message": "访问 QR Lite 在 Github 上的项目主页"
   },
-  "show_generator_options_btn_label": {
-    "message": "显示选项"
+  "toggle_generator_options_btn_label": {
+    "message": "选项"
   },
-  "hide_generator_options_btn_label": {
-    "message": "隐藏选项"
+  "toggle_generator_options_btn_title": {
+    "message": "显示/隐藏二维码生成器选项"
   },
   "error_correction_level_btn_low_title": {
     "message": "低，可以恢复 7% 左右的数据"

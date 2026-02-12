@@ -61,19 +61,19 @@
     "message": "इस प्रविष्टि को इतिहास से हटाएं"
   },
   "github_link_title": {
-    "message": "QR Lite की Github प्रोजेक्ट पृष्ठ पर जाएं"
+    "message": "Github पर QR Lite के प्रोजेक्ट पेज पर जाएँ"
   },
-  "show_generator_options_btn_label": {
-    "message": "विकल्प दिखाएं"
+  "toggle_generator_options_btn_label": {
+    "message": "विकल्प"
   },
-  "hide_generator_options_btn_label": {
-    "message": "विकल्प छिपाएं"
+  "toggle_generator_options_btn_title": {
+    "message": "क्यूआर कोड जनरेटर विकल्प दिखाएँ/छिपाएँ"
   },
   "error_correction_level_btn_low_title": {
-    "message": "कम, 7% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+    "message": "कम, 7% डेटा बाइट्स बहाल किए जा सकते हैं"
   },
   "error_correction_level_btn_medium_title": {
-    "message": "मध्यम, 15% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"
+    "message": "मध्यम, 15% डेटा बाइट्स बहाल किए जा सकते हैं"
   },
   "error_correction_level_btn_quartile_title": {
     "message": "चतुर्थांश, 25% डेटा बाइट्स पुनर्स्थापित किए जा सकते हैं"

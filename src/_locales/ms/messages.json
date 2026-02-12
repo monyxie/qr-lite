@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "Lawati halaman projek QR Lite di Github"
   },
-  "show_generator_options_btn_label": {
-    "message": "Tunjuk pilihan"
+  "toggle_generator_options_btn_label": {
+    "message": "Pilihan"
   },
-  "hide_generator_options_btn_label": {
-    "message": "Sembunyikan pilihan"
+  "toggle_generator_options_btn_title": {
+    "message": "Tunjukkan/sembunyikan pilihan penjana kod QR"
   },
   "error_correction_level_btn_low_title": {
     "message": "Rendah, 7% daripada bait data boleh dipulihkan"

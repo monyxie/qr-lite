@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "QR Lite کی Github پروجیکٹ پیج ملاحظہ کریں"
   },
-  "show_generator_options_btn_label": {
-    "message": "آپشن دکھائیں"
+  "toggle_generator_options_btn_label": {
+    "message": "اختیارات"
   },
-  "hide_generator_options_btn_label": {
-    "message": "آپشن چھپائیں"
+  "toggle_generator_options_btn_title": {
+    "message": "QR کوڈ جنریٹر کے اختیارات دکھائیں/چھپائیں"
   },
   "error_correction_level_btn_low_title": {
     "message": "کم، 7% ڈیٹا بائٹس بحال کیے جا سکتے ہیں"

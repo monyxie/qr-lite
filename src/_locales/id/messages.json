@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "Kunjungi halaman proyek QR Lite di Github"
   },
-  "show_generator_options_btn_label": {
-    "message": "Tampilkan opsi"
+  "toggle_generator_options_btn_label": {
+    "message": "Opsi"
   },
-  "hide_generator_options_btn_label": {
-    "message": "Sembunyikan opsi"
+  "toggle_generator_options_btn_title": {
+    "message": "Tampilkan/sembunyikan opsi pembuat kode QR"
   },
   "error_correction_level_btn_low_title": {
     "message": "Rendah, 7% byte data dapat dipulihkan"

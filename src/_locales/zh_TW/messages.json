@@ -48,11 +48,11 @@
   "github_link_title": {
     "message": "造訪 QR Lite 在 Github 上的專案主頁"
   },
-  "show_generator_options_btn_label": {
-    "message": "顯示選項"
+  "toggle_generator_options_btn_label": {
+    "message": "選項"
   },
-  "hide_generator_options_btn_label": {
-    "message": "隱藏選項"
+  "toggle_generator_options_btn_title": {
+    "message": "顯示/隱藏 QR 碼產生器選項"
   },
   "error_correction_level_btn_low_title": {
     "message": "低，可以恢復 7% 左右的資料"

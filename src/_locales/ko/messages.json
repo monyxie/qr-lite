@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "QR Lite의 Github 프로젝트 페이지 방문"
   },
-  "show_generator_options_btn_label": {
-    "message": "옵션 표시"
+  "toggle_generator_options_btn_label": {
+    "message": "옵션"
   },
-  "hide_generator_options_btn_label": {
-    "message": "옵션 숨기기"
+  "toggle_generator_options_btn_title": {
+    "message": "QR 코드 생성기 옵션 표시/숨기기"
   },
   "error_correction_level_btn_low_title": {
     "message": "낮음, 데이터 바이트의 7% 복구 가능"

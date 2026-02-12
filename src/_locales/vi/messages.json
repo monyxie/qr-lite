@@ -63,11 +63,11 @@
   "github_link_title": {
     "message": "Truy cập trang dự án QR Lite trên Github"
   },
-  "show_generator_options_btn_label": {
-    "message": "Hiển thị tùy chọn"
+  "toggle_generator_options_btn_label": {
+    "message": "Tùy chọn"
   },
-  "hide_generator_options_btn_label": {
-    "message": "Ẩn tùy chọn"
+  "toggle_generator_options_btn_title": {
+    "message": "Hiển thị/ẩn tùy chọn trình tạo mã QR"
   },
   "error_correction_level_btn_low_title": {
     "message": "Thấp, có thể khôi phục 7% byte dữ liệu"

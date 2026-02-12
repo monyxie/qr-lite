@@ -63,11 +63,12 @@
   "github_link_title": {
     "message": "Voir la page du projet QR Lite sur Github"
   },
-  "show_generator_options_btn_label": {
-    "message": "Afficher les options"
+  "toggle_generator_options_btn_label": {
+    "message": "Options",
+    "description": "[keep-original]"
   },
-  "hide_generator_options_btn_label": {
-    "message": "Masquer les options"
+  "toggle_generator_options_btn_title": {
+    "message": "Afficher/masquer les options du générateur de codes QR"
   },
   "error_correction_level_btn_low_title": {
     "message": "Faible, 7 % des octets de données peuvent être restaurés"
