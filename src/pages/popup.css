@@ -37,6 +37,7 @@ body {
   display: flex;
   gap: var(--gap);
   justify-content: space-between;
+  align-items: center;
 }
 
 .footer-container {
@@ -149,9 +150,10 @@ body {
 .main .generator-options {
   display: grid;
   gap: var(--gap);
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: auto auto;
   color: var(--text-primary-color);
   font-size: 12px;
+  margin: auto;
 }
 
 .main .generator-options label {

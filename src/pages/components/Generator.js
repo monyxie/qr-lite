@@ -197,8 +197,8 @@ const Generator = forwardRef(function Generator(props, ref) {
           </span>
         </div>
         <div class="necker">
-          <span class="clickable" onClick={() => { setShowGeneratorOptions(!showGeneratorOptions) }}>
-            {showGeneratorOptions ? T("hide_generator_options_btn_label") : T("show_generator_options_btn_label")}
+          <span class="clickable" title={T("toggle_generator_options_btn_title")} onClick={() => { setShowGeneratorOptions(!showGeneratorOptions) }}>
+            {T("toggle_generator_options_btn_label")}
             <img class={`icon icon-invert ${showGeneratorOptions ? "rotate-180" : ""}`} src="../icons/arrow-d.svg" />
           </span>
         </div>
