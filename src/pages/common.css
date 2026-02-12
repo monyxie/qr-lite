@@ -63,6 +63,7 @@ html {
   display: inline-flex;
   gap: 0.4em;
   align-items: center;
+  user-select: none;
 }
 
 .clickable:hover {

@@ -104,6 +104,10 @@ body {
   outline: var(--input-focus-border-color) 2px solid;
 }
 
+.main .length-view {
+  padding: 0.2em 0.5em;
+}
+
 .main .result {
   display: flex;
   gap: var(--gap);
