@@ -9,7 +9,7 @@
     "message": "👌简单易用 🛡️隐私友好"
   },
   "promo_banner_defining_html": {
-    "message": "<span>二维码<br><strong>生成器</strong> 和 <strong>扫描器</strong>"
+    "message": "<span>离线二维码<br><strong>读写器</strong>"
   },
   "promo_screenshot_generator_title_html": {
     "message": "生成<br>二维码"
@@ -33,6 +33,6 @@
     "message": "QR Lite"
   },
   "extension_name": {
-    "message": "QR Lite - 二维码生成器和扫描器"
+    "message": "QR Lite - 离线二维码读写器"
   }
 }

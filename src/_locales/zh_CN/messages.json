@@ -1,6 +1,6 @@
 {
   "extension_name": {
-    "message": "QR Lite - 二维码生成器和扫描器"
+    "message": "QR Lite - 离线二维码读写器"
   },
   "extension_short_name": {
     "message": "QR Lite",
@@ -13,13 +13,13 @@
     "message": "保存"
   },
   "save_image_btn_title": {
-    "message": "保存这张二维码图片"
+    "message": "保存这张二维码"
   },
   "copy_image_btn": {
     "message": "复制"
   },
   "copy_image_btn_title": {
-    "message": "复制这张二维码图片到剪贴板"
+    "message": "复制这张二维码到剪贴板"
   },
   "copy_image_ok": {
     "message": "已复制！"
@@ -45,80 +45,95 @@
   "clear_history_btn_title": {
     "message": "清除历史记录"
   },
+  "disable_history_btn_title": {
+    "message": "停止记录扫描或生成的内容"
+  },
+  "disable_history_btn_label": {
+    "message": "停用"
+  },
+  "enable_history_btn_title": {
+    "message": "重新启用历史记录功能"
+  },
+  "enable_history_btn_label": {
+    "message": "启用"
+  },
+  "remove_history_btn_title": {
+    "message": "从历史记录中删除此项"
+  },
   "github_link_title": {
     "message": "访问 QR Lite 在 Github 上的项目主页"
   },
   "toggle_generator_options_btn_label": {
-    "message": "选项"
+    "message": "生成选项"
   },
   "toggle_generator_options_btn_title": {
-    "message": "显示/隐藏二维码生成器选项"
+    "message": "显示/隐藏生成器选项"
   },
   "error_correction_level_btn_low_title": {
-    "message": "低，可以恢复 7% 左右的数据"
+    "message": "低，可修正 7% 的错误字码"
   },
   "error_correction_level_btn_medium_title": {
-    "message": "中，可以恢复 15% 左右的数据"
+    "message": "中，可修正 15% 的错误字码"
   },
   "error_correction_level_btn_quartile_title": {
-    "message": "四分级，可以恢复 25% 左右的数据"
+    "message": "良，可修正 25% 的错误字码"
   },
   "error_correction_level_btn_high_title": {
-    "message": "高，可以恢复 30% 左右的数据"
+    "message": "高，可修正 30% 的错误字码"
   },
   "error_correction_level_label": {
-    "message": "纠错:"
+    "message": "纠错级别："
   },
   "error_correction_level_label_title": {
-    "message": "纠错等级"
-  },
-  "content_length_label_title": {
-    "message": "二维码内容长度，以字符数计"
+    "message": "二维码的容错等级，决定其对抗图像干扰的能力。"
   },
   "finder_style_label": {
-    "message": "定位标记样式:"
+    "message": "码眼样式："
   },
   "finder_style_label_title": {
-    "message": "为定位标记图案（三个角标记）选择样式"
+    "message": "为定位标记（三个角落里的框框）选择样式"
   },
   "module_style_label": {
-    "message": "模块样式:"
+    "message": "码点样式："
   },
   "module_style_label_title": {
-    "message": "为数据模块选择样式"
+    "message": "为二维码的数据内容点阵选择样式"
   },
   "image_size_label": {
     "message": "图像尺寸:"
   },
   "image_size_label_title": {
-    "message": "设置二维码的图像尺寸"
+    "message": "设置二维码图片的尺寸"
+  },
+  "content_length_label_title": {
+    "message": "二维码内容长度，以字数计"
   },
   "content_length_label": {
-    "message": "长度:"
+    "message": "内容长度："
   },
   "content_title": {
     "message": "二维码内容"
   },
   "content_placeholder": {
-    "message": "在此输入文字即可生成二维码"
+    "message": "此处可以输入文字，生成对应的二维码"
   },
   "context_menu_make_qr_code_for_link": {
     "message": "为该链接生成二维码"
   },
   "context_menu_make_qr_code_for_selected_text": {
-    "message": "生成 \"%s\" 的二维码"
+    "message": "生成“%s”的二维码"
   },
   "context_menu_scan_qr_code_in_image": {
-    "message": "扫描图片中的二维码"
+    "message": "扫描图中的二维码"
   },
   "context_menu_pick_region_to_scan": {
-    "message": "选择扫描区域..."
+    "message": "截屏选区扫码…"
   },
   "context_menu_scan_with_camera": {
-    "message": "用摄像头扫描"
+    "message": "从摄像头扫码"
   },
   "scan_region_picker_tips_scrollwheel": {
-    "message": "滚轮"
+    "message": "鼠标滑轮"
   },
   "scan_region_picker_tips_adjust_size": {
     "message": "调整大小"
@@ -130,14 +145,22 @@
     "message": "扫描"
   },
   "scan_region_picker_tips_esc": {
-    "message": "Esc",
-    "description": "[keep-original]"
+    "message": "脱出键"
   },
   "scan_region_picker_tips_exit": {
-    "message": "退出"
+    "message": "退出选区"
+  },
+  "scan_region_picker_tips_rescan": {
+    "message": "重新选区"
+  },
+  "scan_region_picker_tips_open_url_mode_title": {
+    "message": "选择如何处理在扫描结果中的网址"
   },
   "copy_btn": {
     "message": "复制"
+  },
+  "copy_btn_title": {
+    "message": "复制到剪贴板"
   },
   "copy_btn_copied": {
     "message": "已复制"
@@ -146,66 +169,40 @@
     "message": "扫码失败：$MSG$",
     "placeholders": {
       "msg": {
-        "content": "$1"
+        "content": "$1",
+        "default": "发生未知错误"
       }
     }
   },
   "unable_to_decode": {
     "message": "无法读取二维码"
   },
+  "unable_to_load_image": {
+    "message": "无法加载图片"
+  },
+  "loading_image": {
+    "message": "正在加载图片…"
+  },
+  "image_scanner_failed_to_load_image": {
+    "message": "图片加载失败。其来源可能无法访问或受到限制。请尝试选择屏幕区域扫描。"
+  },
   "scan_instructions_html": {
-    "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描此图片中的二维码”"
+    "message": "右键单击任意图片并选择<br>“<img class=\"icon\" src=\"../icons/qrlite.svg\"></img> 扫描图中的二维码”"
   },
   "scan_from_clipboard_instructions_html": {
-    "message": "按 <kbd>Ctrl</kbd> + <kbd>V</kbd> <br> 或 <kbd>⌘</kbd> + <kbd>V</kbd> 来扫描剪贴板中的图片"
+    "message": "在此处按下 <kbd>Ctrl</kbd> + <kbd>V</kbd> 或 <kbd>⌘</kbd> + <kbd>V</kbd>（Mac）<br>来扫描剪贴板中的图片"
   },
   "pick_region_to_scan_btn": {
-    "message": "选择扫描区域"
+    "message": "截屏选区扫码"
   },
   "camera_scan_btn": {
-    "message": "用摄像头扫描"
+    "message": "从摄像头扫码"
   },
   "rescan_btn_label": {
-    "message": "重新扫描"
+    "message": "重新选区"
   },
   "rescan_btn_title": {
-    "message": "开始新的扫描"
-  },
-  "grant_camera_permission_name": {
-    "message": "使用摄像头"
-  },
-  "grant_permissions_window_title": {
-    "message": "授予权限"
-  },
-  "grant_camera_initial_instructions_firefox_html": {
-    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请确保 <strong>\"对所有摄像头记住此设置\"</strong> 复选框已勾选，然后点击 <strong>\"允许\"</strong>。<br><br>点击下方按钮开始。"
-  },
-  "grant_camera_initial_instructions_chrome_html": {
-    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请选择 <strong>\"允许在访问网站期间\"</strong>。<br><br>点击下方按钮开始。"
-  },
-  "grant_camera_blocked_instructions_firefox_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏左边的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
-  },
-  "grant_camera_blocked_instructions_chrome_html": {
-    "message": "QR Lite 的摄像头权限似乎已经被设定为<strong>阻止</strong>了。<br><br>如要修改该设定，请点击地址栏上的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，并选择 <strong>始终允许 QR Lite - 二维码生成器和扫描器 访问您的摄像头</strong>。<br><br>完成该操作后，请刷新本页面。"
-  },
-  "grant_camera_granted_instructions_html": {
-    "message": "QR Lite 已经成功获得摄像头权限。<br><br>您现在可以关闭本页面了。"
-  },
-  "grant_page_refresh_btn": {
-    "message": "刷新"
-  },
-  "grant_page_dont_see_icon_btn_html": {
-    "message": "我找不到 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标！"
-  },
-  "grant_page_dont_see_icon_instructions_html": {
-    "message": "有些浏览器会在几秒后隐藏该图标。请点击下面的按钮将其显示出来。"
-  },
-  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
-    "message": "显示图标"
-  },
-  "grant_page_close_btn": {
-    "message": "关闭"
+    "message": "截取一块新的区域并重新扫描"
   },
   "grant_permissions_instructions_html": {
     "message": "此功能需要以下附加权限。<br><br><strong>$PERMISSION$</strong><br>",
@@ -218,92 +215,119 @@
   "grant_permissions_btn": {
     "message": "授予权限"
   },
-  "or": {
-    "message": "或者"
+  "grant_camera_permission_name": {
+    "message": "读取摄像头"
   },
-  "scanning": {
-    "message": "扫描中..."
-  },
-  "unable_to_decode_qr_code": {
-    "message": "二维码解码失败"
-  },
-  "browser_action_command_description": {
-    "message": "显示弹出框"
-  },
-  "select_region_to_scan_command_description": {
-    "message": "选择扫描区域"
-  },
-  "scan_with_camera_command_description": {
-    "message": "用摄像头扫描"
-  },
-  "picker_close_btn_title": {
-    "message": "关闭"
-  },
-  "disable_history_btn_title": {
-    "message": "暂停历史记录"
-  },
-  "disable_history_btn_label": {
-    "message": "暂停"
-  },
-  "enable_history_btn_title": {
-    "message": "恢复历史记录"
-  },
-  "enable_history_btn_label": {
-    "message": "恢复"
-  },
-  "remove_history_btn_title": {
-    "message": "从历史记录中删除此条目"
-  },
-  "select_region_to_scan_open_command_description": {
-    "message": "选择区域进行扫描并打开 URL"
-  },
-  "select_region_to_scan_open_new_bg_tab_command_description": {
-    "message": "选择区域进行扫描并在新的后台标签页中打开 URL"
-  },
-  "select_region_to_scan_open_new_fg_tab_command_description": {
-    "message": "选择区域进行扫描并在新的前台标签页中打开 URL"
-  },
-  "picker_url_mode_auto_open_no": {
-    "message": "不自动打开 URL"
-  },
-  "picker_url_mode_auto_open_in_current_tab": {
-    "message": "在当前标签页中自动打开 URL"
-  },
-  "picker_url_mode_auto_open_in_bg_tab": {
-    "message": "在新的后台标签页中自动打开 URL"
-  },
-  "picker_url_mode_auto_open_in_fg_tab": {
-    "message": "在新的前台标签页中自动打开 URL"
-  },
-  "copy_btn_title": {
-    "message": "复制到剪贴板"
+  "grant_permissions_window_title": {
+    "message": "授予权限"
   },
   "grant_permissions_error_details_summary": {
     "message": "错误详情"
   },
+  "grant_camera_initial_instructions_firefox_html": {
+    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请确认勾选 <strong>“对所有摄像头记住此设置”</strong> 复选框，然后点击 <strong>“允许”</strong>。<br><br>点击下方按钮开始。"
+  },
+  "grant_camera_initial_instructions_chrome_html": {
+    "message": "您即将授予 QR Lite 使用摄像头的权限。<br><br>当浏览器询问您是否允许 QR Lite 使用摄像头时，请选择 <strong>“允许在此页访问”</strong>。<br><br>点击下方按钮开始。"
+  },
+  "grant_camera_blocked_instructions_firefox_html": {
+    "message": "您似乎已经<strong>阻止</strong>了 QR Lite 访问您的摄像头。<br><br>如要解除该状态，请点击地址栏左侧的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，然后将“使用摄像头”一栏的“已阻止”状态<strong>移除</strong>。<br><br>完成该操作后，请刷新本页面。"
+  },
+  "grant_camera_blocked_instructions_chrome_html": {
+    "message": "您似乎已经<strong>阻止</strong>了 QR Lite 访问您的摄像头。<br><br>如要修改该设定，请点击地址栏上的 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标，并选择 <strong>始终允许 QR Lite - 离线二维码读写器 访问您的摄像头</strong>。<br><br>完成该操作后，请刷新本页面。"
+  },
   "grant_camera_unusable_instructions_html": {
-    "message": "摄像头似乎无法访问。是否有其他程序正在使用摄像头？<br><br>请关闭可能正在使用摄像头的其他程序，然后刷新此页面。"
+    "message": "当前无法访问您的摄像头。是否有其他程序正在使用摄像头？<br><br>请关闭可能正在使用摄像头的其他应用，然后刷新此页面。"
   },
   "grant_camera_unknow_error_instructions_html": {
     "message": "尝试获取摄像头访问权限时发生未知错误。<br><br>请刷新此页面并重试。"
   },
+  "grant_camera_granted_instructions_html": {
+    "message": "QR Lite 已经成功取得摄像头访问权限。<br><br>您现在可以关闭本页面了。"
+  },
+  "grant_page_refresh_btn": {
+    "message": "刷新"
+  },
+  "grant_page_dont_see_icon_btn_html": {
+    "message": "找不到 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标吗？"
+  },
+  "grant_page_dont_see_icon_instructions_html": {
+    "message": "有些浏览器会在几秒后隐藏该图标。请点击下面的按钮以将其显示出来。"
+  },
+  "grant_page_dont_see_icon_instructions_reveal_icon_btn_label": {
+    "message": "显示 <img class=\"icon icon-invert\" src=\"../icons/no-camera.svg\"></img> 图标"
+  },
+  "grant_page_close_btn": {
+    "message": "关闭"
+  },
+  "or": {
+    "message": "或者"
+  },
+  "scanning": {
+    "message": "正在扫描中…"
+  },
+  "unable_to_decode_qr_code": {
+    "message": "无法解析二维码"
+  },
   "unable_to_access_camera": {
     "message": "无法访问摄像头。是否有其他程序正在使用摄像头？"
+  },
+  "unable_to_access_camera_unknown_error": {
+    "message": "无法访问摄像头。发生了一个意外错误。"
+  },
+  "browser_action_command_description": {
+    "message": "打开拓展弹窗"
+  },
+  "select_region_to_scan_command_description": {
+    "message": "截屏选区扫码"
+  },
+  "scan_with_camera_command_description": {
+    "message": "从摄像头扫码"
+  },
+  "picker_close_btn_title": {
+    "message": "关闭"
+  },
+  "select_region_to_scan_open_command_description": {
+    "message": "截屏选区扫码并打开其中的链接"
+  },
+  "select_region_to_scan_open_new_bg_tab_command_description": {
+    "message": "截屏选区扫码后在新标签页打开其中的链接"
+  },
+  "select_region_to_scan_open_new_fg_tab_command_description": {
+    "message": "截屏选区扫码后在新标签页打开其中的链接并切换至该页"
+  },
+  "picker_url_mode_auto_open_no": {
+    "message": "不自动打开扫描结果中的链接"
+  },
+  "picker_url_mode_auto_open_in_current_tab": {
+    "message": "在当前页打开结果中的链接"
+  },
+  "picker_url_mode_auto_open_in_bg_tab": {
+    "message": "新建标签页开启结果中的链接"
+  },
+  "picker_url_mode_auto_open_in_fg_tab": {
+    "message": "新建标签页开启结果中的链接并并切换至该页"
   },
   "settings_window_title": {
     "message": "QR Lite 设置"
   },
   "settings_scan_success_sound_enabled_label": {
-    "message": "扫描成功时播放声音"
+    "message": "扫描提示音"
   },
   "settings_scan_success_sound_enabled_explainer": {
-    "message": "成功扫描到二维码时播放提示音。"
+    "message": "成功扫描二维码时播放“啵”的提示音。"
+  },
+  "settings_picker_pause_videos_onload_enabled_label": {
+    "message": "在“截屏选区扫码”期间暂停所有视频"
+  },
+  "settings_picker_pause_videos_onload_enabled_explainer": {
+    "message": "在选择扫描区域时暂停正在播放的视频，以免错过任何二维码。"
   },
   "settings_white_on_black_qr_ccode_in_dark_mode_label": {
-    "message": "在深色模式下生成黑色背景上的白色二维码"
+    "message": "深色模式颜色反转"
   },
   "settings_white_on_black_qr_ccode_in_dark_mode_explainer": {
-    "message": "在深色模式下，生成深色背景上的浅色前景色的二维码。某些扫描仪可能难以扫描此类二维码。您通过“保存”和“复制”按钮保存或复制的二维码将始终具有白色背景和黑色前景色。"
+    "message": "在深色模式下，生成深色背景上的白前景色的二维码。某些扫描软件可能难以解析此类二维码。即使您开启此功能，您通过“保存”和“复制”按钮保存或复制的二维码将始终是在白色背景下的黑色二维码。"
   },
   "settings_scanner_legend": {
     "message": "二维码扫描"
@@ -316,29 +340,5 @@
   },
   "settings_config_keyboard_shortcuts_btn_label": {
     "message": "配置键盘快捷键"
-  },
-  "unable_to_access_camera_unknown_error": {
-    "message": "无法访问摄像头。发生了一个意外错误。"
-  },
-  "scan_region_picker_tips_rescan": {
-    "message": "重新扫描"
-  },
-  "scan_region_picker_tips_open_url_mode_title": {
-    "message": "选择如何在扫描结果中处理网址"
-  },
-  "unable_to_load_image": {
-    "message": "无法加载图片"
-  },
-  "settings_picker_pause_videos_onload_enabled_label": {
-    "message": "在“选择要扫描的区域”期间暂停所有视频"
-  },
-  "settings_picker_pause_videos_onload_enabled_explainer": {
-    "message": "在选择扫描区域时暂停视频，以免您错过任何二维码。"
-  },
-  "image_scanner_failed_to_load_image": {
-    "message": "图片加载失败。其来源可能无法访问或受到限制。请尝试扫描屏幕区域。"
-  },
-  "loading_image": {
-    "message": "正在加载图片..."
   }
 }
